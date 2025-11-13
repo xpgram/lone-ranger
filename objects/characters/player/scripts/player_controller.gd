@@ -17,8 +17,8 @@ func move(vector: Vector2) -> void:
   _set_facing(vector);
 
 
-func _set_facing(dir: Vector2) -> void:
-  match dir:
+func _set_facing(vector: Vector2) -> void:
+  match vector:
     # Up
     Vector2( 0, -1):
       animated_sprite.play('idle_up');

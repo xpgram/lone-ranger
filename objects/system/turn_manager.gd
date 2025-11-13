@@ -27,7 +27,7 @@ func _unhandled_input(event: InputEvent) -> void:
     _advance_time(func ():
       _player_move(Vector2( 0, -1))
     );
-  
+
   elif event.is_action('move_down'):
     _advance_time(func ():
       _player_move(Vector2( 0,  1))
@@ -54,8 +54,16 @@ func _advance_time(player_action: Callable) -> void:
   # - If turn spent:
   #   - Player may travel down stairs (high priority interactives)
   #   - Blocks are pushed, enemies are crushed
+
   #   - Enemies move / act
   #     - Enemy animations, naturally
+  if enemy_container:
+    var enemies: Array[Enemy2D];
+    enemies.assign(enemy_container.get_children());
+
+    for enemy in enemies:
+      enemy.act();
+
   #   - ... Anything else?
 
   inaction_timer.start(15)
