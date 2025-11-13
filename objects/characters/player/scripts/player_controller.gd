@@ -1,3 +1,4 @@
+class_name Player2D
 extends CharacterBody2D
 
 
@@ -76,7 +77,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _move_self(vector: Vector2) -> void:
   # TODO Check collisions first.
-  print(vector);
   position += vector * GRID_SIZE;
 
 
