@@ -27,6 +27,7 @@ func _physics_process(delta: float) -> void:
   # Limit movement to one axis at a time.
   if input.x != 0:
     input.y = 0;
+    input = input.normalized();
 
   var vector_inputs_pressed := [
     Input.is_action_just_pressed('move_up'),
@@ -75,6 +76,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _move_self(vector: Vector2) -> void:
   # TODO Check collisions first.
+  print(vector);
   position += vector * GRID_SIZE;
 
 
