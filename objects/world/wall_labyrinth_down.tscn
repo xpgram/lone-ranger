@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3xx7e8wwir1k"]
+
+[ext_resource type="Texture2D" uid="uid://rk3id4qpgtbk" path="res://textures/wall-labyrinth-r.png" id="1_5cs7l"]
+
+[node name="WallLabyrinthDown" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5707964
+texture = ExtResource("1_5cs7l")
