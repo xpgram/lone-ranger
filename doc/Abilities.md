@@ -1,0 +1,6 @@
+# Abilities
+
+## Spells
+
+### Fire
+
