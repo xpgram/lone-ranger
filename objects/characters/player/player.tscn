@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene load_steps=10 format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://objects/characters/player/scripts/player_controller.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://s1cvx3j8l7jp" path="res://textures/chars/gray/gray-down-0.png" id="2_dgrao"]
 [ext_resource type="Texture2D" uid="uid://juvbaoa7apyf" path="res://textures/chars/gray/gray-down-1.png" id="3_hnwa4"]
+[ext_resource type="Texture2D" uid="uid://cj6r65eoxhgsk" path="res://textures/chars/gray/gray-right-0.png" id="4_jmcxn"]
+[ext_resource type="Texture2D" uid="uid://bjwptwrkhglmb" path="res://textures/chars/gray/gray-right-1.png" id="5_kr0tl"]
+[ext_resource type="Texture2D" uid="uid://cyhlf5apnt7ol" path="res://textures/chars/gray/gray-up-0.png" id="6_ndj21"]
+[ext_resource type="Texture2D" uid="uid://q824tawgpent" path="res://textures/chars/gray/gray-up-1.png" id="7_bari4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uay6n"]
 animations = [{
@@ -16,6 +20,28 @@ animations = [{
 "loop": true,
 "name": &"idle_down",
 "speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_jmcxn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_kr0tl")
+}],
+"loop": true,
+"name": &"idle_side",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ndj21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bari4")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 2.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jmcxn"]
@@ -28,7 +54,6 @@ script = ExtResource("1_reh0w")
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_uay6n")
 animation = &"idle_down"
-frame_progress = 0.6531118
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jmcxn")
