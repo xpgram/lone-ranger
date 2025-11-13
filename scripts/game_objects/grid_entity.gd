@@ -9,3 +9,8 @@ extends Node2D
 #   Oh, I need some standard layer that allows enemies to be attacked, npcs to be talked
 #   to, and most importantly, that they register themselves on the grid and care about
 #   grid collisions and whatnot.
+
+
+func _ready() -> void:
+  # TODO Should Grid handle this conversion itself? Or is that obfuscating too much.
+  Grid.put(self, position / Constants.GRID_SIZE);
