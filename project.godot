@@ -14,6 +14,12 @@ config/name="Lone Ranger"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Constants="*res://scripts/autoload/constants.gd"
+Events="*res://scripts/autoload/events.gd"
+Grid="*res://scripts/autoload/grid.gd"
+
 [display]
 
 window/size/viewport_width=720
