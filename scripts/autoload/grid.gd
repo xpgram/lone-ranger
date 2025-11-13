@@ -1,5 +1,8 @@
 extends Node
 
+const HALF_CELL := Vector2(Constants.GRID_SIZE * 0.5, Constants.GRID_SIZE * 0.5);
+
+
 ## A struct containing a list of world entities.
 class Cell:
   var entities := [] as Array[Node2D];
@@ -23,6 +26,7 @@ func get_entities(place: Vector2) -> Array[Node2D]:
 func put(entity: Node2D, place: Vector2) -> void:
   var place_key := _get_key(place);
 
+  # FIXME GridEntity needs a property 'last_position': I often update world coords before updating the Grid.
   # Using math, try to remove object from its old cell.
   var old_place := Vector2(
     int(entity.position.x / Constants.GRID_SIZE),
@@ -54,9 +58,21 @@ func clear_map() -> void:
   _map.clear();
 
 
+## Given a world-space vector, return its equivalent position on the Grid.
+func get_grid_coords(vector: Vector2) -> Vector2i:
+  return Vector2i(
+    (vector / Constants.GRID_SIZE).floor()
+  );
+
+
+## Given a Grid position, returns the world-space vector for that Grid Cell's center.
+func get_world_coords(place: Vector2i) -> Vector2:
+  return Vector2(place * Constants.GRID_SIZE) + HALF_CELL;
+
+
 ## Returns the dictionary map key for a grid position.
 func _get_key(place: Vector2) -> StringName:
-  return str(place);
+  return &"%sx %sy" % [int(place.x), int(place.y)];
 
 
 ## If a grid position does not have a Cell, creates one.

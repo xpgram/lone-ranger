@@ -25,22 +25,22 @@ func _unhandled_input(event: InputEvent) -> void:
 
   if event.is_action('move_up'):
     _advance_time(func ():
-      _player_move(Vector2( 0, -1))
+      _player_move(Vector2.UP)
     );
 
   elif event.is_action('move_down'):
     _advance_time(func ():
-      _player_move(Vector2( 0,  1))
+      _player_move(Vector2.DOWN)
     );
 
   elif event.is_action('move_left'):
     _advance_time(func ():
-      _player_move(Vector2(-1,  0))
+      _player_move(Vector2.LEFT)
     );
 
   elif event.is_action('move_right'):
     _advance_time(func ():
-      _player_move(Vector2( 1,  0))
+      _player_move(Vector2.RIGHT)
     );
 
 
@@ -62,7 +62,17 @@ func _advance_time(player_action: Callable) -> void:
     enemies.assign(enemy_container.get_children());
 
     for enemy in enemies:
-      enemy.act();
+      enemy.prepare_to_act();
+
+    # This multipass approach allows enemies to all act independently of list order.
+    for i in range(3):
+      var enemies_to_act: Array[Enemy2D];
+      enemies_to_act.assign(
+        enemies.filter(func (enemy): return not enemy.has_acted())
+      );
+
+      for enemy in enemies_to_act:
+        enemy.act();
 
   #   - ... Anything else?
 
