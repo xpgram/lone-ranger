@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=18 format=4 uid="uid://5elbiihgljqp"]
 
-[ext_resource type="Script" uid="uid://1ydx23pefh2f" path="res://objects/system/turn_manager/turn_manager.gd" id="1_7ittx"]
+[ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://objects/world/floor_stairs.tscn" id="1_v30wm"]
 [ext_resource type="PackedScene" uid="uid://bmn56oiwtxfrs" path="res://objects/world/floor_tile.tscn" id="2_6a8my"]
-[ext_resource type="Script" uid="uid://713mi8o78qey" path="res://objects/system/turn_manager/label.gd" id="2_iefdx"]
 [ext_resource type="PackedScene" uid="uid://d3xx7e8wwir1k" path="res://objects/world/wall_labyrinth_down.tscn" id="2_p4wh4"]
 [ext_resource type="PackedScene" uid="uid://da2ibc13e45n3" path="res://objects/world/wall_labyrinth_left.tscn" id="3_7ittx"]
 [ext_resource type="PackedScene" uid="uid://d35p0t2hanj4l" path="res://objects/world/void.tscn" id="3_xe18g"]
@@ -16,9 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://cj3wuhb4d13m3" path="res://objects/world/wall_labyrinth_corner_tl.tscn" id="11_0fxje"]
 [ext_resource type="PackedScene" uid="uid://b4b7wf713qkek" path="res://objects/world/wall_labyrinth_corner_tr.tscn" id="12_m2e2k"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/enemy_mouth.tscn" id="15_b6bp6"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_iefdx"]
-shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
@@ -45,22 +41,9 @@ sources/0 = SubResource("TileSetScenesCollectionSource_1aara")
 position = Vector2(112, 80)
 zoom = Vector2(3, 3)
 
-[node name="TurnManager" type="Node" parent="." node_paths=PackedStringArray("player", "npc_container", "enemy_container", "interactives_container")]
-script = ExtResource("1_7ittx")
+[node name="TurnManager" parent="." node_paths=PackedStringArray("player", "enemy_container") instance=ExtResource("1_b6bp6")]
 player = NodePath("../Player2D")
-npc_container = NodePath("../NPC Container")
 enemy_container = NodePath("../Enemy Container")
-interactives_container = NodePath("../Interactives Container")
-
-[node name="InactionTimer" type="Timer" parent="TurnManager"]
-unique_name_in_owner = true
-wait_time = 15.0
-
-[node name="Label" type="Label" parent="TurnManager"]
-offset_right = 40.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_iefdx")
-script = ExtResource("2_iefdx")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-8, -8)
