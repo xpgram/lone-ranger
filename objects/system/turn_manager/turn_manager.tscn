@@ -6,16 +6,13 @@
 [sub_resource type="LabelSettings" id="LabelSettings_iefdx"]
 shadow_color = Color(0, 0, 0, 1)
 
-[node name="TurnManager" type="Node" node_paths=PackedStringArray("player", "npc_container", "enemy_container", "interactives_container")]
+[node name="TurnManager" type="Node"]
 script = ExtResource("1_r78bh")
-player = NodePath("")
-npc_container = NodePath("")
-enemy_container = NodePath("")
-interactives_container = NodePath("")
 
 [node name="InactionTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 15.0
+one_shot = true
 
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
