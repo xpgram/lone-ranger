@@ -46,8 +46,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _advance_time(player_action: Callable) -> void:
   # Prevent interruptions during long or async operations.
-  # TODO Actually, this may not be desirable. Time probably ought to pass through animations, but it shouldn't fully elapse.
-  inaction_timer.stop();
+  # TODO The InactionTimer continues through animations, but it shouldn't fully elapse.
+  #   It's worth noting, all the timer does on finish is call _advance_time().
+  #   If we're already in _advance_time(), we can probably just ignore it.
+  #   We might need to ignore it with a boolean, though.
+  #   And if we're doing that, well, I see the inconvenience of early returns now.
 
   # - Player actions:
   #   - Action animations, naturally.
