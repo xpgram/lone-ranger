@@ -15,17 +15,9 @@ func action_time_cost() -> float:
   return PartialTime.NONE;
 
 
-func can_perform(
-  _performer: GridEntity,
-  _target_position: Vector2i,
-  _orientation: Vector2i,
-) -> bool:
+func _can_perform() -> bool:
   return true;
 
 
-func perform_async(
-  _performer: GridEntity,
-  _target_position: Vector2i,
-  _orientation: Vector2i,
-) -> void:
+func _perform_async() -> void:
   pass;

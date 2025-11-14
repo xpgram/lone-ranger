@@ -15,7 +15,7 @@ func _ready() -> void:
   inaction_timer.start(PartialTime.FULL);
 
   inaction_timer.timeout.connect(func ():
-    _advance_time(func (): return player.wait());
+    _advance_time(player.get_wait_action());
   );
 
 
@@ -24,27 +24,27 @@ func _unhandled_input(event: InputEvent) -> void:
     return;
 
   if event.is_action('move_up'):
-    _advance_time(func ():
-      return player.move(Vector2.UP)
+    _advance_time(
+      player.get_action_from_move_input(Vector2.UP)
     );
 
   elif event.is_action('move_down'):
-    _advance_time(func ():
-      return player.move(Vector2.DOWN)
+    _advance_time(
+      player.get_action_from_move_input(Vector2.DOWN)
     );
 
   elif event.is_action('move_left'):
-    _advance_time(func ():
-      return player.move(Vector2.LEFT)
+    _advance_time(
+      player.get_action_from_move_input(Vector2.LEFT)
     );
 
   elif event.is_action('move_right'):
-    _advance_time(func ():
-      return player.move(Vector2.RIGHT)
+    _advance_time(
+      player.get_action_from_move_input(Vector2.RIGHT)
     );
 
 
-func _advance_time(player_action: Callable) -> void:
+func _advance_time(player_action: FieldAction) -> void:
   # Prevent interruptions during long or async operations.
   # TODO The InactionTimer continues through animations, but it shouldn't fully elapse.
   #   It's worth noting, all the timer does on finish is call _advance_time().
@@ -52,15 +52,16 @@ func _advance_time(player_action: Callable) -> void:
   #   We might need to ignore it with a boolean, though.
   #   And if we're doing that, well, I see the inconvenience of early returns now.
 
-  # - Player actions:
-  #   - Action animations, naturally.
-  #   - Player may travel down stairs (high priority interactives)
-  #   - Blocks are pushed, enemies are crushed, etc.
-  # TODO Is there no way to accept only functions that return floats?
-  var time_spent := player_action.call() as float;
-  var new_time_remaining := inaction_timer.time_left - time_spent;
+  # Player actions:
+  # - Action animations, naturally.
+  # - Action after-effects,
+  #   - such as Move->Travel down stairs
+  #   - or Push->Push Boulder->Crush Enemy
+  await player_action.perform_async();
 
   # Return early if the turn timer hasn't elapsed yet.
+  var new_time_remaining := inaction_timer.time_left - player_action.action_time_cost();
+
   if new_time_remaining > 0:
     inaction_timer.start(new_time_remaining);
     return;
@@ -82,6 +83,7 @@ func _advance_time(player_action: Callable) -> void:
       );
 
       for enemy in enemies_to_act:
+        # TODO I need a list of promises. But I'm probably gonna have to write that myself.
         enemy.act();
 
   # - ... Anything else?

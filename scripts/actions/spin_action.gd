@@ -14,17 +14,9 @@ func action_time_cost() -> float:
   return PartialTime.NONE;
 
 
-func can_perform(
-  performer: GridEntity,
-  _target_position: Vector2i,
-  orientation: Vector2i,
-) -> bool:
-  return (performer.facing_direction != orientation);
+func _can_perform() -> bool:
+  return (_performer.facing_direction != _orientation);
 
 
-func perform_async(
-  performer: GridEntity,
-  _target_position: Vector2i,
-  orientation: Vector2i,
-) -> void:
-  performer.facing_direction = orientation;
+func _perform_async() -> void:
+  _performer.facing_direction = _orientation;
