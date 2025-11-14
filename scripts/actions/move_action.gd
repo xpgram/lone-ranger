@@ -34,4 +34,4 @@ func perform_async(
   orientation: Vector2i,
 ) -> void:
   performer.grid_position = target_position;
-  performer.facing = orientation;
+  performer.facing_direction = orientation;

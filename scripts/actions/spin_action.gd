@@ -19,7 +19,7 @@ func can_perform(
   _target_position: Vector2i,
   orientation: Vector2i,
 ) -> bool:
-  return (performer.facing != orientation);
+  return (performer.facing_direction != orientation);
 
 
 func perform_async(
@@ -27,4 +27,4 @@ func perform_async(
   _target_position: Vector2i,
   orientation: Vector2i,
 ) -> void:
-  performer.facing = orientation;
+  performer.facing_direction = orientation;

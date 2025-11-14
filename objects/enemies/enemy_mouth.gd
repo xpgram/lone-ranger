@@ -45,12 +45,11 @@ func move(vector: Vector2i) -> void:
     return;
 
   grid_position = new_grid_position;
-  _set_facing(vector);
   _has_acted = true;
 
 
-func _set_facing(vector: Vector2) -> void:
-  match vector:
+func _facing_changed() -> void:
+  match facing_direction:
     Vector2.UP:
       animated_sprite.scale.x = -1;
 

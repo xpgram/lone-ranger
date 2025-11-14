@@ -22,7 +22,7 @@ func can_perform(
   var cell_entities := Grid.get_entities(target_position);
 
   var facing_target: bool = (
-    performer.grid_position + performer.facing == target_position
+    performer.grid_position + performer.facing_direction == target_position
   );
 
   var tile_obstructed: bool = (

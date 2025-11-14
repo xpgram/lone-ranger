@@ -2,8 +2,6 @@ class_name Player2D
 extends GridEntity
 
 
-var facing := Vector2i.DOWN;
-
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D;
 
 
@@ -18,24 +16,13 @@ func wait() -> float:
 
 
 func spin(vector: Vector2) -> float:
-  _set_facing(vector);
   return PartialTime.NONE;
 
 
 func move(vector: Vector2i) -> float:
   var new_grid_position := grid_position + vector;
 
-  var tile_entities := Grid.get_entities(new_grid_position);
-  var tile_is_obstructed := tile_entities.any(func (entity): return entity.obstructive);
-
-  if tile_is_obstructed:
-    if vector != facing:
-      return spin(vector);
-    else:
-      return push(vector);
-
   grid_position = new_grid_position;
-  _set_facing(vector);
 
   return PartialTime.FULL;
 
@@ -50,10 +37,8 @@ func push(vector: Vector2i) -> float:
   return PartialTime.FULL;
 
 
-func _set_facing(vector: Vector2) -> void:
-  facing = vector.normalized();
-
-  match facing:
+func _facing_changed() -> void:
+  match facing_direction:
     Vector2i.UP:
       animated_sprite.play('idle_up');
       animated_sprite.scale.x = 1;
