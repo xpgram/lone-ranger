@@ -15,7 +15,7 @@ func _ready() -> void:
   inaction_timer.start(15);
 
   inaction_timer.timeout.connect(func ():
-    _advance_time(_player_wait);
+    _advance_time(func (): return player.wait());
   );
 
 
@@ -25,38 +25,45 @@ func _unhandled_input(event: InputEvent) -> void:
 
   if event.is_action('move_up'):
     _advance_time(func ():
-      _player_move(Vector2.UP)
+      return player.move(Vector2.UP)
     );
 
   elif event.is_action('move_down'):
     _advance_time(func ():
-      _player_move(Vector2.DOWN)
+      return player.move(Vector2.DOWN)
     );
 
   elif event.is_action('move_left'):
     _advance_time(func ():
-      _player_move(Vector2.LEFT)
+      return player.move(Vector2.LEFT)
     );
 
   elif event.is_action('move_right'):
     _advance_time(func ():
-      _player_move(Vector2.RIGHT)
+      return player.move(Vector2.RIGHT)
     );
 
 
 func _advance_time(player_action: Callable) -> void:
   # Prevent interruptions during long or async operations.
+  # TODO Actually, this may not be desirable. Time probably ought to pass through animations, but it shouldn't fully elapse.
   inaction_timer.stop();
 
-  player_action.call();
-  # - Turn animations happen here, naturally.
-
-  # - If turn spent:
+  # - Player actions:
+  #   - Action animations, naturally.
   #   - Player may travel down stairs (high priority interactives)
-  #   - Blocks are pushed, enemies are crushed
+  #   - Blocks are pushed, enemies are crushed, etc.
+  # TODO Is there no way to accept only functions that return floats?
+  var time_spent := player_action.call() as float;
+  var new_time_remaining := inaction_timer.time_left - time_spent;
 
-  #   - Enemies move / act
-  #     - Enemy animations, naturally
+  # Return early if the turn timer hasn't elapsed yet.
+  if new_time_remaining > 0:
+    inaction_timer.start(new_time_remaining);
+    return;
+
+  # - Enemies move / act
+  #   - Enemy animations, naturally
   if enemy_container:
     var enemies: Array[Enemy2D];
     enemies.assign(enemy_container.get_children());
@@ -74,14 +81,6 @@ func _advance_time(player_action: Callable) -> void:
       for enemy in enemies_to_act:
         enemy.act();
 
-  #   - ... Anything else?
+  # - ... Anything else?
 
-  inaction_timer.start(15)
-
-
-func _player_wait() -> void:
-  pass
-
-
-func _player_move(vector: Vector2) -> void:
-  player.move(vector);
+  inaction_timer.start(PartialTime.FULL)
