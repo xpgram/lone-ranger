@@ -6,6 +6,7 @@ extends GridEntity
 
 
 func _ready() -> void:
+  super();
   animated_sprite.play();
 
 
