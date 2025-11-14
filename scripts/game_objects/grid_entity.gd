@@ -1,16 +1,22 @@
+## An object which maintains a position on the Grid.
 class_name GridEntity
 extends Node2D
-# TODO Can enemies, which are moved by script, be CharacterBody2D's? I think so, right?
 
-# TODO I see this script being inherited by movable players, enemies, interactible chests,
-#   pushable blocks, etc. This is the GameObject class, essentially.
-#   I'm not sure what I want from it yet, though.
-#
-#   Oh, I need some standard layer that allows enemies to be attacked, npcs to be talked
-#   to, and most importantly, that they register themselves on the grid and care about
-#   grid collisions and whatnot.
+
+## Whether this entity obstructs the travel of other entities, like walls do.
+@export var obstructive := false;
+
+
+## This object's position on the Grid.
+## When setting this value, this object's Grid position is automatically updated.
+var grid_position: Vector2i:
+  get():
+    return Grid.get_grid_coords(position);
+  set(grid_vector):
+    Grid.remove(self, grid_position);
+    position = Grid.get_world_coords(grid_vector);
+    Grid.put(self, grid_position);
 
 
 func _ready() -> void:
-  # TODO Should Grid handle this conversion itself? Or is that obfuscating too much.
-  Grid.put(self, position / Constants.GRID_SIZE);
+  Grid.put(self, grid_position);
