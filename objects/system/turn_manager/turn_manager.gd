@@ -12,7 +12,7 @@ extends Node
 
 
 func _ready() -> void:
-  inaction_timer.start(15);
+  inaction_timer.start(PartialTime.FULL);
 
   inaction_timer.timeout.connect(func ():
     _advance_time(func (): return player.wait());
