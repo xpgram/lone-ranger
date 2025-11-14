@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://hd6tv01qq0ed"]
+[gd_scene load_steps=6 format=3 uid="uid://hd6tv01qq0ed"]
 
 [ext_resource type="Script" uid="uid://wf7hbush7jb0" path="res://objects/enemies/enemy_mouth.gd" id="1_4nn12"]
 [ext_resource type="Texture2D" uid="uid://bn15smo1estix" path="res://textures/chars/enemies/mouth-idle-0.png" id="1_ffl0m"]
 [ext_resource type="Texture2D" uid="uid://bkjae32eo8jlu" path="res://textures/chars/enemies/mouth-idle-1.png" id="2_4nn12"]
+[ext_resource type="PackedScene" uid="uid://bv8yfn6m0oq2r" path="res://objects/components/hp_component.tscn" id="4_ijwdy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ijwdy"]
 animations = [{
@@ -26,3 +27,7 @@ obstructive = true
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_ijwdy")
 animation = &"idle"
+
+[node name="Stats" type="Node" parent="."]
+
+[node name="HPComponent" parent="Stats" instance=ExtResource("4_ijwdy")]

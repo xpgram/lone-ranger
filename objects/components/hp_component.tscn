@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv8yfn6m0oq2r"]
+
+[ext_resource type="Script" uid="uid://bsdfkose05x24" path="res://scripts/game_objects/int_meter.gd" id="1_cqxux"]
+
+[node name="HPComponent" type="Node"]
+script = ExtResource("1_cqxux")
+maximum = 5
+value = 5
+metadata/_custom_type_script = "uid://bsdfkose05x24"

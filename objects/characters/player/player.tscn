@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene load_steps=10 format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://objects/characters/player/scripts/player2d.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://s1cvx3j8l7jp" path="res://textures/chars/gray/gray-down-0.png" id="2_dgrao"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bjwptwrkhglmb" path="res://textures/chars/gray/gray-right-1.png" id="5_kr0tl"]
 [ext_resource type="Texture2D" uid="uid://cyhlf5apnt7ol" path="res://textures/chars/gray/gray-up-0.png" id="6_ndj21"]
 [ext_resource type="Texture2D" uid="uid://q824tawgpent" path="res://textures/chars/gray/gray-up-1.png" id="7_bari4"]
+[ext_resource type="PackedScene" uid="uid://bv8yfn6m0oq2r" path="res://objects/components/hp_component.tscn" id="8_kr0tl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uay6n"]
 animations = [{
@@ -52,3 +53,7 @@ obstructive = true
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_uay6n")
 animation = &"idle_down"
+
+[node name="Stats" type="Node" parent="."]
+
+[node name="HPComponent" parent="Stats" instance=ExtResource("8_kr0tl")]
