@@ -29,10 +29,10 @@ func _facing_changed() -> void:
       animated_sprite.scale.x = 1;
 
 
-func get_wait_action() -> FieldAction:
-  return (Wait_FieldAction
-    .new()
-    .fill_parameters(
+func get_wait_action() -> FieldActionSchedule:
+  return FieldActionSchedule.new(
+    Wait_FieldAction.new(),
+    FieldActionPlaybill.new(
       self,
       grid_position,
       facing_direction,
@@ -40,8 +40,14 @@ func get_wait_action() -> FieldAction:
   );
 
 
-func get_action_from_move_input(direction: Vector2i) -> FieldAction:
+func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
   var chosen_action: FieldAction = Wait_FieldAction.new();
+
+  var playbill := FieldActionPlaybill.new(
+    self,
+    grid_position + direction,
+    direction,
+  );
 
   var actions := [
     Move_FieldAction.new(),
@@ -49,19 +55,9 @@ func get_action_from_move_input(direction: Vector2i) -> FieldAction:
     Spin_FieldAction.new(),
   ] as Array[FieldAction];
 
-  actions.assign(
-    actions.map(
-      func (action): return action.fill_parameters(
-        self,
-        grid_position + direction,
-        direction,
-      )
-    )
-  );
-
   for action in actions:
-    if action.can_perform():
+    if action.can_perform(playbill):
       chosen_action = action;
       break;
 
-  return chosen_action;
+  return FieldActionSchedule.new(chosen_action, playbill);

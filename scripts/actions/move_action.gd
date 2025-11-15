@@ -14,8 +14,8 @@ func action_time_cost() -> float:
   return PartialTime.FULL;
 
 
-func _can_perform() -> bool:
-  var cell_entities := Grid.get_entities(_target_position);
+func can_perform(playbill: FieldActionPlaybill) -> bool:
+  var cell_entities := Grid.get_entities(playbill.target_position);
 
   var tile_unobstructed: bool = (
     cell_entities.all(func (entity: GridEntity): return not entity.obstructive)
@@ -24,6 +24,6 @@ func _can_perform() -> bool:
   return tile_unobstructed;
 
 
-func _perform_async() -> void:
-  _performer.grid_position = _target_position;
-  _performer.facing_direction = _orientation;
+func perform_async(playbill: FieldActionPlaybill) -> void:
+  playbill.performer.grid_position = playbill.target_position;
+  playbill.performer.facing_direction = playbill.orientation;

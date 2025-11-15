@@ -44,7 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
     );
 
 
-func _advance_time(player_action: FieldAction) -> void:
+func _advance_time(player_schedule: FieldActionSchedule) -> void:
   # Prevent interruptions during long or async operations.
   # TODO The InactionTimer continues through animations, but it shouldn't fully elapse.
   #   It's worth noting, all the timer does on finish is call _advance_time().
@@ -57,10 +57,11 @@ func _advance_time(player_action: FieldAction) -> void:
   # - Action after-effects,
   #   - such as Move->Travel down stairs
   #   - or Push->Push Boulder->Crush Enemy
-  await player_action.perform_async();
+  @warning_ignore('redundant_await')
+  await player_schedule.action.perform_async(player_schedule.playbill);
 
   # Return early if the turn timer hasn't elapsed yet.
-  var new_time_remaining := inaction_timer.time_left - player_action.action_time_cost();
+  var new_time_remaining := inaction_timer.time_left - player_schedule.action.action_time_cost();
 
   if new_time_remaining > 0:
     inaction_timer.start(new_time_remaining);

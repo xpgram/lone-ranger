@@ -14,11 +14,11 @@ func action_time_cost() -> float:
   return PartialTime.FULL;
 
 
-func _can_perform() -> bool:
-  var cell_entities := Grid.get_entities(_target_position);
+func can_perform(playbill: FieldActionPlaybill,) -> bool:
+  var cell_entities := Grid.get_entities(playbill.target_position);
 
   var facing_target: bool = (
-    _performer.grid_position + _performer.facing_direction == _target_position
+    playbill.performer.grid_position + playbill.performer.facing_direction == playbill.target_position
   );
 
   var tile_obstructed: bool = (
@@ -28,7 +28,7 @@ func _can_perform() -> bool:
   return facing_target and tile_obstructed;
 
 
-func _perform_async() -> void:
+func perform_async(playbill: FieldActionPlaybill,) -> void:
   # IMPLEMENT Pushing/bumping behavior.
-  var entities := Grid.get_entities(_target_position);
+  var entities := Grid.get_entities(playbill.target_position);
   print('Pushing %s...' % entities[0].name);

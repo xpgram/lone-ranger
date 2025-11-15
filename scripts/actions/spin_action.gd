@@ -14,9 +14,9 @@ func action_time_cost() -> float:
   return PartialTime.NONE;
 
 
-func _can_perform() -> bool:
-  return (_performer.facing_direction != _orientation);
+func can_perform(playbill: FieldActionPlaybill) -> bool:
+  return (playbill.performer.facing_direction != playbill.orientation);
 
 
-func _perform_async() -> void:
-  _performer.facing_direction = _orientation;
+func perform_async(playbill: FieldActionPlaybill) -> void:
+  playbill.performer.facing_direction = playbill.orientation;

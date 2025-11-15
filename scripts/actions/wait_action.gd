@@ -15,9 +15,9 @@ func action_time_cost() -> float:
   return PartialTime.NONE;
 
 
-func _can_perform() -> bool:
+func can_perform(_playbill: FieldActionPlaybill) -> bool:
   return true;
 
 
-func _perform_async() -> void:
+func perform_async(_playbill: FieldActionPlaybill) -> void:
   pass;
