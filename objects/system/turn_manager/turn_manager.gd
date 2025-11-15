@@ -7,6 +7,8 @@ extends Node
 @export var enemy_container: Node2D;
 @export var interactives_container: Node2D;
 
+## Used to lock the turn-execution loop, preventing parallel triggers.
+var turn_in_progress := false;
 
 @onready var inaction_timer: Timer = %InactionTimer;
 
@@ -44,49 +46,80 @@ func _unhandled_input(event: InputEvent) -> void:
     );
 
 
+## Advances in-game events by triggering turn actions for each set of actors on the field.
+## `player_schedule` describes the player's input to this process.
 func _advance_time(player_schedule: FieldActionSchedule) -> void:
   # Prevent interruptions during long or async operations.
-  # TODO The InactionTimer continues through animations, but it shouldn't fully elapse.
-  #   It's worth noting, all the timer does on finish is call _advance_time().
-  #   If we're already in _advance_time(), we can probably just ignore it.
-  #   We might need to ignore it with a boolean, though.
-  #   And if we're doing that, well, I see the inconvenience of early returns now.
+  if turn_in_progress:
+    return;
+  turn_in_progress = true;
 
-  # Player actions:
-  # - Action animations, naturally.
-  # - Action after-effects,
-  #   - such as Move->Travel down stairs
-  #   - or Push->Push Boulder->Crush Enemy
+  # Player action
   @warning_ignore('redundant_await')
   await player_schedule.action.perform_async(player_schedule.playbill);
 
-  # Return early if the turn timer hasn't elapsed yet.
   var new_time_remaining := inaction_timer.time_left - player_schedule.action.action_time_cost();
 
-  if new_time_remaining > 0:
-    inaction_timer.start(new_time_remaining);
+  # Other turn actions
+  if new_time_remaining <= 0:
+    await _perform_npc_actions_async();
+    await _perform_enemy_actions_async();
+    await _perform_object_actions_async();
+
+  # Reset for next turn
+  var next_time_remaining := new_time_remaining if new_time_remaining > 0 else PartialTime.FULL;
+  inaction_timer.start(next_time_remaining);
+
+  turn_in_progress = false;
+
+
+## Trigger NPC turn actions.
+func _perform_npc_actions_async() -> void:
+  if not npc_container or npc_container.get_child_count() == 0:
+    return;
+  
+  await _perform_wait();
+
+
+## Trigger enemy turn actions.
+func _perform_enemy_actions_async() -> void:
+  if not enemy_container or enemy_container.get_child_count() == 0:
     return;
 
-  # - Enemies move / act
-  #   - Enemy animations, naturally
-  if enemy_container:
-    var enemies: Array[Enemy2D];
-    enemies.assign(enemy_container.get_children());
+  await _perform_wait();
+  
+  var enemies: Array[Enemy2D];
+  enemies.assign(enemy_container.get_children());
 
-    for enemy in enemies:
-      enemy.prepare_to_act();
+  for enemy in enemies:
+    enemy.prepare_to_act();
 
-    # This multipass approach allows enemies to all act independently of list order.
-    for i in range(3):
-      var enemies_to_act: Array[Enemy2D];
-      enemies_to_act.assign(
-        enemies.filter(func (enemy): return not enemy.has_acted())
-      );
+  # This multipass approach allows enemies to all act independently of list order.
+  for i in range(3):
+    var enemies_to_act: Array[Enemy2D];
+    enemies_to_act.assign(
+      enemies.filter(func (enemy): return not enemy.has_acted())
+    );
 
-      for enemy in enemies_to_act:
-        # TODO I need a list of promises. But I'm probably gonna have to write that myself.
-        enemy.act();
+    for enemy in enemies_to_act:
+      # TODO This should be a list of promises to await so all enemies act in unison.
+      @warning_ignore('redundant_await')
+      await enemy.act();
 
-  # - ... Anything else?
 
-  inaction_timer.start(PartialTime.FULL)
+## Trigger passive, interactive object "actions".
+func _perform_object_actions_async() -> void:
+  if not interactives_container or interactives_container.get_child_count() == 0:
+    return;
+
+  await _perform_wait();
+
+
+# TODO I don't think this method ought to be official. It slows things down too much.
+#   But it remains true that if an enemy pushes something, a delay before and after they
+#   act helps communicate the sequence of events.
+#   Also, does Void Stranger allow the tail-end of your push to overlap the beginning of a
+#   mimic's push? I dunno.
+## Trigger a short time break.
+func _perform_wait() -> void:
+  await get_tree().create_timer(0.1).timeout;

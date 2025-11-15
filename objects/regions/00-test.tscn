@@ -41,9 +41,11 @@ sources/0 = SubResource("TileSetScenesCollectionSource_1aara")
 position = Vector2(112, 80)
 zoom = Vector2(3, 3)
 
-[node name="TurnManager" parent="." node_paths=PackedStringArray("player", "enemy_container") instance=ExtResource("1_b6bp6")]
+[node name="TurnManager" parent="." node_paths=PackedStringArray("player", "npc_container", "enemy_container", "interactives_container") instance=ExtResource("1_b6bp6")]
 player = NodePath("../Player2D")
+npc_container = NodePath("../NPC Container")
 enemy_container = NodePath("../Enemy Container")
+interactives_container = NodePath("../Interactives Container")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-8, -8)
