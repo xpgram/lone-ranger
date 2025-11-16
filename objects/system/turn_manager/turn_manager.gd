@@ -62,6 +62,11 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   # Player action
   @warning_ignore('redundant_await')
   await player_schedule.action.perform_async(player_schedule.playbill);
+  await _perform_wait_async();
+  # TODO 1 wait_async should be called every turn.
+  #   More than 1 may be called depending on what else is happening.
+  #   Figure out how to orchestrate that.
+  #   But do it *after* adding NPCs and objects that can act independently.
 
   var new_time_remaining := inaction_timer.time_left - player_schedule.action.action_time_cost();
 
@@ -82,16 +87,22 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
 func _perform_npc_actions_async() -> void:
   if not npc_container or npc_container.get_child_count() == 0:
     return;
-  
+
+  var children := npc_container.get_children();
+  if not children.any(_can_act):
+    return;
+
   await _perform_wait_async();
+
+  # TODO Multipass?
+  for interactive in interactives_container.get_children():
+    await interactive.act();
 
 
 ## Trigger enemy turn actions.
 func _perform_enemy_actions_async() -> void:
   if not enemy_container or enemy_container.get_child_count() == 0:
     return;
-
-  await _perform_wait_async();
   
   var enemies: Array[Enemy2D];
   enemies.assign(enemy_container.get_children());
@@ -117,16 +128,23 @@ func _perform_object_actions_async() -> void:
   if not interactives_container or interactives_container.get_child_count() == 0:
     return;
 
-  # TODO This should only be if an object actually does anything.
-  if false:
-    await _perform_wait_async();
+  var children := interactives_container.get_children();
+  if not children.any(_can_act):
+    return;
+
+  await _perform_wait_async();
+
+  # TODO Multipass?
+  for interactive in interactives_container.get_children():
+    await interactive.act();
 
 
-# TODO I don't think this method ought to be official. It slows things down too much.
-#   But it remains true that if an enemy pushes something, a delay before and after they
-#   act helps communicate the sequence of events.
-#   Also, does Void Stranger allow the tail-end of your push to overlap the beginning of a
-#   mimic's push? I dunno.
 ## Trigger a short time break.
 func _perform_wait_async() -> void:
-  await get_tree().create_timer(0.1).timeout;
+  print('waiting...');
+  await get_tree().create_timer(0.075).timeout;
+
+
+## Returns true if the given entity has an 'act' method to call.
+func _can_act(entity: GridEntity) -> bool:
+  return entity.has_method('act');
