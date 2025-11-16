@@ -1,3 +1,4 @@
+## A struct describing the actors in a Field Action.
 class_name FieldActionPlaybill
 extends RefCounted
 
