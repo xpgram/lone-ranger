@@ -141,7 +141,6 @@ func _perform_object_actions_async() -> void:
 
 ## Trigger a short time break.
 func _perform_wait_async() -> void:
-  print('waiting...');
   await get_tree().create_timer(0.075).timeout;
 
 
