@@ -33,12 +33,4 @@ func perform_interaction_async(actor: GridEntity) -> void:
     actor.facing_direction = dir;
     await get_tree().create_timer(0.05).timeout;
 
-  # TODO Fix queue_free() breaks animation script
-  #   I dunno if I have the brains for this right now.
-  #   An anonymous function needs to be sent to a Puppeteer node. Or an ExternalCallback node.
-  #   This ExternalCallback is then returned to Interact_FieldAction.
-  #   Interacter_FieldAction awaits the trigger_async() method of the ExternalCallback.
-  #   The method packaged within is allowed to queue_free() the Chest and wait 0.25 seconds.
-  #   It happily returns control back to Interact_FieldAction, who returns in turn.
-
   await get_tree().create_timer(0.25).timeout;
