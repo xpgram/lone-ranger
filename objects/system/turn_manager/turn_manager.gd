@@ -83,7 +83,7 @@ func _perform_npc_actions_async() -> void:
   if not npc_container or npc_container.get_child_count() == 0:
     return;
   
-  await _perform_wait();
+  await _perform_wait_async();
 
 
 ## Trigger enemy turn actions.
@@ -91,7 +91,7 @@ func _perform_enemy_actions_async() -> void:
   if not enemy_container or enemy_container.get_child_count() == 0:
     return;
 
-  await _perform_wait();
+  await _perform_wait_async();
   
   var enemies: Array[Enemy2D];
   enemies.assign(enemy_container.get_children());
@@ -117,7 +117,9 @@ func _perform_object_actions_async() -> void:
   if not interactives_container or interactives_container.get_child_count() == 0:
     return;
 
-  await _perform_wait();
+  # TODO This should only be if an object actually does anything.
+  if false:
+    await _perform_wait_async();
 
 
 # TODO I don't think this method ought to be official. It slows things down too much.
@@ -126,5 +128,5 @@ func _perform_object_actions_async() -> void:
 #   Also, does Void Stranger allow the tail-end of your push to overlap the beginning of a
 #   mimic's push? I dunno.
 ## Trigger a short time break.
-func _perform_wait() -> void:
+func _perform_wait_async() -> void:
   await get_tree().create_timer(0.1).timeout;
