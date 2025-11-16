@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cj3wuhb4d13m3" path="res://objects/world/wall_labyrinth_corner_tl.tscn" id="11_0fxje"]
 [ext_resource type="PackedScene" uid="uid://b4b7wf713qkek" path="res://objects/world/wall_labyrinth_corner_tr.tscn" id="12_m2e2k"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/enemy_mouth.tscn" id="15_b6bp6"]
-[ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest.tscn" id="16_iefdx"]
+[ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest/chest.tscn" id="16_iefdx"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"

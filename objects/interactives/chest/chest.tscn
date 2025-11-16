@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqm128gxj3t0x"]
+[gd_scene load_steps=6 format=3 uid="uid://dqm128gxj3t0x"]
 
-[ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://objects/interactives/chest.gd" id="1_ask4u"]
+[ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://objects/interactives/chest/chest.gd" id="1_ask4u"]
 [ext_resource type="Texture2D" uid="uid://csmw2bt1etsbl" path="res://textures/entity-chest-closed.png" id="1_ome50"]
 [ext_resource type="Texture2D" uid="uid://cs5ag26gaa8d4" path="res://textures/entity-chest-open.png" id="3_btvpo"]
+[ext_resource type="Script" uid="uid://cqilrqw1pi3ai" path="res://scripts/game_objects/context_action.gd" id="4_6nagg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5bdfo"]
 animations = [{
@@ -30,3 +31,7 @@ metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5bdfo")
 animation = &"closed"
+
+[node name="ContextAction" type="Node" parent="."]
+script = ExtResource("4_6nagg")
+metadata/_custom_type_script = "uid://cqilrqw1pi3ai"
