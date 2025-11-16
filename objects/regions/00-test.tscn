@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=19 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cj3wuhb4d13m3" path="res://objects/world/wall_labyrinth_corner_tl.tscn" id="11_0fxje"]
 [ext_resource type="PackedScene" uid="uid://b4b7wf713qkek" path="res://objects/world/wall_labyrinth_corner_tr.tscn" id="12_m2e2k"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/enemy_mouth.tscn" id="15_b6bp6"]
+[ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest.tscn" id="16_iefdx"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
@@ -66,3 +67,8 @@ position = Vector2(48, 64)
 position = Vector2(144, 128)
 
 [node name="Interactives Container" type="Node2D" parent="."]
+
+[node name="Chest" parent="Interactives Container" instance=ExtResource("16_iefdx")]
+position = Vector2(144, 48)
+contents = "Fira spell"
+obstructive = true
