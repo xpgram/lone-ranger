@@ -17,24 +17,29 @@ func action_time_cost() -> float:
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var entities := Grid.get_entities(playbill.performer.faced_position);
 
-  return entities.any(func (entity):
+  return entities.any(func (entity: GridEntity):
     return (
-      is_instance_of(entity, InteractiveGridEntity)
-      and (entity as InteractiveGridEntity).can_interact(playbill.performer)
+      # TODO What if I ever change the name of this node?
+      entity.has_node('ContextAction')
+      and (entity.get_node('ContextAction')).can_interact(playbill.performer)
     );
   );
 
 
 func perform_async(playbill: FieldActionPlaybill) -> void:
-  var entities := Grid.get_entities(playbill.performer.faced_position);
+  var interact_position := playbill.performer.faced_position;
+  var entities := Grid.get_entities(interact_position);
   var interactive_idx := entities.find_custom(func (entity):
-    return is_instance_of(entity, InteractiveGridEntity)
+    return (
+      entity.has_node('ContextAction')
+      and (entity.get_node('ContextAction')).can_interact(playbill.performer)
+    );
   );
 
   assert(interactive_idx >= 0,
-    "Interact_FieldAction is trying to interact with a Grid position that has no interactibles.");
+    "Interact_FieldAction is trying to interact with a Grid position that has no context actions. coords: %s" % interact_position);
   
-  var interactive_entity := entities[interactive_idx] as InteractiveGridEntity;
+  var context_action := entities[interactive_idx].get_node('ContextAction') as ContextAction;
 
   @warning_ignore('redundant_await')
-  await interactive_entity.perform_interaction_async(playbill.performer);
+  await context_action.perform_interaction_async(playbill.performer);
