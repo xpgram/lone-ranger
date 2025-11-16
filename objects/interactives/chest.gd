@@ -19,8 +19,22 @@ func can_interact(initiator: GridEntity) -> bool:
 
 func perform_interaction_async(initiator: GridEntity) -> void:
   animated_sprite.play('open');
-
+  
+  initiator.facing_direction = Vector2i.DOWN;
   print('%s obtained a %s...' % [initiator.name, contents]);
   # TODO contents is a struct type, including... I guess I'm not sure.
   # TODO initiator.has_node('Inventory')
   # TODO initiator.inventory.add(contents.item * contents.number)
+
+  await get_tree().create_timer(0.25).timeout;
+
+  var dirs := [
+    Vector2i.RIGHT,
+    Vector2i.UP,
+    Vector2i.LEFT,
+    Vector2i.DOWN,
+  ];
+
+  for dir in dirs:
+    initiator.facing_direction = dir;
+    await get_tree().create_timer(0.05).timeout;
