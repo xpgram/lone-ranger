@@ -31,8 +31,12 @@ var grid_position: Vector2i:
     Grid.put(self, grid_position);
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
   Grid.put(self, grid_position);
+
+
+func _exit_tree() -> void:
+  Grid.remove(self, grid_position);
 
 
 ## Overridable function called whenever this GridEntity's facing direction is changed.
