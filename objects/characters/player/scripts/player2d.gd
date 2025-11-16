@@ -6,7 +6,6 @@ extends GridEntity
 
 
 func _ready() -> void:
-  super();
   animated_sprite.play();
 
 
@@ -80,5 +79,5 @@ func get_interact_action() -> FieldActionSchedule:
     if action.can_perform(playbill):
       chosen_action = action;
       break;
-  
+
   return FieldActionSchedule.new(chosen_action, playbill);
