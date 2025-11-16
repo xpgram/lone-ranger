@@ -14,6 +14,11 @@ var facing_direction := Vector2i.DOWN:
     facing_direction = dir;
     _facing_changed();
 
+## The Grid coordinate position this entity is facing.
+var faced_position: Vector2i:
+  get():
+    return grid_position + facing_direction;
+
 
 ## This object's position on the Grid.
 ## When setting this value, this object's Grid position is automatically updated.

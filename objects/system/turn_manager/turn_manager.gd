@@ -44,6 +44,11 @@ func _unhandled_input(event: InputEvent) -> void:
     _advance_time(
       player.get_action_from_move_input(Vector2.RIGHT)
     );
+  
+  elif event.is_action('interact'):
+    _advance_time(
+      player.get_interact_action()
+    );
 
 
 ## Advances in-game events by triggering turn actions for each set of actors on the field.

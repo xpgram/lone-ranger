@@ -61,3 +61,24 @@ func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
       break;
 
   return FieldActionSchedule.new(chosen_action, playbill);
+
+
+func get_interact_action() -> FieldActionSchedule:
+  var chosen_action: FieldAction = Wait_FieldAction.new();
+
+  var playbill := FieldActionPlaybill.new(
+    self,
+    faced_position,
+    facing_direction,
+  );
+
+  var actions := [
+    Interact_FieldAction.new(),
+  ];
+
+  for action in actions:
+    if action.can_perform(playbill):
+      chosen_action = action;
+      break;
+  
+  return FieldActionSchedule.new(chosen_action, playbill);
