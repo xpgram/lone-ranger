@@ -11,6 +11,9 @@ func action_description() -> String:
 
 
 func action_time_cost() -> float:
+  # TODO Opening a chest should cost full, probably.
+  # TODO But talking to an NPC shouldn't, right?
+  #   Talking to an NPC needs to pause the timer somehow, too.
   return PartialTime.NONE;
 
 
