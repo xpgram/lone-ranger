@@ -24,29 +24,24 @@ func get_entities(place: Vector2) -> Array[GridEntity]:
 func put(entity: GridEntity, place: Vector2) -> void:
   var place_key := _get_key(place);
 
-  # FIXME GridEntity needs a property 'last_position': I often update world coords before updating the Grid.
-  # Using math, try to remove object from its old cell.
-  var old_place := Vector2(
-    int(entity.position.x / Constants.GRID_SIZE),
-    int(entity.position.y / Constants.GRID_SIZE),
-  );
-  remove(entity, old_place);
+  # Ensure that entities are not double-placed in the given cell.
+  remove(entity, place);
 
-  # Place object in the desired cell.
+  # Place entity in the desired cell.
   _try_create_cell(place_key);
   _map[place_key].entities.append(entity);
 
 
 ## Removes an entity from the grid at position 'place'.
-func remove(object: GridEntity, place: Vector2) -> void:
+func remove(entity: GridEntity, place: Vector2) -> void:
   var place_key := _get_key(place);
 
   if not _map.has(place_key):
     return;
 
-  # Filter object from the cell's list of entities.
+  # Filter entity from the cell's list of entities.
   var cell := _map[place_key];
-  cell.entities = cell.entities.filter(func (entity): return entity != object);
+  cell.entities = cell.entities.filter(func (cell_entity): return cell_entity != entity);
 
   _try_destroy_cell(place_key);
 
