@@ -24,6 +24,12 @@ Grid="*res://scripts/autoload/grid.gd"
 
 window/size/viewport_width=720
 window/size/viewport_height=480
+mouse_cursor/tooltip_position_offset=Vector2(256, -16)
+
+[gui]
+
+timers/tooltip_delay_sec=2.0
+timers/tooltip_delay_sec.editor_hint=2.0
 
 [input]
 
