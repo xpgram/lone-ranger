@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 
@@ -22,6 +23,9 @@ func get_entities(place: Vector2) -> Array[GridEntity]:
 
 ## Inserts an entity into the grid at position 'place'.
 func put(entity: GridEntity, place: Vector2) -> void:
+  if Engine.is_editor_hint():
+    return;
+
   var place_key := _get_key(place);
 
   # Ensure that entities are not double-placed in the given cell.
@@ -34,6 +38,9 @@ func put(entity: GridEntity, place: Vector2) -> void:
 
 ## Removes an entity from the grid at position 'place'.
 func remove(entity: GridEntity, place: Vector2) -> void:
+  if Engine.is_editor_hint():
+    return;
+
   var place_key := _get_key(place);
 
   if not _map.has(place_key):
