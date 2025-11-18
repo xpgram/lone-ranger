@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=38 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
@@ -48,6 +48,14 @@ scenes/13/scene = ExtResource("5_iefdx")
 terrain_set_0/mode = 0
 sources/0 = SubResource("TileSetScenesCollectionSource_1aara")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2uj7"]
+content_margin_left = 5.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+
 [sub_resource type="SystemFont" id="SystemFont_iefdx"]
 font_names = PackedStringArray("Monospace")
 font_weight = 700
@@ -56,12 +64,16 @@ hinting = 2
 [sub_resource type="Theme" id="Theme_xdkey"]
 default_font = SubResource("SystemFont_iefdx")
 default_font_size = 8
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m2e2k"]
-content_margin_left = 5.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 4.0
+ItemList/colors/font_color = Color(0, 0, 0, 1)
+ItemList/colors/font_hovered_color = Color(0, 0, 0, 1)
+ItemList/colors/font_hovered_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/guide_color = Color(0, 0, 0, 0)
+ItemList/constants/icon_margin = 2
+ItemList/constants/line_separation = 0
+ItemList/constants/v_separation = 0
+ItemList/styles/focus = SubResource("StyleBoxEmpty_k7uxw")
+ItemList/styles/panel = SubResource("StyleBoxEmpty_u2uj7")
 
 [sub_resource type="Animation" id="Animation_u44ev"]
 resource_name = "wiggle"
@@ -170,6 +182,7 @@ offset_left = -64.0
 offset_top = -64.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = SubResource("Theme_xdkey")
 texture = ExtResource("16_0fxje")
 patch_margin_left = 4
 patch_margin_top = 8
@@ -192,16 +205,6 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
-theme = SubResource("Theme_xdkey")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/guide_color = Color(0, 0, 0, 0)
-theme_override_constants/v_separation = 0
-theme_override_constants/line_separation = 0
-theme_override_constants/icon_margin = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
 allow_search = false
 item_count = 3
 item_0/text = "Skills"
@@ -226,16 +229,6 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
-theme = SubResource("Theme_xdkey")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/guide_color = Color(0, 0, 0, 0)
-theme_override_constants/v_separation = 0
-theme_override_constants/line_separation = 0
-theme_override_constants/icon_margin = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
 allow_search = false
 item_count = 3
 item_0/text = "Push"
@@ -256,16 +249,6 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
-theme = SubResource("Theme_xdkey")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/guide_color = Color(0, 0, 0, 0)
-theme_override_constants/v_separation = 0
-theme_override_constants/line_separation = 0
-theme_override_constants/icon_margin = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
 allow_search = false
 item_count = 4
 item_0/text = "Flame"
@@ -292,16 +275,6 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
-theme = SubResource("Theme_xdkey")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
-theme_override_colors/guide_color = Color(0, 0, 0, 0)
-theme_override_constants/v_separation = 0
-theme_override_constants/line_separation = 0
-theme_override_constants/icon_margin = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
 allow_search = false
 item_count = 3
 item_0/text = "Heart"
