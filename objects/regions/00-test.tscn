@@ -53,7 +53,7 @@ default_font = SubResource("SystemFont_iefdx")
 default_font_size = 8
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m2e2k"]
-content_margin_left = 6.0
+content_margin_left = 5.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 4.0
@@ -74,6 +74,26 @@ interactives_container = NodePath("../Interactives Container")
 [node name="CommandMenu" type="Node2D" parent="."]
 script = ExtResource("14_7ip5i")
 
+[node name="Interactives Container" type="Node2D" parent="."]
+
+[node name="Chest" parent="Interactives Container" instance=ExtResource("16_iefdx")]
+position = Vector2(144, 48)
+contents = "Fira spell"
+obstructive = true
+
+[node name="Enemy Container" type="Node2D" parent="."]
+
+[node name="Enemy Mouth" parent="Enemy Container" instance=ExtResource("15_b6bp6")]
+position = Vector2(48, 64)
+
+[node name="Enemy Mouth2" parent="Enemy Container" instance=ExtResource("15_b6bp6")]
+position = Vector2(144, 128)
+
+[node name="NPC Container" type="Node2D" parent="."]
+
+[node name="Player2D" parent="." instance=ExtResource("1_lxegh")]
+position = Vector2(128, 64)
+
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
 position = Vector2(112, 80)
 zoom = Vector2(3, 3)
@@ -89,7 +109,15 @@ offset_top = -72.0
 offset_right = 112.0
 offset_bottom = 72.0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/UIContainer"]
+[node name="CommandMenu" type="Control" parent="Camera2D/UIContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/UIContainer/CommandMenu"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -97,7 +125,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -64.0
-offset_top = -72.0
+offset_top = -64.0
 grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("16_0fxje")
@@ -108,7 +136,7 @@ patch_margin_bottom = 8
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="ItemList" type="ItemList" parent="Camera2D/UIContainer"]
+[node name="ItemList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -116,13 +144,19 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -64.0
-offset_top = -72.0
+offset_top = -64.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = SubResource("Theme_xdkey")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/guide_color = Color(0, 0, 0, 0)
+theme_override_constants/v_separation = 0
+theme_override_constants/line_separation = 0
 theme_override_constants/icon_margin = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
 allow_search = false
@@ -135,23 +169,3 @@ item_2/text = "Items"
 item_2/icon = ExtResource("19_6w5x8")
 item_3/text = "Close"
 item_3/icon = ExtResource("20_jiwvv")
-
-[node name="Player2D" parent="." instance=ExtResource("1_lxegh")]
-position = Vector2(128, 64)
-
-[node name="NPC Container" type="Node2D" parent="."]
-
-[node name="Enemy Container" type="Node2D" parent="."]
-
-[node name="Enemy Mouth" parent="Enemy Container" instance=ExtResource("15_b6bp6")]
-position = Vector2(48, 64)
-
-[node name="Enemy Mouth2" parent="Enemy Container" instance=ExtResource("15_b6bp6")]
-position = Vector2(144, 128)
-
-[node name="Interactives Container" type="Node2D" parent="."]
-
-[node name="Chest" parent="Interactives Container" instance=ExtResource("16_iefdx")]
-position = Vector2(144, 48)
-contents = "Fira spell"
-obstructive = true
