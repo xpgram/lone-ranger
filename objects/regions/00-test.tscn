@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=37 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
@@ -22,7 +22,12 @@
 [ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://textures/system/icon-skill.png" id="17_wes0v"]
 [ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://textures/system/icon-magic.png" id="18_1t0dy"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://textures/system/icon-items.png" id="19_6w5x8"]
-[ext_resource type="Texture2D" uid="uid://bm2kqp8aiao4y" path="res://textures/system/icon-close.png" id="20_jiwvv"]
+[ext_resource type="Script" uid="uid://372k1qqga746" path="res://objects/system/command_menu/item_list.gd" id="24_6w5x8"]
+[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://textures/system/icon-fire.png" id="24_k7uxw"]
+[ext_resource type="Texture2D" uid="uid://cro06oopey0eh" path="res://textures/system/icon-pointer.png" id="25_jiwvv"]
+[ext_resource type="Texture2D" uid="uid://b1vo5c1c0vbw8" path="res://textures/system/icon-thunder.png" id="25_u2uj7"]
+[ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://textures/system/icon-plant.png" id="26_tq2tj"]
+[ext_resource type="Texture2D" uid="uid://dkhd2f7ywih0j" path="res://textures/system/icon-orb.png" id="27_l2lt0"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
@@ -57,6 +62,43 @@ content_margin_left = 5.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 4.0
+
+[sub_resource type="Animation" id="Animation_u44ev"]
+resource_name = "wiggle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k7uxw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u2uj7"]
+_data = {
+&"RESET": SubResource("Animation_k7uxw"),
+&"wiggle": SubResource("Animation_u44ev")
+}
 
 [node name="Node2D" type="Node2D"]
 
@@ -136,7 +178,72 @@ patch_margin_bottom = 8
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="ItemList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+[node name="MainList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = SubResource("Theme_xdkey")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/guide_color = Color(0, 0, 0, 0)
+theme_override_constants/v_separation = 0
+theme_override_constants/line_separation = 0
+theme_override_constants/icon_margin = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
+allow_search = false
+item_count = 3
+item_0/text = "Skills"
+item_0/icon = ExtResource("17_wes0v")
+item_1/text = "Spells"
+item_1/icon = ExtResource("18_1t0dy")
+item_2/text = "Items"
+item_2/icon = ExtResource("19_6w5x8")
+script = ExtResource("24_6w5x8")
+
+[node name="SkillsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = SubResource("Theme_xdkey")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/guide_color = Color(0, 0, 0, 0)
+theme_override_constants/v_separation = 0
+theme_override_constants/line_separation = 0
+theme_override_constants/icon_margin = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
+allow_search = false
+item_count = 3
+item_0/text = "Push"
+item_1/text = "Torque"
+item_2/text = "3-Tap"
+script = ExtResource("24_6w5x8")
+
+[node name="SpellsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -161,11 +268,63 @@ theme_override_constants/icon_margin = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
 allow_search = false
 item_count = 4
-item_0/text = "Skills"
-item_0/icon = ExtResource("17_wes0v")
-item_1/text = "Spells"
-item_1/icon = ExtResource("18_1t0dy")
-item_2/text = "Items"
-item_2/icon = ExtResource("19_6w5x8")
-item_3/text = "Close"
-item_3/icon = ExtResource("20_jiwvv")
+item_0/text = "Flame"
+item_0/icon = ExtResource("24_k7uxw")
+item_1/text = "Shock"
+item_1/icon = ExtResource("25_u2uj7")
+item_2/text = "Grow"
+item_2/icon = ExtResource("26_tq2tj")
+item_3/text = "Demi"
+item_3/icon = ExtResource("27_l2lt0")
+script = ExtResource("24_6w5x8")
+
+[node name="ItemsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = SubResource("Theme_xdkey")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/guide_color = Color(0, 0, 0, 0)
+theme_override_constants/v_separation = 0
+theme_override_constants/line_separation = 0
+theme_override_constants/icon_margin = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
+allow_search = false
+item_count = 3
+item_0/text = "Heart"
+item_1/text = "Time Dial"
+item_2/text = "Lund Key"
+script = ExtResource("24_6w5x8")
+
+[node name="MenuCursorBox" type="Control" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 4.0
+offset_bottom = 1.0
+
+[node name="MenuCursor" type="Node2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox"]
+unique_name_in_owner = true
+position = Vector2(2, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
+texture = ExtResource("25_jiwvv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_u2uj7")
+}
+autoplay = "wiggle"
