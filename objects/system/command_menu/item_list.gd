@@ -9,12 +9,12 @@ extends ItemList
 
 
 func _ready() -> void:
+  _disable_tooltips_for_all_items();
   item_selected.connect(_move_cursor_to_item);
 
   # Default to the first option.
   # FIXME Doesn't work. _ready() happens too early, I presume.
-  select(0);
-  item_selected.emit(0);
+  _self_select_item(0);
 
 
 func open() -> void:
@@ -26,6 +26,11 @@ func open() -> void:
 func close() -> void:
   hide();
   # TODO Do I need to save an index number here to remember cursor position?
+
+
+func _disable_tooltips_for_all_items() -> void:
+  for i in range(item_count):
+    set_item_tooltip_enabled(i, false);
 
 
 func _self_select_item(index: int) -> void:
