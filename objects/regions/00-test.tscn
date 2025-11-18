@@ -75,6 +75,21 @@ ItemList/constants/v_separation = 0
 ItemList/styles/focus = SubResource("StyleBoxEmpty_k7uxw")
 ItemList/styles/panel = SubResource("StyleBoxEmpty_u2uj7")
 
+[sub_resource type="Animation" id="Animation_k7uxw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_u44ev"]
 resource_name = "wiggle"
 loop_mode = 1
@@ -89,21 +104,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(0, 0), Vector2(1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_k7uxw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u2uj7"]
@@ -125,8 +125,10 @@ npc_container = NodePath("../NPC Container")
 enemy_container = NodePath("../Enemy Container")
 interactives_container = NodePath("../Interactives Container")
 
-[node name="CommandMenu" type="Node2D" parent="."]
+[node name="CommandMenu" type="Node2D" parent="." node_paths=PackedStringArray("ui_container", "lists")]
 script = ExtResource("14_7ip5i")
+ui_container = NodePath("../Camera2D/UIContainer")
+lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SkillsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SpellsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/ItemsList")]
 
 [node name="Interactives Container" type="Node2D" parent="."]
 
@@ -214,6 +216,7 @@ item_1/icon = ExtResource("18_1t0dy")
 item_2/text = "Items"
 item_2/icon = ExtResource("19_6w5x8")
 script = ExtResource("24_6w5x8")
+remember_cursor_position = true
 
 [node name="SkillsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 visible = false
@@ -235,6 +238,7 @@ item_0/text = "Push"
 item_1/text = "Torque"
 item_2/text = "3-Tap"
 script = ExtResource("24_6w5x8")
+remember_cursor_position = true
 
 [node name="SpellsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 layout_mode = 1
@@ -260,6 +264,7 @@ item_2/icon = ExtResource("26_tq2tj")
 item_3/text = "Demi"
 item_3/icon = ExtResource("27_l2lt0")
 script = ExtResource("24_6w5x8")
+remember_cursor_position = true
 
 [node name="ItemsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 visible = false
@@ -281,6 +286,7 @@ item_0/text = "Heart"
 item_1/text = "Time Dial"
 item_2/text = "Lund Key"
 script = ExtResource("24_6w5x8")
+remember_cursor_position = true
 
 [node name="MenuCursorBox" type="Control" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 layout_mode = 1
