@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=29 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
@@ -19,6 +19,10 @@
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/enemy_mouth.tscn" id="15_b6bp6"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="16_0fxje"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest/chest.tscn" id="16_iefdx"]
+[ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://textures/system/icon-skill.png" id="17_wes0v"]
+[ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://textures/system/icon-magic.png" id="18_1t0dy"]
+[ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://textures/system/icon-items.png" id="19_6w5x8"]
+[ext_resource type="Texture2D" uid="uid://bm2kqp8aiao4y" path="res://textures/system/icon-close.png" id="20_jiwvv"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
@@ -46,12 +50,12 @@ hinting = 2
 
 [sub_resource type="Theme" id="Theme_xdkey"]
 default_font = SubResource("SystemFont_iefdx")
-default_font_size = 9
+default_font_size = 8
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m2e2k"]
-content_margin_left = 4.0
+content_margin_left = 6.0
 content_margin_top = 8.0
-content_margin_right = 4.0
+content_margin_right = 8.0
 content_margin_bottom = 4.0
 
 [node name="Node2D" type="Node2D"]
@@ -119,13 +123,18 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = SubResource("Theme_xdkey")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/icon_margin = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_m2e2k")
 allow_search = false
 item_count = 4
 item_0/text = "Skills"
+item_0/icon = ExtResource("17_wes0v")
 item_1/text = "Spells"
+item_1/icon = ExtResource("18_1t0dy")
 item_2/text = "Items"
+item_2/icon = ExtResource("19_6w5x8")
 item_3/text = "Close"
+item_3/icon = ExtResource("20_jiwvv")
 
 [node name="Player2D" parent="." instance=ExtResource("1_lxegh")]
 position = Vector2(128, 64)
