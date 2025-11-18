@@ -13,11 +13,10 @@ var remembered_index := 0;
 
 func _ready() -> void:
   _disable_tooltips_for_all_items();
-  item_selected.connect(_move_cursor_to_item);
+  draw.connect(_on_draw_call);
 
 
 func open() -> void:
-  print('open menu');
   show();
   grab_focus();
 
@@ -28,16 +27,11 @@ func open() -> void:
 
 
 func close() -> void:
-  remembered_index = _get_current_selection_index();
+  remembered_index = get_current_selection_index();
   hide();
 
 
-func _disable_tooltips_for_all_items() -> void:
-  for i in range(item_count):
-    set_item_tooltip_enabled(i, false);
-
-
-func _get_current_selection_index() -> int:
+func get_current_selection_index() -> int:
   var selected_items := get_selected_items();
   return (
     0 if selected_items.size() == 0
@@ -45,20 +39,19 @@ func _get_current_selection_index() -> int:
   );
 
 
-func _self_select_item(index: int) -> void:
-  # FIXME Remove. Should report 2, 23.0.
-  select(2);
-  item_selected.emit(index);
+func _disable_tooltips_for_all_items() -> void:
+  for i in range(item_count):
+    set_item_tooltip_enabled(i, false);
 
+
+func _self_select_item(index: int) -> void:
   select(index);
   item_selected.emit(index);
 
 
-func _move_cursor_to_item(index: int) -> void:
-  var nums := [
-    index,
-    get_item_rect(index).get_center().y,
-  ];
-  print('item:%s rect.center.y = %s' % nums);
+func _on_draw_call() -> void:
+  _move_cursor_to_item(get_current_selection_index());
 
+
+func _move_cursor_to_item(index: int) -> void:
   menu_cursor_sprite.position.y = get_item_rect(index).get_center().y;
