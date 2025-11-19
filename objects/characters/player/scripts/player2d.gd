@@ -2,30 +2,30 @@ class_name Player2D
 extends GridEntity
 
 
-@onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D;
+@onready var animation_player: AnimationPlayer = %AnimationPlayer;
 
 
 func _ready() -> void:
-  animated_sprite.play();
+  animation_player.play('idle_down');
 
 
 func _facing_changed() -> void:
   match facing_direction:
     Vector2i.UP:
-      animated_sprite.play('idle_up');
-      animated_sprite.scale.x = 1;
+      animation_player.reset();
+      animation_player.play('idle_up');
 
     Vector2i.DOWN:
-      animated_sprite.play('idle_down');
-      animated_sprite.scale.x = 1;
+      animation_player.reset();
+      animation_player.play('idle_down');
 
     Vector2i.LEFT:
-      animated_sprite.play('idle_side');
-      animated_sprite.scale.x = -1;
+      animation_player.reset();
+      animation_player.play('idle_left');
 
     Vector2i.RIGHT:
-      animated_sprite.play('idle_side');
-      animated_sprite.scale.x = 1;
+      animation_player.reset();
+      animation_player.play('idle_right');
 
 
 func get_wait_action() -> FieldActionSchedule:
