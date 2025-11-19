@@ -9,25 +9,6 @@ func _ready() -> void:
   animation_player.play('idle_down');
 
 
-func _facing_changed() -> void:
-  match facing_direction:
-    Vector2i.UP:
-      animation_player.reset();
-      animation_player.play('idle_up');
-
-    Vector2i.DOWN:
-      animation_player.reset();
-      animation_player.play('idle_down');
-
-    Vector2i.LEFT:
-      animation_player.reset();
-      animation_player.play('idle_left');
-
-    Vector2i.RIGHT:
-      animation_player.reset();
-      animation_player.play('idle_right');
-
-
 func get_wait_action() -> FieldActionSchedule:
   return FieldActionSchedule.new(
     Wait_FieldAction.new(),
