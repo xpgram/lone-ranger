@@ -826,4 +826,4 @@ script = ExtResource("17_gu5dh")
 
 [node name="Stats" type="Node" parent="."]
 
-[node name="HPComponent" parent="Stats" instance=ExtResource("8_kr0tl")]
+[node name="HP" parent="Stats" instance=ExtResource("8_kr0tl")]

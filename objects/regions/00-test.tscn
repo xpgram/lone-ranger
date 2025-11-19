@@ -112,7 +112,7 @@ _data = {
 &"wiggle": SubResource("Animation_u44ev")
 }
 
-[node name="Node2D" type="Node2D"]
+[node name="Game" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-8, -8)
