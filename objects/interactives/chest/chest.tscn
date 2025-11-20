@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://objects/interactives/chest/chest.gd" id="1_ask4u"]
 [ext_resource type="Texture2D" uid="uid://csmw2bt1etsbl" path="res://textures/entity-chest-closed.png" id="1_ome50"]
 [ext_resource type="Texture2D" uid="uid://cs5ag26gaa8d4" path="res://textures/entity-chest-open.png" id="3_btvpo"]
-[ext_resource type="Script" uid="uid://dct8xv6bwi7al" path="res://objects/interactives/chest/context_action.gd" id="4_4ml27"]
+[ext_resource type="Script" uid="uid://dct8xv6bwi7al" path="res://scripts/actions/context_actions/open_chest.gd" id="4_4ml27"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5bdfo"]
 animations = [{
