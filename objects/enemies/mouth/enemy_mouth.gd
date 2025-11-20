@@ -1,5 +1,3 @@
-##
-# TODO Refactor this into a parent class.
 class_name EnemyMouth
 extends Enemy2D
 
@@ -14,17 +12,21 @@ func _ready() -> void:
 
 
 func act_async() -> void:
-  if _player_is_in_sight(Vector2.UP):
-    move(Vector2.UP);
-  elif _player_is_in_sight(Vector2.DOWN):
-    move(Vector2.DOWN);
-  elif _player_is_in_sight(Vector2.LEFT):
-    move(Vector2.LEFT);
-  elif _player_is_in_sight(Vector2.RIGHT):
-    move(Vector2.RIGHT);
+  var dirs := [
+    Vector2i.UP,
+    Vector2i.DOWN,
+    Vector2i.LEFT,
+    Vector2i.RIGHT,
+  ];
+
+  for dir in dirs:
+    if _player_is_in_sight(dir):
+      _move(dir);
+      break;
 
 
-func move(vector: Vector2i) -> void:
+## Attempts to _move this enemy on the Grid.
+func _move(vector: Vector2i) -> void:
   # TODO Abstract this and Player2D's equivalent.
   #  movement may be unique among each kind of grid entity, but some standard methods
   #  about checking if a location is traversible or the like would be nice. They could
@@ -38,6 +40,8 @@ func move(vector: Vector2i) -> void:
 
   if tile_contains_player:
     # TODO Reorganize this code to be less garbage.
+    #   An actual attack would probably 'bite' the player in some way, dealing damage, and
+    #   the player would set their own 'injured' state.
     var player_index := tile_entities.find_custom(func (entity): return entity is Player2D);
     var player := tile_entities[player_index] as Player2D;
     player.set_animation_state('injured');
