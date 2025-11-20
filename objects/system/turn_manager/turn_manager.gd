@@ -125,6 +125,10 @@ func _perform_enemy_actions_async() -> void:
       # TODO This should be a list of promises to await so all enemies act in unison.
       @warning_ignore('redundant_await')
       await enemy.act();
+  
+  # FIXME This obviously shouldn't go here.
+  if player.current_animation_state == 'injured':
+    await get_tree().create_timer(0.5).timeout;
 
 
 ## Trigger passive, interactive object "actions".
