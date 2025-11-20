@@ -31,5 +31,4 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
   actor.faced_direction = playbill.orientation;
 
   if actor is Player2D:
-    actor.animation_player.reset();
-    actor.animation_set_player.play('idle', actor.faced_direction);
+    actor.set_animation_state('idle');

@@ -2,13 +2,15 @@ class_name Player2D
 extends GridEntity
 
 
+var current_animation_state: StringName = 'idle';
+
 @onready var animation_player: AnimationPlayer = %AnimationPlayer;
-# TODO This was designed to get around AnimationTree, but I dunno. I dunno, man.
-@onready var animation_set_player: AnimationSetPlayer = %AnimationSetPlayer;
+
+@onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
 
 
 func _ready() -> void:
-  animation_player.play('idle_down');
+  animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 
 
@@ -67,19 +69,19 @@ func get_interact_action() -> FieldActionSchedule:
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
-## Sets the animation state to idle in the current `property facing_direction`.
-func reset_animation_to_idle() -> void:
-  animation_player.reset();
-  animation_set_player.play('idle', faced_direction);
+## Sets the animation state to `param state_key`.
+func set_animation_state(state_key: StringName) -> void:
+  current_animation_state = state_key;
+  animation_state_switch.play(state_key, faced_direction);
 
 
 ## Resets the animation state to the idle animation set.
-func _on_animation_finished(from_animation: StringName = '') -> void:
-  var non_resetting_animations: Array[StringName] = [
+func _on_animation_finished(_from_animation: StringName = '') -> void:
+  var non_resetting_states: Array[StringName] = [
     &'item_get!',
   ];
 
-  if from_animation in non_resetting_animations:
+  if current_animation_state in non_resetting_states:
     return;
   
-  reset_animation_to_idle();
+  set_animation_state('idle');
