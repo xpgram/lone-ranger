@@ -3,10 +3,13 @@ extends GridEntity
 
 
 @onready var animation_player: AnimationPlayer = %AnimationPlayer;
+# TODO This was designed to get around AnimationTree, but I dunno. I dunno, man.
+@onready var animation_set_player: AnimationSetPlayer = %AnimationSetPlayer;
 
 
 func _ready() -> void:
   animation_player.play('idle_down');
+  animation_player.animation_finished.connect(_on_animation_finished);
 
 
 func get_wait_action() -> FieldActionSchedule:
@@ -62,3 +65,21 @@ func get_interact_action() -> FieldActionSchedule:
       break;
 
   return FieldActionSchedule.new(chosen_action, playbill);
+
+
+## Sets the animation state to idle in the current `property facing_direction`.
+func reset_animation_to_idle() -> void:
+  animation_player.reset();
+  animation_set_player.play('idle', facing_direction);
+
+
+## Resets the animation state to the idle animation set.
+func _on_animation_finished(from_animation: StringName = '') -> void:
+  var non_resetting_animations: Array[StringName] = [
+    &'item_get!',
+  ];
+
+  if from_animation in non_resetting_animations:
+    return;
+  
+  reset_animation_to_idle();

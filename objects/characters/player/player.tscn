@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene load_steps=37 format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://objects/characters/player/scripts/player2d.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://lv8q188gep4i" path="res://textures/chars/gray/gray-scepter-right.png" id="2_0vnf7"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bdpbop5vsxn8j" path="res://textures/chars/gray/gray-up-push-0.png" id="15_lk4q4"]
 [ext_resource type="Texture2D" uid="uid://cvdx0w6a7ujju" path="res://textures/chars/gray/gray-up-push-1.png" id="16_ash3l"]
 [ext_resource type="Script" uid="uid://dtn0pj60ose2j" path="res://scripts/game_objects/animation_player.gd" id="17_gu5dh"]
+[ext_resource type="Script" uid="uid://bib46e3dh6n5r" path="res://objects/characters/player/animation_state_player.gd" id="18_15kbc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uay6n"]
 animations = [{
@@ -823,6 +824,10 @@ libraries = {
 }
 autoplay = "idle_down"
 script = ExtResource("17_gu5dh")
+
+[node name="AnimationSetPlayer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("18_15kbc")
 
 [node name="Stats" type="Node" parent="."]
 

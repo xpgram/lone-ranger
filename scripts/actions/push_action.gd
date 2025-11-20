@@ -29,6 +29,15 @@ func can_perform(playbill: FieldActionPlaybill,) -> bool:
 
 
 func perform_async(playbill: FieldActionPlaybill,) -> void:
-  # IMPLEMENT Pushing/bumping behavior.
+  var actor := playbill.performer;
+  actor.facing_direction = playbill.orientation;
+
   var entities := Grid.get_entities(playbill.target_position);
+
+  # IMPLEMENT Pushing/bumping behavior.
+  # grid_entity.push(direction) -> trigger movement, bump if it can't, animation state
   print('Pushing %s...' % entities[0].name);
+
+  if actor is Player2D:
+    actor.animation_player.reset();
+    actor.animation_set_player.play('push', actor.facing_direction);
