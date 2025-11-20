@@ -44,7 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
     _advance_time(
       player.get_action_from_move_input(Vector2.RIGHT)
     );
-  
+
   elif event.is_action('interact'):
     _advance_time(
       player.get_interact_action()
@@ -103,7 +103,7 @@ func _perform_npc_actions_async() -> void:
 func _perform_enemy_actions_async() -> void:
   if not enemy_container or enemy_container.get_child_count() == 0:
     return;
-  
+
   var enemies: Array[Enemy2D];
   enemies.assign(
     # TODO Is it better to double loop like this or spawn push_clouds in a different layer?
@@ -124,8 +124,8 @@ func _perform_enemy_actions_async() -> void:
     for enemy in enemies_to_act:
       # TODO This should be a list of promises to await so all enemies act in unison.
       @warning_ignore('redundant_await')
-      await enemy.act();
-  
+      await enemy.act_async();
+
   # FIXME This obviously shouldn't go here.
   if player.current_animation_state == 'injured':
     await get_tree().create_timer(0.5).timeout;

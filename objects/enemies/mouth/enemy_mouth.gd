@@ -1,11 +1,10 @@
 ##
 # TODO Refactor this into a parent class.
-class_name Enemy2D
-extends GridEntity
+class_name EnemyMouth
+extends Enemy2D
 
-## Whether this Enemy2D has acted this turn.
-var _has_acted := false;
 
+@export var vision_range := 10;
 
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
 
@@ -14,15 +13,7 @@ func _ready() -> void:
   animated_sprite.play();
 
 
-func has_acted() -> bool:
-  return _has_acted;
-
-
-func prepare_to_act() -> void:
-  _has_acted = false;
-
-
-func act() -> void:
+func act_async() -> void:
   if _player_is_in_sight(Vector2.UP):
     move(Vector2.UP);
   elif _player_is_in_sight(Vector2.DOWN):
@@ -35,6 +26,9 @@ func act() -> void:
 
 func move(vector: Vector2i) -> void:
   # TODO Abstract this and Player2D's equivalent.
+  #  movement may be unique among each kind of grid entity, but some standard methods
+  #  about checking if a location is traversible or the like would be nice. They could
+  #  even go in Grid, I suppose.
 
   var new_grid_position := grid_position + vector;
 
@@ -47,32 +41,29 @@ func move(vector: Vector2i) -> void:
     var player_index := tile_entities.find_custom(func (entity): return entity is Player2D);
     var player := tile_entities[player_index] as Player2D;
     player.set_animation_state('injured');
-    _has_acted = true;
+    exhaust();
     return;
 
   if tile_is_obstructed:
     return;
 
-
+  # TODO Tags need a better interface, as well.
   if tags.has('stun'):
     tags.erase('stun');
   else:
     grid_position = new_grid_position;
 
-  _has_acted = true;
+  exhaust();
 
 
 func _facing_changed() -> void:
   match faced_direction:
     Vector2.UP:
       animated_sprite.scale.x = -1;
-
     Vector2.DOWN:
       animated_sprite.scale.x = 1;
-
     Vector2.LEFT:
       animated_sprite.scale.x = -1;
-
     Vector2.RIGHT:
       animated_sprite.scale.x = 1;
 
@@ -83,7 +74,7 @@ func _get_vision_line(dir: Vector2i) -> Array[Vector2i]:
   var grid_positions := [] as Array[Vector2i];
   var cursor := grid_position + dir;
 
-  for i in range(10):
+  for i in range(vision_range):
     grid_positions.append(cursor);
     cursor += dir;
 
