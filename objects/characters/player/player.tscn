@@ -111,7 +111,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
+tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
@@ -135,7 +135,7 @@ tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/path = NodePath("AnimatedSprite2D:frame")
-tracks/2/interp = 1
+tracks/2/interp = 0
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
@@ -217,7 +217,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"idle_down"]
 }
 tracks/1/type = "value"
@@ -246,7 +246,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"idle_side"]
 }
 tracks/1/type = "value"
@@ -287,7 +287,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"idle_side"]
 }
 tracks/1/type = "value"
@@ -316,7 +316,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"idle_up"]
 }
 tracks/1/type = "value"
@@ -346,7 +346,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"injured"]
 }
 tracks/1/type = "value"
@@ -387,7 +387,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"item_get!"]
 }
 tracks/1/type = "value"
@@ -415,7 +415,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_down"]
 }
 tracks/1/type = "value"
@@ -479,7 +479,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_side"]
 }
 tracks/1/type = "value"
@@ -555,7 +555,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_side"]
 }
 tracks/1/type = "value"
@@ -607,7 +607,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_up"]
 }
 tracks/1/type = "value"
@@ -672,7 +672,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_down"]
 }
 tracks/1/type = "value"
@@ -701,7 +701,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_side"]
 }
 tracks/1/type = "value"
@@ -742,7 +742,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_side"]
 }
 tracks/1/type = "value"
@@ -771,7 +771,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"push_up"]
 }
 tracks/1/type = "value"
@@ -815,13 +815,14 @@ left = &"idle_left"
 right = &"idle_right"
 metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
-[sub_resource type="Resource" id="Resource_pmh1o"]
+[sub_resource type="Resource" id="Resource_lk4q4"]
 script = ExtResource("19_5ce6h")
-default = &"push_down"
-up = &"push_up"
-down = &"push_down"
-left = &"push_left"
-right = &"push_right"
+default = &"injured"
+metadata/_custom_type_script = "uid://cpjdc1h6kotna"
+
+[sub_resource type="Resource" id="Resource_ash3l"]
+script = ExtResource("19_5ce6h")
+default = &"item_get!"
 metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
 [sub_resource type="Resource" id="Resource_7i16l"]
@@ -833,14 +834,13 @@ left = &"item_use_left"
 right = &"item_use_right"
 metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
-[sub_resource type="Resource" id="Resource_lk4q4"]
+[sub_resource type="Resource" id="Resource_pmh1o"]
 script = ExtResource("19_5ce6h")
-default = &"injured"
-metadata/_custom_type_script = "uid://cpjdc1h6kotna"
-
-[sub_resource type="Resource" id="Resource_ash3l"]
-script = ExtResource("19_5ce6h")
-default = &"item_get!"
+default = &"push_down"
+up = &"push_up"
+down = &"push_down"
+left = &"push_left"
+right = &"push_right"
 metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
 [node name="Player2D" type="Node2D"]
