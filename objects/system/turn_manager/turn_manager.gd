@@ -150,6 +150,15 @@ func _perform_object_actions_async() -> void:
 
 ## Update all entity attribute counters and status effect states.
 func _update_entity_attributes() -> void:
+  # FIXME We have an off-by-one error.
+  #  Entities should update their attributes after their own actions, not in one big step.
+  #  This one big step strategy doesn't work because either the player or the enemies end
+  #  up suffering this issue:
+  #    -> player applies stun
+  #    -> stun updates, clears
+  #    -> enemy acts without being stunned
+  #  So all entities should self-manage in some way. Or at least, their completed actions,
+  #  including Wait, must be followed by their own attribute update step.
   player.update_attributes();
 
   for npc: GridEntity in npc_container.get_children():
