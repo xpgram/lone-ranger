@@ -3,6 +3,7 @@ extends FieldAction
 
 
 const scene_push_cloud := preload('uid://hua0n75be2w3');
+const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 
 
 func action_name() -> String:
@@ -68,9 +69,9 @@ func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> voi
   for entity in pushable_entities:
     entity.grid_position = push_to_position;
 
-    # TODO Should probably be `if entity.stunnable`; player, enemy, and npc should inherit from a LivingEntity class.
+    # TODO Should probably be `if entity.stunnable`, even if such a thing is stored on the enemy class.
     if entity is Enemy2D:
-      entity.tags['stun'] = EntityTagData.new();
+      entity.apply_attribute('stun', stun_attribute_resource.duplicate());
 
   _create_push_cloud(pushable_entities[0], current_position, direction);
 

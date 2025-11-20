@@ -72,6 +72,7 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
 
   # Other turn actions
   if new_time_remaining <= 0:
+    player.update_attributes();
     await _perform_npc_actions_async();
     await _perform_enemy_actions_async();
     await _perform_object_actions_async();
@@ -129,6 +130,10 @@ func _perform_enemy_actions_async() -> void:
   # FIXME This obviously shouldn't go here.
   if player.current_animation_state == 'injured':
     await get_tree().create_timer(0.5).timeout;
+
+  # TODO Should these actually be handled in one big update_attributes_for_all_entities() step?
+  for enemy in enemies:
+    enemy.update_attributes();
 
 
 ## Trigger passive, interactive object "actions".

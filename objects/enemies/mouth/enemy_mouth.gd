@@ -51,10 +51,7 @@ func _move(vector: Vector2i) -> void:
   if tile_is_obstructed:
     return;
 
-  # TODO Tags need a better interface, as well.
-  if tags.has('stun'):
-    tags.erase('stun');
-  else:
+  if not has_attribute('stun'):
     grid_position = new_grid_position;
 
   exhaust();

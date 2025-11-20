@@ -14,11 +14,8 @@ extends Node2D
 @export var pushable := false;
 
 
-# TODO This dictionary needs an interface.
-#   We need ways to quickly apply things like 'poison' without having to check if we're
-#   erasing a previous, worse application and such.
 ## A dictionary of applied effects and qualities.
-@export var tags: Dictionary[StringName, EntityTagData];
+@export var _attributes: Dictionary[StringName, GridEntityAttribute];
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
 var faced_direction := Vector2i.DOWN:
@@ -50,6 +47,39 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
   Grid.remove(self, grid_position);
+
+
+## Returns true if `param attribute_name` is among the _attributes applied to this entity.
+func has_attribute(attribute_name: StringName) -> bool:
+  return _attributes.has(attribute_name);
+
+
+## Returns the Attribute object for an attribute applied to this entity.
+func get_attribute(attribute_name: StringName) -> GridEntityAttribute:
+  # This may be refactor to .get(key, default) if I can think of what a useful default
+  # might be.
+  return _attributes[attribute_name];
+
+
+## Applies an attribute to this entity. If this attribute was already applied, then the
+## given attribute will merge with the existing one.
+func apply_attribute(attribute_name: StringName, data: GridEntityAttribute) -> void:
+  if _attributes.has(attribute_name):
+    _attributes[attribute_name] = _attributes[attribute_name].merge(data);
+  else:
+    _attributes[attribute_name] = data;
+
+
+## Iterates over the entity's collection of _attributes, updating their metrics, and
+## removing them if their nullified.
+func update_attributes() -> void:
+  for attribute_key in _attributes:
+    var attribute := _attributes[attribute_key];
+
+    attribute.update();
+
+    if attribute.is_nullified():
+      _attributes.erase(attribute_key);
 
 
 ## Overridable function called whenever this GridEntity's facing direction is changed.

@@ -30,7 +30,7 @@ func has_acted() -> bool:
 func can_act() -> bool:
   return (
     not has_acted()
-    and not tags.has('stun')
+    and not has_attribute('stun')
   );
 
 
