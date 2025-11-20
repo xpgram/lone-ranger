@@ -40,9 +40,19 @@ func move(vector: Vector2i) -> void:
 
   var tile_entities := Grid.get_entities(new_grid_position);
   var tile_is_obstructed := tile_entities.any(func (entity: GridEntity): return entity.solid);
+  var tile_contains_player := tile_entities.any(func (entity): return entity is Player2D);
+
+  if tile_contains_player:
+    # TODO Reorganize this code to be less garbage.
+    var player_index := tile_entities.find_custom(func (entity): return entity is Player2D);
+    var player := tile_entities[player_index] as Player2D;
+    player.set_animation_state('injured');
+    _has_acted = true;
+    return;
 
   if tile_is_obstructed:
     return;
+
 
   if tags.has('stun'):
     tags.erase('stun');
