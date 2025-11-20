@@ -45,6 +45,7 @@ func play(state: StringName, direction: Vector2i) -> void:
     new_animation_state = _get_4way_state(animation_set, direction);
 
   animation_player.play(new_animation_state);
+  animation_player.advance(0);
 
 
 func _get_4way_state(animation_set: Array[String], direction: Vector2i) -> StringName:
