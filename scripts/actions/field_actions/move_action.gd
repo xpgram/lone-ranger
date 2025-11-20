@@ -18,7 +18,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
   var cell_entities := Grid.get_entities(playbill.target_position);
 
   var tile_unobstructed: bool = (
-    cell_entities.all(func (entity: GridEntity): return not entity.obstructive)
+    cell_entities.all(func (entity: GridEntity): return not entity.solid)
   );
 
   return tile_unobstructed;

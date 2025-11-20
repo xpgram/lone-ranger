@@ -4,7 +4,7 @@ extends Node2D
 
 
 ## Whether this entity obstructs the travel of other entities, like walls do.
-@export var obstructive := false;
+@export var solid := false;
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
 var faced_direction := Vector2i.DOWN:

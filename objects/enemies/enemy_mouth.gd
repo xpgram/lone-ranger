@@ -1,4 +1,4 @@
-## 
+##
 # TODO Refactor this into a parent class.
 class_name Enemy2D
 extends GridEntity
@@ -39,7 +39,7 @@ func move(vector: Vector2i) -> void:
   var new_grid_position := grid_position + vector;
 
   var tile_entities := Grid.get_entities(new_grid_position);
-  var tile_is_obstructed := tile_entities.any(func (entity): return entity.obstructive);
+  var tile_is_obstructed := tile_entities.any(func (entity: GridEntity): return entity.solid);
 
   if tile_is_obstructed:
     return;
@@ -88,7 +88,7 @@ func _player_is_in_sight(dir: Vector2) -> bool:
       return true;
 
     # If entities contains anything sight-obstructing, quit early.
-    if entities.any(func (entity: GridEntity): return entity.obstructive):
+    if entities.any(func (entity: GridEntity): return entity.solid):
       break;
-  
+
   return false;

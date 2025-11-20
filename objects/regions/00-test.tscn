@@ -135,7 +135,7 @@ lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"),
 [node name="Chest" parent="Interactives Container" instance=ExtResource("16_iefdx")]
 position = Vector2(144, 48)
 contents = "Fira spell"
-obstructive = true
+solid = true
 
 [node name="Enemy Container" type="Node2D" parent="."]
 

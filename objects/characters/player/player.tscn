@@ -845,7 +845,7 @@ metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
 [node name="Player2D" type="Node2D"]
 script = ExtResource("1_reh0w")
-obstructive = true
+solid = true
 
 [node name="HandheldItem" type="Node2D" parent="."]
 visible = false

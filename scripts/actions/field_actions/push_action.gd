@@ -22,7 +22,7 @@ func can_perform(playbill: FieldActionPlaybill,) -> bool:
   );
 
   var tile_obstructed: bool = (
-    cell_entities.any(func (entity: GridEntity): return entity.obstructive)
+    cell_entities.any(func (entity: GridEntity): return entity.solid)
   );
 
   return facing_target and tile_obstructed;
