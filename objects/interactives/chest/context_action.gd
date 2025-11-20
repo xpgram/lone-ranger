@@ -24,7 +24,7 @@ func perform_interaction_async(actor: GridEntity) -> void:
   #   to find a ContextAction that might touch something I'm updating is misery.
   #   I don't *necessarily* mind that these ContextActions are part of the Chest .tscn,
   #   I kind of dread the thought of the alternative, honestly, but the ContextAction
-  #   script can't be located here. It needs to be held with all others.
+  #   script can't be located here. It needs to be held with all the others.
 
   if actor is Player2D:
     actor.facing_direction = Vector2i.DOWN;
