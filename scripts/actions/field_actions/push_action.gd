@@ -2,6 +2,9 @@ class_name Push_FieldAction
 extends FieldAction
 
 
+const scene_push_cloud := preload('uid://hua0n75be2w3');
+
+
 func action_name() -> String:
   return "Push";
 
@@ -68,4 +71,12 @@ func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> voi
     if entity is Enemy2D:
       entity.tags['stun'] = EntityTagData.new();
 
-  # TODO Create push cloud (current_position, direction)
+  _create_push_cloud(pushable_entities[0], current_position, direction);
+
+
+func _create_push_cloud(entry_node: Node, grid_position: Vector2i, direction: Vector2i) -> void:
+  var push_cloud := scene_push_cloud.instantiate();
+  push_cloud.position = Grid.get_world_coords(grid_position);
+  push_cloud.set_direction(direction);
+
+  entry_node.add_sibling(push_cloud);
