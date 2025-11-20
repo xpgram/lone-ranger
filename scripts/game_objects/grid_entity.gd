@@ -7,17 +7,17 @@ extends Node2D
 @export var obstructive := false;
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
-var facing_direction := Vector2i.DOWN:
+var faced_direction := Vector2i.DOWN:
   get():
-    return facing_direction;
+    return faced_direction;
   set(dir):
-    facing_direction = dir;
+    faced_direction = dir;
     _facing_changed();
 
 ## The Grid coordinate position this entity is facing.
 var faced_position: Vector2i:
   get():
-    return grid_position + facing_direction;
+    return grid_position + faced_direction;
 
 
 ## This object's position on the Grid.

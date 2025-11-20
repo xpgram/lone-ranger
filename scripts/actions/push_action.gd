@@ -18,7 +18,7 @@ func can_perform(playbill: FieldActionPlaybill,) -> bool:
   var cell_entities := Grid.get_entities(playbill.target_position);
 
   var facing_target: bool = (
-    playbill.performer.grid_position + playbill.performer.facing_direction == playbill.target_position
+    playbill.performer.grid_position + playbill.performer.faced_direction == playbill.target_position
   );
 
   var tile_obstructed: bool = (
@@ -30,7 +30,7 @@ func can_perform(playbill: FieldActionPlaybill,) -> bool:
 
 func perform_async(playbill: FieldActionPlaybill,) -> void:
   var actor := playbill.performer;
-  actor.facing_direction = playbill.orientation;
+  actor.faced_direction = playbill.orientation;
 
   var entities := Grid.get_entities(playbill.target_position);
 
@@ -40,4 +40,4 @@ func perform_async(playbill: FieldActionPlaybill,) -> void:
 
   if actor is Player2D:
     actor.animation_player.reset();
-    actor.animation_set_player.play('push', actor.facing_direction);
+    actor.animation_set_player.play('push', actor.faced_direction);

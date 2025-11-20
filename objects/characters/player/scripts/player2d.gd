@@ -18,7 +18,7 @@ func get_wait_action() -> FieldActionSchedule:
     FieldActionPlaybill.new(
       self,
       grid_position,
-      facing_direction,
+      faced_direction,
     )
   );
 
@@ -52,7 +52,7 @@ func get_interact_action() -> FieldActionSchedule:
   var playbill := FieldActionPlaybill.new(
     self,
     faced_position,
-    facing_direction,
+    faced_direction,
   );
 
   var actions := [
@@ -70,7 +70,7 @@ func get_interact_action() -> FieldActionSchedule:
 ## Sets the animation state to idle in the current `property facing_direction`.
 func reset_animation_to_idle() -> void:
   animation_player.reset();
-  animation_set_player.play('idle', facing_direction);
+  animation_set_player.play('idle', faced_direction);
 
 
 ## Resets the animation state to the idle animation set.

@@ -6,7 +6,7 @@ extends ContextAction
 
 func can_interact(actor: GridEntity) -> bool:
   var initiated_from_below := (chest.grid_position + Vector2i.DOWN == actor.grid_position);
-  var actor_facing_self := (actor.facing_direction == Vector2i.UP);
+  var actor_facing_self := (actor.faced_direction == Vector2i.UP);
 
   return not chest.is_open and initiated_from_below and actor_facing_self;
 
@@ -27,8 +27,8 @@ func perform_interaction_async(actor: GridEntity) -> void:
   #   script can't be located here. It needs to be held with all the others.
 
   if actor is Player2D:
-    actor.facing_direction = Vector2i.DOWN;
-    actor.animation_set_player.play('item_get!', actor.facing_direction);
+    actor.faced_direction = Vector2i.DOWN;
+    actor.animation_set_player.play('item_get!', actor.faced_direction);
     await get_tree().create_timer(1.0).timeout;
 
-    actor.animation_set_player.play('idle', actor.facing_direction);
+    actor.animation_set_player.play('idle', actor.faced_direction);

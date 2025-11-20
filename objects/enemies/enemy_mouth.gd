@@ -49,7 +49,7 @@ func move(vector: Vector2i) -> void:
 
 
 func _facing_changed() -> void:
-  match facing_direction:
+  match faced_direction:
     Vector2.UP:
       animated_sprite.scale.x = -1;
 

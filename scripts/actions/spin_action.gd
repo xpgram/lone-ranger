@@ -15,14 +15,14 @@ func action_time_cost() -> float:
 
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
-  return (playbill.performer.facing_direction != playbill.orientation);
+  return (playbill.performer.faced_direction != playbill.orientation);
 
 
 func perform_async(playbill: FieldActionPlaybill) -> void:
   var actor := playbill.performer;
 
-  actor.facing_direction = playbill.orientation;
+  actor.faced_direction = playbill.orientation;
 
   if actor is Player2D:
     actor.animation_player.reset();
-    actor.animation_set_player.play('idle', actor.facing_direction);
+    actor.animation_set_player.play('idle', actor.faced_direction);
