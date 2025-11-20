@@ -72,10 +72,10 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
 
   # Other turn actions
   if new_time_remaining <= 0:
-    player.update_attributes();
     await _perform_npc_actions_async();
     await _perform_enemy_actions_async();
     await _perform_object_actions_async();
+    _update_entity_attributes();
 
   # Reset for next turn
   var next_time_remaining := new_time_remaining if new_time_remaining > 0 else PartialTime.FULL;
@@ -131,10 +131,6 @@ func _perform_enemy_actions_async() -> void:
   if player.current_animation_state == 'injured':
     await get_tree().create_timer(0.5).timeout;
 
-  # TODO Should these actually be handled in one big update_attributes_for_all_entities() step?
-  for enemy in enemies:
-    enemy.update_attributes();
-
 
 ## Trigger passive, interactive object "actions".
 func _perform_object_actions_async() -> void:
@@ -150,6 +146,23 @@ func _perform_object_actions_async() -> void:
   # TODO Multipass?
   for interactive in interactives_container.get_children():
     await interactive.act();
+
+
+## Update all entity attribute counters and status effect states.
+func _update_entity_attributes() -> void:
+  player.update_attributes();
+
+  for npc: GridEntity in npc_container.get_children():
+    npc.update_attributes();
+
+  for enemy in enemy_container.get_children():
+    # FIXME VisualEffects are probably just not necessary on this layer.
+    #  I should send them elsewhere and think about z-index later.
+    if enemy is Enemy2D:
+      enemy.update_attributes();
+
+  for object: GridEntity in interactives_container.get_children():
+    object.update_attributes();
 
 
 ## Trigger a short time break.
