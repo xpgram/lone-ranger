@@ -3,8 +3,22 @@ class_name GridEntity
 extends Node2D
 
 
+# TODO As I add more conditions here, I should consider extracting them to a Resource.
+#   Having to go through every monster and object I've ever created just to check
+#   'pushable' is irritating.
+
 ## Whether this entity obstructs the travel of other entities, like walls do.
 @export var solid := false;
+
+## Whether this entity can be forcibly moved into another Grid position.
+@export var pushable := false;
+
+
+# TODO This dictionary needs an interface.
+#   We need ways to quickly apply things like 'poison' without having to check if we're
+#   erasing a previous, worse application and such.
+## A dictionary of applied effects and qualities.
+@export var tags: Dictionary[StringName, EntityTagData];
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
 var faced_direction := Vector2i.DOWN:
@@ -18,7 +32,6 @@ var faced_direction := Vector2i.DOWN:
 var faced_position: Vector2i:
   get():
     return grid_position + faced_direction;
-
 
 ## This object's position on the Grid.
 ## When setting this value, this object's Grid position is automatically updated.

@@ -44,7 +44,11 @@ func move(vector: Vector2i) -> void:
   if tile_is_obstructed:
     return;
 
-  grid_position = new_grid_position;
+  if tags.has('stun'):
+    tags.erase('stun');
+  else:
+    grid_position = new_grid_position;
+
   _has_acted = true;
 
 
