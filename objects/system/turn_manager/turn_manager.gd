@@ -105,7 +105,11 @@ func _perform_enemy_actions_async() -> void:
     return;
   
   var enemies: Array[Enemy2D];
-  enemies.assign(enemy_container.get_children());
+  enemies.assign(
+    # TODO Is it better to double loop like this or spawn push_clouds in a different layer?
+    enemy_container.get_children()
+      .filter(func (child): return child is Enemy2D)
+  );
 
   for enemy in enemies:
     enemy.prepare_to_act();
