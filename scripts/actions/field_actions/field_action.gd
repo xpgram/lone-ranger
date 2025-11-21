@@ -2,21 +2,88 @@
 ## This includes anything an actor, the player, an enemy, might *do* in the game.
 ##
 ## These objects are async by nature to account for animations and other effects.
+##
+## For actions that do not have one static `var action_time_cost`, implement:
+## `func get_variable_action_time_cost()`.
+## A common pattern is to return a private number that is updated with every
+## `func perform_async()` call.
 @abstract
 class_name FieldAction
 extends Resource
 
 
-## Returns the name for this action.
-@abstract func action_name() -> String;
+## The name of this action. Used in menus and callouts, among other places.
+## Should ideally be kept to a maximum of 10 or so characters.
+@export var action_name: String;
 
 
-## Returns a description of this action's effects.
-@abstract func action_description() -> String;
+## Provides additional information about what this action does and how it's used.
+## Should ideally be kept to a maximum of one full line of text.
+@export_multiline var action_description: String;
 
 
-## Returns the Partial Time cost for this action.
-@abstract func action_time_cost() -> float;
+# TODO While accurate, this should be a dropdown of enum names.
+## The Partial Time cost for this action. In addition to animations that must be sat
+## through, this number will be subtracted from the player's inaction timer when used.
+@export_range(0, 15, 3.75) var action_time_cost: float;
+
+
+@export_group('Icons')
+
+# TODO Support animated icons?
+## @nullable A texture to represent this action, such as when collecting it from a
+## treasure chest.
+@export var large_icon: Texture2D;
+
+## @nullable A small texture to represent this action in certain contexts, such as in the
+## command menu.
+@export var small_icon: Texture2D;
+
+
+@export_group('Sort Order', 'command_menu_sort')
+
+# TODO Should this be a dropdown, actually?
+## The top-level sort order for this action in the command menu.
+@export var command_menu_sort_priority: int;
+
+## The second-level sort order for this action in the command menu.
+@export var command_menu_sort_sub_priority: int;
+
+
+@export_group('Limited Use')
+
+## Whether this action should display and countdown its remaining uses.
+@export var has_limited_uses := false;
+
+## If true, will not display a usage count next to its name if its usage count is 1.
+## Useful for key items that are singular by nature but still discarded when used.
+@export var singular_usage_count_is_implicit := false;
+
+## Counts the number of times this action may still be used, sort of like an inventory.
+@export var uses_remaining := 1;
+
+
+# TODO Add export group 'Targeting'
+# Or maybe don't. This could be specially implemented in some inheritors of FieldAction.
+# - requires_targeting: bool = false    # Default AoE is 1 tile in front of you
+# - minimum_range: int = 1
+# - maximum_range: int = 1
+# - area_of_effect_pattern: AreaOfEffectPattern Resource = 'one tile at origin'
+#   - origin: Vector2
+#   - map: Vector2[]
+#     - type: int          # This is used by the script, maybe an enum conversion, to
+#                          # determine what kind of target-square this is. So, 0 might be
+#                          # 'move self', 1 might be 'damages inhabitant', 2 might be
+#                          # 'pushes target up', 3 might be 'pushes target down', etc.
+# - rotatable_hint: bool = false    # Whether rotating the area_pattern does anything
+
+
+## For actions that have more than one possible action time cost, this will return the
+## time cost decided by the most recent call to `func perform_async()`.
+## **Note:** This means you *must* call `func perform_async()` first to get an accurate
+## result from this method.
+func get_variable_action_time_cost() -> float:
+  return action_time_cost;
 
 
 ## Given a performing actor and a cast-to position, returns True if this action can be
