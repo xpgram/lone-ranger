@@ -122,10 +122,12 @@ func _perform_enemy_actions_async() -> void:
       enemies.filter(func (enemy): return not enemy.has_acted())
     );
 
+    var enemy_promises: Array[Promise];
+
     for enemy in enemies_to_act:
-      # TODO This should be a list of promises to await so all enemies act in unison.
-      @warning_ignore('redundant_await')
-      await enemy.act_async();
+      enemy_promises.append(Promise.new(enemy.act_async));
+
+    await Promise.all(enemy_promises).finished;
 
   # FIXME This obviously shouldn't go here.
   if player.current_animation_state == 'injured':
