@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=39 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://textures/system/icon-skill.png" id="17_wes0v"]
 [ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://textures/system/icon-magic.png" id="18_1t0dy"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://textures/system/icon-items.png" id="19_6w5x8"]
+[ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://objects/system/command_menu/command_menu_ui.gd" id="19_u2uj7"]
 [ext_resource type="Script" uid="uid://372k1qqga746" path="res://objects/system/command_menu/item_list.gd" id="24_6w5x8"]
 [ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://textures/system/icon-fire.png" id="24_k7uxw"]
 [ext_resource type="Texture2D" uid="uid://cro06oopey0eh" path="res://textures/system/icon-pointer.png" id="25_jiwvv"]
@@ -172,6 +173,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("19_u2uj7")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/UIContainer/CommandMenu"]
 layout_mode = 1
