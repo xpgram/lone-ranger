@@ -82,3 +82,11 @@ func _create_push_cloud(entry_node: Node, grid_position: Vector2i, direction: Ve
   push_cloud.set_direction(direction);
 
   entry_node.add_sibling(push_cloud);
+
+  # TODO Fix push_cloud render order.
+  # A possible solution to this problem is to use a global autoload, like Grid, to hold a
+  # registry of world entities. This way, TurnManager doesn't reference a container it
+  # knows about. It doesn't really care where these things are at all, honestly.
+  #
+  # To a similar end, look into .add_to_group(), which specifically calls out this problem
+  # in particular.
