@@ -115,17 +115,11 @@ func _perform_enemy_actions_async() -> void:
   for enemy in enemies:
     enemy.prepare_to_act();
 
-  # This multipass approach allows enemies to all act independently of list order.
+  # This multipass approach allows all enemies to act independently of their list order.
   for i in range(3):
-    var enemies_to_act: Array[Enemy2D];
-    enemies_to_act.assign(
-      enemies.filter(func (enemy): return not enemy.has_acted())
-    );
-
-    var enemy_promises: Array[Promise];
-
-    for enemy in enemies_to_act:
-      enemy_promises.append(Promise.new(enemy.act_async));
+    var enemy_promises: Array = enemies \
+      .filter(func (enemy: Enemy2D): return not enemy.has_acted()) \
+      .map(func (enemy: Enemy2D): return enemy.act_async);
 
     await Promise.all(enemy_promises).finished;
 
