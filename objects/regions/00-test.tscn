@@ -296,7 +296,7 @@ offset_bottom = 1.0
 
 [node name="MenuCursor" type="Node2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox"]
 unique_name_in_owner = true
-position = Vector2(2, 0)
+position = Vector2(-2, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
 texture = ExtResource("25_jiwvv")
