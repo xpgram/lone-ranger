@@ -11,7 +11,7 @@ func _ready() -> void:
   ui_container.hide();
 
 
-func _process(_can_actdelta: float) -> void:
+func _process(_delta: float) -> void:
   
   if Input.is_action_just_pressed('open_action_menu'):
     if not ui_container.visible:
