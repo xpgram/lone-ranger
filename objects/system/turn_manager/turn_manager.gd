@@ -68,7 +68,8 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   #   Figure out how to orchestrate that.
   #   But do it *after* adding NPCs and objects that can act independently.
 
-  var new_time_remaining := inaction_timer.time_left - player_schedule.action.action_time_cost();
+  var action_time_cost := player_schedule.action.get_variable_action_time_cost()
+  var new_time_remaining := inaction_timer.time_left - action_time_cost;
 
   # Other turn actions
   if new_time_remaining <= 0:
