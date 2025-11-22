@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func get_wait_action() -> FieldActionSchedule:
   return FieldActionSchedule.new(
-    Wait_FieldAction.new(),
+    FieldActionList.wait,
     FieldActionPlaybill.new(
       self,
       grid_position,
@@ -26,7 +26,7 @@ func get_wait_action() -> FieldActionSchedule:
 
 
 func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
-  var chosen_action: FieldAction = Wait_FieldAction.new();
+  var chosen_action: FieldAction = FieldActionList.wait;
 
   var playbill := FieldActionPlaybill.new(
     self,
@@ -35,9 +35,9 @@ func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
   );
 
   var actions := [
-    Move_FieldAction.new(),
-    Push_FieldAction.new(),
-    Spin_FieldAction.new(),
+    FieldActionList.move,
+    FieldActionList.push,
+    FieldActionList.spin,
   ] as Array[FieldAction];
 
   for action in actions:
@@ -49,7 +49,7 @@ func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
 
 
 func get_interact_action() -> FieldActionSchedule:
-  var chosen_action: FieldAction = Wait_FieldAction.new();
+  var chosen_action: FieldAction = FieldActionList.wait;
 
   var playbill := FieldActionPlaybill.new(
     self,
@@ -58,7 +58,7 @@ func get_interact_action() -> FieldActionSchedule:
   );
 
   var actions := [
-    Interact_FieldAction.new(),
+    FieldActionList.interact,
   ];
 
   for action in actions:

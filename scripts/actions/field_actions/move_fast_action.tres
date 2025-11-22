@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Move_FieldAction" load_steps=2 format=3 uid="uid://xqdq20a70cev"]
+
+[ext_resource type="Script" uid="uid://b1we8bvlckfot" path="res://scripts/actions/field_actions/move_action.gd" id="1_v6i07"]
+
+[resource]
+script = ExtResource("1_v6i07")
+action_name = "Move"
+action_description = "Move one tile on the field."
+action_time_cost = 7.5
+metadata/_custom_type_script = "uid://b1we8bvlckfot"
