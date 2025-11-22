@@ -4,6 +4,11 @@ extends Node2D
 @export var ui_container: Control;
 @export var lists: Array[ItemList];
 
+@export_group('Menu Content')
+@export var skill_actions: Array[FieldAction];
+@export var magic_actions: Array[FieldAction];
+@export var item_actions: Array[FieldAction];
+
 var active_index := 0;
 
 

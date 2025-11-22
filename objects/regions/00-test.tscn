@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=51 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
@@ -17,8 +17,10 @@
 [ext_resource type="Script" uid="uid://ckx4y5pqfqg6k" path="res://objects/system/command_menu/command_menu.gd" id="14_7ip5i"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://objects/system/camera2d/camera_2d.gd" id="14_xdkey"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/mouth/enemy_mouth.tscn" id="15_b6bp6"]
+[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://scripts/actions/field_actions/scripts/field_action.gd" id="15_l2lt0"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="16_0fxje"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest/chest.tscn" id="16_iefdx"]
+[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://scripts/actions/field_actions/scripts/print_log_action.gd" id="16_ocnqy"]
 [ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://textures/system/icon-skill.png" id="17_wes0v"]
 [ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://textures/system/icon-magic.png" id="18_1t0dy"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://textures/system/icon-items.png" id="19_6w5x8"]
@@ -48,6 +50,88 @@ scenes/13/scene = ExtResource("5_iefdx")
 [sub_resource type="TileSet" id="TileSet_jjdoh"]
 terrain_set_0/mode = 0
 sources/0 = SubResource("TileSetScenesCollectionSource_1aara")
+
+[sub_resource type="Resource" id="Resource_d84s7"]
+script = ExtResource("16_ocnqy")
+action_name = "Shove"
+action_description = "Push objects two tiles away."
+action_time_cost = 15.0
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_sauxk"]
+script = ExtResource("16_ocnqy")
+action_name = "Torque"
+action_description = "Rotate heavy or stuck objects."
+action_time_cost = 15.0
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_3u3mk"]
+script = ExtResource("16_ocnqy")
+action_name = "Knock"
+action_description = "Use a secret knock pattern."
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_l2lt0"]
+script = ExtResource("16_ocnqy")
+action_name = "Flame"
+action_description = "Burn distant targets."
+action_time_cost = 15.0
+small_icon = ExtResource("24_k7uxw")
+has_limited_uses = true
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_ocnqy"]
+script = ExtResource("16_ocnqy")
+action_name = "Shock"
+action_description = "Electrify distant targets."
+action_time_cost = 15.0
+small_icon = ExtResource("25_u2uj7")
+has_limited_uses = true
+uses_remaining = 5
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_tobie"]
+script = ExtResource("16_ocnqy")
+action_name = "Grow"
+action_description = "Rapidly grow plant life."
+action_time_cost = 7.5
+small_icon = ExtResource("26_tq2tj")
+has_limited_uses = true
+uses_remaining = 2
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_islog"]
+script = ExtResource("16_ocnqy")
+action_name = "Hole"
+action_description = "Create a rift in spacetime."
+action_time_cost = 15.0
+small_icon = ExtResource("27_l2lt0")
+has_limited_uses = true
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_0t4oo"]
+script = ExtResource("16_ocnqy")
+action_name = "Heart"
+action_description = "Heal one point of damage."
+has_limited_uses = true
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_jvmxx"]
+script = ExtResource("16_ocnqy")
+action_name = "Time Dial"
+action_description = "Slow time down for a while."
+has_limited_uses = true
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_j78yn"]
+script = ExtResource("16_ocnqy")
+action_name = "Lund Key"
+action_description = "A key with a garden motif."
+has_limited_uses = true
+singular_usage_count_is_implicit = true
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
 
@@ -130,6 +214,9 @@ interactives_container = NodePath("../Interactives Container")
 script = ExtResource("14_7ip5i")
 ui_container = NodePath("../Camera2D/UIContainer")
 lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SkillsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SpellsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/ItemsList")]
+skill_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_d84s7"), SubResource("Resource_sauxk"), SubResource("Resource_3u3mk")])
+magic_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_l2lt0"), SubResource("Resource_ocnqy"), SubResource("Resource_tobie"), SubResource("Resource_islog")])
+item_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_0t4oo"), SubResource("Resource_jvmxx"), SubResource("Resource_j78yn")])
 
 [node name="Interactives Container" type="Node2D" parent="."]
 
