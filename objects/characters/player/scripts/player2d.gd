@@ -83,5 +83,5 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
 
   if current_animation_state in non_resetting_states:
     return;
-  
+
   set_animation_state('idle');

@@ -1,6 +1,6 @@
 class_name FieldActionList
 
-const ROOT_FOLDER: StringName = 'res://scripts/actions/field_actions/';
+const ROOT_FOLDER: StringName = 'res://scripts/actions/field_actions/resources/';
 
 const wait: FieldAction = preload(ROOT_FOLDER + 'wait_action.tres');
 const spin: FieldAction = preload(ROOT_FOLDER + 'spin_action.tres');

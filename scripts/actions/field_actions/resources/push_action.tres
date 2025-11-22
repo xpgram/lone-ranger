@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Push_FieldAction" load_steps=2 format=3 uid="uid://cremxf5c4fv6w"]
 
-[ext_resource type="Script" uid="uid://cr14jkqg2alan" path="res://scripts/actions/field_actions/push_action.gd" id="1_lplxr"]
+[ext_resource type="Script" uid="uid://cr14jkqg2alan" path="res://scripts/actions/field_actions/scripts/push_action.gd" id="1_lplxr"]
 
 [resource]
 script = ExtResource("1_lplxr")
