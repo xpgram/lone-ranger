@@ -36,21 +36,6 @@ extends FieldAction
 #   variable_time_cost every time.
 
 
-func action_name() -> String:
-  return "Interact";
-
-
-func action_description() -> String:
-  return "Perform context actions in the field.";
-
-
-func action_time_cost() -> float:
-  # TODO Opening a chest should cost full, probably.
-  # TODO But talking to an NPC shouldn't, right?
-  #   Talking to an NPC needs to pause the timer somehow, too.
-  return PartialTime.NONE;
-
-
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var entities := Grid.get_entities(playbill.performer.faced_position);
 

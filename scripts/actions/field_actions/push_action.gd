@@ -6,18 +6,6 @@ const scene_push_cloud := preload('uid://hua0n75be2w3');
 const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 
 
-func action_name() -> String:
-  return "Push";
-
-
-func action_description() -> String:
-  return "Move a target one tile over.";
-
-
-func action_time_cost() -> float:
-  return PartialTime.FULL;
-
-
 func can_perform(playbill: FieldActionPlaybill,) -> bool:
   var cell_entities := Grid.get_entities(playbill.target_position);
 
