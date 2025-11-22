@@ -13,6 +13,10 @@ extends Node2D
 ## Whether this entity can be forcibly moved into another Grid position.
 @export var pushable := false;
 
+## Whether this entity adheres to the more turn-based golem time instead of the ongoing
+## action timer.
+@export var observes_golem_time := false;
+
 
 ## A dictionary of applied effects and qualities.
 @export var _attributes: Dictionary[StringName, GridEntityAttribute];

@@ -137,6 +137,8 @@ lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"),
 position = Vector2(144, 48)
 contents = "Fira spell"
 solid = true
+observes_golem_time = null
+_attributes = false
 
 [node name="Enemy Container" type="Node2D" parent="."]
 

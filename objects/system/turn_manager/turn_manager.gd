@@ -10,6 +10,10 @@ extends Node
 ## Used to lock the turn-execution loop, preventing parallel triggers.
 var turn_in_progress := false;
 
+## Increments independently of the inaction timer, and triggers different enemies' turn
+## behavior.
+var golem_time := 0.0;
+
 @onready var inaction_timer: Timer = %InactionTimer;
 
 
@@ -71,6 +75,8 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   var action_time_cost := player_schedule.action.get_variable_action_time_cost()
   var new_time_remaining := inaction_timer.time_left - action_time_cost;
 
+  golem_time += action_time_cost;
+
   # Other turn actions
   if new_time_remaining <= 0:
     await _perform_npc_actions_async();
@@ -81,6 +87,9 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   # Reset for next turn
   var next_time_remaining := new_time_remaining if new_time_remaining > 0 else PartialTime.FULL;
   inaction_timer.start(next_time_remaining);
+
+  if golem_time >= PartialTime.FULL:
+    golem_time = PartialTime.NONE;
 
   turn_in_progress = false;
 
@@ -106,11 +115,22 @@ func _perform_enemy_actions_async() -> void:
   if not enemy_container or enemy_container.get_child_count() == 0:
     return;
 
+  var include_golems := golem_time >= PartialTime.FULL;
+
+  # TODO This area needs to be cleaned up for readability.
+  #  Keep all Enemy2Ds, but exclude golems, unless include_golems is true.
   var enemies: Array[Enemy2D];
   enemies.assign(
     # TODO Is it better to double loop like this or spawn push_clouds in a different layer?
-    enemy_container.get_children()
-      .filter(func (child): return child is Enemy2D)
+    enemy_container.get_children().filter(func (child):
+      if child is not Enemy2D:
+        return false;
+
+      var enemy := child as Enemy2D;
+      return (
+        not enemy.observes_golem_time
+        or include_golems
+      ))
   );
 
   for enemy in enemies:
