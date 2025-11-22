@@ -52,12 +52,8 @@ extends Resource
 
 @export_group('Limited Use')
 
-## Whether this action should display and countdown its remaining uses.
-@export var has_limited_uses := false;
-
-## If true, will not display a usage count next to its name if its usage count is 1.
-## Useful for key items that are singular by nature but still discarded when used.
-@export var singular_usage_count_is_implicit := false;
+## Which kind of limiting system to use.
+@export var limit_type := Enums.LimitedUseType.NoLimit;
 
 ## Counts the number of times this action may still be used, sort of like an inventory.
 @export var uses_remaining := 1;
