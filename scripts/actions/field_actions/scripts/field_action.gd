@@ -22,6 +22,32 @@ extends Resource
 @export_multiline var action_description: String;
 
 
+## Separate from `var action_description`, this is in-character commentary about the
+## action/item in question, and is much less likely to contain explicit instructions
+## about how it's used.
+##
+## Ex: Lund Key -> "It bears a garden pattern."
+## Ex: Flame -> "It feels warm in the mind."
+##
+## I could expand these, as well, as your character "learns" about them, i.e., through
+## use or something. Maybe "Hole" has really unfamiliar text, but after first use she
+## starts commenting on how scary it is or something.
+##
+## One big problem:
+## # TODO How do we trigger this flavor text?
+## #  I don't want to give the player a "press for more info" button; feels a bit tacky.
+## #  It harms the mystique a bit. But if not, then only key items have an easy (and
+## #  hidden) way of triggering these investigations: they're used, but unsuccessfully.
+## #  ...
+## #  Maybe MC should have more commentary in general? I could live with a "talk" button
+## #  you'd use on various things in the world. You could hear her thoughts on the various
+## #  traps and monuments she comes across.
+## #  Your menu wouldn't specifically call out that you can investigate options, but it
+## #  doesn't seem to hard to discover, either; you have a dedicated "thoughts" button.
+## #  Key items would still "thoughts" on fail, though, of course. Maybe as a hint, even.
+@export_multiline var action_hint: String;
+
+
 # TODO While accurate, this should be a dropdown of enum names.
 ## The Partial Time cost for this action. In addition to animations that must be sat
 ## through, this number will be subtracted from the player's inaction timer when used.
