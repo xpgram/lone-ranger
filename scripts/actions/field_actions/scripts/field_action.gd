@@ -12,6 +12,11 @@ class_name FieldAction
 extends Resource
 
 
+## The unique identifier for this FieldAction.
+## Often used as a key for this FieldAction when stored in a Dictionary.
+@export var action_uid: StringName;
+
+
 ## The name of this action. Used in menus and callouts, among other places.
 ## Should ideally be kept to a maximum of 10 or so characters.
 @export var action_name: String;
