@@ -67,3 +67,4 @@ position = Vector2(144, 128)
 
 [node name="PlayerModule" parent="." instance=ExtResource("16_xdkey")]
 position = Vector2(128, 64)
+hide_elements = true
