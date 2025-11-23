@@ -2,6 +2,12 @@ class_name Player2D
 extends GridEntity
 
 
+@export var inventory: PlayerInventory:
+  get():
+    assert(inventory,
+      "Player inventory for '%s' was accessed, but inventory does not exist." % name);
+    return inventory;
+
 var current_animation_state: StringName = 'idle';
 
 @onready var animation_player: AnimationPlayer = %AnimationPlayer;
