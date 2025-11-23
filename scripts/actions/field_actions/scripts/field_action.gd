@@ -17,6 +17,11 @@ extends Resource
 @export var action_name: String;
 
 
+## The type of this action. Mostly used for sorting as FieldActions are also treated like
+## tradable commodities.
+@export var action_type: Enums.FieldActionType;
+
+
 ## Provides additional information about what this action does and how it's used.
 ## Should ideally be kept to a maximum of one full line of text.
 @export_multiline var action_description: String;
