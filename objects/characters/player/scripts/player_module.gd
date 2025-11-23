@@ -12,7 +12,7 @@ extends GridEntityModule
 
 ## The perspective camera for this player.
 ## **Note:** use `func get_camera()` instead to get correct static typing.
-var _camera;
+var _camera: NodePath;
 
 
 func _get_property_list() -> Array[Dictionary]:
@@ -35,9 +35,9 @@ func _get_property_list() -> Array[Dictionary]:
 
 
 func get_entity() -> Player2D:
-  return _entity;
+  return get_node(_entity);
 
 
 ## Returns the perspective camera wrapped by this module.
 func get_camera() -> Camera2D:
-  return _camera;
+  return get_node(_camera);

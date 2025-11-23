@@ -11,7 +11,7 @@ extends Node2D
 
 ## The Grid entity wrapped by this module.
 ## **Note:** use `func get_entity()` instead to get correct static typing.
-var _entity;
+var _entity: NodePath;
 
 
 func _get_property_list() -> Array[Dictionary]:
@@ -30,6 +30,10 @@ func _get_property_list() -> Array[Dictionary]:
   return properties;
 
 
+# TODO Wait for a _entity.queue_freed signal and destroy self.
+#  exit_tree() might do, but we can write our own that's more specific, I think.
+
+
 ## Returns the Grid entity wrapped by this module.
 func get_entity() -> GridEntity:
-  return _entity;
+  return get_node(_entity);
