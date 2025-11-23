@@ -53,11 +53,11 @@ func get_entity() -> GridEntity:
 
 
 ## Sets the visibility of all nodes other than the wrapped entity to `param is_visible`.
-func _set_element_visibility(is_visible: bool) -> void:
+func _set_element_visibility(value: bool) -> void:
   if not Engine.is_editor_hint():
     return;
 
   for child in get_children():
-    child.visible = is_visible;
+    child.visible = value;
   
   get_entity().visible = true;
