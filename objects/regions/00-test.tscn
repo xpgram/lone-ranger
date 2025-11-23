@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=52 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/mouth/enemy_mouth.tscn" id="15_b6bp6"]
 [ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://scripts/actions/field_actions/scripts/field_action.gd" id="15_l2lt0"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="16_0fxje"]
+[ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://objects/characters/player/scripts/player_module.gd" id="16_d84s7"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest/chest.tscn" id="16_iefdx"]
 [ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://scripts/actions/field_actions/scripts/print_log_action.gd" id="16_ocnqy"]
 [ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://textures/system/icon-skill.png" id="17_wes0v"]
@@ -203,19 +204,11 @@ position = Vector2(-8, -8)
 tile_map_data = PackedByteArray("AAAAAP//AAAAAAAAAwD//wEAAAAAAAAADQABAAIAAAAAAAAABAABAAEAAAAAAAAADQABAAAAAAAAAAAACgABAP//AAAAAAAAAwACAP//AAAAAAAAAwACAAAAAAAAAAAACgACAAEAAAAAAAAADQACAAIAAAAAAAAABAD//wMAAAAAAAAAAwABAAMAAAAAAAAAAwACAAMAAAAAAAAAAwADAAMAAAAAAAAAAwAEAAMAAAAAAAAAAwAFAAMAAAAAAAAAAwAGAAMAAAAAAAAAAwAHAAMAAAAAAAAAAgAIAAMAAAAAAAAAAgAIAAQAAAAAAAAAAgAIAAUAAAAAAAAAAgAHAAUAAAAAAAAAAgAGAAUAAAAAAAAAAwAFAAUAAAAAAAAAAwAEAAUAAAAAAAAAAwADAAUAAAAAAAAABAACAAQAAAAAAAAAAwABAAQAAAAAAAAAAwD//wQAAAAAAAAAAwD//wUAAAAAAAAAAwABAAUAAAAAAAAAAwAAAAUAAAAAAAAAAwACAAUAAAAAAAAAAwADAAQAAAAAAAAAAgAEAAQAAAAAAAAAAwAFAAQAAAAAAAAAAwAGAAQAAAAAAAAAAwAHAAQAAAAAAAAAAgAIAAIAAAAAAAAABAAIAAEAAAAAAAAADQAIAAAAAAAAAAAACgAIAP//AAAAAAAAAwD//wIAAAAAAAAABAD/////AAAAAAAAAwD//wAAAAAAAAAACgADAP//AAAAAAAAAwADAAAAAAAAAAAACgADAAEAAAAAAAAADQADAAIAAAAAAAAABAAEAAIAAAAAAAAABAAEAAEAAAAAAAAADQAEAAAAAAAAAAAACgAEAP//AAAAAAAAAwAFAP//AAAAAAAAAwAFAAAAAAAAAAAACgAFAAEAAAAAAAAADQAFAAIAAAAAAAAABAAGAAIAAAAAAAAABAAGAAEAAAAAAAAADQAGAAAAAAAAAAAACgAGAP//AAAAAAAAAwAHAP//AAAAAAAAAwAHAAAAAAAAAAAACgAHAAEAAAAAAAAADQAHAAIAAAAAAAAABAD//wYAAAAAAAAAAwD//wcAAAAAAAAAAwD//wgAAAAAAAAAAwD//wkAAAAAAAAAAwD//woAAAAAAAAAAwD//wsAAAAAAAAAAwAAAAYAAAAAAAAAAwAAAAcAAAAAAAAAAwAAAAgAAAAAAAAAAwAAAAkAAAAAAAAAAwAAAAoAAAAAAAAAAwAAAAsAAAAAAAAAAwABAAYAAAAAAAAAAwABAAcAAAAAAAAAAwABAAgAAAAAAAAAAwABAAkAAAAAAAAAAwABAAoAAAAAAAAAAwABAAsAAAAAAAAAAwACAAYAAAAAAAAAAgACAAcAAAAAAAAAAgACAAgAAAAAAAAAAgACAAkAAAAAAAAABAACAAoAAAAAAAAAAwACAAsAAAAAAAAAAwADAAYAAAAAAAAAAgADAAcAAAAAAAAAAQADAAgAAAAAAAAAAgADAAkAAAAAAAAABAADAAoAAAAAAAAAAwADAAsAAAAAAAAAAwAEAAYAAAAAAAAAAgAEAAcAAAAAAAAAAgAEAAgAAAAAAAAAAgAEAAkAAAAAAAAABAAEAAoAAAAAAAAAAwAEAAsAAAAAAAAAAwAFAAYAAAAAAAAAAwAFAAcAAAAAAAAAAgAFAAgAAAAAAAAABAAFAAkAAAAAAAAAAwAFAAoAAAAAAAAAAwAFAAsAAAAAAAAAAwAGAAYAAAAAAAAAAwAGAAcAAAAAAAAAAgAGAAgAAAAAAAAABAAGAAkAAAAAAAAAAwAGAAoAAAAAAAAAAwAGAAsAAAAAAAAAAwAHAAYAAAAAAAAAAgAHAAcAAAAAAAAAAgAHAAgAAAAAAAAAAgAHAAkAAAAAAAAABAAHAAoAAAAAAAAAAwAHAAsAAAAAAAAAAwAIAAYAAAAAAAAAAgAIAAcAAAAAAAAAAgAIAAgAAAAAAAAAAgAIAAkAAAAAAAAABAAIAAoAAAAAAAAAAwAIAAsAAAAAAAAAAwAJAP//AAAAAAAAAwAJAAAAAAAAAAAACgAJAAEAAAAAAAAADQAJAAIAAAAAAAAABAAJAAMAAAAAAAAAAgAJAAQAAAAAAAAAAgAJAAUAAAAAAAAAAgAJAAYAAAAAAAAAAgAJAAcAAAAAAAAAAgAJAAgAAAAAAAAAAgAJAAkAAAAAAAAABAAJAAoAAAAAAAAAAwAJAAsAAAAAAAAAAwAKAP//AAAAAAAAAwAKAAAAAAAAAAAACgAKAAEAAAAAAAAADQAKAAIAAAAAAAAABAAKAAMAAAAAAAAAAwAKAAQAAAAAAAAAAwAKAAUAAAAAAAAAAwAKAAYAAAAAAAAAAwAKAAcAAAAAAAAAAwAKAAgAAAAAAAAAAwAKAAkAAAAAAAAAAwAKAAoAAAAAAAAAAwAKAAsAAAAAAAAAAwALAP//AAAAAAAAAwALAAAAAAAAAAAACgALAAIAAAAAAAAABAALAAMAAAAAAAAAAwALAAQAAAAAAAAAAwALAAUAAAAAAAAAAwALAAYAAAAAAAAAAwALAAcAAAAAAAAAAwALAAgAAAAAAAAAAwALAAkAAAAAAAAAAwALAAoAAAAAAAAAAwALAAsAAAAAAAAAAwAMAP//AAAAAAAAAwAMAAAAAAAAAAAACgAMAAEAAAAAAAAACQAMAAIAAAAAAAAADAAMAAMAAAAAAAAADAAMAAQAAAAAAAAADAAMAAUAAAAAAAAADAAMAAYAAAAAAAAADAAMAAcAAAAAAAAADAAMAAgAAAAAAAAADAAMAAkAAAAAAAAADAAMAAoAAAAAAAAADAAMAAsAAAAAAAAADAANAP//AAAAAAAAAwANAAAAAAAAAAAAAwANAAEAAAAAAAAACwANAAIAAAAAAAAACwANAAMAAAAAAAAACwANAAQAAAAAAAAACwANAAUAAAAAAAAACwANAAYAAAAAAAAACwANAAcAAAAAAAAACwANAAgAAAAAAAAACwANAAkAAAAAAAAACwANAAoAAAAAAAAACwANAAsAAAAAAAAACwAOAP//AAAAAAAAAwAOAAAAAAAAAAAAAwAOAAEAAAAAAAAAAwAOAAIAAAAAAAAAAwAOAAMAAAAAAAAAAwAOAAQAAAAAAAAAAwAOAAUAAAAAAAAAAwAOAAYAAAAAAAAAAwAOAAcAAAAAAAAAAwAOAAgAAAAAAAAAAwAOAAkAAAAAAAAAAwAOAAoAAAAAAAAAAwAOAAsAAAAAAAAAAwAPAP//AAAAAAAAAwAPAAAAAAAAAAAAAwAPAAEAAAAAAAAAAwAPAAIAAAAAAAAAAwAPAAMAAAAAAAAAAwAPAAQAAAAAAAAAAwAPAAUAAAAAAAAAAwAPAAYAAAAAAAAAAwAPAAcAAAAAAAAAAwAPAAgAAAAAAAAAAwAPAAkAAAAAAAAAAwAPAAoAAAAAAAAAAwAPAAsAAAAAAAAAAwALAAEAAAAAAAAADQAAAAAAAAAAAAAACgAAAAEAAAAAAAAADQAAAAIAAAAAAAAABAAAAAMAAAAAAAAAAwAAAAQAAAAAAAAAAwA=")
 tile_set = SubResource("TileSet_jjdoh")
 
-[node name="TurnManager" parent="." node_paths=PackedStringArray("player", "npc_container", "enemy_container", "interactives_container") instance=ExtResource("1_b6bp6")]
-player = NodePath("../Player2D")
+[node name="TurnManager" parent="." node_paths=PackedStringArray("player_module", "npc_container", "enemy_container", "interactives_container") instance=ExtResource("1_b6bp6")]
+player_module = NodePath("../PlayerModule")
 npc_container = NodePath("../NPC Container")
 enemy_container = NodePath("../Enemy Container")
 interactives_container = NodePath("../Interactives Container")
-
-[node name="CommandMenu" type="Node2D" parent="." node_paths=PackedStringArray("ui_container", "lists")]
-script = ExtResource("14_7ip5i")
-ui_container = NodePath("../Camera2D/UIContainer")
-lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SkillsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SpellsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/ItemsList")]
-skill_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_d84s7"), SubResource("Resource_sauxk"), SubResource("Resource_3u3mk")])
-magic_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_l2lt0"), SubResource("Resource_ocnqy"), SubResource("Resource_tobie"), SubResource("Resource_islog")])
-item_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_0t4oo"), SubResource("Resource_jvmxx"), SubResource("Resource_j78yn")])
 
 [node name="Interactives Container" type="Node2D" parent="."]
 
@@ -223,8 +216,6 @@ item_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_0t4oo"), Su
 position = Vector2(144, 48)
 contents = "Fira spell"
 solid = true
-observes_golem_time = null
-_attributes = false
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
@@ -236,17 +227,31 @@ position = Vector2(144, 128)
 
 [node name="NPC Container" type="Node2D" parent="."]
 
-[node name="Player2D" parent="." instance=ExtResource("1_lxegh")]
+[node name="PlayerModule" type="Node2D" parent="."]
+script = ExtResource("16_d84s7")
+_entity = NodePath("Player2D")
+_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://kreg7knmfr1j"
+
+[node name="Player2D" parent="PlayerModule" instance=ExtResource("1_lxegh")]
 position = Vector2(128, 64)
 
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
+[node name="CommandMenu" type="Node2D" parent="PlayerModule" node_paths=PackedStringArray("ui_container", "lists")]
+script = ExtResource("14_7ip5i")
+ui_container = NodePath("../Camera2D/UIContainer")
+lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SkillsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SpellsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/ItemsList")]
+skill_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_d84s7"), SubResource("Resource_sauxk"), SubResource("Resource_3u3mk")])
+magic_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_l2lt0"), SubResource("Resource_ocnqy"), SubResource("Resource_tobie"), SubResource("Resource_islog")])
+item_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_0t4oo"), SubResource("Resource_jvmxx"), SubResource("Resource_j78yn")])
+
+[node name="Camera2D" type="Camera2D" parent="PlayerModule" node_paths=PackedStringArray("subject")]
 position = Vector2(112, 80)
 zoom = Vector2(3, 3)
 script = ExtResource("14_xdkey")
 subject = NodePath("../Player2D")
 close_follow = true
 
-[node name="UIContainer" type="Control" parent="Camera2D"]
+[node name="UIContainer" type="Control" parent="PlayerModule/Camera2D"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -112.0
@@ -254,7 +259,7 @@ offset_top = -72.0
 offset_right = 112.0
 offset_bottom = 72.0
 
-[node name="CommandMenu" type="Control" parent="Camera2D/UIContainer"]
+[node name="CommandMenu" type="Control" parent="PlayerModule/Camera2D/UIContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -263,7 +268,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("19_u2uj7")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/UIContainer/CommandMenu"]
+[node name="NinePatchRect" type="NinePatchRect" parent="PlayerModule/Camera2D/UIContainer/CommandMenu"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -283,7 +288,7 @@ patch_margin_bottom = 8
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="MainList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+[node name="MainList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -308,7 +313,7 @@ item_2/icon = ExtResource("19_6w5x8")
 script = ExtResource("24_6w5x8")
 remember_cursor_position = true
 
-[node name="SkillsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+[node name="SkillsList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -330,7 +335,7 @@ item_2/text = "3-Tap"
 script = ExtResource("24_6w5x8")
 remember_cursor_position = true
 
-[node name="SpellsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+[node name="SpellsList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -356,7 +361,7 @@ item_3/icon = ExtResource("27_l2lt0")
 script = ExtResource("24_6w5x8")
 remember_cursor_position = true
 
-[node name="ItemsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+[node name="ItemsList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -378,20 +383,20 @@ item_2/text = "Lund Key"
 script = ExtResource("24_6w5x8")
 remember_cursor_position = true
 
-[node name="MenuCursorBox" type="Control" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+[node name="MenuCursorBox" type="Control" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 layout_mode = 1
 anchors_preset = 0
 offset_right = 4.0
 offset_bottom = 1.0
 
-[node name="MenuCursor" type="Node2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox"]
+[node name="MenuCursor" type="Node2D" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox"]
 unique_name_in_owner = true
 position = Vector2(-2, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
+[node name="Sprite2D" type="Sprite2D" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
 texture = ExtResource("25_jiwvv")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
 root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_u2uj7")

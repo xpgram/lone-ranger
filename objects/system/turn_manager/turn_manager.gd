@@ -1,11 +1,12 @@
 extends Node
 
-@export var player: Player2D;
+@export var player_module: PlayerModule;
 
 # TODO It would be nice if these types knew they could only contain objects of such types: Enemy, NPC, Interactive, etc.
 @export var npc_container: Node2D;
 @export var enemy_container: Node2D;
 @export var interactives_container: Node2D;
+
 
 ## Used to lock the turn-execution loop, preventing parallel triggers.
 var turn_in_progress := false;
@@ -14,6 +15,11 @@ var turn_in_progress := false;
 ## behavior.
 var golem_time := 0.0;
 
+
+## The GridEntity operated by the player.
+@onready var player := player_module.get_entity();
+
+## The timer used to count down missed player turns.
 @onready var inaction_timer: Timer = %InactionTimer;
 
 
