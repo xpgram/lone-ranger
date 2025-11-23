@@ -11,7 +11,7 @@ extends Node2D
 
 ## The Grid entity wrapped by this module.
 ## **Note:** use `func get_entity()` instead to get correct static typing.
-var _entity: GridEntity;
+var _entity;
 
 
 func _get_property_list() -> Array[Dictionary]:

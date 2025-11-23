@@ -10,7 +10,9 @@ class_name PlayerModule
 extends GridEntityModule
 
 
-var _camera: Camera2D;
+## The perspective camera for this player.
+## **Note:** use `func get_camera()` instead to get correct static typing.
+var _camera;
 
 
 func _get_property_list() -> Array[Dictionary]:
@@ -36,5 +38,6 @@ func get_entity() -> Player2D:
   return _entity;
 
 
+## Returns the perspective camera wrapped by this module.
 func get_camera() -> Camera2D:
   return _camera;
