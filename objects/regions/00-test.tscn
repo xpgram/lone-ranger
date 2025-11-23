@@ -1,7 +1,6 @@
-[gd_scene load_steps=52 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=19 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
-[ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="1_lxegh"]
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://objects/world/floor_stairs.tscn" id="1_v30wm"]
 [ext_resource type="PackedScene" uid="uid://bmn56oiwtxfrs" path="res://objects/world/floor_tile.tscn" id="2_6a8my"]
 [ext_resource type="PackedScene" uid="uid://d3xx7e8wwir1k" path="res://objects/world/wall_labyrinth_down.tscn" id="2_p4wh4"]
@@ -14,24 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://5munun7kx34b" path="res://objects/world/wall_labyrinth_corner_br.tscn" id="10_7ip5i"]
 [ext_resource type="PackedScene" uid="uid://cj3wuhb4d13m3" path="res://objects/world/wall_labyrinth_corner_tl.tscn" id="11_0fxje"]
 [ext_resource type="PackedScene" uid="uid://b4b7wf713qkek" path="res://objects/world/wall_labyrinth_corner_tr.tscn" id="12_m2e2k"]
-[ext_resource type="Script" uid="uid://ckx4y5pqfqg6k" path="res://objects/system/command_menu/command_menu.gd" id="14_7ip5i"]
-[ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://objects/system/camera2d/camera_2d.gd" id="14_xdkey"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/mouth/enemy_mouth.tscn" id="15_b6bp6"]
-[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://scripts/actions/field_actions/scripts/field_action.gd" id="15_l2lt0"]
-[ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="16_0fxje"]
-[ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://objects/characters/player/scripts/player_module.gd" id="16_d84s7"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest/chest.tscn" id="16_iefdx"]
-[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://scripts/actions/field_actions/scripts/print_log_action.gd" id="16_ocnqy"]
-[ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://textures/system/icon-skill.png" id="17_wes0v"]
-[ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://textures/system/icon-magic.png" id="18_1t0dy"]
-[ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://textures/system/icon-items.png" id="19_6w5x8"]
-[ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://objects/system/command_menu/command_menu_ui.gd" id="19_u2uj7"]
-[ext_resource type="Script" uid="uid://372k1qqga746" path="res://objects/system/command_menu/item_list.gd" id="24_6w5x8"]
-[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://textures/system/icon-fire.png" id="24_k7uxw"]
-[ext_resource type="Texture2D" uid="uid://cro06oopey0eh" path="res://textures/system/icon-pointer.png" id="25_jiwvv"]
-[ext_resource type="Texture2D" uid="uid://b1vo5c1c0vbw8" path="res://textures/system/icon-thunder.png" id="25_u2uj7"]
-[ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://textures/system/icon-plant.png" id="26_tq2tj"]
-[ext_resource type="Texture2D" uid="uid://dkhd2f7ywih0j" path="res://textures/system/icon-orb.png" id="27_l2lt0"]
+[ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://objects/characters/player/player_module.tscn" id="16_xdkey"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
@@ -52,151 +36,6 @@ scenes/13/scene = ExtResource("5_iefdx")
 terrain_set_0/mode = 0
 sources/0 = SubResource("TileSetScenesCollectionSource_1aara")
 
-[sub_resource type="Resource" id="Resource_d84s7"]
-script = ExtResource("16_ocnqy")
-action_name = "Shove"
-action_description = "Push objects two tiles away."
-action_time_cost = 15.0
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_sauxk"]
-script = ExtResource("16_ocnqy")
-action_name = "Torque"
-action_description = "Rotate heavy or stuck objects."
-action_time_cost = 15.0
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_3u3mk"]
-script = ExtResource("16_ocnqy")
-action_name = "Knock"
-action_description = "Use a secret knock pattern."
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_l2lt0"]
-script = ExtResource("16_ocnqy")
-action_name = "Flame"
-action_description = "Burn distant targets."
-action_time_cost = 15.0
-small_icon = ExtResource("24_k7uxw")
-limit_type = 2
-uses_remaining = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_ocnqy"]
-script = ExtResource("16_ocnqy")
-action_name = "Shock"
-action_description = "Electrify distant targets."
-action_time_cost = 15.0
-small_icon = ExtResource("25_u2uj7")
-limit_type = 2
-uses_remaining = 5
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_tobie"]
-script = ExtResource("16_ocnqy")
-action_name = "Grow"
-action_description = "Rapidly grow plant life."
-action_time_cost = 7.5
-small_icon = ExtResource("26_tq2tj")
-limit_type = 2
-uses_remaining = 2
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_islog"]
-script = ExtResource("16_ocnqy")
-action_name = "Hole"
-action_description = "Create a rift in spacetime."
-action_time_cost = 15.0
-small_icon = ExtResource("27_l2lt0")
-limit_type = 2
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_0t4oo"]
-script = ExtResource("16_ocnqy")
-action_name = "Heart"
-action_description = "Heal one point of damage."
-limit_type = 1
-uses_remaining = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_jvmxx"]
-script = ExtResource("16_ocnqy")
-action_name = "Time Dial"
-action_description = "Slow time down for a while."
-limit_type = 1
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_j78yn"]
-script = ExtResource("16_ocnqy")
-action_name = "Lund Key"
-action_description = "A key with a garden motif."
-limit_type = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2uj7"]
-content_margin_left = 5.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 4.0
-
-[sub_resource type="SystemFont" id="SystemFont_iefdx"]
-font_names = PackedStringArray("Monospace")
-font_weight = 700
-hinting = 2
-
-[sub_resource type="Theme" id="Theme_xdkey"]
-default_font = SubResource("SystemFont_iefdx")
-default_font_size = 8
-ItemList/colors/font_color = Color(0, 0, 0, 1)
-ItemList/colors/font_hovered_color = Color(0, 0, 0, 1)
-ItemList/colors/font_hovered_selected_color = Color(0, 0, 0, 1)
-ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
-ItemList/colors/guide_color = Color(0, 0, 0, 0)
-ItemList/constants/icon_margin = 2
-ItemList/constants/line_separation = 0
-ItemList/constants/v_separation = 0
-ItemList/styles/focus = SubResource("StyleBoxEmpty_k7uxw")
-ItemList/styles/panel = SubResource("StyleBoxEmpty_u2uj7")
-
-[sub_resource type="Animation" id="Animation_k7uxw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_u44ev"]
-resource_name = "wiggle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2(0, 0), Vector2(1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_u2uj7"]
-_data = {
-&"RESET": SubResource("Animation_k7uxw"),
-&"wiggle": SubResource("Animation_u44ev")
-}
-
 [node name="Game" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -204,8 +43,7 @@ position = Vector2(-8, -8)
 tile_map_data = PackedByteArray("AAAAAP//AAAAAAAAAwD//wEAAAAAAAAADQABAAIAAAAAAAAABAABAAEAAAAAAAAADQABAAAAAAAAAAAACgABAP//AAAAAAAAAwACAP//AAAAAAAAAwACAAAAAAAAAAAACgACAAEAAAAAAAAADQACAAIAAAAAAAAABAD//wMAAAAAAAAAAwABAAMAAAAAAAAAAwACAAMAAAAAAAAAAwADAAMAAAAAAAAAAwAEAAMAAAAAAAAAAwAFAAMAAAAAAAAAAwAGAAMAAAAAAAAAAwAHAAMAAAAAAAAAAgAIAAMAAAAAAAAAAgAIAAQAAAAAAAAAAgAIAAUAAAAAAAAAAgAHAAUAAAAAAAAAAgAGAAUAAAAAAAAAAwAFAAUAAAAAAAAAAwAEAAUAAAAAAAAAAwADAAUAAAAAAAAABAACAAQAAAAAAAAAAwABAAQAAAAAAAAAAwD//wQAAAAAAAAAAwD//wUAAAAAAAAAAwABAAUAAAAAAAAAAwAAAAUAAAAAAAAAAwACAAUAAAAAAAAAAwADAAQAAAAAAAAAAgAEAAQAAAAAAAAAAwAFAAQAAAAAAAAAAwAGAAQAAAAAAAAAAwAHAAQAAAAAAAAAAgAIAAIAAAAAAAAABAAIAAEAAAAAAAAADQAIAAAAAAAAAAAACgAIAP//AAAAAAAAAwD//wIAAAAAAAAABAD/////AAAAAAAAAwD//wAAAAAAAAAACgADAP//AAAAAAAAAwADAAAAAAAAAAAACgADAAEAAAAAAAAADQADAAIAAAAAAAAABAAEAAIAAAAAAAAABAAEAAEAAAAAAAAADQAEAAAAAAAAAAAACgAEAP//AAAAAAAAAwAFAP//AAAAAAAAAwAFAAAAAAAAAAAACgAFAAEAAAAAAAAADQAFAAIAAAAAAAAABAAGAAIAAAAAAAAABAAGAAEAAAAAAAAADQAGAAAAAAAAAAAACgAGAP//AAAAAAAAAwAHAP//AAAAAAAAAwAHAAAAAAAAAAAACgAHAAEAAAAAAAAADQAHAAIAAAAAAAAABAD//wYAAAAAAAAAAwD//wcAAAAAAAAAAwD//wgAAAAAAAAAAwD//wkAAAAAAAAAAwD//woAAAAAAAAAAwD//wsAAAAAAAAAAwAAAAYAAAAAAAAAAwAAAAcAAAAAAAAAAwAAAAgAAAAAAAAAAwAAAAkAAAAAAAAAAwAAAAoAAAAAAAAAAwAAAAsAAAAAAAAAAwABAAYAAAAAAAAAAwABAAcAAAAAAAAAAwABAAgAAAAAAAAAAwABAAkAAAAAAAAAAwABAAoAAAAAAAAAAwABAAsAAAAAAAAAAwACAAYAAAAAAAAAAgACAAcAAAAAAAAAAgACAAgAAAAAAAAAAgACAAkAAAAAAAAABAACAAoAAAAAAAAAAwACAAsAAAAAAAAAAwADAAYAAAAAAAAAAgADAAcAAAAAAAAAAQADAAgAAAAAAAAAAgADAAkAAAAAAAAABAADAAoAAAAAAAAAAwADAAsAAAAAAAAAAwAEAAYAAAAAAAAAAgAEAAcAAAAAAAAAAgAEAAgAAAAAAAAAAgAEAAkAAAAAAAAABAAEAAoAAAAAAAAAAwAEAAsAAAAAAAAAAwAFAAYAAAAAAAAAAwAFAAcAAAAAAAAAAgAFAAgAAAAAAAAABAAFAAkAAAAAAAAAAwAFAAoAAAAAAAAAAwAFAAsAAAAAAAAAAwAGAAYAAAAAAAAAAwAGAAcAAAAAAAAAAgAGAAgAAAAAAAAABAAGAAkAAAAAAAAAAwAGAAoAAAAAAAAAAwAGAAsAAAAAAAAAAwAHAAYAAAAAAAAAAgAHAAcAAAAAAAAAAgAHAAgAAAAAAAAAAgAHAAkAAAAAAAAABAAHAAoAAAAAAAAAAwAHAAsAAAAAAAAAAwAIAAYAAAAAAAAAAgAIAAcAAAAAAAAAAgAIAAgAAAAAAAAAAgAIAAkAAAAAAAAABAAIAAoAAAAAAAAAAwAIAAsAAAAAAAAAAwAJAP//AAAAAAAAAwAJAAAAAAAAAAAACgAJAAEAAAAAAAAADQAJAAIAAAAAAAAABAAJAAMAAAAAAAAAAgAJAAQAAAAAAAAAAgAJAAUAAAAAAAAAAgAJAAYAAAAAAAAAAgAJAAcAAAAAAAAAAgAJAAgAAAAAAAAAAgAJAAkAAAAAAAAABAAJAAoAAAAAAAAAAwAJAAsAAAAAAAAAAwAKAP//AAAAAAAAAwAKAAAAAAAAAAAACgAKAAEAAAAAAAAADQAKAAIAAAAAAAAABAAKAAMAAAAAAAAAAwAKAAQAAAAAAAAAAwAKAAUAAAAAAAAAAwAKAAYAAAAAAAAAAwAKAAcAAAAAAAAAAwAKAAgAAAAAAAAAAwAKAAkAAAAAAAAAAwAKAAoAAAAAAAAAAwAKAAsAAAAAAAAAAwALAP//AAAAAAAAAwALAAAAAAAAAAAACgALAAIAAAAAAAAABAALAAMAAAAAAAAAAwALAAQAAAAAAAAAAwALAAUAAAAAAAAAAwALAAYAAAAAAAAAAwALAAcAAAAAAAAAAwALAAgAAAAAAAAAAwALAAkAAAAAAAAAAwALAAoAAAAAAAAAAwALAAsAAAAAAAAAAwAMAP//AAAAAAAAAwAMAAAAAAAAAAAACgAMAAEAAAAAAAAACQAMAAIAAAAAAAAADAAMAAMAAAAAAAAADAAMAAQAAAAAAAAADAAMAAUAAAAAAAAADAAMAAYAAAAAAAAADAAMAAcAAAAAAAAADAAMAAgAAAAAAAAADAAMAAkAAAAAAAAADAAMAAoAAAAAAAAADAAMAAsAAAAAAAAADAANAP//AAAAAAAAAwANAAAAAAAAAAAAAwANAAEAAAAAAAAACwANAAIAAAAAAAAACwANAAMAAAAAAAAACwANAAQAAAAAAAAACwANAAUAAAAAAAAACwANAAYAAAAAAAAACwANAAcAAAAAAAAACwANAAgAAAAAAAAACwANAAkAAAAAAAAACwANAAoAAAAAAAAACwANAAsAAAAAAAAACwAOAP//AAAAAAAAAwAOAAAAAAAAAAAAAwAOAAEAAAAAAAAAAwAOAAIAAAAAAAAAAwAOAAMAAAAAAAAAAwAOAAQAAAAAAAAAAwAOAAUAAAAAAAAAAwAOAAYAAAAAAAAAAwAOAAcAAAAAAAAAAwAOAAgAAAAAAAAAAwAOAAkAAAAAAAAAAwAOAAoAAAAAAAAAAwAOAAsAAAAAAAAAAwAPAP//AAAAAAAAAwAPAAAAAAAAAAAAAwAPAAEAAAAAAAAAAwAPAAIAAAAAAAAAAwAPAAMAAAAAAAAAAwAPAAQAAAAAAAAAAwAPAAUAAAAAAAAAAwAPAAYAAAAAAAAAAwAPAAcAAAAAAAAAAwAPAAgAAAAAAAAAAwAPAAkAAAAAAAAAAwAPAAoAAAAAAAAAAwAPAAsAAAAAAAAAAwALAAEAAAAAAAAADQAAAAAAAAAAAAAACgAAAAEAAAAAAAAADQAAAAIAAAAAAAAABAAAAAMAAAAAAAAAAwAAAAQAAAAAAAAAAwA=")
 tile_set = SubResource("TileSet_jjdoh")
 
-[node name="TurnManager" parent="." node_paths=PackedStringArray("player_module", "npc_container", "enemy_container", "interactives_container") instance=ExtResource("1_b6bp6")]
-player_module = NodePath("../PlayerModule")
+[node name="TurnManager" parent="." node_paths=PackedStringArray("npc_container", "enemy_container", "interactives_container") instance=ExtResource("1_b6bp6")]
 npc_container = NodePath("../NPC Container")
 enemy_container = NodePath("../Enemy Container")
 interactives_container = NodePath("../Interactives Container")
@@ -227,178 +65,5 @@ position = Vector2(144, 128)
 
 [node name="NPC Container" type="Node2D" parent="."]
 
-[node name="PlayerModule" type="Node2D" parent="."]
-script = ExtResource("16_d84s7")
-_entity = NodePath("Player2D")
-_camera = NodePath("Camera2D")
-metadata/_custom_type_script = "uid://kreg7knmfr1j"
-
-[node name="Player2D" parent="PlayerModule" instance=ExtResource("1_lxegh")]
+[node name="PlayerModule" parent="." instance=ExtResource("16_xdkey")]
 position = Vector2(128, 64)
-
-[node name="CommandMenu" type="Node2D" parent="PlayerModule" node_paths=PackedStringArray("ui_container", "lists")]
-script = ExtResource("14_7ip5i")
-ui_container = NodePath("../Camera2D/UIContainer")
-lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SkillsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SpellsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/ItemsList")]
-skill_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_d84s7"), SubResource("Resource_sauxk"), SubResource("Resource_3u3mk")])
-magic_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_l2lt0"), SubResource("Resource_ocnqy"), SubResource("Resource_tobie"), SubResource("Resource_islog")])
-item_actions = Array[ExtResource("15_l2lt0")]([SubResource("Resource_0t4oo"), SubResource("Resource_jvmxx"), SubResource("Resource_j78yn")])
-
-[node name="Camera2D" type="Camera2D" parent="PlayerModule" node_paths=PackedStringArray("subject")]
-position = Vector2(112, 80)
-zoom = Vector2(3, 3)
-script = ExtResource("14_xdkey")
-subject = NodePath("../Player2D")
-close_follow = true
-
-[node name="UIContainer" type="Control" parent="PlayerModule/Camera2D"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -112.0
-offset_top = -72.0
-offset_right = 112.0
-offset_bottom = 72.0
-
-[node name="CommandMenu" type="Control" parent="PlayerModule/Camera2D/UIContainer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("19_u2uj7")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="PlayerModule/Camera2D/UIContainer/CommandMenu"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
-theme = SubResource("Theme_xdkey")
-texture = ExtResource("16_0fxje")
-patch_margin_left = 4
-patch_margin_top = 8
-patch_margin_right = 4
-patch_margin_bottom = 8
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="MainList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-allow_search = false
-item_count = 3
-item_0/text = "Skills"
-item_0/icon = ExtResource("17_wes0v")
-item_1/text = "Spells"
-item_1/icon = ExtResource("18_1t0dy")
-item_2/text = "Items"
-item_2/icon = ExtResource("19_6w5x8")
-script = ExtResource("24_6w5x8")
-remember_cursor_position = true
-
-[node name="SkillsList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-allow_search = false
-item_count = 3
-item_0/text = "Push"
-item_1/text = "Torque"
-item_2/text = "3-Tap"
-script = ExtResource("24_6w5x8")
-remember_cursor_position = true
-
-[node name="SpellsList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-allow_search = false
-item_count = 4
-item_0/text = "Flame"
-item_0/icon = ExtResource("24_k7uxw")
-item_1/text = "Shock"
-item_1/icon = ExtResource("25_u2uj7")
-item_2/text = "Grow"
-item_2/icon = ExtResource("26_tq2tj")
-item_3/text = "Demi"
-item_3/icon = ExtResource("27_l2lt0")
-script = ExtResource("24_6w5x8")
-remember_cursor_position = true
-
-[node name="ItemsList" type="ItemList" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-allow_search = false
-item_count = 3
-item_0/text = "Heart"
-item_1/text = "Time Dial"
-item_2/text = "Lund Key"
-script = ExtResource("24_6w5x8")
-remember_cursor_position = true
-
-[node name="MenuCursorBox" type="Control" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 0
-offset_right = 4.0
-offset_bottom = 1.0
-
-[node name="MenuCursor" type="Node2D" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox"]
-unique_name_in_owner = true
-position = Vector2(-2, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
-texture = ExtResource("25_jiwvv")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerModule/Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_u2uj7")
-}
-autoplay = "wiggle"
