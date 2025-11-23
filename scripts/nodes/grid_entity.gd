@@ -38,10 +38,10 @@ var faced_position: Vector2i:
 ## When setting this value, this object's Grid position is automatically updated.
 var grid_position: Vector2i:
   get():
-    return Grid.get_grid_coords(position);
+    return Grid.get_grid_coords(global_position);
   set(grid_vector):
     Grid.remove(self, grid_position);
-    position = Grid.get_world_coords(grid_vector);
+    global_position = Grid.get_world_coords(grid_vector);
     Grid.put(self, grid_position);
 
 
