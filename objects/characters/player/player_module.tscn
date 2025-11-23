@@ -1,14 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=19 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://objects/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="2_7iogb"]
-[ext_resource type="Script" uid="uid://ckx4y5pqfqg6k" path="res://objects/system/command_menu/command_menu.gd" id="3_3k65y"]
-[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://scripts/actions/field_actions/scripts/field_action.gd" id="4_7hiuf"]
-[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://scripts/actions/field_actions/scripts/print_log_action.gd" id="5_si0qk"]
-[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://textures/system/icon-fire.png" id="6_4tfgr"]
-[ext_resource type="Texture2D" uid="uid://b1vo5c1c0vbw8" path="res://textures/system/icon-thunder.png" id="7_ybx00"]
-[ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://textures/system/icon-plant.png" id="8_85q7o"]
-[ext_resource type="Texture2D" uid="uid://dkhd2f7ywih0j" path="res://textures/system/icon-orb.png" id="9_2mukj"]
+[ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://objects/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://objects/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://objects/system/command_menu/command_menu_ui.gd" id="11_7lunh"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="12_tcvj7"]
@@ -17,87 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://textures/system/icon-items.png" id="15_lxu83"]
 [ext_resource type="Script" uid="uid://372k1qqga746" path="res://objects/system/command_menu/item_list.gd" id="16_3cofi"]
 [ext_resource type="Texture2D" uid="uid://cro06oopey0eh" path="res://textures/system/icon-pointer.png" id="17_nvsln"]
-
-[sub_resource type="Resource" id="Resource_d84s7"]
-script = ExtResource("5_si0qk")
-action_name = "Shove"
-action_description = "Push objects two tiles away."
-action_time_cost = 15.0
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_sauxk"]
-script = ExtResource("5_si0qk")
-action_name = "Torque"
-action_description = "Rotate heavy or stuck objects."
-action_time_cost = 15.0
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_3u3mk"]
-script = ExtResource("5_si0qk")
-action_name = "Knock"
-action_description = "Use a secret knock pattern."
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_l2lt0"]
-script = ExtResource("5_si0qk")
-action_name = "Flame"
-action_description = "Burn distant targets."
-action_time_cost = 15.0
-small_icon = ExtResource("6_4tfgr")
-limit_type = 2
-uses_remaining = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_ocnqy"]
-script = ExtResource("5_si0qk")
-action_name = "Shock"
-action_description = "Electrify distant targets."
-action_time_cost = 15.0
-small_icon = ExtResource("7_ybx00")
-limit_type = 2
-uses_remaining = 5
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_tobie"]
-script = ExtResource("5_si0qk")
-action_name = "Grow"
-action_description = "Rapidly grow plant life."
-action_time_cost = 7.5
-small_icon = ExtResource("8_85q7o")
-limit_type = 2
-uses_remaining = 2
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_islog"]
-script = ExtResource("5_si0qk")
-action_name = "Hole"
-action_description = "Create a rift in spacetime."
-action_time_cost = 15.0
-small_icon = ExtResource("9_2mukj")
-limit_type = 2
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_0t4oo"]
-script = ExtResource("5_si0qk")
-action_name = "Heart"
-action_description = "Heal one point of damage."
-limit_type = 1
-uses_remaining = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_jvmxx"]
-script = ExtResource("5_si0qk")
-action_name = "Time Dial"
-action_description = "Slow time down for a while."
-limit_type = 1
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_j78yn"]
-script = ExtResource("5_si0qk")
-action_name = "Lund Key"
-action_description = "A key with a garden motif."
-limit_type = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
 
@@ -170,15 +83,11 @@ _entity = NodePath("Player2D")
 _camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://kreg7knmfr1j"
 
-[node name="Player2D" parent="." instance=ExtResource("2_7iogb")]
+[node name="Player2D" parent="." node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
+inventory = NodePath("../Inventory")
 
-[node name="CommandMenu" type="Node2D" parent="." node_paths=PackedStringArray("ui_container", "lists")]
-script = ExtResource("3_3k65y")
-ui_container = NodePath("../Camera2D/UIContainer")
-lists = [NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/MainList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SkillsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/SpellsList"), NodePath("../Camera2D/UIContainer/CommandMenu/NinePatchRect/ItemsList")]
-skill_actions = Array[ExtResource("4_7hiuf")]([SubResource("Resource_d84s7"), SubResource("Resource_sauxk"), SubResource("Resource_3u3mk")])
-magic_actions = Array[ExtResource("4_7hiuf")]([SubResource("Resource_l2lt0"), SubResource("Resource_ocnqy"), SubResource("Resource_tobie"), SubResource("Resource_islog")])
-item_actions = Array[ExtResource("4_7hiuf")]([SubResource("Resource_0t4oo"), SubResource("Resource_jvmxx"), SubResource("Resource_j78yn")])
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource("3_08fk3")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
 zoom = Vector2(3, 3)
@@ -194,7 +103,7 @@ offset_top = -72.0
 offset_right = 112.0
 offset_bottom = 72.0
 
-[node name="CommandMenu" type="Control" parent="Camera2D/UIContainer"]
+[node name="CommandMenu" type="Control" parent="Camera2D/UIContainer" node_paths=PackedStringArray("_inventory", "_back_panel", "_main_list", "_options_list")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -202,6 +111,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("11_7lunh")
+_inventory = NodePath("../../../Inventory")
+_back_panel = NodePath("NinePatchRect")
+_main_list = NodePath("NinePatchRect/MainList")
+_options_list = NodePath("NinePatchRect/OptionsList")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/UIContainer/CommandMenu"]
 layout_mode = 1
@@ -224,7 +137,6 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [node name="MainList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -248,7 +160,7 @@ item_2/icon = ExtResource("15_lxu83")
 script = ExtResource("16_3cofi")
 remember_cursor_position = true
 
-[node name="SkillsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+[node name="OptionsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -263,58 +175,6 @@ grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 allow_search = false
-item_count = 3
-item_0/text = "Push"
-item_1/text = "Torque"
-item_2/text = "3-Tap"
-script = ExtResource("16_3cofi")
-remember_cursor_position = true
-
-[node name="SpellsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-allow_search = false
-item_count = 4
-item_0/text = "Flame"
-item_0/icon = ExtResource("6_4tfgr")
-item_1/text = "Shock"
-item_1/icon = ExtResource("7_ybx00")
-item_2/text = "Grow"
-item_2/icon = ExtResource("8_85q7o")
-item_3/text = "Demi"
-item_3/icon = ExtResource("9_2mukj")
-script = ExtResource("16_3cofi")
-remember_cursor_position = true
-
-[node name="ItemsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-allow_search = false
-item_count = 3
-item_0/text = "Heart"
-item_1/text = "Time Dial"
-item_2/text = "Lund Key"
 script = ExtResource("16_3cofi")
 remember_cursor_position = true
 
