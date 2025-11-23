@@ -4,10 +4,6 @@ extends Node2D
 @export var ui_container: Control;
 @export var lists: Array[ItemList];
 
-@export_group('Menu Content')
-@export var skill_actions: Array[FieldAction];
-@export var magic_actions: Array[FieldAction];
-@export var item_actions: Array[FieldAction];
 
 var active_index := 0;
 
@@ -18,6 +14,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
   
+  # TODO This is going to go into Player2D, along with the other controls.
   if Input.is_action_just_pressed('open_action_menu'):
     if not ui_container.visible:
       ui_container.show();
@@ -26,6 +23,8 @@ func _process(_delta: float) -> void:
       active_index = 0;
       ui_container.hide();
   
+  # TODO This will be a signal connection to Main and OptionsList instead of a button check.
+  # TODO ItemList may need some logic to know to listen for 'interact'
   elif Input.is_action_just_pressed('interact') and _is_open():
     if active_index == 0:
       active_index = _get_current_submenu_selection_index() + 1;
@@ -35,6 +34,7 @@ func _process(_delta: float) -> void:
       active_index = 0;
       ui_container.hide();
 
+  # TODO ItemList may need some logic to know to listen for 'cancel'
   elif Input.is_action_just_pressed('cancel'):
     if active_index != 0:
       active_index = 0;
