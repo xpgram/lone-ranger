@@ -78,7 +78,7 @@ func resize_cursor_memory(new_size: int) -> void:
 
   # Fill empty slots with new memory structs.
   for i in range(old_size, new_size):
-    _memory_contexts.append(SubmenuMemory.new());
+    _memory_contexts[i] = SubmenuMemory.new();
 
 
 ## Changes the menu content to [param content: Array<ListItem | FieldAction>] and updates
