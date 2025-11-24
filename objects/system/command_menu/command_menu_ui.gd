@@ -122,7 +122,7 @@ func close() -> void:
   # TODO Does release_focus also trigger the built-in signal focus_exited()?
 
 
-## 
+## Bind listeners to inventory signals.
 func _connect_to_inventory() -> void:
   _inventory.abilities_updated.connect(func (items): _update_submenu_content(_abilities_submenu_content, items));
   _inventory.magic_updated.connect(func (items): _update_submenu_content(_magic_submenu_content, items));
@@ -150,7 +150,7 @@ func _connect_to_item_lists() -> void:
   _options_list.go_back.connect(func (): _switch_to_main_list());
 
 
-## 
+## Configure child ItemList nodes.
 func _configure_item_lists() -> void:
   # TODO Set main_list content should include only options that have submenu content.
   _main_list.set_content(MAIN_LIST_OPTIONS, 0);
