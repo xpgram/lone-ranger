@@ -84,15 +84,13 @@ func get_current_page() -> int:
   return clampi(_cursor_memory.page_index, 0, _num_pages);
 
 
-## 
+## Gets the index for the currently selected menu option.
 func get_current_selection_index() -> int:
   var selected_items := get_selected_items();
-  # TODO Account for pages
-  #   I think I gotta add `page_size * memory.page_index`
-  return (
-    0 if selected_items.size() == 0
-    else selected_items[0]
-  );
+  var selected_index := 0 if selected_items.size() == 0 else selected_items[0];
+  selected_index += page_size * get_current_page();
+  selected_index = clampi(selected_index, 0, _menu_content.size());
+  return selected_index;
 
 
 ## Sets all list item tooltips to disabled.
