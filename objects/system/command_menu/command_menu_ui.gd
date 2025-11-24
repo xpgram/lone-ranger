@@ -91,7 +91,8 @@ func wait_to_open():
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  if not has_focus():
+  # TODO Cleaner way of asking if descendants have focus.
+  if not _main_list.has_focus() and not _options_list.has_focus():
     return;
 
   # If the action menu is open (it is), then allow players to close it.
