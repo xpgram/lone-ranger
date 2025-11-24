@@ -165,7 +165,7 @@ func _update_main_list_options() -> void:
   pass
 
 
-##
+## Switch the command menu context to its home menu.
 func _switch_to_main_list() -> void:
   _update_main_list_options();
   active_menu = Submenu.Main;
@@ -174,29 +174,20 @@ func _switch_to_main_list() -> void:
   _main_list.open();
 
 
-##
+## Switch the command menu context to a submenu of [FieldAction]s.
 func _switch_to_options_list(submenu: Submenu) -> void:
-  # Populate options list with the active submenu content.
-  var options_list_content: Array[FieldAction];
-  match active_menu:
-    Submenu.Abilities:
-      options_list_content = _abilities_submenu_content;
-    Submenu.Magic:
-      options_list_content = _magic_submenu_content;
-    Submenu.Items:
-      options_list_content = _items_submenu_content;
-  _populate_options_list(options_list_content, active_menu);
+  var options_content_switch := {
+    Submenu.Abilities: _abilities_submenu_content,
+    Submenu.Magic: _magic_submenu_content,
+    Submenu.Items: _items_submenu_content,
+  };
+
+  # Quit early if submenu is not found in the dictionary of menu contents.
+  if not options_content_switch.has(submenu):
+    return;
+
+  _options_list.set_content(options_content_switch[submenu], submenu);
+  active_menu = submenu;
 
   _main_list.close();
   _options_list.open();
-
-
-## 
-func _populate_options_list(actions: Array[FieldAction], menu: Submenu) -> void:
-  _options_list.clear();
-
-  # TODO actions is assumed to be the entire list; ItemList will handle paging.
-  for action in actions:
-    _options_list.add_item(action.action_name, action.small_icon);
-
-  _options_list.switch_memory(menu); # TODO Write this method
