@@ -157,10 +157,9 @@ func _change_to_page(page_number: int) -> void:
 
 
 ## Adds [param item] to the items list.
-func _add_normal_item(item: Variant) -> void:
-  # TODO Does this `item.[non-existent member]` return null or throw an error?
-  var item_name: String = item.name if item.name else '';
-  var item_icon: Resource = item.icon if item.icon else null;
+func _add_normal_item(item: RefCounted) -> void:
+  var item_name: String = item.name if item.get('name') is String else '';
+  var item_icon: Resource = item.icon if item.get('icon') is Resource else null;
   add_item(item_name, item_icon);
 
 
