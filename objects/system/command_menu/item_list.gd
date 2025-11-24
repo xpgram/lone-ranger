@@ -69,12 +69,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 ## Sets the number of different submenu memory contexts this item list should have.
-func resize_cursor_memory(size: int) -> void:
+func resize_cursor_memory(new_size: int) -> void:
   var old_size := _memory_contexts.size();
-  _memory_contexts.resize(size);
+  _memory_contexts.resize(new_size);
   
   # Fill empty slots with new memory structs.
-  for i in range(old_size, size):
+  for i in range(old_size, new_size):
     _memory_contexts.append(SubmenuMemory.new());
 
 
