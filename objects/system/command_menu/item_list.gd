@@ -19,6 +19,11 @@ var page_size := 6;
 var _menu_content: Array;
 
 ##
+var _num_pages: int:
+  get():
+    return ceil(_menu_content.size() / float(page_size));
+
+##
 var _cursor_memories: Array[SubmenuMemory] = [ SubmenuMemory.new() ];
 
 ## 
@@ -50,6 +55,12 @@ func set_memory_index(index: int) -> void:
   _cursor_memory = _cursor_memories[index];
 
 
+##
+func set_content(content: Array) -> void:
+  _menu_content = content;
+  # TODO Set active page using get_current_page() which clamps the value
+
+
 ## 
 func open() -> void:
   show();
@@ -68,10 +79,16 @@ func close() -> void:
   hide();
 
 
+##
+func get_current_page() -> int:
+  return clampi(_cursor_memory.page_index, 0, _num_pages);
+
+
 ## 
 func get_current_selection_index() -> int:
   var selected_items := get_selected_items();
   # TODO Account for pages
+  #   I think I gotta add `page_size * memory.page_index`
   return (
     0 if selected_items.size() == 0
     else selected_items[0]
