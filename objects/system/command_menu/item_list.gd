@@ -39,6 +39,13 @@ func _ready() -> void:
   draw.connect(_on_draw_call);
 
 
+func _unhandled_input(event: InputEvent) -> void:
+  # listen for direction buttons
+  # listen for interact
+  # listen for cancel
+  pass
+
+
 ## Sets the number of different submenu memory contexts this item list should have.
 func resize_cursor_memory(size: int) -> void:
   var old_size := _cursor_memories.size();
