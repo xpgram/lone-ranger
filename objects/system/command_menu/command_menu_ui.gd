@@ -92,12 +92,17 @@ func wait_to_open():
 
 func _unhandled_input(event: InputEvent) -> void:
   # TODO Cleaner way of asking if descendants have focus.
-  if not _main_list.has_focus() and not _options_list.has_focus():
-    return;
+  # FIXME Re-enable after the open() call below has been moved.
+  # if not _main_list.has_focus() and not _options_list.has_focus():
+  #   return;
 
   # If the action menu is open (it is), then allow players to close it.
   if event.is_action_pressed('open_action_menu'):
-    close();
+    if visible:
+      close();
+    else:
+      # FIXME This is actually a response to a call from Player2D.
+      open();
 
 
 ## Opens the menu in whatever state it was in when it was closed.
@@ -128,6 +133,8 @@ func _connect_to_inventory() -> void:
   _inventory.abilities_updated.connect(func (items): _update_submenu_content(_abilities_submenu_content, items));
   _inventory.magic_updated.connect(func (items): _update_submenu_content(_magic_submenu_content, items));
   _inventory.items_updated.connect(func (items): _update_submenu_content(_items_submenu_content, items));
+
+  _inventory.emit_full_inventory();
 
 
 ##
