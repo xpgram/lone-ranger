@@ -23,6 +23,25 @@ enum Submenu {
 }
 
 
+const MAIN_LIST_OPTIONS = [
+  {
+    'name': 'Skills',
+    'icon': preload('res://textures/system/icon-skill.png'),
+    'link_to': Submenu.Abilities,
+  },
+  {
+    'name': 'Magic',
+    'icon': preload('res://textures/system/icon-magic.png'),
+    'link_to': Submenu.Magic,
+  },
+  {
+    'name': 'Items',
+    'icon': preload('res://textures/system/icon-items.png'),
+    'link_to': Submenu.Items,
+  },
+];
+
+
 ## The _inventory to poll for contents when updating the menu content.
 @export var _inventory: PlayerInventory;
 
@@ -58,7 +77,7 @@ var _items_submenu_content: Array[FieldAction];
 func _ready() -> void:
   _connect_to_inventory();
   _connect_to_item_lists();
-  _configure_options_list();
+  _configure_item_lists();
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -110,11 +129,18 @@ func _connect_to_item_lists() -> void:
   #   Main (cancel) -> close()
   #   Options -> emit action_selected  # TODO I think I can give ItemList a custom signal, here
   #   Options (cancel) -> switch to Main
-  pass
+
+  _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
+  _main_list.go_back.connect(func (): close());
+
+  _options_list.item_chosen.connect(func (item: FieldAction): action_selected.emit(item));
+  _options_list.go_back.connect(func (): _switch_to_main_list());
 
 
 ## 
-func _configure_options_list() -> void:
+func _configure_item_lists() -> void:
+  # TODO Set main_list content should include only options that have submenu content.
+  _main_list.set_content(MAIN_LIST_OPTIONS, 0);
   _options_list.resize_cursor_memory(Submenu.size());
 
 
