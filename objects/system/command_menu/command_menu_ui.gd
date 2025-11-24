@@ -95,7 +95,7 @@ func _unhandled_input(event: InputEvent) -> void:
     return;
 
   # If the action menu is open (it is), then allow players to close it.
-  if event.is_action('open_action_menu'):
+  if event.is_action_pressed('open_action_menu'):
     close();
 
 

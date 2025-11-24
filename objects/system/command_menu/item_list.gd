@@ -52,22 +52,22 @@ func _unhandled_input(event: InputEvent) -> void:
   if not has_focus():
     return;
 
-  if event.is_action('move_up'):
+  if event.is_action_pressed('move_up'):
     _move_cursor(-1);
 
-  elif event.is_action('move_down'):
+  elif event.is_action_pressed('move_down'):
     _move_cursor(1);
 
-  elif event.is_action('move_left'):
+  elif event.is_action_pressed('move_left'):
     _move_page_cursor(-1);
 
-  elif event.is_action('move_right'):
+  elif event.is_action_pressed('move_right'):
     _move_page_cursor(1);
 
-  elif event.is_action('interact'):
+  elif event.is_action_pressed('interact'):
     _emit_item_chosen();
 
-  elif event.is_action('cancel'):
+  elif event.is_action_pressed('cancel'):
     _emit_go_back();
 
 
