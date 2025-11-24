@@ -1,8 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=26 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://objects/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="2_7iogb"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://objects/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
+[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://scripts/actions/field_actions/scripts/field_action.gd" id="4_08fk3"]
+[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://scripts/actions/field_actions/scripts/print_log_action.gd" id="5_jru4w"]
+[ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://textures/system/icon-orbital.png" id="6_g13rh"]
+[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://textures/system/icon-fire.png" id="7_7iogb"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://objects/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://objects/system/command_menu/command_menu_ui.gd" id="11_7lunh"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="12_tcvj7"]
@@ -11,6 +15,41 @@
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://textures/system/icon-items.png" id="15_lxu83"]
 [ext_resource type="Script" uid="uid://372k1qqga746" path="res://objects/system/command_menu/item_list.gd" id="16_3cofi"]
 [ext_resource type="Texture2D" uid="uid://cro06oopey0eh" path="res://textures/system/icon-pointer.png" id="17_nvsln"]
+
+[sub_resource type="Resource" id="Resource_3k65y"]
+script = ExtResource("5_jru4w")
+action_uid = &"orbital"
+action_name = "Orbital"
+action_description = "asvavdsave"
+action_hint = "aveaveav"
+action_time_cost = 15.0
+small_icon = ExtResource("6_g13rh")
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_7hiuf"]
+script = ExtResource("5_jru4w")
+action_uid = &"flame"
+action_name = "Flame"
+action_type = 1
+action_description = "asverave"
+action_hint = "avdsavea"
+action_time_cost = 15.0
+small_icon = ExtResource("7_7iogb")
+limit_type = 2
+uses_remaining = 2
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_si0qk"]
+script = ExtResource("5_jru4w")
+action_uid = &"heart"
+action_name = "Heart"
+action_type = 2
+action_description = "aveavfdsaf"
+action_hint = "avesvasef"
+small_icon = ExtResource("15_lxu83")
+limit_type = 1
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
 
@@ -88,6 +127,15 @@ inventory = NodePath("../Inventory")
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_08fk3")
+_abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
+&"orbital": SubResource("Resource_3k65y")
+})
+_magic = Dictionary[StringName, ExtResource("4_08fk3")]({
+&"flame": SubResource("Resource_7hiuf")
+})
+_items = Dictionary[StringName, ExtResource("4_08fk3")]({
+&"heart": SubResource("Resource_si0qk")
+})
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
 zoom = Vector2(3, 3)
