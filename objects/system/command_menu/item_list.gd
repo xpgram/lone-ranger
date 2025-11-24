@@ -49,37 +49,34 @@ func resize_cursor_memory(size: int) -> void:
     _cursor_memories.append(SubmenuMemory.new());
 
 
-## 
-## Will throw an error if index is out of range.
-func set_memory_index(index: int) -> void:
-  _cursor_memory = _cursor_memories[index];
-
-
-##
-func set_content(content: Array) -> void:
+## Changes the menu content to `param content: (ListItem | FieldAction)[]` and updates the
+## submenu memory context to `param memory_index`.
+func set_content(content: Array, memory_index: int) -> void:
   _menu_content = content;
-  # TODO Set active page using get_current_page() which clamps the value
+  _set_memory_index(memory_index);
+  _change_to_page(_cursor_memory.page_index);
 
 
-## 
+## Reveals this item list while grabbing input focus.
 func open() -> void:
   show();
   grab_focus();
 
+  # TODO Should this still go here? I might be treating _cursor_memory as more authoritative elsewhere.
   if remember_cursor_position:
     _self_select_item(_cursor_memory.cursor_index);
   else:
     _self_select_item(0);
 
 
-## 
+## Saves this item list's current state and hides it.
 func close() -> void:
   _cursor_memory.cursor_index = get_current_selection_index();
-  # TODO Save current page
+  _cursor_memory.page_index = get_current_page();
   hide();
 
 
-##
+## Returns the current page number.
 func get_current_page() -> int:
   return clampi(_cursor_memory.page_index, 0, _num_pages);
 
@@ -98,6 +95,40 @@ func get_current_selection_index() -> int:
 func _disable_tooltips_for_all_items() -> void:
   for i in range(item_count):
     set_item_tooltip_enabled(i, false);
+
+
+## Sets the in-use Submenu memory.
+## Will throw an error if `param index` is out of range.
+func _set_memory_index(index: int) -> void:
+  _cursor_memory = _cursor_memories[index];
+
+
+## Clears and repopulates the menu with items from `param page_number`.
+## Tries to preserve selection cursor position.
+func _change_to_page(page_number: int) -> void:
+  _cursor_memory.page_index = clampi(page_number, 0, _num_pages);
+  var page_content := _menu_content.slice(page_number, page_number + page_size);
+
+  clear();
+
+  for item in page_content:
+    # TODO Handle other list item types, like the generic struct.
+    if item is FieldAction:
+      _add_field_action_item(item);
+
+  _disable_tooltips_for_all_items();
+  _self_select_item(_cursor_memory.cursor_index);
+
+
+## 
+func _add_normal_item(item) -> void:
+  # IMPLEMENT I don't expect a type or make any checks here. It's also not used, I don't think.
+  add_item(item.name, item.icon);
+
+
+## Adds `param action` to the items list.
+func _add_field_action_item(action: FieldAction) -> void:
+  add_item(action.action_name, action.small_icon);
 
 
 ## Set the selection cursor position and emit associated triggers.
