@@ -216,6 +216,7 @@ func _emit_go_back() -> void:
 ## returns a number within `[0, range]` where exceeding either limit yields a number
 ## relative to the other limit: like Pacman.
 func _wrap_clampi(value_range: int, value: int) -> int:
+  value_range = 1 if value_range <= 0 else value_range;
   return (2 * value_range + value) % value_range;
 
 
