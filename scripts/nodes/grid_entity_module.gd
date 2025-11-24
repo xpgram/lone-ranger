@@ -9,15 +9,6 @@ class_name GridEntityModule
 extends Node2D
 
 
-# TODO Make this a button?
-# TODO Automatically hide by context? "am I a tscn? then hide all children"
-## If true, child elements other than the wrapped entity are hidden.
-@export var hide_elements := false:
-  set(value):
-    hide_elements = value;
-    _set_element_visibility(not hide_elements);
-
-
 ## The Grid entity wrapped by this module.
 ## **Note:** use `func get_entity()` instead to get correct static typing.
 var _entity: NodePath;
@@ -40,7 +31,7 @@ func _get_property_list() -> Array[Dictionary]:
 
 
 func _ready() -> void:
-  _set_element_visibility(hide_elements);
+  _set_element_visibility();
 
 
 # TODO Wait for a _entity.queue_freed signal and destroy self.
@@ -53,11 +44,14 @@ func get_entity() -> GridEntity:
 
 
 ## Sets the visibility of all nodes other than the wrapped entity to `param is_visible`.
-func _set_element_visibility(value: bool) -> void:
-  if not Engine.is_editor_hint():
+func _set_element_visibility() -> void:
+  var not_in_editor := not Engine.is_editor_hint();
+  var in_own_tscn := owner == null;
+
+  if not_in_editor or in_own_tscn:
     return;
 
   for child in get_children():
-    child.visible = value;
+    child.visible = false;
   
   get_entity().visible = true;
