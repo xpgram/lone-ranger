@@ -31,11 +31,11 @@ enum Submenu {
 
 ## The list of selectable second-layer menus. This list is used to choose which other
 ## menus to navigate to.
-@export var _main_list: ItemList;
+@export var _main_list: CommandMenuItemList;
 
 ## The list of selectable options in a second-layer menu. This list is populated with
 ## content from the player _inventory.
-@export var _options_list: ItemList;
+@export var _options_list: CommandMenuItemList;
 
 
 ## Which submenu of the CommandMenu is being shown.
@@ -111,9 +111,8 @@ func _connect_to_item_lists() -> void:
 
 ## 
 func _configure_options_list() -> void:
-  # Tell OptionsList how many memories it should hold.
-  #   use OptionsList.switch_memory(Submenu.Magic) to focus a known SubmenuMemory
-  pass
+  _options_list.resize_cursor_memory(Submenu.size());
+  _options_list.set_memory_index(Submenu.Main);
 
 
 ##
@@ -148,9 +147,3 @@ func _populate_options_list(actions: Array[FieldAction], menu: Submenu) -> void:
     _options_list.add_item(action.action_name, action.small_icon);
 
   _options_list.switch_memory(menu); # TODO Write this method
-
-
-# TODO This can go into the ItemList script, maybe.
-class SubmenuMemory:
-  var cursor_index := 0;
-  var page_index := 0;
