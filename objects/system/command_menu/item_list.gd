@@ -86,6 +86,7 @@ func get_current_page() -> int:
 
 ## Gets the index for the currently selected menu option.
 func get_current_selection_index() -> int:
+  # TODO Would it make sense to treat _cursor_memory.cursor_index as more authoritative?
   var selected_items := get_selected_items();
   var selected_index := 0 if selected_items.size() == 0 else selected_items[0];
   selected_index += page_size * get_current_page();
