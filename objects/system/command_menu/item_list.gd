@@ -39,7 +39,7 @@ func _ready() -> void:
   draw.connect(_on_draw_call);
 
 
-## 
+## Sets the number of different submenu memory contexts this item list should have.
 func resize_cursor_memory(size: int) -> void:
   var old_size := _cursor_memories.size();
   _cursor_memories.resize(size);
