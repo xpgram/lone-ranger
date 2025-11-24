@@ -45,6 +45,7 @@ const MAIN_LIST_OPTIONS = [
 ## The _inventory to poll for contents when updating the menu content.
 @export var _inventory: PlayerInventory;
 
+# TODO Either: resize to fit the main or options list, or remove this reference.
 ## The backdrop panel to the items list. This is resized according to the size needs of
 ## the submenu being shown.
 @export var _back_panel: Control;
@@ -79,8 +80,20 @@ func _ready() -> void:
   _connect_to_item_lists();
   _configure_item_lists();
 
+  close();
+
+  # TODO Remove this function after Player2D can open the menu themselves.
+  wait_to_open();
+
+func wait_to_open():
+  await get_tree().create_timer(1.5).timeout;
+  open_from_start();
+
 
 func _unhandled_input(event: InputEvent) -> void:
+  if not has_focus():
+    return;
+
   # If the action menu is open (it is), then allow players to close it.
   if event.is_action('open_action_menu'):
     close();

@@ -49,6 +49,9 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+  if not has_focus():
+    return;
+
   if event.is_action('move_up'):
     _move_cursor(-1);
 
