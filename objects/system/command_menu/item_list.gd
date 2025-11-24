@@ -2,9 +2,6 @@ class_name CommandMenuItemList
 extends ItemList
 
 
-# TODO Fix `param variable` notation to [param variable]
-
-
 ## Emitted when an item has been activated. Contains the activated item.
 signal item_chosen(item: Variant);
 
@@ -22,9 +19,10 @@ var page_size := 6;
 
 ## The raw list of item data for this menu. These are not the same as the ItemList's own
 ## array of list-item nodes, but the data that CommandMenuItemList uses to create those
-## nodes.
-## The data accepted here must have a `prop name` and optionally a `prop icon`, and may
-## otherwise contain whatever you like. The one exception to this are **FieldActions**,
+## nodes. [br]
+##
+## The data accepted here must have a `member name` and optionally an `member icon`, and
+## may otherwise contain whatever you like. The one exception to this are [FieldAction]s,
 ## which are understood as-is.
 var _menu_content: Array;
 
@@ -80,11 +78,11 @@ func resize_cursor_memory(size: int) -> void:
     _memory_contexts.append(SubmenuMemory.new());
 
 
-## Changes the menu content to `param content: Array<ListItem | FieldAction>` and updates the
-## submenu memory context to `param memory_index`.
+## Changes the menu content to [param content: Array<ListItem | FieldAction>] and updates
+## the submenu memory context to [param memory_index]. [br]
 ##
-## The "**ListItem**" described here is any object with a `prop name` and optionally a
-## `prop icon`, and may otherwise contain whatever you like.
+## The "`ListItem`" described here is any object with a `member name` and optionally a
+## `member icon`, and may otherwise contain whatever you like.
 func set_content(content: Array, memory_index: int) -> void:
   _menu_content = content;
   _set_memory_index(memory_index);
@@ -132,12 +130,12 @@ func _disable_tooltips_for_all_items() -> void:
 
 
 ## Sets the in-use Submenu memory.
-## Will throw an error if `param index` is out of range.
+## Will throw an error if [param index] is out of range.
 func _set_memory_index(index: int) -> void:
   _memory = _memory_contexts[index];
 
 
-## Clears and repopulates the menu with items from `param page_number`.
+## Clears and repopulates the menu with items from [param page_number].
 ## Tries to preserve selection cursor position.
 func _change_to_page(page_number: int) -> void:
   _memory.page_index = clampi(page_number, 0, num_pages);
@@ -179,7 +177,7 @@ func _on_draw_call() -> void:
   _move_cursor_to_item(get_current_selection_index());
 
 
-## Moves the menu cursor graphic to the list-item at `param index`.
+## Moves the menu cursor graphic to the list-item at [param index].
 func _move_cursor_to_item(index: int) -> void:
   _menu_cursor_sprite.position.y = get_item_rect(index).get_center().y;
 
@@ -214,7 +212,7 @@ func _emit_go_back() -> void:
 
 
 # TODO Move to Utils autoload or something.
-## Given a number `param value` assumed to be within the range `[-range, 2*range]`,
+## Given a number [param value] assumed to be within the range `[-range, 2*range]`,
 ## returns a number within `[0, range]` where exceeding either limit yields a number
 ## relative to the other limit: like Pacman.
 func _wrap_clampi(value_range: int, value: int) -> int:
