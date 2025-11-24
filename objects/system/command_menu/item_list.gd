@@ -12,21 +12,21 @@ signal item_chosen(item: Variant);
 
 
 ##
-## A list of unknown type, though only FieldActions and ItemListItems are assemblable into list items.
-var menu_content: Array;
-
-##
 var page_size := 6;
 
 ##
-var cursor_memories: Array[SubmenuMemory] = [ SubmenuMemory.new() ];
+## A list of unknown type, though only FieldActions and ItemListItems are assemblable into list items.
+var _menu_content: Array;
+
+##
+var _cursor_memories: Array[SubmenuMemory] = [ SubmenuMemory.new() ];
 
 ## 
-var cursor_memory := cursor_memories[0];
+var _cursor_memory := _cursor_memories[0];
 
 
 ## 
-@onready var menu_cursor_sprite := %MenuCursor;
+@onready var _menu_cursor_sprite := %MenuCursor;
 
 
 func _ready() -> void:
@@ -36,18 +36,18 @@ func _ready() -> void:
 
 ## 
 func resize_cursor_memory(size: int) -> void:
-  var old_size := cursor_memories.size();
-  cursor_memories.resize(size);
+  var old_size := _cursor_memories.size();
+  _cursor_memories.resize(size);
   
   # Fill empty slots with new memory structs.
   for i in range(old_size, size):
-    cursor_memories.append(SubmenuMemory.new());
+    _cursor_memories.append(SubmenuMemory.new());
 
 
 ## 
 ## Will throw an error if index is out of range.
 func set_memory_index(index: int) -> void:
-  cursor_memory = cursor_memories[index];
+  _cursor_memory = _cursor_memories[index];
 
 
 ## 
@@ -56,14 +56,14 @@ func open() -> void:
   grab_focus();
 
   if remember_cursor_position:
-    _self_select_item(cursor_memory.cursor_index);
+    _self_select_item(_cursor_memory.cursor_index);
   else:
     _self_select_item(0);
 
 
 ## 
 func close() -> void:
-  cursor_memory.cursor_index = get_current_selection_index();
+  _cursor_memory.cursor_index = get_current_selection_index();
   # TODO Save current page
   hide();
 
@@ -97,7 +97,7 @@ func _on_draw_call() -> void:
 
 ## 
 func _move_cursor_to_item(index: int) -> void:
-  menu_cursor_sprite.position.y = get_item_rect(index).get_center().y;
+  _menu_cursor_sprite.position.y = get_item_rect(index).get_center().y;
 
 
 ## 
