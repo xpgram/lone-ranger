@@ -8,6 +8,7 @@ class_name CommandMenu
 extends Control
 
 # TODO Rename script to command_menu.gd after the other script is deleted.
+# TODO Fix `` to BBCode [] where it makes sense to.
 
 
 ## Emitted when the player selects a **FieldAction** option.
