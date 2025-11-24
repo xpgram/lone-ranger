@@ -157,7 +157,8 @@ func _change_to_page(page_number: int) -> void:
 
 
 ## Adds [param item] to the items list.
-func _add_normal_item(item: RefCounted) -> void:
+func _add_normal_item(item: Variant) -> void:
+  # FIXME How am I *supposed* to check if an object has a property? Duck-typing, hello?
   var item_name: String = item.name if item.get('name') is String else '';
   var item_icon: Resource = item.icon if item.get('icon') is Resource else null;
   add_item(item_name, item_icon);
