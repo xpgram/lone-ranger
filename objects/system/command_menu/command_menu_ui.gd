@@ -112,7 +112,6 @@ func _connect_to_item_lists() -> void:
 ## 
 func _configure_options_list() -> void:
   _options_list.resize_cursor_memory(Submenu.size());
-  _options_list.set_memory_index(Submenu.Main);
 
 
 ##
