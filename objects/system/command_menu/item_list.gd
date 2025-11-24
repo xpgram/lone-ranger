@@ -63,7 +63,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
   elif event.is_action('interact'):
     _emit_item_chosen();
-  
+
   elif event.is_action('cancel'):
     _emit_go_back();
 
@@ -72,7 +72,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func resize_cursor_memory(new_size: int) -> void:
   var old_size := _memory_contexts.size();
   _memory_contexts.resize(new_size);
-  
+
   # Fill empty slots with new memory structs.
   for i in range(old_size, new_size):
     _memory_contexts.append(SubmenuMemory.new());
