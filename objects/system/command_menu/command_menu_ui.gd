@@ -69,9 +69,11 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Opens the menu in whatever state it was in when it was closed.
 func open() -> void:
   visible = true;
-  # update options_list content, just in case?
-  # update main_list content, just in case?
-  # submenu.grab_focus(), but they'll need a custom method for that to utelize their memory.
+
+  if active_menu == Submenu.Main:
+    _switch_to_main_list();
+  else:
+    _switch_to_options_list(active_menu);
 
 
 ## Opens the menu after resetting the active menu to main.
