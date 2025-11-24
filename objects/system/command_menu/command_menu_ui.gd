@@ -61,9 +61,9 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  # This can capture any input not handled by the ItemList children, right?
-  # If so, listen for 'open_action_menu' and call close().
-  pass
+  # If the action menu is open (it is), then allow players to close it.
+  if event.is_action('open_action_menu'):
+    close();
 
 
 ## Opens the menu in whatever state it was in when it was closed.
@@ -86,6 +86,7 @@ func open_from_start() -> void:
 func close() -> void:
   visible = false;
   release_focus(); # TODO Does this work recursively?
+  # TODO Does release_focus also trigger the built-in signal focus_exited()?
 
 
 ## 
