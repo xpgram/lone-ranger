@@ -127,15 +127,26 @@ func _update_main_list_options() -> void:
 func _switch_to_main_list() -> void:
   _update_main_list_options();
   active_menu = Submenu.Main;
-  _options_list.hide(); # TODO Are these the right method calls?
-  _main_list.show();
+
+  _options_list.close();
+  _main_list.open();
 
 
 ##
 func _switch_to_options_list(submenu: Submenu) -> void:
-  # repopulate options_list by active_menu
-  _main_list.hide();  # TODO Are these the right method calls?
-  _options_list.show();
+  # Populate options list with the active submenu content.
+  var options_list_content: Array[FieldAction];
+  match active_menu:
+    Submenu.Abilities:
+      options_list_content = _abilities_submenu_content;
+    Submenu.Magic:
+      options_list_content = _magic_submenu_content;
+    Submenu.Items:
+      options_list_content = _items_submenu_content;
+  _populate_options_list(options_list_content, active_menu);
+
+  _main_list.close();
+  _options_list.open();
 
 
 ## 

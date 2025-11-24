@@ -2,10 +2,21 @@ class_name CommandMenuItemList
 extends ItemList
 
 
+##
+signal item_chosen(item: Variant);
+
+
 ## Whether the cursor position is remembered the next time this menu is opened after
 ## closing it.
 @export var remember_cursor_position := false;
 
+
+##
+## A list of unknown type, though only FieldActions and ItemListItems are assemblable into list items.
+var menu_content: Array;
+
+##
+var page_size := 6;
 
 ##
 var cursor_memories: Array[SubmenuMemory] = [ SubmenuMemory.new() ];
