@@ -30,8 +30,17 @@ func _ready() -> void:
     _advance_time(player.get_wait_action());
   );
 
+  # TODO Clean this up: I just wanted to try some demo stuff.
+  player.action_declared.connect(func (action: FieldActionSchedule):
+    _advance_time(action);
+  );
+
 
 func _unhandled_input(event: InputEvent) -> void:
+  # TODO Move this into Player2D, let Player2D communicate control impulses with action_declared
+  #   We can also have a signal action_impulse or something, if we need distinction between
+  #   a menu-selected thing (which may need to be buffered/rejected) and a button-press
+  #   thing (which should feel immediate, and otherwise discarded).
   if not event.is_pressed():
     return;
 

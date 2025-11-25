@@ -2,7 +2,7 @@ class_name Player2D
 extends GridEntity
 
 
-signal action_declared(action: FieldAction);
+signal action_declared(action: FieldActionSchedule);
 
 
 ##
@@ -31,7 +31,11 @@ func _ready() -> void:
   animation_player.animation_finished.connect(_on_animation_finished);
 
   # Pass through command menu actions as own actions.
-  _command_menu.action_selected.connect(func (action: FieldAction): action_declared.emit(action));
+  _command_menu.action_selected.connect(func (action: FieldAction):
+    var playbill := FieldActionPlaybill.new(self, faced_position, faced_direction);
+    var schedule := FieldActionSchedule.new(action, playbill);
+    action_declared.emit(schedule);
+  );
 
   # Setup focus control.
   focus_node.grab_focus();
