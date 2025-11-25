@@ -15,3 +15,13 @@ func has_branch_focus(node: Node) -> bool:
     return true;
 
   return node.is_ancestor_of(focus_owner);
+
+
+## If [param node] is, or is an ancestor of, the currently focused control node, releases
+## focus on the focused node.
+func release_branch_focus(node: Node) -> void:
+  if not has_branch_focus(node):
+    return;
+  
+  var focus_owner := get_viewport().gui_get_focus_owner();
+  focus_owner.release_focus();

@@ -2,6 +2,9 @@ class_name Player2D
 extends GridEntity
 
 
+signal action_declared(action: FieldAction);
+
+
 ##
 @export var inventory: PlayerInventory;
 
@@ -19,20 +22,34 @@ var current_animation_state: StringName = 'idle';
 ##
 @onready var _command_menu: CommandMenu = %CommandMenu;
 
+##
+@onready var _focus_node: Control = %FocusableControl;
+
 
 func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 
-  # TODO connect to command menu signals, pass them through to ??? (turn manager)
+  # Pass through command menu actions as own actions.
+  _command_menu.action_selected.connect(func (action: FieldAction): action_declared.emit(action));
+
+  # Setup focus control.
+  _focus_node.grab_focus();
+  _command_menu.closed.connect(func (): _focus_node.grab_focus());
+
+
+func _process(_delta: float) -> void:
+  if not get_viewport().gui_get_focus_owner():
+    _focus_node.grab_focus();
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  # TODO check for control
+  if not _focus_node.has_focus():
+    return;
 
   if event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
-    # TODO accept the input
+    _focus_node.accept_event();
 
 
 func get_wait_action() -> FieldActionSchedule:

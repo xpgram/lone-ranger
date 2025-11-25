@@ -11,6 +11,9 @@ extends Control
 ## Emitted when the player selects a **FieldAction** option.
 signal action_selected(action: FieldAction);
 
+## Emitted when the Command Menu system is closed.
+signal closed();
+
 
 enum Submenu {
   Main,
@@ -103,9 +106,9 @@ func open_from_start() -> void:
 
 ## Closes the menu and releases input focus.
 func close() -> void:
+  # Setting visibility here implicitly releases focus on children.
   visible = false;
-  release_focus(); # TODO Does this work recursively?
-  # TODO Does release_focus also trigger the built-in signal focus_exited()?
+  closed.emit();
 
 
 ## Bind listeners to inventory signals.

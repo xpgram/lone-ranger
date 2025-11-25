@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=39 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://objects/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="2_7iogb"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://scripts/actions/field_actions/scripts/print_log_action.gd" id="5_jru4w"]
 [ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://textures/system/icon-orbital.png" id="6_g13rh"]
 [ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://textures/system/icon-fire.png" id="7_7iogb"]
+[ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://scripts/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://objects/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://objects/system/command_menu/command_menu.gd" id="11_7lunh"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="12_tcvj7"]
@@ -235,6 +236,13 @@ _magic = Dictionary[StringName, ExtResource("4_08fk3")]({
 _items = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"heart": SubResource("Resource_si0qk")
 })
+
+[node name="FocusableControl" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("10_jru4w")
+metadata/_custom_type_script = "uid://dx2don6d2tt38"
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
 zoom = Vector2(3, 3)
