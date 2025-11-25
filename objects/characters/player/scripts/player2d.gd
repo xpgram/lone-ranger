@@ -20,10 +20,10 @@ var current_animation_state: StringName = 'idle';
 @onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
 
 ##
-@onready var _command_menu: CommandMenu = %CommandMenu;
+@onready var focus_node: Control = %FocusableControl;
 
 ##
-@onready var _focus_node: Control = %FocusableControl;
+@onready var _command_menu: CommandMenu = %CommandMenu;
 
 
 func _ready() -> void:
@@ -34,22 +34,22 @@ func _ready() -> void:
   _command_menu.action_selected.connect(func (action: FieldAction): action_declared.emit(action));
 
   # Setup focus control.
-  _focus_node.grab_focus();
-  _command_menu.closed.connect(func (): _focus_node.grab_focus());
+  focus_node.grab_focus();
+  _command_menu.closed.connect(func (): focus_node.grab_focus());
 
 
 func _process(_delta: float) -> void:
   if not get_viewport().gui_get_focus_owner():
-    _focus_node.grab_focus();
+    focus_node.grab_focus();
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  if not _focus_node.has_focus():
+  if not focus_node.has_focus():
     return;
 
   if event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
-    _focus_node.accept_event();
+    focus_node.accept_event();
 
 
 func get_wait_action() -> FieldActionSchedule:
