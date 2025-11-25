@@ -11,4 +11,4 @@ func has_branch_focus(node: Node) -> bool:
   elif node is Control and (node as Control).has_focus():
     return true;
 
-  return focus_owner.is_ancestor_of(node);
+  return node.is_ancestor_of(focus_owner);
