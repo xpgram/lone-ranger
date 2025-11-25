@@ -1,8 +1,11 @@
 extends Node
 
 
-## Returns true if the given node is, or is an ancestor of, the currently focused control
-## node.
+## Returns true if [param node] is, or is an ancestor of, the currently focused control
+## node. [br]
+##
+## In combination with [method Control.accept_input], this is an effective means of
+## letting input events bubble up the scene tree, but only from focused child to parent.
 func has_branch_focus(node: Node) -> bool:
   var focus_owner := get_viewport().gui_get_focus_owner();
 
