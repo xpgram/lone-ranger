@@ -42,11 +42,6 @@ const MAIN_LIST_OPTIONS = [
 ## The _inventory to poll for contents when updating the menu content.
 @export var _inventory: PlayerInventory;
 
-# TODO Either: resize to fit the main or options list, or remove this reference.
-## The backdrop panel to the items list. This is resized according to the size needs of
-## the submenu being shown.
-@export var _back_panel: Control;
-
 ## The list of selectable second-layer menus. This list is used to choose which other
 ## menus to navigate to.
 @export var _main_list: CommandMenuItemList;
