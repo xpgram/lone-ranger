@@ -112,7 +112,7 @@ func open() -> void:
 
 ## Saves this item list's current state and hides it.
 func close() -> void:
-  _memory.cursor_index = get_current_selection_index();
+  _memory.cursor_index = get_page_selection_index();
   _memory.page_index = get_current_page();
   hide();
 
@@ -122,11 +122,22 @@ func get_current_page() -> int:
   return clampi(_memory.page_index, 0, num_pages);
 
 
-## Gets the index for the currently selected menu option.
-func get_current_selection_index() -> int:
+## Gets the index for the currently selected menu option on the current page. [br]
+##
+## The page index is for the menu's currently displayed items. Use
+## [method get_content_selection_index] if you want the index for all displayable items.
+func get_page_selection_index() -> int:
   # TODO Would it make sense to treat _memory.cursor_index as more authoritative?
   var selected_items := get_selected_items();
-  var selected_index := 0 if selected_items.size() == 0 else selected_items[0];
+  return 0 if selected_items.size() == 0 else selected_items[0];
+
+
+## Gets the content index for the currently selected menu option. [br]
+##
+## The content index is for the aggregate list of all page items. Use
+## [method get_page_selection_index] if you want the index for the current page.
+func get_content_selection_index() -> int:
+  var selected_index := get_page_selection_index();
   selected_index += page_size * get_current_page();
   selected_index = clampi(selected_index, 0, _menu_content.size());
   return selected_index;
@@ -187,7 +198,7 @@ func _self_select_item(index: int) -> void:
 
 ## Handler for draw call events.
 func _on_draw_call() -> void:
-  _move_cursor_to_item(get_current_selection_index());
+  _move_cursor_to_item(get_page_selection_index());
 
 
 ## Moves the menu cursor graphic to the list-item at [param index].
@@ -215,7 +226,7 @@ func _move_page_cursor(direction: int) -> void:
 
 ## Emits the item_chosen signal with the data of the list-item that was activated.
 func _emit_item_chosen() -> void:
-  var action_index := get_current_selection_index();
+  var action_index := get_content_selection_index();
   item_chosen.emit(_menu_content[action_index]);
 
 
