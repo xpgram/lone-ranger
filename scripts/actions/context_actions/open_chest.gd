@@ -13,15 +13,26 @@ func can_interact(actor: GridEntity) -> bool:
 
 func perform_interaction_async(actor: GridEntity) -> void:
   chest.is_open = true;
-
-  print('%s obtained a %s...' % [actor.name, chest.contents]);
-  # TODO contents is a struct type, including... I guess I'm not sure.
-  # TODO initiator.has_node('Inventory')
-  # TODO initiator.inventory.add(contents.item * contents.number)
+  actor.faced_direction = Vector2i.DOWN;
 
   if actor is Player2D:
-    actor.faced_direction = Vector2i.DOWN;
-    actor.set_animation_state('item_get!');
-    await get_tree().create_timer(1.0).timeout;
+    _give_items_to_actor(actor);
+    await _play_animation_async(actor);
 
-    actor.set_animation_state('idle');
+
+# TODO Can I write `actor: InventoryHaver` as an interface if I just describe a class that
+#   has an inventory reference?
+##
+func _give_items_to_actor(actor: Player2D) -> void:
+  for item in chest.contents:
+    actor.inventory.add(item);
+
+    # TODO If such a message is logged, it should probably be logged by the inventory itself.
+    print('%s obtained a %s...' % [actor.name, item.action_name]);
+
+
+##
+func _play_animation_async(actor: Player2D) -> void:
+  actor.set_animation_state('item_get!');
+  await get_tree().create_timer(1.0).timeout;
+  actor.set_animation_state('idle');

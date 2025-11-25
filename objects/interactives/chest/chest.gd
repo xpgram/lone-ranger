@@ -3,7 +3,7 @@ class_name ChestEntity
 extends GridEntity
 
 ## The contents of this chest.
-@export var contents: String;
+@export var contents: Array[FieldAction];
 
 ## Whether this Chest has been opened.
 @export var is_open := false:

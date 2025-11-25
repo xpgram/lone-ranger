@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=23 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://objects/system/turn_manager/turn_manager.tscn" id="1_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://objects/world/floor_stairs.tscn" id="1_v30wm"]
@@ -13,9 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://5munun7kx34b" path="res://objects/world/wall_labyrinth_corner_br.tscn" id="10_7ip5i"]
 [ext_resource type="PackedScene" uid="uid://cj3wuhb4d13m3" path="res://objects/world/wall_labyrinth_corner_tl.tscn" id="11_0fxje"]
 [ext_resource type="PackedScene" uid="uid://b4b7wf713qkek" path="res://objects/world/wall_labyrinth_corner_tr.tscn" id="12_m2e2k"]
+[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://scripts/actions/field_actions/scripts/field_action.gd" id="15_0fxje"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://objects/enemies/mouth/enemy_mouth.tscn" id="15_b6bp6"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://objects/interactives/chest/chest.tscn" id="16_iefdx"]
+[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://scripts/actions/field_actions/scripts/print_log_action.gd" id="16_m2e2k"]
 [ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://objects/characters/player/player_module.tscn" id="16_xdkey"]
+[ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://textures/system/icon-magic.png" id="17_p7u2r"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
@@ -36,6 +39,19 @@ scenes/13/scene = ExtResource("5_iefdx")
 terrain_set_0/mode = 0
 sources/0 = SubResource("TileSetScenesCollectionSource_1aara")
 
+[sub_resource type="Resource" id="Resource_is78a"]
+script = ExtResource("16_m2e2k")
+action_uid = &"libra"
+action_name = "Libra"
+action_type = 1
+action_description = "aveavd"
+action_hint = "avdsvae"
+action_time_cost = 15.0
+small_icon = ExtResource("17_p7u2r")
+limit_type = 2
+uses_remaining = 2
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
 [node name="Game" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -53,7 +69,7 @@ interactives_container = NodePath("../Interactives Container")
 
 [node name="Chest" parent="Interactives Container" instance=ExtResource("16_iefdx")]
 position = Vector2(144, 48)
-contents = "Fira spell"
+contents = Array[ExtResource("15_0fxje")]([SubResource("Resource_is78a")])
 solid = true
 
 [node name="Enemy Container" type="Node2D" parent="."]
@@ -68,4 +84,3 @@ position = Vector2(144, 128)
 
 [node name="PlayerModule" parent="." instance=ExtResource("16_xdkey")]
 position = Vector2(128, 64)
-hide_elements = true
