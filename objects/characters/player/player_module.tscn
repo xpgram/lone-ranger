@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=38 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://objects/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://objects/characters/player/player.tscn" id="2_7iogb"]
@@ -37,6 +37,98 @@ action_time_cost = 15.0
 small_icon = ExtResource("7_7iogb")
 limit_type = 2
 uses_remaining = 2
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_08fk3"]
+script = ExtResource("5_jru4w")
+action_uid = &"a"
+action_name = "TestA"
+action_type = 1
+action_time_cost = 15.0
+small_icon = ExtResource("14_tgoko")
+limit_type = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_jru4w"]
+script = ExtResource("5_jru4w")
+action_uid = &"b"
+action_name = "TestB"
+action_type = 1
+action_time_cost = 15.0
+small_icon = ExtResource("14_tgoko")
+limit_type = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g13rh"]
+load_path = "res://.godot/imported/icon-magic.png-d412f8a45c1f7169441f030ecbd6fd34.ctex"
+
+[sub_resource type="Resource" id="Resource_7iogb"]
+script = ExtResource("5_jru4w")
+action_uid = &"c"
+action_name = "TestC"
+action_type = 1
+action_time_cost = 15.0
+small_icon = SubResource("CompressedTexture2D_g13rh")
+limit_type = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3k65y"]
+load_path = "res://.godot/imported/icon-magic.png-d412f8a45c1f7169441f030ecbd6fd34.ctex"
+
+[sub_resource type="Resource" id="Resource_4tfgr"]
+script = ExtResource("5_jru4w")
+action_uid = &"d"
+action_name = "TestD"
+action_type = 1
+action_time_cost = 15.0
+small_icon = SubResource("CompressedTexture2D_3k65y")
+limit_type = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ybx00"]
+load_path = "res://.godot/imported/icon-magic.png-d412f8a45c1f7169441f030ecbd6fd34.ctex"
+
+[sub_resource type="Resource" id="Resource_85q7o"]
+script = ExtResource("5_jru4w")
+action_uid = &"e"
+action_name = "TestE"
+action_type = 1
+action_time_cost = 15.0
+small_icon = SubResource("CompressedTexture2D_ybx00")
+limit_type = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2mukj"]
+load_path = "res://.godot/imported/icon-magic.png-d412f8a45c1f7169441f030ecbd6fd34.ctex"
+
+[sub_resource type="Resource" id="Resource_yid0f"]
+script = ExtResource("5_jru4w")
+action_uid = &"f"
+action_name = "TestF"
+action_type = 1
+action_time_cost = 15.0
+small_icon = SubResource("CompressedTexture2D_2mukj")
+limit_type = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7lunh"]
+load_path = "res://.godot/imported/icon-magic.png-d412f8a45c1f7169441f030ecbd6fd34.ctex"
+
+[sub_resource type="Resource" id="Resource_tcvj7"]
+script = ExtResource("5_jru4w")
+action_uid = &"g"
+action_name = "TestG"
+action_type = 1
+action_time_cost = 15.0
+small_icon = SubResource("CompressedTexture2D_7lunh")
+limit_type = 2
+uses_remaining = 3
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="Resource" id="Resource_si0qk"]
@@ -131,7 +223,14 @@ _abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"orbital": SubResource("Resource_3k65y")
 })
 _magic = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"flame": SubResource("Resource_7hiuf")
+&"a": SubResource("Resource_08fk3"),
+&"b": SubResource("Resource_jru4w"),
+&"c": SubResource("Resource_7iogb"),
+&"d": SubResource("Resource_4tfgr"),
+&"e": SubResource("Resource_85q7o"),
+&"f": SubResource("Resource_yid0f"),
+&"flame": SubResource("Resource_7hiuf"),
+&"g": SubResource("Resource_tcvj7")
 })
 _items = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"heart": SubResource("Resource_si0qk")
