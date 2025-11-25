@@ -31,7 +31,7 @@ func _ready() -> void:
   );
 
   # TODO Clean this up: I just wanted to try some demo stuff.
-  player.action_declared.connect(func (action: FieldActionSchedule):
+  player.action_declared.connect(func (action: FieldActionSchedule, _buffer: bool):
     _advance_time(action);
   );
 

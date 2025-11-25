@@ -2,7 +2,7 @@ class_name Player2D
 extends GridEntity
 
 
-signal action_declared(action: FieldActionSchedule);
+signal action_declared(action: FieldActionSchedule, buffer: bool);
 
 
 ##
@@ -34,7 +34,7 @@ func _ready() -> void:
   _command_menu.action_selected.connect(func (action: FieldAction):
     var playbill := FieldActionPlaybill.new(self, faced_position, faced_direction);
     var schedule := FieldActionSchedule.new(action, playbill);
-    action_declared.emit(schedule);
+    action_declared.emit(schedule, true);
   );
 
   # Setup focus control.
