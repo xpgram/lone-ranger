@@ -13,9 +13,9 @@ signal go_back();
 ## closing it.
 @export var remember_cursor_position := false;
 
-
 ## The number of items that can be displayed per page.
-var page_size := 6;
+@export var page_size := 5;
+
 
 ## The raw list of item data for this menu. These are not the same as the ItemList's own
 ## array of list-item nodes, but the data that CommandMenuItemList uses to create those
