@@ -36,7 +36,6 @@ const MAIN_LIST_OPTIONS = [
     'icon': preload('res://textures/system/icon-items.png'),
     'link_to': Submenu.Items,
   },
-  # TODO Check an item that doesn't have an 'icon'
 ];
 
 

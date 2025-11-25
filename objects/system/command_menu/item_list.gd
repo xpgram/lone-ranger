@@ -26,12 +26,6 @@ signal go_back();
 ## which are understood as-is.
 var _menu_content: Array;
 
-# TODO Is this more clear as an explicit function? This feels weird.
-## The number of pages this menu's content has been sliced into.
-var num_pages: int:
-  get():
-    return ceil(_menu_content.size() / float(page_size));
-
 ## The array of memory contexts managed by this item list.
 var _memory_contexts: Array[SubmenuMemory] = [ SubmenuMemory.new() ];
 
@@ -120,7 +114,12 @@ func close() -> void:
 
 ## Returns the current page number.
 func get_current_page() -> int:
-  return clampi(_memory.page_index, 0, num_pages);
+  return clampi(_memory.page_index, 0, get_page_count());
+
+
+## Returns the number of pages this menu's content has been sliced into.
+func get_page_count() -> int:
+  return ceil(_menu_content.size() / float(page_size));
 
 
 ## Gets the index for the currently selected menu option on the current page. [br]
@@ -159,7 +158,7 @@ func _set_memory_index(index: int) -> void:
 ## Clears and repopulates the menu with items from [param page_number].
 ## Tries to preserve selection cursor position.
 func _change_to_page(page_number: int) -> void:
-  _memory.page_index = clampi(page_number, 0, num_pages);
+  _memory.page_index = clampi(page_number, 0, get_page_count());
 
   clear();
 
@@ -178,7 +177,6 @@ func _change_to_page(page_number: int) -> void:
 
 ## Adds [param item] to the items list.
 func _add_normal_item(item: Variant) -> void:
-  # FIXME How am I *supposed* to check if an object has a property? Duck-typing, hello?
   var item_name: String = item.name if item.get('name') is String else '';
   var item_icon: Resource = item.icon if item.get('icon') is Resource else null;
   add_item(item_name, item_icon);
@@ -220,7 +218,7 @@ func _move_cursor(direction: int) -> void:
 ## display. The cursor, if moved beyond a range limit, will wrap around to the other side.
 func _move_page_cursor(direction: int) -> void:
   _memory.page_index += direction;
-  _memory.page_index = _wrap_clampi(_memory.page_index, num_pages - 1);
+  _memory.page_index = _wrap_clampi(_memory.page_index, get_page_count() - 1);
 
   _change_to_page(_memory.page_index);
 
