@@ -17,9 +17,10 @@ extends Node2D
 ## action timer.
 @export var observes_golem_time := false;
 
-
+# TODO This attribute-tag system should be a component node, actually.
 ## A dictionary of applied effects and qualities.
 @export var _attributes: Dictionary[StringName, GridEntityAttribute];
+
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
 var faced_direction := Vector2i.DOWN:
