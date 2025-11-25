@@ -36,6 +36,7 @@ const MAIN_LIST_OPTIONS = [
     'icon': preload('res://textures/system/icon-items.png'),
     'link_to': Submenu.Items,
   },
+  # TODO Check an item that doesn't have an 'icon'
 ];
 
 
@@ -88,20 +89,13 @@ func wait_to_open():
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  # TODO Cleaner way of asking if descendants have focus.
-  # FIXME Re-enable after the open() call below has been moved.
-  # if not _main_list.has_focus() and not _options_list.has_focus():
-  #   return;
+  if not InputFocus.has_branch_focus(self):
+    return;
 
   # If the action menu is open (it is), then allow players to close it.
   if event.is_action_pressed('open_action_menu'):
-    if visible:
-      close();
-      accept_event();
-    else:
-      # FIXME This is actually a response to a call from Player2D.
-      open();
-      accept_event();
+    close();
+    accept_event();
 
 
 ## Opens the menu in whatever state it was in when it was closed.

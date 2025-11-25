@@ -49,7 +49,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  if not has_focus():
+  if not InputFocus.has_branch_focus(self):
     return;
 
   if event.is_action_pressed('move_up'):
@@ -103,10 +103,11 @@ func open() -> void:
   show();
   grab_focus();
 
-  # TODO Should this still go here? I might be treating _memory as more authoritative elsewhere.
   if remember_cursor_position:
+    _change_to_page(_memory.page_index);
     _self_select_item(_memory.cursor_index);
   else:
+    _change_to_page(0);
     _self_select_item(0);
 
 
