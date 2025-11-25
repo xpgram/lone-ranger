@@ -26,19 +26,6 @@ action_time_cost = 15.0
 small_icon = ExtResource("6_g13rh")
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="Resource" id="Resource_7hiuf"]
-script = ExtResource("5_jru4w")
-action_uid = &"flame"
-action_name = "Flame"
-action_type = 1
-action_description = "asverave"
-action_hint = "avdsavea"
-action_time_cost = 15.0
-small_icon = ExtResource("7_7iogb")
-limit_type = 2
-uses_remaining = 2
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
 [sub_resource type="Resource" id="Resource_08fk3"]
 script = ExtResource("5_jru4w")
 action_uid = &"a"
@@ -115,6 +102,19 @@ action_time_cost = 15.0
 small_icon = SubResource("CompressedTexture2D_2mukj")
 limit_type = 2
 uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_7hiuf"]
+script = ExtResource("5_jru4w")
+action_uid = &"flame"
+action_name = "Flame"
+action_type = 1
+action_description = "asverave"
+action_hint = "avdsavea"
+action_time_cost = 15.0
+small_icon = ExtResource("7_7iogb")
+limit_type = 2
+uses_remaining = 2
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7lunh"]
@@ -250,7 +250,8 @@ offset_top = -72.0
 offset_right = 112.0
 offset_bottom = 72.0
 
-[node name="CommandMenu" type="Control" parent="Camera2D/UIContainer" node_paths=PackedStringArray("_inventory", "_back_panel", "_main_list", "_options_list")]
+[node name="CommandMenu" type="Control" parent="Camera2D/UIContainer" node_paths=PackedStringArray("_inventory", "_main_list", "_options_list")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -259,7 +260,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("11_7lunh")
 _inventory = NodePath("../../../Inventory")
-_back_panel = NodePath("NinePatchRect")
 _main_list = NodePath("NinePatchRect/MainList")
 _options_list = NodePath("NinePatchRect/OptionsList")
 

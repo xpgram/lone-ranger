@@ -74,13 +74,6 @@ func _ready() -> void:
 
   close();
 
-  # TODO Remove this function after Player2D can open the menu themselves.
-  wait_to_open();
-
-func wait_to_open():
-  await get_tree().create_timer(1.5).timeout;
-  open_from_start();
-
 
 func _unhandled_input(event: InputEvent) -> void:
   if not InputFocus.has_branch_focus(self):

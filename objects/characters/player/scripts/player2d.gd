@@ -2,22 +2,37 @@ class_name Player2D
 extends GridEntity
 
 
-@export var inventory: PlayerInventory:
-  get():
-    assert(inventory,
-      "Player inventory for '%s' was accessed, but inventory does not exist." % name);
-    return inventory;
+##
+@export var inventory: PlayerInventory;
 
+
+##
 var current_animation_state: StringName = 'idle';
 
+
+##
 @onready var animation_player: AnimationPlayer = %AnimationPlayer;
 
+##
 @onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
+
+##
+@onready var _command_menu: CommandMenu = %CommandMenu;
 
 
 func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
+
+  # TODO connect to command menu signals, pass them through to ??? (turn manager)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+  # TODO check for control
+
+  if event.is_action_pressed('open_action_menu'):
+    _command_menu.open_from_start();
+    # TODO accept the input
 
 
 func get_wait_action() -> FieldActionSchedule:
