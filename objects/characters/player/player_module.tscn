@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://textures/system/icon-orbital.png" id="6_g13rh"]
 [ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://textures/system/icon-fire.png" id="7_7iogb"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://objects/system/camera2d/camera_2d.gd" id="10_yid0f"]
-[ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://objects/system/command_menu/command_menu_ui.gd" id="11_7lunh"]
+[ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://objects/system/command_menu/command_menu.gd" id="11_7lunh"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://textures/system/command-menu.png" id="12_tcvj7"]
 [ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://textures/system/icon-skill.png" id="13_0e3mw"]
 [ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://textures/system/icon-magic.png" id="14_tgoko"]
