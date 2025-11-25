@@ -209,7 +209,7 @@ func _move_cursor_to_item(index: int) -> void:
 ## The cursor, if moved beyond a range limit, will wrap around to the other side.
 func _move_cursor(direction: int) -> void:
   _memory.cursor_index += direction;
-  _memory.cursor_index = _wrap_clampi(_memory.cursor_index, item_count - 1);
+  _memory.cursor_index = wrapi(_memory.cursor_index, 0, item_count);
 
   _self_select_item(_memory.cursor_index);
 
@@ -218,7 +218,7 @@ func _move_cursor(direction: int) -> void:
 ## display. The cursor, if moved beyond a range limit, will wrap around to the other side.
 func _move_page_cursor(direction: int) -> void:
   _memory.page_index += direction;
-  _memory.page_index = _wrap_clampi(_memory.page_index, get_page_count() - 1);
+  _memory.page_index = wrapi(_memory.page_index, 0, get_page_count());
 
   _change_to_page(_memory.page_index);
 
@@ -232,16 +232,6 @@ func _emit_item_chosen() -> void:
 ## Emits the 'go back' signal.
 func _emit_go_back() -> void:
   go_back.emit();
-
-
-# TODO Move to Utils autoload or something.
-## Given a number [param value] assumed to be within the range `[-range, 2*range]`,
-## returns a number within `[0, range]` where exceeding either limit yields a number
-## relative to the other limit: like Pacman.
-func _wrap_clampi(value: int, value_range: int) -> int:
-  # Add 1 to value_range to be range-inclusive.
-  value_range = 1 if value_range <= 0 else value_range + 1;
-  return (2 * value_range + value) % value_range;
 
 
 ## A struct to save state information about some variant of this options list.
