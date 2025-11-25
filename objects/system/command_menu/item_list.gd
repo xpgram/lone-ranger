@@ -52,25 +52,29 @@ func _unhandled_input(event: InputEvent) -> void:
   if not has_focus():
     return;
 
-  accept_event();
-
   if event.is_action_pressed('move_up'):
     _move_cursor(-1);
+    accept_event();
 
   elif event.is_action_pressed('move_down'):
     _move_cursor(1);
+    accept_event();
 
   elif event.is_action_pressed('move_left'):
     _move_page_cursor(-1);
+    accept_event();
 
   elif event.is_action_pressed('move_right'):
     _move_page_cursor(1);
+    accept_event();
 
   elif event.is_action_pressed('interact'):
     _emit_item_chosen();
+    accept_event();
 
   elif event.is_action_pressed('cancel'):
     _emit_go_back();
+    accept_event();
 
 
 ## Sets the number of different submenu memory contexts this item list should have.
