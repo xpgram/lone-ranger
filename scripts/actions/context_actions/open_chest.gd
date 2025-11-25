@@ -20,9 +20,7 @@ func perform_interaction_async(actor: GridEntity) -> void:
     await _play_animation_async(actor);
 
 
-# TODO Can I write `actor: InventoryHaver` as an interface if I just describe a class that
-#   has an inventory reference?
-##
+## Add the chest's contents to the inventory of [param actor].
 func _give_items_to_actor(actor: Player2D) -> void:
   for item in chest.contents:
     actor.inventory.add(item);
@@ -31,8 +29,10 @@ func _give_items_to_actor(actor: Player2D) -> void:
     print('%s obtained a %s...' % [actor.name, item.action_name]);
 
 
-##
+## Plays a scripted animation using [param actor].
 func _play_animation_async(actor: Player2D) -> void:
   actor.set_animation_state('item_get!');
   await get_tree().create_timer(1.0).timeout;
   actor.set_animation_state('idle');
+
+  # TODO This should trigger a dialogue box, shouldn't it?
