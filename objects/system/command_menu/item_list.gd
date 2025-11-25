@@ -226,8 +226,8 @@ func _move_page_cursor(direction: int) -> void:
 
 ## Emits the item_chosen signal with the data of the list-item that was activated.
 func _emit_item_chosen() -> void:
-  var action_index := get_content_selection_index();
-  item_chosen.emit(_menu_content[action_index]);
+  var item_index := get_content_selection_index();
+  item_chosen.emit(_menu_content[item_index]);
 
 
 ## Emits the 'go back' signal.
