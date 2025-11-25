@@ -148,9 +148,11 @@ func _set_memory_index(index: int) -> void:
 ## Tries to preserve selection cursor position.
 func _change_to_page(page_number: int) -> void:
   _memory.page_index = clampi(page_number, 0, num_pages);
-  var page_content := _menu_content.slice(page_number, page_number + page_size);
 
   clear();
+
+  var page_start_idx := page_number * page_size;
+  var page_content := _menu_content.slice(page_start_idx, page_start_idx + page_size);
 
   for item in page_content:
     if item is FieldAction:
@@ -177,8 +179,10 @@ func _add_field_action_item(action: FieldAction) -> void:
 
 ## Set the selection cursor position and emit associated triggers.
 func _self_select_item(index: int) -> void:
-  select(index);
-  item_selected.emit(index);
+  _memory.cursor_index = clampi(index, 0, item_count - 1);
+
+  select(_memory.cursor_index);
+  item_selected.emit(_memory.cursor_index);
 
 
 ## Handler for draw call events.
@@ -195,16 +199,16 @@ func _move_cursor_to_item(index: int) -> void:
 ## The cursor, if moved beyond a range limit, will wrap around to the other side.
 func _move_cursor(direction: int) -> void:
   _memory.cursor_index += direction;
-  _memory.cursor_index = _wrap_clampi(page_size, _memory.cursor_index);
+  _memory.cursor_index = _wrap_clampi(_memory.cursor_index, item_count - 1);
 
-  _move_cursor_to_item(_memory.cursor_index);
+  _self_select_item(_memory.cursor_index);
 
 
 ## Moves the page_cursor left or right, relative to its current position, then updates the
 ## display. The cursor, if moved beyond a range limit, will wrap around to the other side.
 func _move_page_cursor(direction: int) -> void:
   _memory.page_index += direction;
-  _memory.page_index = _wrap_clampi(num_pages, _memory.page_index);
+  _memory.page_index = _wrap_clampi(_memory.page_index, num_pages - 1);
 
   _change_to_page(_memory.page_index);
 
@@ -224,8 +228,9 @@ func _emit_go_back() -> void:
 ## Given a number [param value] assumed to be within the range `[-range, 2*range]`,
 ## returns a number within `[0, range]` where exceeding either limit yields a number
 ## relative to the other limit: like Pacman.
-func _wrap_clampi(value_range: int, value: int) -> int:
-  value_range = 1 if value_range <= 0 else value_range;
+func _wrap_clampi(value: int, value_range: int) -> int:
+  # Add 1 to value_range to be range-inclusive.
+  value_range = 1 if value_range <= 0 else value_range + 1;
   return (2 * value_range + value) % value_range;
 
 
