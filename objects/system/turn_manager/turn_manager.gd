@@ -36,40 +36,6 @@ func _ready() -> void:
   );
 
 
-func _unhandled_input(event: InputEvent) -> void:
-  # TODO Move this into Player2D, let Player2D communicate control impulses with action_declared
-  #   We can also have a signal action_impulse or something, if we need distinction between
-  #   a menu-selected thing (which may need to be buffered/rejected) and a button-press
-  #   thing (which should feel immediate, and otherwise discarded).
-  if not event.is_pressed():
-    return;
-
-  if event.is_action('move_up'):
-    _advance_time(
-      player.get_action_from_move_input(Vector2.UP)
-    );
-
-  elif event.is_action('move_down'):
-    _advance_time(
-      player.get_action_from_move_input(Vector2.DOWN)
-    );
-
-  elif event.is_action('move_left'):
-    _advance_time(
-      player.get_action_from_move_input(Vector2.LEFT)
-    );
-
-  elif event.is_action('move_right'):
-    _advance_time(
-      player.get_action_from_move_input(Vector2.RIGHT)
-    );
-
-  elif event.is_action('interact'):
-    _advance_time(
-      player.get_interact_action()
-    );
-
-
 ## Advances in-game events by triggering turn actions for each set of actors on the field.
 ## `player_schedule` describes the player's input to this process.
 func _advance_time(player_schedule: FieldActionSchedule) -> void:

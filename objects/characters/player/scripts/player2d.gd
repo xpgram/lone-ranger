@@ -51,7 +51,27 @@ func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
 
-  if event.is_action_pressed('open_action_menu'):
+  if event.is_action_pressed('move_up'):
+    action_declared.emit(get_action_from_move_input(Vector2.UP), false);
+    focus_node.accept_event();
+
+  elif event.is_action_pressed('move_down'):
+    action_declared.emit(get_action_from_move_input(Vector2.DOWN), false);
+    focus_node.accept_event();
+
+  elif event.is_action_pressed('move_left'):
+    action_declared.emit(get_action_from_move_input(Vector2.LEFT), false);
+    focus_node.accept_event();
+
+  elif event.is_action_pressed('move_right'):
+    action_declared.emit(get_action_from_move_input(Vector2.RIGHT), false);
+    focus_node.accept_event();
+
+  elif event.is_action_pressed('interact'):
+    action_declared.emit(get_interact_action(), false);
+    focus_node.accept_event();
+
+  elif event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
     focus_node.accept_event();
 

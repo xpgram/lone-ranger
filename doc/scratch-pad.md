@@ -18,7 +18,7 @@ Move input from TurnManager into Player2D. Let's try something like this:
   - [x] Called by Player2D: move_up -> get_move_action() -> _send_action()
   - [x] Called by CommandMenu: selection -> send_selection() -> player2d._send_action() (via signal connection)
   - [x] TurnManager knows when to buffer an action cast
-  - [ ] Player2D is responsible for player input, TurnManager only listens
+  - [x] Player2D is responsible for player input, TurnManager only listens
   - [ ] TurnManager knows how to handle multiple buffer requests (it doesn't)
   - [ ] Player2D can be told (by TurnManager, by ContextActions, ...) to shutdown input handling.
     - [ ] Test: you can't cast Flame while opening a chest and victory posing.
