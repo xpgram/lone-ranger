@@ -47,6 +47,12 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   # Player action
   @warning_ignore('redundant_await')
   await player_schedule.action.perform_async(player_schedule.playbill);
+
+  # TODO Is this really how I want to do this? Was this meant to go in the perform script?
+  #  Oh, it probably was. This will 'expend' your normal abilities, too. :p
+  if player_schedule.action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
+    player.inventory.expend(player_schedule.action.action_uid);
+
   await _perform_wait_async();
   # TODO 1 wait_async should be called every turn.
   #   More than 1 may be called depending on what else is happening.
