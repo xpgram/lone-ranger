@@ -162,6 +162,12 @@ func _change_to_page(page_number: int) -> void:
 
   clear();
 
+  # TODO Demo code that ought to be rewritten.
+  # Clear all Label children.
+  for child in get_children():
+    if child.name != 'Label':
+      remove_child(child);
+
   var page_start_idx := page_number * page_size;
   var page_content := _menu_content.slice(page_start_idx, page_start_idx + page_size);
 
@@ -185,6 +191,14 @@ func _add_normal_item(item: Variant) -> void:
 ## Adds [param action] to the items list.
 func _add_field_action_item(action: FieldAction) -> void:
   add_item(action.action_name, action.small_icon);
+
+  # TODO Demo code that should be cleaned up.
+  if action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
+    var label = $Label.duplicate();
+    label.text = str(action.uses_remaining);
+    label.position.y = 10 * (item_count - 1) + 8;
+    label.visible = true;
+    add_child(label);
 
 
 ## Set the selection cursor position and emit associated triggers.
