@@ -55,7 +55,7 @@ func add(action: FieldAction) -> void:
     dict[action.action_uid].uses_remaining += action.uses_remaining;
   else:
     dict[action.action_uid] = action;
-  
+
   _emit_update_signal(update_signal, dict);
 
 
@@ -132,9 +132,12 @@ func _get_inventory_dict(action_type: Enums.FieldActionType) -> Dictionary[Strin
       dict = _abilities;
     Enums.FieldActionType.Magic:
       dict = _magic;
-    Enums.FieldActionType.Item or Enums.FieldActionType.KeyItem:
+    # TODO Is there a way to combine these two? 'or' will match action_type with a boolean.
+    Enums.FieldActionType.Item:
       dict = _items;
-  
+    Enums.FieldActionType.KeyItem:
+      dict = _items;
+
   return dict;
 
 
@@ -149,7 +152,7 @@ func _get_update_signal(action_type: Enums.FieldActionType) -> Signal:
       update_signal = magic_updated;
     Enums.FieldActionType.Item or Enums.FieldActionType.KeyItem:
       update_signal = items_updated;
-  
+
   return update_signal;
 
 
