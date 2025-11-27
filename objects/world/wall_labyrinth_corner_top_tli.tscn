@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cylofrecntsbh"]
+
+[ext_resource type="Texture2D" uid="uid://dlhmrid4mxfno" path="res://textures/wall-labyrinth-top-tli.png" id="1_yxoey"]
+
+[node name="WallLabyrinthCornerTopTLi" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yxoey")
