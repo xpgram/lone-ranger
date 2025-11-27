@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://drf8kgobmnw62"]
+[gd_scene load_steps=3 format=3 uid="uid://drf8kgobmnw62"]
 
 [ext_resource type="Texture2D" uid="uid://bcwyhr3t7l5kc" path="res://textures/wall-labyrinth-bl.png" id="1_sg8ai"]
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://scripts/nodes/grid_entity.gd" id="2_ksadp"]
 
 [node name="WallLabyrinthCornerBL" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_sg8ai")
+
+[node name="GridEntity_Wall" type="Node2D" parent="."]
+script = ExtResource("2_ksadp")
+solid = true
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
