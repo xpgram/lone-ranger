@@ -150,7 +150,11 @@ func _get_update_signal(action_type: Enums.FieldActionType) -> Signal:
       update_signal = abilities_updated;
     Enums.FieldActionType.Magic:
       update_signal = magic_updated;
-    Enums.FieldActionType.Item or Enums.FieldActionType.KeyItem:
+    # TODO Is there a way to combine these two? 'or' will match action_type with a boolean.
+    # TODO Also, I just forgot to update this after updating the _get_inventory_dict above. Can we DRY these two?
+    Enums.FieldActionType.Item:
+      update_signal = items_updated;
+    Enums.FieldActionType.KeyItem:
       update_signal = items_updated;
 
   return update_signal;
