@@ -88,7 +88,7 @@ extends Resource
 
 @export_group('Limited Use')
 
-## Which kind of limiting system to use.
+## Which kind of limited quantity system to use.
 @export var limit_type := Enums.LimitedUseType.NoLimit;
 
 ## Counts the number of times this action may still be used, sort of like an inventory.
