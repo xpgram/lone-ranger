@@ -118,6 +118,9 @@ position = Vector2(400, -336)
 [node name="Enemy Mouth7" parent="Enemy Container" instance=ExtResource("15_b6bp6")]
 position = Vector2(512, -256)
 
+[node name="Enemy Mouth8" parent="Enemy Container" instance=ExtResource("15_b6bp6")]
+position = Vector2(496, 112)
+
 [node name="NPC Container" type="Node2D" parent="."]
 
 [node name="PlayerModule" parent="." instance=ExtResource("16_xdkey")]
