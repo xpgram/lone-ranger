@@ -51,7 +51,29 @@ func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
 
-  if event.is_action_pressed('move_up'):
+  # If 'brace' is held, then hold position for movement inputs.
+  if Input.is_action_pressed('brace'):
+    if event.is_action_pressed('move_up'):
+      action_declared.emit(get_action_from_brace_move_input(Vector2.UP), false);
+      focus_node.accept_event();
+      return;
+
+    elif event.is_action_pressed('move_down'):
+      action_declared.emit(get_action_from_brace_move_input(Vector2.DOWN), false);
+      focus_node.accept_event();
+      return;
+
+    elif event.is_action_pressed('move_left'):
+      action_declared.emit(get_action_from_brace_move_input(Vector2.LEFT), false);
+      focus_node.accept_event();
+      return;
+
+    elif event.is_action_pressed('move_right'):
+      action_declared.emit(get_action_from_brace_move_input(Vector2.RIGHT), false);
+      focus_node.accept_event();
+      return;
+
+  elif event.is_action_pressed('move_up'):
     action_declared.emit(get_action_from_move_input(Vector2.UP), false);
     focus_node.accept_event();
 
@@ -106,6 +128,20 @@ func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
     if action.can_perform(playbill):
       chosen_action = action;
       break;
+
+  return FieldActionSchedule.new(chosen_action, playbill);
+
+
+func get_action_from_brace_move_input(direction: Vector2i) -> FieldActionSchedule:
+  var chosen_action: FieldAction = FieldActionList.wait;
+  var playbill := FieldActionPlaybill.new(
+    self,
+    grid_position + direction,
+    direction,
+  );
+
+  if FieldActionList.spin.can_perform(playbill):
+    chosen_action = FieldActionList.spin;
 
   return FieldActionSchedule.new(chosen_action, playbill);
 
