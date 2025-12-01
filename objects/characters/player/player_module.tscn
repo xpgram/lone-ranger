@@ -201,6 +201,7 @@ script = ExtResource("10_jru4w")
 metadata/_custom_type_script = "uid://dx2don6d2tt38"
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
+ignore_rotation = false
 zoom = Vector2(3, 3)
 script = ExtResource("10_yid0f")
 subject = NodePath("../Player2D")
