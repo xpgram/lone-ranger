@@ -23,20 +23,21 @@ enum Submenu {
 }
 
 
+# TODO These icons should possibly be exported values. All of these properties, actually.
 const MAIN_LIST_OPTIONS = [
   {
     'name': 'Skills',
-    'icon': preload('res://textures/system/icon-skill.png'),
+    'icon': preload('uid://bogdmfl1vf1uv'),
     'link_to': Submenu.Abilities,
   },
   {
     'name': 'Magic',
-    'icon': preload('res://textures/system/icon-magic.png'),
+    'icon': preload('uid://ctu86c82jsblf'),
     'link_to': Submenu.Magic,
   },
   {
     'name': 'Items',
-    'icon': preload('res://textures/system/icon-items.png'),
+    'icon': preload('uid://c8hl7pwsr04fi'),
     'link_to': Submenu.Items,
   },
 ];
