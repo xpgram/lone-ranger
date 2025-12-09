@@ -1,0 +1,325 @@
+[gd_scene load_steps=33 format=3 uid="uid://eyhskerhpe2y"]
+
+[ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
+[ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
+[ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
+[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://utilities/actions/field_actions/field_action.gd" id="4_08fk3"]
+[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://utilities/actions/field_actions/scripts/print_log_action.gd" id="5_jru4w"]
+[ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures/system/icon-orbital.png" id="6_g13rh"]
+[ext_resource type="Texture2D" uid="uid://dkhd2f7ywih0j" path="res://assets/textures/system/icon-orb.png" id="7_3k65y"]
+[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://assets/textures/system/icon-fire.png" id="7_7iogb"]
+[ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://assets/textures/system/icon-plant.png" id="9_7hiuf"]
+[ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
+[ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
+[ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://entities/ui/command_menu/command_menu.gd" id="11_7lunh"]
+[ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://assets/textures/system/command-menu.png" id="12_tcvj7"]
+[ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://assets/textures/system/icon-skill.png" id="13_0e3mw"]
+[ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://assets/textures/system/icon-magic.png" id="14_tgoko"]
+[ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures/system/icon-items.png" id="15_lxu83"]
+[ext_resource type="Script" uid="uid://372k1qqga746" path="res://entities/ui/command_menu/item_list.gd" id="16_3cofi"]
+[ext_resource type="Texture2D" uid="uid://cro06oopey0eh" path="res://assets/textures/system/icon-pointer.png" id="17_nvsln"]
+
+[sub_resource type="Resource" id="Resource_3k65y"]
+script = ExtResource("5_jru4w")
+action_uid = &"orbital"
+action_name = "Orbital"
+action_description = "asvavdsave"
+action_hint = "aveaveav"
+action_time_cost = 15.0
+small_icon = ExtResource("6_g13rh")
+command_menu_sort_priority = 1
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_4tfgr"]
+script = ExtResource("5_jru4w")
+action_uid = &"push"
+action_name = "Push"
+action_description = "safdsa"
+action_hint = "esavdsa"
+action_time_cost = 15.0
+small_icon = ExtResource("7_3k65y")
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_7hiuf"]
+script = ExtResource("5_jru4w")
+action_uid = &"flame"
+action_name = "Flame"
+action_type = 1
+action_description = "asverave"
+action_hint = "avdsavea"
+action_time_cost = 15.0
+small_icon = ExtResource("7_7iogb")
+limit_type = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_ybx00"]
+script = ExtResource("5_jru4w")
+action_uid = &"grow"
+action_name = "Grow"
+action_type = 1
+action_description = "asvesav"
+action_hint = "dsave"
+action_time_cost = 15.0
+small_icon = ExtResource("9_7hiuf")
+command_menu_sort_priority = 1
+limit_type = 2
+uses_remaining = 4
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_si0qk"]
+script = ExtResource("5_jru4w")
+action_uid = &"heart"
+action_name = "Heart"
+action_type = 2
+action_description = "aveavfdsaf"
+action_hint = "avesvasef"
+small_icon = ExtResource("15_lxu83")
+limit_type = 1
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_85q7o"]
+script = ExtResource("5_jru4w")
+action_uid = &"time_dial"
+action_name = "Dial"
+action_type = 2
+action_description = "avesav"
+action_hint = "adsvaev"
+action_time_cost = 15.0
+small_icon = ExtResource("7_3k65y")
+command_menu_sort_sub_priority = 1
+limit_type = 1
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_2mukj"]
+script = ExtResource("5_jru4w")
+action_uid = &"wind_key"
+action_name = "Wind Key"
+action_type = 3
+action_description = "aseva"
+action_hint = "advesaf"
+command_menu_sort_priority = 1
+limit_type = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2uj7"]
+content_margin_left = 5.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+
+[sub_resource type="SystemFont" id="SystemFont_iefdx"]
+font_names = PackedStringArray("Monospace")
+font_weight = 700
+hinting = 2
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_xdkey"]
+default_font = SubResource("SystemFont_iefdx")
+default_font_size = 8
+ItemList/colors/font_color = Color(0, 0, 0, 1)
+ItemList/colors/font_hovered_color = Color(0, 0, 0, 1)
+ItemList/colors/font_hovered_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/guide_color = Color(0, 0, 0, 0)
+ItemList/constants/icon_margin = 2
+ItemList/constants/line_separation = 0
+ItemList/constants/v_separation = 0
+ItemList/styles/focus = SubResource("StyleBoxEmpty_k7uxw")
+ItemList/styles/panel = SubResource("StyleBoxEmpty_u2uj7")
+
+[sub_resource type="Animation" id="Animation_k7uxw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_u44ev"]
+resource_name = "wiggle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuCursor/Sprite2D:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u2uj7"]
+_data = {
+&"RESET": SubResource("Animation_k7uxw"),
+&"wiggle": SubResource("Animation_u44ev")
+}
+
+[node name="PlayerModule" type="Node2D"]
+script = ExtResource("1_g13rh")
+_entity = NodePath("Player2D")
+_camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://kreg7knmfr1j"
+
+[node name="Player2D" parent="." node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
+pushable = null
+observes_golem_time = null
+_attributes = null
+inventory = NodePath("../Inventory")
+
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource("3_08fk3")
+_abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
+&"orbital": SubResource("Resource_3k65y"),
+&"push": SubResource("Resource_4tfgr")
+})
+_magic = Dictionary[StringName, ExtResource("4_08fk3")]({
+&"flame": SubResource("Resource_7hiuf"),
+&"grow": SubResource("Resource_ybx00")
+})
+_items = Dictionary[StringName, ExtResource("4_08fk3")]({
+&"heart": SubResource("Resource_si0qk"),
+&"time_dial": SubResource("Resource_85q7o"),
+&"wind_key": SubResource("Resource_2mukj")
+})
+
+[node name="FocusableControl" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("10_jru4w")
+metadata/_custom_type_script = "uid://dx2don6d2tt38"
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
+ignore_rotation = false
+zoom = Vector2(3, 3)
+script = ExtResource("10_yid0f")
+subject = NodePath("../Player2D")
+close_follow = true
+
+[node name="UIContainer" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -112.0
+offset_top = -72.0
+offset_right = 112.0
+offset_bottom = 72.0
+
+[node name="CommandMenu" type="Control" parent="Camera2D/UIContainer" node_paths=PackedStringArray("_inventory", "_main_list", "_options_list")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_7lunh")
+_inventory = NodePath("../../../Inventory")
+_main_list = NodePath("NinePatchRect/MainList")
+_options_list = NodePath("NinePatchRect/OptionsList")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Camera2D/UIContainer/CommandMenu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = SubResource("Theme_xdkey")
+texture = ExtResource("12_tcvj7")
+patch_margin_left = 4
+patch_margin_top = 8
+patch_margin_right = 4
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MainList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+allow_search = false
+item_count = 3
+item_0/text = "Skills"
+item_0/icon = ExtResource("13_0e3mw")
+item_1/text = "Spells"
+item_1/icon = ExtResource("14_tgoko")
+item_2/text = "Items"
+item_2/icon = ExtResource("15_lxu83")
+script = ExtResource("16_3cofi")
+remember_cursor_position = true
+
+[node name="OptionsList" type="ItemList" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+allow_search = false
+script = ExtResource("16_3cofi")
+remember_cursor_position = true
+
+[node name="Label" type="Label" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/OptionsList"]
+visible = false
+layout_mode = 0
+offset_left = 46.0
+offset_right = 56.0
+offset_bottom = 10.0
+theme = SubResource("Theme_xdkey")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "2"
+horizontal_alignment = 2
+
+[node name="MenuCursorBox" type="Control" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 4.0
+offset_bottom = 1.0
+
+[node name="MenuCursor" type="Node2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox"]
+unique_name_in_owner = true
+position = Vector2(-2, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
+texture = ExtResource("17_nvsln")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/UIContainer/CommandMenu/NinePatchRect/MenuCursorBox/MenuCursor"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_u2uj7")
+}
+autoplay = "wiggle"

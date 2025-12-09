@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://hd6tv01qq0ed"]
+
+[ext_resource type="Script" uid="uid://wf7hbush7jb0" path="res://entities/grid_entities/enemies/mouth/enemy_mouth.gd" id="1_4nn12"]
+[ext_resource type="Texture2D" uid="uid://bn15smo1estix" path="res://assets/textures/chars/enemies/mouth-idle-0.png" id="1_ffl0m"]
+[ext_resource type="Texture2D" uid="uid://bkjae32eo8jlu" path="res://assets/textures/chars/enemies/mouth-idle-1.png" id="2_4nn12"]
+[ext_resource type="PackedScene" uid="uid://bv8yfn6m0oq2r" path="res://utilities/nodes/components/hp_component.tscn" id="4_ijwdy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ijwdy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ffl0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_4nn12")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[node name="EnemyMouth" type="Node2D"]
+script = ExtResource("1_4nn12")
+solid = true
+pushable = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_ijwdy")
+animation = &"idle"
+
+[node name="Stats" type="Node" parent="."]
+
+[node name="HPComponent" parent="Stats" instance=ExtResource("4_ijwdy")]

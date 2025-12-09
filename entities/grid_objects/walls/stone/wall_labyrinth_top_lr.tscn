@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbqi2kk8d3lkt"]
+
+[ext_resource type="Texture2D" uid="uid://cix1kil1yh5bs" path="res://assets/textures/wall-labyrinth-top-2lr.png" id="1_v3pie"]
+
+[node name="WallLabyrinthTopLR" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v3pie")
