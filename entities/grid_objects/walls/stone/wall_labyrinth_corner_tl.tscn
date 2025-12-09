@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cj3wuhb4d13m3"]
 
-[ext_resource type="Texture2D" uid="uid://cavrpakj4te4y" path="res://assets/textures/wall-labyrinth-tl.png" id="1_cf2ek"]
+[ext_resource type="Texture2D" uid="uid://cavrpakj4te4y" path="res://entities/grid_objects/walls/stone/images/wall-labyrinth-tl.png" id="1_cf2ek"]
 [ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="2_t2k8d"]
 
 [node name="WallLabyrinthCornerTL" type="Node2D"]

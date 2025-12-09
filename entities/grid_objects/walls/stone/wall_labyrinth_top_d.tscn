@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dqax5ap5h0s2q"]
 
-[ext_resource type="Texture2D" uid="uid://djwtd7bar0kf0" path="res://assets/textures/wall-labyrinth-top-l.png" id="1_xlkd0"]
+[ext_resource type="Texture2D" uid="uid://djwtd7bar0kf0" path="res://entities/grid_objects/walls/stone/images/wall-labyrinth-top-l.png" id="1_xlkd0"]
 
 [node name="WallLabyrinthTopD" type="Node2D"]
 

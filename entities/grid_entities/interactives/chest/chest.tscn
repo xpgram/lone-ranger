@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dqm128gxj3t0x"]
 
 [ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://entities/grid_entities/interactives/chest/chest.gd" id="1_ask4u"]
-[ext_resource type="Texture2D" uid="uid://csmw2bt1etsbl" path="res://assets/textures/entity-chest-closed.png" id="1_ome50"]
-[ext_resource type="Texture2D" uid="uid://cs5ag26gaa8d4" path="res://assets/textures/entity-chest-open.png" id="3_btvpo"]
+[ext_resource type="Texture2D" uid="uid://csmw2bt1etsbl" path="res://entities/grid_entities/interactives/chest/images/entity-chest-closed.png" id="1_ome50"]
+[ext_resource type="Texture2D" uid="uid://cs5ag26gaa8d4" path="res://entities/grid_entities/interactives/chest/images/entity-chest-open.png" id="3_btvpo"]
 [ext_resource type="Script" uid="uid://dct8xv6bwi7al" path="res://utilities/actions/context_actions/open_chest.gd" id="4_4ml27"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5bdfo"]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://hd6tv01qq0ed"]
 
 [ext_resource type="Script" uid="uid://wf7hbush7jb0" path="res://entities/grid_entities/enemies/mouth/enemy_mouth.gd" id="1_4nn12"]
-[ext_resource type="Texture2D" uid="uid://bn15smo1estix" path="res://assets/textures/chars/enemies/mouth-idle-0.png" id="1_ffl0m"]
-[ext_resource type="Texture2D" uid="uid://bkjae32eo8jlu" path="res://assets/textures/chars/enemies/mouth-idle-1.png" id="2_4nn12"]
-[ext_resource type="PackedScene" uid="uid://bv8yfn6m0oq2r" path="res://utilities/nodes/components/hp_component.tscn" id="4_ijwdy"]
+[ext_resource type="Texture2D" uid="uid://bn15smo1estix" path="res://entities/grid_entities/enemies/mouth/images/mouth-idle-0.png" id="1_ffl0m"]
+[ext_resource type="Texture2D" uid="uid://bkjae32eo8jlu" path="res://entities/grid_entities/enemies/mouth/images/mouth-idle-1.png" id="2_4nn12"]
+[ext_resource type="Script" uid="uid://bsdfkose05x24" path="res://utilities/nodes/components/int_meter.gd" id="4_twm60"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ijwdy"]
 animations = [{
@@ -31,4 +31,8 @@ animation = &"idle"
 
 [node name="Stats" type="Node" parent="."]
 
-[node name="HPComponent" parent="Stats" instance=ExtResource("4_ijwdy")]
+[node name="HP" type="Node" parent="Stats"]
+script = ExtResource("4_twm60")
+maximum = 2
+value = 2
+metadata/_custom_type_script = "uid://bsdfkose05x24"

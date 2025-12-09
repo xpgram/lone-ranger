@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://drviqcetydif5"]
 
-[ext_resource type="Texture2D" uid="uid://bcwyhr3t7l5kc" path="res://assets/textures/wall-labyrinth-bl.png" id="1_bmv2q"]
-[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="2_2ab8j"]
+[ext_resource type="Texture2D" uid="uid://bcwyhr3t7l5kc" path="res://entities/grid_objects/walls/stone/images/wall-labyrinth-bl.png" id="1_cawwf"]
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="2_66fea"]
 
 [node name="WallLabyrinthTopL" type="Node2D"]
 editor_description = "Delete this:
@@ -19,8 +19,8 @@ If these tiles have configurable properties, but are also members of a tilemapla
 Maybe we don't use a tilemaplayer but instead a plugin for object placement."
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_bmv2q")
+texture = ExtResource("1_cawwf")
 
 [node name="GridEntity_Wall" type="Node2D" parent="."]
-script = ExtResource("2_2ab8j")
+script = ExtResource("2_66fea")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
