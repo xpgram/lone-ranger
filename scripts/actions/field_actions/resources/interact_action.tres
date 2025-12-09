@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Interact_FieldAction" load_steps=2 format=3 uid="uid://qj4qft4xcnx6"]
-
-[ext_resource type="Script" uid="uid://cmlvujlh6bqmd" path="res://scripts/actions/field_actions/scripts/interact_action.gd" id="1_qrrg1"]
-
-[resource]
-script = ExtResource("1_qrrg1")
-action_name = "Interact"
-action_description = "Perform context actions in the field."
-metadata/_custom_type_script = "uid://cmlvujlh6bqmd"

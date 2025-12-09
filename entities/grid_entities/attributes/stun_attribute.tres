@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GridEntityAttribute" load_steps=2 format=3 uid="uid://jnysha6rnoxl"]
+
+[ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="1_xxgqm"]
+
+[resource]
+script = ExtResource("1_xxgqm")
+attribute_key = &"stun"
+metadata/_custom_type_script = "uid://dn1ef7gb6cvg3"

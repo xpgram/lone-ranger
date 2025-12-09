@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://coku8yjncbhfy"]
+
+[ext_resource type="Texture2D" uid="uid://rk3id4qpgtbk" path="res://entities/grid_objects/walls/stone/images/wall-labyrinth-r.png" id="1_4v6oo"]
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="2_rgaxv"]
+
+[node name="WallLabyrinthRight" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4v6oo")
+
+[node name="GridEntity_Wall" type="Node2D" parent="."]
+script = ExtResource("2_rgaxv")
+solid = true
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"

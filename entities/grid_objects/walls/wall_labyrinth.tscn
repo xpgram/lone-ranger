@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://drviqcetydif5"]
+
+[ext_resource type="Texture2D" uid="uid://bcwyhr3t7l5kc" path="res://entities/grid_objects/walls/stone/images/wall-labyrinth-bl.png" id="1_cawwf"]
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="2_66fea"]
+
+[node name="WallLabyrinthTopL" type="Node2D"]
+editor_description = "Delete this:
+
+I have like 30 different wall .tscns, but I want to combine them into one placeable wall source.
+It can auto-tile itself by looking at its neighbors.
+It works in-editor.
+And it can be \"locked\" so it doesn't auto-tile if I need it to be something specific.
+
+And later:
+A custom plugin to take auto-tile resources like this and make custom tile placements easier to manage would be nice.
+
+One problem:
+If these tiles have configurable properties, but are also members of a tilemaplayer, how do I configure them?
+Maybe we don't use a tilemaplayer but instead a plugin for object placement."
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cawwf")
+
+[node name="GridEntity_Wall" type="Node2D" parent="."]
+script = ExtResource("2_66fea")
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
