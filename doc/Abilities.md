@@ -36,7 +36,7 @@ Active while bracing. What would this do, though?
 
 ## Spells
 
-### Fire
+### Flame
 
 Burn flammable enemies / materials.
 
@@ -44,13 +44,17 @@ Light fuel / gas / etc.
 
 Multiple uses can melt metals / rocks.
 
-### Bolt / Power
+### Shock
 
 Chain to nearby enemies.
 
 Stun certain enemies.
 
 Energize / overclock certain targets.
+
+### Crush
+
+Compactifies things.
 
 ### Raise
 
