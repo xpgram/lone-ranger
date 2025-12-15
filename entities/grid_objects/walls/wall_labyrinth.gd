@@ -8,6 +8,11 @@ extends GridEntity
 # TODO Socket types? 'wall-lab', 'walltop-lab', u d l r ud lr ul bl ur br uli bli uri bri 3u 3d 3l 3r 4
 
 
+# TODO I think it might be better to just integrate Grid with TileMapLayer checks.
+#   I'll have my layers add themselves to a group, and Grid will simply check the group,
+#   check the coordinate, and check for custom data, like 'is_solid' or something.
+
+
 @export var sprite_locked := false;
 
 
