@@ -4,6 +4,8 @@ extends GridEntity
 
 
 # TODO Walls don't really need to be GridEntities, I don't think, but I'm not sure yet where the split should be.
+# TODO Walls auto-tile with other walls. WallTops auto-tile with other Walls and WallTops.
+# TODO Socket types? 'wall-lab', 'walltop-lab', u d l r ud lr ul bl ur br uli bli uri bri 3u 3d 3l 3r 4
 
 
 @export var sprite_locked := false;
