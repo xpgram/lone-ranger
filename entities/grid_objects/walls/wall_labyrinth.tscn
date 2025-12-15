@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://drviqcetydif5"]
+[gd_scene load_steps=4 format=3 uid="uid://drviqcetydif5"]
 
+[ext_resource type="Script" uid="uid://brhs5d7qscgnm" path="res://entities/grid_objects/walls/wall_labyrinth.gd" id="1_66fea"]
 [ext_resource type="Texture2D" uid="uid://bcwyhr3t7l5kc" path="res://entities/grid_objects/walls/stone/images/wall-labyrinth-bl.png" id="1_cawwf"]
 [ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="2_66fea"]
 
-[node name="WallLabyrinthTopL" type="Node2D"]
+[node name="WallLabyrinth" type="Node2D"]
 editor_description = "Delete this:
 
 I have like 30 different wall .tscns, but I want to combine them into one placeable wall source.
@@ -17,6 +18,8 @@ A custom plugin to take auto-tile resources like this and make custom tile place
 One problem:
 If these tiles have configurable properties, but are also members of a tilemaplayer, how do I configure them?
 Maybe we don't use a tilemaplayer but instead a plugin for object placement."
+script = ExtResource("1_66fea")
+solid = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_cawwf")
