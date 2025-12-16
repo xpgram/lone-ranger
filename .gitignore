@@ -4,3 +4,7 @@
 
 # Tool Ignores
 .vscode/
+
+# Krita source file ignores
+*-autosave.kra
+*.kra~
