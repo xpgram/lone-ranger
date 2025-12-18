@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=19 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
+[ext_resource type="PackedScene" uid="uid://ds7ihux3pahep" path="res://entities/grid_entities/interactives/chest/special_chest.tscn" id="8_ycanp"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -605,7 +606,29 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
+[sub_resource type="Resource" id="Resource_jadfo"]
+script = ExtResource("38_s5uvd")
+action_uid = &"lock"
+action_name = "Gate Lock"
+action_type = 2
+action_description = "aveavd"
+action_hint = "avdsvae"
+small_icon = ExtResource("39_iylj1")
+limit_type = 1
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
 [sub_resource type="Resource" id="Resource_is78a"]
+script = ExtResource("38_s5uvd")
+action_uid = &"medal"
+action_name = "Medal"
+action_type = 2
+action_description = "aveavd"
+action_hint = "avdsvae"
+small_icon = ExtResource("39_iylj1")
+limit_type = 1
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_ycanp"]
 script = ExtResource("38_s5uvd")
 action_uid = &"libra"
 action_name = "Libra"
@@ -615,7 +638,21 @@ action_hint = "avdsvae"
 action_time_cost = 15.0
 small_icon = ExtResource("39_iylj1")
 limit_type = 2
-uses_remaining = 2
+uses_remaining = 3
+metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jadfo"]
+load_path = "res://.godot/imported/icon-magic.png-470bed3d6ce52f2d10bb7ad2c9941c45.ctex"
+
+[sub_resource type="Resource" id="Resource_mud7x"]
+script = ExtResource("38_s5uvd")
+action_uid = &"gate_key"
+action_name = "Gate Key"
+action_type = 3
+action_description = "aveavd"
+action_hint = "avdsvae"
+small_icon = SubResource("CompressedTexture2D_jadfo")
+limit_type = 3
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [node name="Game" type="Node2D"]
@@ -635,23 +672,19 @@ interactives_container = NodePath("../Interactives Container")
 
 [node name="Chest" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(128, -80)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_is78a")])
-solid = true
-
-[node name="Chest2" parent="Interactives Container" instance=ExtResource("36_pqjox")]
-position = Vector2(496, 0)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_is78a")])
-solid = true
+contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_jadfo")])
 
 [node name="Chest3" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(576, -96)
 contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_is78a")])
-solid = true
 
 [node name="Chest4" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(336, -240)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_is78a")])
-solid = true
+contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_ycanp")])
+
+[node name="SpecialChest" parent="Interactives Container" instance=ExtResource("8_ycanp")]
+position = Vector2(496, 0)
+contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_mud7x")])
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
