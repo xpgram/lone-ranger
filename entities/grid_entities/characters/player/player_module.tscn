@@ -175,10 +175,8 @@ _camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://kreg7knmfr1j"
 
 [node name="Player2D" parent="." node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
-pushable = null
-observes_golem_time = null
-_attributes = null
 inventory = NodePath("../Inventory")
+pushable = true
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_08fk3")
