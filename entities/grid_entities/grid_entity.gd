@@ -3,6 +3,10 @@ class_name GridEntity
 extends Node2D
 
 
+## Emitted when this entity changes its position on the Grid.
+signal entity_moved();
+
+
 # TODO As I add more conditions here, I should consider extracting them to a Resource.
 #   Having to go through every monster and object I've ever created just to check
 #   'pushable' is irritating.
@@ -44,6 +48,7 @@ var grid_position: Vector2i:
     Grid.remove(self, grid_position);
     global_position = Grid.get_world_coords(grid_vector);
     Grid.put(self, grid_position);
+    entity_moved.emit();
 
 
 func _enter_tree() -> void:

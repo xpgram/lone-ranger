@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cpegrk0wmjb2x"]
+[gd_scene load_steps=8 format=3 uid="uid://cpegrk0wmjb2x"]
 
 [ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://entities/grid_entities/interactives/chest/chest.gd" id="1_08832"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_iuses"]
 [ext_resource type="Script" uid="uid://dct8xv6bwi7al" path="res://utilities/actions/context_actions/open_chest.gd" id="3_lkcyo"]
+[ext_resource type="Script" uid="uid://dui54g6w5fw46" path="res://entities/grid_entities/grid_expander.gd" id="4_iuses"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_08832"]
 atlas = ExtResource("2_iuses")
@@ -36,9 +37,15 @@ script = ExtResource("1_08832")
 solid = true
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
+[node name="GridExpander" type="Node2D" parent="." node_paths=PackedStringArray("grid_entity")]
+position = Vector2(16, 0)
+script = ExtResource("4_iuses")
+grid_entity = NodePath("..")
+metadata/_custom_type_script = "uid://dui54g6w5fw46"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-8, 0)
+position = Vector2(8, 0)
 sprite_frames = SubResource("SpriteFrames_5bdfo")
 animation = &"closed"
 
