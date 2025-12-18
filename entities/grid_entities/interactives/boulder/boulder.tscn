@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://oysxdqutfm51"]
+
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_ge1so"]
+[ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_1hbqi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa2cf"]
+atlas = ExtResource("2_1hbqi")
+region = Rect2(176, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ijwdy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xa2cf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
+[node name="BoulderEntity" type="Node2D"]
+script = ExtResource("1_ge1so")
+solid = true
+pushable = true
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_ijwdy")
+animation = &"idle"
