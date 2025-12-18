@@ -21,18 +21,6 @@ func get_entities(place: Vector2) -> Array[GridEntity]:
   return entities;
 
 
-##
-func get_tilemap_cell(place: Vector2) -> void:
-  # Get a tilemap layer
-  # Check cell at place
-  # Get and return tiledata
-
-  # Question: Glass tiles are in the tileset, yes? But glass tiles can crumble away,
-  #  turning into empty tiles. I'm sure a tilemap can handle changing data, but how do we
-  #  handle animations and such?
-  pass
-
-
 ## Inserts an entity into the grid at position 'place'.
 func put(entity: GridEntity, place: Vector2) -> void:
   if Engine.is_editor_hint():
