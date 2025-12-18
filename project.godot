@@ -21,12 +21,17 @@ Enums="*res://utilities/autoload/enums.gd"
 Events="*res://utilities/autoload/events.gd"
 InputFocus="*res://utilities/autoload/input_focus.gd"
 Grid="*res://utilities/autoload/grid.gd"
+BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
 [display]
 
 window/size/viewport_width=720
 window/size/viewport_height=480
 mouse_cursor/tooltip_position_offset=Vector2(256, -16)
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg")
 
 [file_customization]
 

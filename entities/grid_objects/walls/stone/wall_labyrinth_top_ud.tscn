@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbixv08nm5j62"]
-
-[ext_resource type="Texture2D" uid="uid://cix1kil1yh5bs" path="res://entities/grid_objects/walls/stone/images/wall-labyrinth-top-2lr.png" id="1_nvcfn"]
-
-[node name="WallLabyrinthTopUD" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = 1.5707964
-texture = ExtResource("1_nvcfn")
