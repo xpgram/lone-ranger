@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CellTerrainData" load_steps=2 format=3 uid="uid://bsvg3r3elpj1n"]
+
+[ext_resource type="Script" uid="uid://bic0r1crdbtwt" path="res://utilities/resources/cell_terrain_data/cell_terrain_data.gd" id="1_7810g"]
+
+[resource]
+script = ExtResource("1_7810g")
+metadata/_custom_type_script = "uid://bic0r1crdbtwt"
