@@ -10,31 +10,6 @@ class Cell:
 var _map: Dictionary[StringName, Cell];
 
 
-## Returns an array of entities from a Cell.
-func get_entities(place: Vector2) -> Array[GridEntity]:
-  var entities := [] as Array[GridEntity];
-  var place_key := _get_key(place);
-
-  if _map.has(place_key):
-    entities.assign(_map[place_key].entities);
-  
-  return entities;
-
-
-## Returns an array of [CellTerrainData] for the tile at [param place].
-## If the array is empty, no tilemap data exists in the terrain-data group.
-func get_tile_data(place: Vector2) -> Array[CellTerrainData]:
-  var terrain_data: Array[CellTerrainData];
-
-  terrain_data.assign(
-    get_tree()
-      .get_nodes_in_group(Group.TerrainData)
-      .map(func (layer: GridTileMapLayer): return layer.get_from_grid_coords(place))
-  );
-
-  return terrain_data;
-
-
 ## Inserts an entity into the grid at position 'place'.
 func put(entity: GridEntity, place: Vector2) -> void:
   if Engine.is_editor_hint():
@@ -70,6 +45,31 @@ func remove(entity: GridEntity, place: Vector2) -> void:
 ## Removes all data from all known Cells.
 func clear_map() -> void:
   _map.clear();
+
+
+## Returns an array of entities from a Cell.
+func get_entities(place: Vector2) -> Array[GridEntity]:
+  var entities := [] as Array[GridEntity];
+  var place_key := _get_key(place);
+
+  if _map.has(place_key):
+    entities.assign(_map[place_key].entities);
+  
+  return entities;
+
+
+## Returns an array of [CellTerrainData] for the tile at [param place].
+## If the array is empty, no tilemap data exists in the terrain-data group.
+func get_tile_data(place: Vector2) -> Array[CellTerrainData]:
+  var terrain_data: Array[CellTerrainData];
+
+  terrain_data.assign(
+    get_tree()
+      .get_nodes_in_group(Group.TerrainData)
+      .map(func (layer: GridTileMapLayer): return layer.get_from_grid_coords(place))
+  );
+
+  return terrain_data;
 
 
 ## Given a world-space vector, return its equivalent position on the Grid.
