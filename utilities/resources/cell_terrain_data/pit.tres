@@ -3,5 +3,6 @@
 [ext_resource type="Script" uid="uid://bic0r1crdbtwt" path="res://utilities/resources/cell_terrain_data/cell_terrain_data.gd" id="1_7810g"]
 
 [resource]
+resource_name = "Pit"
 script = ExtResource("1_7810g")
 metadata/_custom_type_script = "uid://bic0r1crdbtwt"
