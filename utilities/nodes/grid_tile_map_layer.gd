@@ -30,4 +30,4 @@ func get_from_grid_coords(tile_coords: Vector2i) -> CellTerrainData:
   assert(terrain_data != null,
     'No CellTerrainData exists. Cannot fulfill request nor return a default.');
 
-  return default_cell_terrain_data;
+  return terrain_data;
