@@ -21,6 +21,20 @@ func get_entities(place: Vector2) -> Array[GridEntity]:
   return entities;
 
 
+## Returns an array of [CellTerrainData] for the tile at [param place].
+## If the array is empty, no tilemap data exists in the terrain-data group.
+func get_tile_data(place: Vector2) -> Array[CellTerrainData]:
+  var terrain_data: Array[CellTerrainData];
+
+  terrain_data.assign(
+    get_tree()
+      .get_nodes_in_group(Group.TerrainData)
+      .map(func (layer: GridTileMapLayer): return layer.get_from_grid_coords(place))
+  );
+
+  return terrain_data;
+
+
 ## Inserts an entity into the grid at position 'place'.
 func put(entity: GridEntity, place: Vector2) -> void:
   if Engine.is_editor_hint():
