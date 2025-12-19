@@ -5,19 +5,25 @@ class_name ActionUtils
 
 
 ##
-static func is_cell_traversable(place: Vector2) -> bool:
-  var cell := _get_cell_data(place);
-  return cell_has_no_walls(cell) and cell_has_no_obstructions(cell);
+static func is_cell_traversable(place: Vector2, _entity: GridEntity) -> bool:
+  var cell := get_cell_data(place);
+  return not cell_has_wall(cell) and not cell_has_entity_obstructions(cell);
 
 
 ##
 static func is_cell_idleable(place: Vector2, _entity: GridEntity) -> bool:
-  var cell := _get_cell_data(place);
+  var cell := get_cell_data(place);
   return (
     cell_has_floor(cell)
-    and cell_has_no_walls(cell)
-    and cell_has_no_obstructions(cell)
+    and not cell_has_wall(cell)
+    and not cell_has_entity_obstructions(cell)
   );
+
+
+##
+static func is_cell_obstructed(place: Vector2) -> bool:
+  var cell := get_cell_data(place);
+  return cell_has_wall(cell) or cell_has_entity_obstructions(cell);
 
 
 ##
@@ -27,20 +33,20 @@ static func cell_has_floor(cell: CellData) -> bool:
 
 
 ##
-static func cell_has_no_walls(cell: CellData) -> bool:
+static func cell_has_wall(cell: CellData) -> bool:
   return cell.tile_data \
-    .all(func (terrain_data: CellTerrainData): return terrain_data.geometry_type != CellTerrainData.GeometryType.Wall)
+    .any(func (terrain_data: CellTerrainData): return terrain_data.geometry_type == CellTerrainData.GeometryType.Wall)
 
 
 ##
-static func cell_has_no_obstructions(cell: CellData) -> bool:
+static func cell_has_entity_obstructions(cell: CellData) -> bool:
   return cell.entities \
-    .all(func (entity: GridEntity): return not entity.solid);
+    .any(func (entity: GridEntity): return entity.solid);
 
 
 # TODO It would be nice if Grid could return this package itself.
 ##
-static func _get_cell_data(place: Vector2) -> CellData:
+static func get_cell_data(place: Vector2) -> CellData:
   var cell_data := CellData.new();
   cell_data.tile_data = Grid.get_tile_data(place);
   cell_data.entities = Grid.get_entities(place);
