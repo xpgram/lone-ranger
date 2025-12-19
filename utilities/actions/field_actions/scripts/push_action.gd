@@ -7,15 +7,11 @@ const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 
 
 func can_perform(playbill: FieldActionPlaybill,) -> bool:
-  var cell_entities := Grid.get_entities(playbill.target_position);
-
   var facing_target: bool = (
     playbill.performer.grid_position + playbill.performer.faced_direction == playbill.target_position
   );
 
-  var tile_obstructed: bool = (
-    cell_entities.any(func (entity: GridEntity): return entity.solid)
-  );
+  var tile_obstructed: bool = ActionUtils.is_cell_obstructed(playbill.target_position);
 
   return facing_target and tile_obstructed;
 
@@ -45,13 +41,10 @@ func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> voi
   
   var current_position := pushable_entities[0].grid_position;
   var push_to_position := current_position + direction;
-  var tile_is_obstructed := (
-    Grid.get_entities(push_to_position)
-      .any(func (entity: GridEntity): return entity.solid)
-  );
+  var tile_is_obstructed := ActionUtils.is_cell_obstructed(push_to_position);
 
   if tile_is_obstructed:
-    # TODO If push fails, do a vibrate animation instead.
+    # TODO If push fails, do a vibrate animation instead. Unless it's a wall.
     return;
 
   for entity in pushable_entities:

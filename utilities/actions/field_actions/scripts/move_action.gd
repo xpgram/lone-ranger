@@ -3,13 +3,7 @@ extends FieldAction
 
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
-  var cell_entities := Grid.get_entities(playbill.target_position);
-
-  var tile_unobstructed: bool = (
-    cell_entities.all(func (entity: GridEntity): return not entity.solid)
-  );
-
-  return tile_unobstructed;
+  return ActionUtils.is_cell_idleable(playbill.target_position, playbill.performer);
 
 
 func perform_async(playbill: FieldActionPlaybill) -> void:
