@@ -16,6 +16,10 @@ extends GridEntity
 var _exhausted := false;
 
 
+func _ready() -> void:
+  add_to_group(Group.Enemy);
+
+
 ## Readies this enemy to act this turn.
 func prepare_to_act() -> void:
   _exhausted = false;

@@ -2,11 +2,6 @@ extends Node
 
 @export var player_module: PlayerModule;
 
-# TODO It would be nice if these types knew they could only contain objects of such types: Enemy, NPC, Interactive, etc.
-@export var npc_container: Node2D;
-@export var enemy_container: Node2D;
-@export var interactives_container: Node2D;
-
 
 ## Used to lock the turn-execution loop, preventing parallel triggers.
 var turn_in_progress := false;
@@ -53,6 +48,9 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   if player_schedule.action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
     player.inventory.expend(player_schedule.action.action_uid);
 
+  # TODO Get from the player group instead of @export
+  player.update_attributes();
+
   await _perform_wait_async();
   # TODO 1 wait_async should be called every turn.
   #   More than 1 may be called depending on what else is happening.
@@ -69,7 +67,6 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
     await _perform_npc_actions_async();
     await _perform_enemy_actions_async();
     await _perform_object_actions_async();
-    _update_entity_attributes();
 
   # Reset for next turn
   var next_time_remaining := new_time_remaining if new_time_remaining > 0 else PartialTime.FULL;
@@ -83,53 +80,47 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
 
 ## Trigger NPC turn actions.
 func _perform_npc_actions_async() -> void:
-  if not npc_container or npc_container.get_child_count() == 0:
-    return;
+  var npc_entities: Array[GridEntity];
+  npc_entities.assign(get_tree().get_nodes_in_group(Group.NPC));
 
-  var children := npc_container.get_children();
-  if not children.any(_can_act):
-    return;
+  var any_npc_acted := false;
+  
+  for npc in npc_entities:
+    if npc.has_method('can_act') and npc.can_act():
+      # TODO Use multipass method to make sure all actors do something?
+      await npc.act_async();
+      npc.update_attributes();
+      any_npc_acted = true;
 
-  await _perform_wait_async();
-
-  # TODO Multipass?
-  for interactive in interactives_container.get_children():
-    await interactive.act();
+  if any_npc_acted:
+    await _perform_wait_async();
 
 
 ## Trigger enemy turn actions.
 func _perform_enemy_actions_async() -> void:
-  if not enemy_container or enemy_container.get_child_count() == 0:
-    return;
-
   var include_golems := golem_time >= PartialTime.FULL;
 
-  # TODO This area needs to be cleaned up for readability.
-  #  Keep all Enemy2Ds, but exclude golems, unless include_golems is true.
-  var enemies: Array[Enemy2D];
-  enemies.assign(
-    # TODO Is it better to double loop like this or spawn push_clouds in a different layer?
-    enemy_container.get_children().filter(func (child):
-      if child is not Enemy2D:
-        return false;
-
-      var enemy := child as Enemy2D;
-      return (
-        not enemy.observes_golem_time
-        or include_golems
-      ))
+  var enemy_entities: Array[Enemy2D];
+  enemy_entities.assign(
+    get_tree()
+      .get_nodes_in_group(Group.Enemy)
+      .filter(func (enemy: Enemy2D): return include_golems or not enemy.observes_golem_time)
   );
 
-  for enemy in enemies:
+  for enemy in enemy_entities:
     enemy.prepare_to_act();
-
-  # This multipass approach allows all enemies to act independently of their list order.
+  
+  # This multipass approach allows all enemies to act independently of their list order,
+  # avoiding scenarios where one enemy obsructs the action of another.
   for i in range(3):
-    var enemy_promises: Array = enemies \
+    var enemy_promises: Array = enemy_entities \
       .filter(func (enemy: Enemy2D): return not enemy.has_acted()) \
       .map(func (enemy: Enemy2D): return enemy.act_async);
 
     await Promise.all(enemy_promises).finished;
+
+  for enemy in enemy_entities:
+    enemy.update_attributes();
 
   # FIXME This obviously shouldn't go here.
   if player.current_animation_state == 'injured':
@@ -138,44 +129,20 @@ func _perform_enemy_actions_async() -> void:
 
 ## Trigger passive, interactive object "actions".
 func _perform_object_actions_async() -> void:
-  if not interactives_container or interactives_container.get_child_count() == 0:
-    return;
+  var interactive_entities: Array[Interactive2D];
+  interactive_entities.assign(get_tree().get_nodes_in_group(Group.Interactible));
 
-  var children := interactives_container.get_children();
-  if not children.any(_can_act):
-    return;
+  var any_interactive_acted := false;
+  
+  for interactive in interactive_entities:
+    if interactive.has_method('can_act') and interactive.can_act():
+      # TODO Use multipass method to make sure all actors do something?
+      await interactive.act_async();
+      interactive.update_attributes();
+      any_interactive_acted = true;
 
-  await _perform_wait_async();
-
-  # TODO Multipass?
-  for interactive in interactives_container.get_children():
-    await interactive.act();
-
-
-## Update all entity attribute counters and status effect states.
-func _update_entity_attributes() -> void:
-  # FIXME We have an off-by-one error.
-  #  Entities should update their attributes after their own actions, not in one big step.
-  #  This one big step strategy doesn't work because either the player or the enemies end
-  #  up suffering this issue:
-  #    -> player applies stun
-  #    -> stun updates, clears
-  #    -> enemy acts without being stunned
-  #  So all entities should self-manage in some way. Or at least, their completed actions,
-  #  including Wait, must be followed by their own attribute update step.
-  player.update_attributes();
-
-  for npc: GridEntity in npc_container.get_children():
-    npc.update_attributes();
-
-  for enemy in enemy_container.get_children():
-    # FIXME VisualEffects are probably just not necessary on this layer.
-    #  I should send them elsewhere and think about z-index later.
-    if enemy is Enemy2D:
-      enemy.update_attributes();
-
-  for object: GridEntity in interactives_container.get_children():
-    object.update_attributes();
+  if any_interactive_acted:
+    await _perform_wait_async();
 
 
 ## Trigger a short time break.

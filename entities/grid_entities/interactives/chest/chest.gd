@@ -1,6 +1,6 @@
 @tool
 class_name ChestEntity
-extends GridEntity
+extends Interactive2D
 
 ## The contents of this chest.
 @export var contents: Array[FieldAction];

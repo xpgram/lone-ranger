@@ -27,6 +27,8 @@ var current_animation_state: StringName = 'idle';
 
 
 func _ready() -> void:
+  add_to_group(Group.Player);
+
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 
