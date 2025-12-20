@@ -2,23 +2,8 @@
 extends Node
 
 
-## A struct containing a list of world entities.
-class Cell:
-  var entities := [] as Array[GridEntity];
-
 ## The map of all grid cells.
-var _map: Dictionary[StringName, Cell];
-
-
-## Returns an array of entities from a Cell.
-func get_entities(place: Vector2) -> Array[GridEntity]:
-  var entities := [] as Array[GridEntity];
-  var place_key := _get_key(place);
-
-  if _map.has(place_key):
-    entities.assign(_map[place_key].entities);
-  
-  return entities;
+var _map: Dictionary[StringName, InternalCell];
 
 
 ## Inserts an entity into the grid at position 'place'.
@@ -58,6 +43,40 @@ func clear_map() -> void:
   _map.clear();
 
 
+## Returns the array of entities at a Cell.
+func get_entities(place: Vector2) -> Array[GridEntity]:
+  var entities := [] as Array[GridEntity];
+  var place_key := _get_key(place);
+
+  if _map.has(place_key):
+    entities.assign(_map[place_key].entities);
+  
+  return entities;
+
+
+## Returns an array of [CellTerrainData] for the tile at [param place].
+## If the array is empty, no tilemap data exists in the terrain-data group.
+func get_tile_data(place: Vector2) -> CellTerrainData:
+  var tile_layers: Array[GridTileMapLayer];
+  tile_layers.assign(get_tree().get_nodes_in_group(Group.TerrainData));
+
+  if tile_layers.size() == 0:
+    push_warning('Grid: No tile map layers found. Returning featureless tile data.');
+    return CellTerrainData.new();
+
+  # It is assumed, for convenience, that Group.TerrainData only has one layer that matters
+  # to the world's physical geometry.
+  return tile_layers[0].get_from_grid_coords(place);
+
+
+## Returns a struct containing all information about the grid cell at [param place].
+func get_cell(place: Vector2) -> Cell:
+  var cell := Cell.new();
+  cell.tile_data = get_tile_data(place);
+  cell.entities = get_entities(place);
+  return cell;
+
+
 ## Given a world-space vector, return its equivalent position on the Grid.
 func get_grid_coords(vector: Vector2) -> Vector2i:
   return Vector2i(
@@ -75,16 +94,31 @@ func _get_key(place: Vector2) -> StringName:
   return &"%sx %sy" % [int(place.x), int(place.y)];
 
 
-## If a grid position does not have a Cell, creates one.
+## If a grid position does not have an [InternalCell], creates one.
 func _try_create_cell(place_key: String) -> void:
   if not _map.has(place_key):
-    _map[place_key] = Cell.new();
+    _map[place_key] = InternalCell.new();
 
 
-## If a grid position's Cell has no occupiers, releases it from system memory.
+## If a grid position's [InternalCell] has no occupiers, releases it from system memory.
 func _try_destroy_cell(place_key: String) -> void:
   if (
     _map.has(place_key)
     and _map[place_key].entities.size() == 0
   ):
     _map.erase(place_key);
+
+
+## @internal-only [br]
+## A struct containing a list of grid entities and other important cell information not
+## described by the tilemap.
+##
+## Use [class Cell] for the public API cell data.
+class InternalCell:
+  var entities := [] as Array[GridEntity];
+
+
+## A struct containing a list of grid entities and other important cell information.
+class Cell:
+  var tile_data: CellTerrainData;
+  var entities: Array[GridEntity];
