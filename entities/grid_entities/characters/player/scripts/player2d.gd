@@ -26,9 +26,11 @@ var current_animation_state: StringName = 'idle';
 @onready var _command_menu: CommandMenu = %CommandMenu;
 
 
-func _ready() -> void:
+func _init() -> void:
   add_to_group(Group.Player);
 
+
+func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 

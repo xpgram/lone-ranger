@@ -3,5 +3,5 @@ class_name Interactive2D
 extends GridEntity
 
 
-func _ready() -> void:
+func _init() -> void:
   add_to_group(Group.Interactible);

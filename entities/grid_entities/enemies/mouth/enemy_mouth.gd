@@ -8,7 +8,6 @@ extends Enemy2D
 
 
 func _ready() -> void:
-  super._ready();
   animated_sprite.play();
 
 

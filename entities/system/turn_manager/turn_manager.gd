@@ -12,7 +12,7 @@ var golem_time := 0.0;
 
 
 ## The GridEntity operated by the player.
-@onready var player := player_module.get_entity();
+@onready var player: Player2D = _get_player_entity();
 
 ## The timer used to count down missed player turns.
 @onready var inaction_timer: Timer = %InactionTimer;
@@ -84,7 +84,7 @@ func _perform_npc_actions_async() -> void:
   npc_entities.assign(get_tree().get_nodes_in_group(Group.NPC));
 
   var any_npc_acted := false;
-  
+
   for npc in npc_entities:
     if npc.has_method('can_act') and npc.can_act():
       # TODO Use multipass method to make sure all actors do something?
@@ -109,7 +109,7 @@ func _perform_enemy_actions_async() -> void:
 
   for enemy in enemy_entities:
     enemy.prepare_to_act();
-  
+
   # This multipass approach allows all enemies to act independently of their list order,
   # avoiding scenarios where one enemy obsructs the action of another.
   for i in range(3):
@@ -133,7 +133,7 @@ func _perform_object_actions_async() -> void:
   interactive_entities.assign(get_tree().get_nodes_in_group(Group.Interactible));
 
   var any_interactive_acted := false;
-  
+
   for interactive in interactive_entities:
     if interactive.has_method('can_act') and interactive.can_act():
       # TODO Use multipass method to make sure all actors do something?
@@ -150,6 +150,14 @@ func _perform_wait_async() -> void:
   await get_tree().create_timer(0.075).timeout;
 
 
-## Returns true if the given entity has an 'act' method to call.
-func _can_act(entity: GridEntity) -> bool:
-  return entity.has_method('act');
+## Retrieves the player entity from the Player group.
+## Throws an error if no players were found.
+func _get_player_entity() -> Player2D:
+  var players: Array[Player2D];
+  players.assign(get_tree().get_nodes_in_group(Group.Player));
+
+  if players.size() == 0:
+    push_error('TurnManager: Player2D entity not found.');
+    return null;
+
+  return players[0];

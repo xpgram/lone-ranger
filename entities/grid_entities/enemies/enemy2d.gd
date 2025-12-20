@@ -16,7 +16,7 @@ extends GridEntity
 var _exhausted := false;
 
 
-func _ready() -> void:
+func _init() -> void:
   add_to_group(Group.Enemy);
 
 
