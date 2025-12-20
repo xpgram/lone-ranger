@@ -56,22 +56,23 @@ func get_entities(place: Vector2) -> Array[GridEntity]:
 
 ## Returns an array of [CellTerrainData] for the tile at [param place].
 ## If the array is empty, no tilemap data exists in the terrain-data group.
-func get_tile_data(place: Vector2) -> Array[CellTerrainData]:
-  var terrain_data: Array[CellTerrainData];
+func get_tile_data(place: Vector2) -> CellTerrainData:
+  var tile_layers: Array[GridTileMapLayer];
+  tile_layers.assign(get_tree().get_nodes_in_group(Group.TerrainData));
 
-  terrain_data.assign(
-    get_tree()
-      .get_nodes_in_group(Group.TerrainData)
-      .map(func (layer: GridTileMapLayer): return layer.get_from_grid_coords(place))
-  );
+  if tile_layers.size() == 0:
+    push_warning('Grid: No tile map layers found. Returning featureless tile data.');
+    return CellTerrainData.new();
 
-  return terrain_data;
+  # It is assumed, for convenience, that Group.TerrainData only has one layer that matters
+  # to the world's physical geometry.
+  return tile_layers[0].get_from_grid_coords(place);
 
 
-## Returns a struct containing all information about a grid cell.
+## Returns a struct containing all information about the grid cell at [param place].
 func get_cell(place: Vector2) -> Cell:
   var cell := Cell.new();
-  cell.tile_data = get_tile_data(place)[0]; # TODO [0] here is silly.
+  cell.tile_data = get_tile_data(place);
   cell.entities = get_entities(place);
   return cell;
 
