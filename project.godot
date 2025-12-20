@@ -45,6 +45,10 @@ folder_colors={
 [global_group]
 
 terrain_data="World terrain data in the form of special TileMapLayers"
+enemy_entities="Enemy GridEntities"
+interactible_entities="Interactible or inert GridEntities (e.g. chests, warp zones, etc.)"
+npc_entities="NPC GridEntities, or allied non-players"
+player_entities="Player GridEntity"
 
 [gui]
 
