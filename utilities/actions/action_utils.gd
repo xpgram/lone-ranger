@@ -1,60 +1,49 @@
 ## @static [br]
 ##
-##
+## A utility class containing functions useful to [FieldAction] scripts and the like.
 class_name ActionUtils
 
 
-##
+## Returns true if the cell at [param place] is free of obstructions.
 static func is_cell_traversable(place: Vector2, _entity: GridEntity) -> bool:
-  var cell := get_cell_data(place);
-  return not cell_has_wall(cell) and not cell_has_entity_obstructions(cell);
-
-
-##
-static func is_cell_idleable(place: Vector2, _entity: GridEntity) -> bool:
-  var cell := get_cell_data(place);
+  var cell := Grid.get_cell(place);
   return (
-    cell_has_floor(cell)
-    and not cell_has_wall(cell)
-    and not cell_has_entity_obstructions(cell)
+    not cell_is_wall(cell)
+    and not cell_has_collidables(cell)
   );
 
 
-##
+## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
+static func is_cell_idleable(place: Vector2, _entity: GridEntity) -> bool:
+  var cell := Grid.get_cell(place);
+  return (
+    cell_is_floor(cell)
+    and not cell_has_collidables(cell)
+  );
+
+
+## Returns true if the cell at [param place] contains some solid, collidable object.
 static func is_cell_obstructed(place: Vector2) -> bool:
-  var cell := get_cell_data(place);
-  return cell_has_wall(cell) or cell_has_entity_obstructions(cell);
+  var cell := Grid.get_cell(place);
+  return cell_is_wall(cell) or cell_has_collidables(cell);
 
 
-##
-static func cell_has_floor(cell: CellData) -> bool:
-  return cell.tile_data \
-    .any(func (terrain_data: CellTerrainData): return terrain_data.geometry_type == CellTerrainData.GeometryType.Floor)
+## Returns true if [param cell] is a floor-type tile.
+static func cell_is_pit(cell: Grid.Cell) -> bool:
+  return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Hole;
 
 
-##
-static func cell_has_wall(cell: CellData) -> bool:
-  return cell.tile_data \
-    .any(func (terrain_data: CellTerrainData): return terrain_data.geometry_type == CellTerrainData.GeometryType.Wall)
+## Returns true if [param cell] is a floor-type tile.
+static func cell_is_floor(cell: Grid.Cell) -> bool:
+  return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Floor;
 
 
-##
-static func cell_has_entity_obstructions(cell: CellData) -> bool:
+## Returns true if [param cell] is a wall-type tile.
+static func cell_is_wall(cell: Grid.Cell) -> bool:
+  return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Wall;
+
+
+## Returns true if [param cell] has any inhabiting entity that is collidable.
+static func cell_has_collidables(cell: Grid.Cell) -> bool:
   return cell.entities \
     .any(func (entity: GridEntity): return entity.solid);
-
-
-# TODO It would be nice if Grid could return this package itself.
-##
-static func get_cell_data(place: Vector2) -> CellData:
-  var cell_data := CellData.new();
-  cell_data.tile_data = Grid.get_tile_data(place);
-  cell_data.entities = Grid.get_entities(place);
-  return cell_data;
-
-
-# TODO This type should exist in Grid, ideally.
-##
-class CellData:
-  var tile_data: Array[CellTerrainData];
-  var entities: Array[GridEntity];
