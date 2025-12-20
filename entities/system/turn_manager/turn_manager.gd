@@ -1,6 +1,5 @@
+class_name TurnManager
 extends Node
-
-@export var player_module: PlayerModule;
 
 
 ## Used to lock the turn-execution loop, preventing parallel triggers.
