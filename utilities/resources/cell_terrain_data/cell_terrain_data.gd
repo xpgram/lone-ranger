@@ -15,7 +15,7 @@ enum GeometryType {
 
 
 ## The world-geometry type for this terrain object. [br]
-## [enum GeometryType.Hole] can be fallen into. [br]
+## [enum GeometryType.Pit] can be fallen into. [br]
 ## [enum GeometryType.Floor] can be traversed. [br]
 ## [enum GeometryType.Wall] cannot be traversed. [br]
 @export var geometry_type := GeometryType.Pit;

@@ -7,7 +7,7 @@ extends TileSet
 # - The old tileset info, including all sources, custom data, and better-terrain data
 #   must be ported over.
 # - It would be nice if GridTileMapLayer did not need to know what a 'default terrain
-#   data' was, i.e., this class just returned it naturally.
+#   data' was, i.e., this class just returned it naturally when asked.
 
 
 const CUSTOM_DATA_LAYER_TYPE_OBJECT := 15;

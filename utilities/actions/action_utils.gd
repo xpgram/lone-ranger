@@ -1,5 +1,4 @@
 ## @static [br]
-##
 ## A utility class containing functions useful to [FieldAction] scripts and the like.
 class_name ActionUtils
 
