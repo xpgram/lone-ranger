@@ -6,7 +6,7 @@ extends Resource
 ## The world-geometry type for terrain objects.
 enum GeometryType {
   ## Entities can fall into this type.
-  Hole,
+  Pit,
   ## Entities can traverse this type.
   Floor,
   ## Entities cannot traverse this type.
@@ -18,4 +18,4 @@ enum GeometryType {
 ## [enum GeometryType.Hole] can be fallen into. [br]
 ## [enum GeometryType.Floor] can be traversed. [br]
 ## [enum GeometryType.Wall] cannot be traversed. [br]
-@export var geometry_type := GeometryType.Hole;
+@export var geometry_type := GeometryType.Pit;

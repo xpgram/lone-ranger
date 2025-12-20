@@ -30,7 +30,7 @@ static func is_cell_obstructed(place: Vector2) -> bool:
 
 ## Returns true if [param cell] is a floor-type tile.
 static func cell_is_pit(cell: Grid.Cell) -> bool:
-  return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Hole;
+  return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Pit;
 
 
 ## Returns true if [param cell] is a floor-type tile.
