@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://hd6tv01qq0ed"]
 
 [ext_resource type="Texture2D" uid="uid://bn15smo1estix" path="res://entities/grid_entities/enemies/mouth/images/mouth-idle-0.png" id="1_ffl0m"]
-[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_rr1s5"]
+[ext_resource type="Script" uid="uid://83jrylvkrkma" path="res://entities/grid_entities/enemies/enemy2d.gd" id="1_rr1s5"]
 [ext_resource type="Texture2D" uid="uid://bkjae32eo8jlu" path="res://entities/grid_entities/enemies/mouth/images/mouth-idle-1.png" id="2_4nn12"]
 [ext_resource type="Script" uid="uid://bex05p7bnb6yp" path="res://entities/grid_entities/enemies/mouth/grid_actor_component.gd" id="4_rr1s5"]
 [ext_resource type="Script" uid="uid://bsdfkose05x24" path="res://utilities/nodes/components/int_meter.gd" id="4_twm60"]
@@ -24,7 +24,7 @@ animations = [{
 script = ExtResource("1_rr1s5")
 solid = true
 pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+metadata/_custom_type_script = "uid://83jrylvkrkma"
 metadata/GridActorComponent = NodePath("GridActorComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
