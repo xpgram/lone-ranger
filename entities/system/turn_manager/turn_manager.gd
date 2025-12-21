@@ -47,7 +47,6 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   if player_schedule.action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
     player.inventory.expend(player_schedule.action.action_uid);
 
-  # TODO Get from the player group instead of @export
   player.update_attributes();
 
   await _perform_wait_async();
