@@ -10,7 +10,7 @@
 ## [method can_act] is used by the turn system and should not be overridden without a call
 ## to [code]super.can_act()[/code].
 @tool
-class_name BoardActorComponent
+class_name GridActorComponent
 extends BaseComponent
 
 
