@@ -6,7 +6,7 @@
 ##
 ## This component does not define any behavior on its own and must be extended. Override
 ## [method act_async] to define this behavior. [br]
-## 
+##
 ## [method can_act] is used by the turn system and should not be overridden without a call
 ## to [code]super.can_act()[/code].
 @tool
