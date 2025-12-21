@@ -20,7 +20,7 @@ static func set_component(node: Node, component: BaseComponent) -> void:
   if not node:
     return;
 
-  node.set_meta(TypeString.from(component), component);
+  node.set_meta(TypeString.from(component), node.get_path_to(component));
 
 
 ## Returns the [param component_type] registered to [param node], or null. [br]
@@ -32,7 +32,8 @@ static func get_component(node: Node, component_type: Variant) -> BaseComponent:
     push_error("Cannot get a component from a null value.");
     return null;
 
-  return node.get_meta(TypeString.from(component_type));
+  var node_path: String = node.get_meta(TypeString.from(component_type));
+  return node.get_node(node_path);
 
 
 ## Removes the [param component_type] registered to [param node], or if no component
