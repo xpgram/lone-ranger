@@ -8,12 +8,18 @@ class_name Component
 ## [param component_type] should be a class reference to any type that extends
 ## [BaseComponent].
 static func has_component(node: Node, component_type: Variant) -> bool:
+  if not node:
+    return false;
+
   return node.has_meta(TypeString.from(component_type));
 
 
 ## Registers the given [param component] to [param node] using the component's class name
 ## as the metadata key.
 static func set_component(node: Node, component: BaseComponent) -> void:
+  if not node:
+    return;
+
   node.set_meta(TypeString.from(component), component);
 
 
@@ -22,6 +28,10 @@ static func set_component(node: Node, component: BaseComponent) -> void:
 ## [param component_type] should be a class reference to any type that extends
 ## [BaseComponent].
 static func get_component(node: Node, component_type: Variant) -> BaseComponent:
+  if not node:
+    push_error("Cannot get a component from a null value.");
+    return null;
+
   return node.get_meta(TypeString.from(component_type));
 
 
@@ -31,4 +41,7 @@ static func get_component(node: Node, component_type: Variant) -> BaseComponent:
 ## [param component_type] should be a class reference to any type that extends
 ## [BaseComponent].
 static func remove_component(node: Node, component_type: Variant) -> void:
+  if not node:
+    return;
+
   node.remove_meta(TypeString.from(component_type));
