@@ -31,6 +31,11 @@ func _get_configuration_warnings() -> PackedStringArray:
   return warnings;
 
 
+## Returns the [GridEntity] this object is a component to.
+func get_entity() -> GridEntity:
+  return component_owner;
+
+
 ## Readies this entity to act this turn.
 func prepare_to_act() -> void:
   _exhausted = false;
@@ -51,7 +56,7 @@ func has_acted() -> bool:
 ## information. It is not recommended to override this method, but if you do, include a
 ## call to [code]super.can_act()[/code].
 func can_act() -> bool:
-  var grid_entity := component_owner as GridEntity;
+  var grid_entity := get_entity();
 
   return (
     not has_acted()
