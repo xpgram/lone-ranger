@@ -1,3 +1,5 @@
+## @tool [br]
+##
 ## Base component class that manages parent-owner registration. [br]
 ##
 ## Components assign themselves to a metadata key on their parent node, using their class
@@ -10,8 +12,13 @@
 ## if Component.has_component(node, BaseComponent):
 ##     var component := Component.get_component(node, BaseComponent) as BaseComponent;
 ## [/codeblock]
+@tool
 @abstract class_name BaseComponent
 extends Node
+
+
+## Emitted when this component's owner is altered.
+signal component_owner_changed();
 
 
 @export_group('Owner')
@@ -25,11 +32,21 @@ extends Node
     if component_owner:
       Component.set_component(component_owner, self);
 
+    component_owner_changed.emit();
+
 
 func _ready() -> void:
   if not component_owner:
     component_owner = get_parent();
 
 
+func _enter_tree() -> void:
+  if not component_owner:
+    component_owner = get_parent();
+
+
 func _exit_tree() -> void:
   Component.remove_component(component_owner, self);
+
+  if component_owner == get_parent():
+    component_owner = null;
