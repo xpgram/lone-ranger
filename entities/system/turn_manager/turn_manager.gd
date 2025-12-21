@@ -82,17 +82,17 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
 func _perform_group_entity_actions_async(entity_group: StringName) -> void:
   var include_golems := golem_time >= PartialTime.FULL;
 
-  var actor_components: Array[BoardActorComponent];
+  var actor_components: Array[GridActorComponent];
   actor_components.assign(
     get_tree()
       .get_nodes_in_group(entity_group)
       .filter(func (entity: GridEntity):
         return (
-          Component.has_component(entity, BoardActorComponent)
+          Component.has_component(entity, GridActorComponent)
           and (include_golems or not entity.observes_golem_time)
           # TODO observes_golem_time only makes sense to BoardActor's, so should probably be located there.
         ))
-      .map(func (entity: GridEntity): return Component.get_component(entity, BoardActorComponent))
+      .map(func (entity: GridEntity): return Component.get_component(entity, GridActorComponent))
   );
 
   if actor_components.size() == 0:
@@ -105,8 +105,8 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
   # their list order, avoiding scenarios where one entity obstructs the action of another.
   for i in range(3):
     var actor_promises: Array = actor_components \
-      .filter(func (actor: BoardActorComponent): return not actor.has_acted()) \
-      .map(func (actor: BoardActorComponent): return actor.act_async);
+      .filter(func (actor: GridActorComponent): return not actor.has_acted()) \
+      .map(func (actor: GridActorComponent): return actor.act_async);
 
     await Promise.all(actor_promises).finished;
 
