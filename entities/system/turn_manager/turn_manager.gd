@@ -1,11 +1,5 @@
+class_name TurnManager
 extends Node
-
-@export var player_module: PlayerModule;
-
-# TODO It would be nice if these types knew they could only contain objects of such types: Enemy, NPC, Interactive, etc.
-@export var npc_container: Node2D;
-@export var enemy_container: Node2D;
-@export var interactives_container: Node2D;
 
 
 ## Used to lock the turn-execution loop, preventing parallel triggers.
@@ -17,7 +11,7 @@ var golem_time := 0.0;
 
 
 ## The GridEntity operated by the player.
-@onready var player := player_module.get_entity();
+@onready var player: Player2D = _get_player_entity();
 
 ## The timer used to count down missed player turns.
 @onready var inaction_timer: Timer = %InactionTimer;
@@ -53,6 +47,8 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   if player_schedule.action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
     player.inventory.expend(player_schedule.action.action_uid);
 
+  player.update_attributes();
+
   await _perform_wait_async();
   # TODO 1 wait_async should be called every turn.
   #   More than 1 may be called depending on what else is happening.
@@ -66,10 +62,9 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
 
   # Other turn actions
   if new_time_remaining <= 0:
-    await _perform_npc_actions_async();
-    await _perform_enemy_actions_async();
-    await _perform_object_actions_async();
-    _update_entity_attributes();
+    await _perform_group_entity_actions_async(Group.NPC);
+    await _perform_group_entity_actions_async(Group.Enemy);
+    await _perform_group_entity_actions_async(Group.Interactible);
 
   # Reset for next turn
   var next_time_remaining := new_time_remaining if new_time_remaining > 0 else PartialTime.FULL;
@@ -81,101 +76,45 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   turn_in_progress = false;
 
 
-## Trigger NPC turn actions.
-func _perform_npc_actions_async() -> void:
-  if not npc_container or npc_container.get_child_count() == 0:
-    return;
-
-  var children := npc_container.get_children();
-  if not children.any(_can_act):
-    return;
-
-  await _perform_wait_async();
-
-  # TODO Multipass?
-  for interactive in interactives_container.get_children():
-    await interactive.act();
-
-
-## Trigger enemy turn actions.
-func _perform_enemy_actions_async() -> void:
-  if not enemy_container or enemy_container.get_child_count() == 0:
-    return;
-
+## For all [GridEntity]'s in group [param entity_group], request and await their turn
+## actions and after-effects on the game board.
+func _perform_group_entity_actions_async(entity_group: StringName) -> void:
   var include_golems := golem_time >= PartialTime.FULL;
 
-  # TODO This area needs to be cleaned up for readability.
-  #  Keep all Enemy2Ds, but exclude golems, unless include_golems is true.
-  var enemies: Array[Enemy2D];
-  enemies.assign(
-    # TODO Is it better to double loop like this or spawn push_clouds in a different layer?
-    enemy_container.get_children().filter(func (child):
-      if child is not Enemy2D:
-        return false;
-
-      var enemy := child as Enemy2D;
-      return (
-        not enemy.observes_golem_time
-        or include_golems
-      ))
+  var actor_components: Array[GridActorComponent];
+  actor_components.assign(
+    get_tree()
+      .get_nodes_in_group(entity_group)
+      .filter(func (entity: GridEntity):
+        return (
+          Component.has_component(entity, GridActorComponent)
+          and (include_golems or not entity.observes_golem_time)
+          # TODO observes_golem_time only makes sense to BoardActor's, so should probably be located there.
+        ))
+      .map(func (entity: GridEntity): return Component.get_component(entity, GridActorComponent))
   );
 
-  for enemy in enemies:
-    enemy.prepare_to_act();
+  if actor_components.size() == 0:
+    return;
 
-  # This multipass approach allows all enemies to act independently of their list order.
+  for actor in actor_components:
+    actor.prepare_to_act();
+
+  # This multipass approach allows all entities in a turn-group to act independently of
+  # their list order, avoiding scenarios where one entity obstructs the action of another.
   for i in range(3):
-    var enemy_promises: Array = enemies \
-      .filter(func (enemy: Enemy2D): return not enemy.has_acted()) \
-      .map(func (enemy: Enemy2D): return enemy.act_async);
+    var actor_promises: Array = actor_components \
+      .filter(func (actor: GridActorComponent): return not actor.has_acted()) \
+      .map(func (actor: GridActorComponent): return actor.act_async);
 
-    await Promise.all(enemy_promises).finished;
+    await Promise.all(actor_promises).finished;
+
+  for actor in actor_components:
+    actor.get_entity().update_attributes();
 
   # FIXME This obviously shouldn't go here.
   if player.current_animation_state == 'injured':
     await get_tree().create_timer(0.5).timeout;
-
-
-## Trigger passive, interactive object "actions".
-func _perform_object_actions_async() -> void:
-  if not interactives_container or interactives_container.get_child_count() == 0:
-    return;
-
-  var children := interactives_container.get_children();
-  if not children.any(_can_act):
-    return;
-
-  await _perform_wait_async();
-
-  # TODO Multipass?
-  for interactive in interactives_container.get_children():
-    await interactive.act();
-
-
-## Update all entity attribute counters and status effect states.
-func _update_entity_attributes() -> void:
-  # FIXME We have an off-by-one error.
-  #  Entities should update their attributes after their own actions, not in one big step.
-  #  This one big step strategy doesn't work because either the player or the enemies end
-  #  up suffering this issue:
-  #    -> player applies stun
-  #    -> stun updates, clears
-  #    -> enemy acts without being stunned
-  #  So all entities should self-manage in some way. Or at least, their completed actions,
-  #  including Wait, must be followed by their own attribute update step.
-  player.update_attributes();
-
-  for npc: GridEntity in npc_container.get_children():
-    npc.update_attributes();
-
-  for enemy in enemy_container.get_children():
-    # FIXME VisualEffects are probably just not necessary on this layer.
-    #  I should send them elsewhere and think about z-index later.
-    if enemy is Enemy2D:
-      enemy.update_attributes();
-
-  for object: GridEntity in interactives_container.get_children():
-    object.update_attributes();
 
 
 ## Trigger a short time break.
@@ -183,6 +122,14 @@ func _perform_wait_async() -> void:
   await get_tree().create_timer(0.075).timeout;
 
 
-## Returns true if the given entity has an 'act' method to call.
-func _can_act(entity: GridEntity) -> bool:
-  return entity.has_method('act');
+## Retrieves the player entity from the Player group.
+## Throws an error if no players were found.
+func _get_player_entity() -> Player2D:
+  var players: Array[Player2D];
+  players.assign(get_tree().get_nodes_in_group(Group.Player));
+
+  if players.size() == 0:
+    push_error('TurnManager: Player2D entity not found.');
+    return null;
+
+  return players[0];

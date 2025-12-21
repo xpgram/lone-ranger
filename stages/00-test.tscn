@@ -668,11 +668,7 @@ tile_set = SubResource("TileSet_jjdoh")
 script = ExtResource("3_mud7x")
 default_cell_terrain_data = ExtResource("3_2ba2c")
 
-[node name="TurnManager" parent="." node_paths=PackedStringArray("player_module", "npc_container", "enemy_container", "interactives_container") instance=ExtResource("35_u8t85")]
-player_module = NodePath("../PlayerModule")
-npc_container = NodePath("../NPC Container")
-enemy_container = NodePath("../Enemy Container")
-interactives_container = NodePath("../Interactives Container")
+[node name="TurnManager" parent="." instance=ExtResource("35_u8t85")]
 
 [node name="Interactives Container" type="Node2D" parent="."]
 

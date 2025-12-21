@@ -69,7 +69,7 @@ func _increment_turn_count() -> void:
 
   # The turn count must *surpass* turn duration so that a turn duration of 1 is accurately
   # counted as one full turn, while 0 may be discarded immediately.
-  if self_remedying and _turn_count > turn_duration:
+  if self_remedying and _turn_count >= turn_duration:
     nullify();
 
 

@@ -1,5 +1,5 @@
-class_name EnemyMouth
-extends Enemy2D
+@warning_ignore('missing_tool')
+extends GridActorComponent
 
 
 @export var vision_range := 10;
@@ -25,14 +25,18 @@ func act_async() -> void:
       break;
 
 
+func get_entity() -> Enemy2D:
+  return super.get_entity();
+
+
 ## Attempts to _move this enemy on the Grid.
 func _move(vector: Vector2i) -> void:
-  # TODO Abstract this and Player2D's equivalent.
-  #  movement may be unique among each kind of grid entity, but some standard methods
-  #  about checking if a location is traversible or the like would be nice. They could
-  #  even go in Grid, I suppose.
+  # TODO Consider refactoring this component to contain a list of behaviors (FieldActions)
+  #  instead of explicit code here. It would make certain behaviors reusable, and also
+  #  make ActionUtils less awkward to use since they'd be in the same directory.
 
-  var new_grid_position := grid_position + vector;
+  var self_entity := get_entity();
+  var new_grid_position := get_entity().grid_position + vector;
 
   var tile_entities := Grid.get_entities(new_grid_position);
   var tile_is_obstructed := tile_entities.any(func (entity: GridEntity): return entity.solid);
@@ -51,14 +55,14 @@ func _move(vector: Vector2i) -> void:
   if tile_is_obstructed:
     return;
 
-  if not has_attribute('stun'):
-    grid_position = new_grid_position;
+  if not self_entity.has_attribute('stun'):
+    self_entity.grid_position = new_grid_position;
 
   exhaust();
 
 
 func _facing_changed() -> void:
-  match faced_direction:
+  match get_entity().faced_direction:
     Vector2.UP:
       animated_sprite.scale.x = -1;
     Vector2.DOWN:
@@ -73,7 +77,7 @@ func _facing_changed() -> void:
 ## direction of 'dir'.
 func _get_vision_line(dir: Vector2i) -> Array[Vector2i]:
   var grid_positions := [] as Array[Vector2i];
-  var cursor := grid_position + dir;
+  var cursor := get_entity().grid_position + dir;
 
   for i in range(vision_range):
     grid_positions.append(cursor);

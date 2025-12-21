@@ -14,9 +14,11 @@ signal items_updated(items: Array[FieldAction]);
 
 @export_group('Equipment')
 
+# IMPLEMENT Key items in the form of found equipment are not used by anything.
 ## A list of special key-items that are not castable (there is no action script) and
 ## simply represent something the player owns. Think of these like getting the Morph Ball
 ## in Metroid.
+@warning_ignore('unused_private_class_variable')
 @export var _equipment: Array[StringName];
 
 
