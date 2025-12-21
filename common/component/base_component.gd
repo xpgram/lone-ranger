@@ -23,30 +23,50 @@ signal component_owner_changed();
 
 @export_group('Owner')
 
-## The node this object is a component to. By default, this is this node's direct parent.
-@export var component_owner: Node:
+## A reference to a remote composite node for this component. This overrides the default
+## composite node, which would be this node's direct parent.
+@export var _remote_component_owner: Node:
   set(value):
-    Component.remove_component(component_owner, self);
-
-    component_owner = value;
-    if component_owner:
-      Component.set_component(component_owner, self);
-
-    component_owner_changed.emit();
+    _remote_component_owner = value;
+    _update_ownership();
 
 
-func _ready() -> void:
-  if not component_owner:
-    component_owner = get_parent();
+## The current composite node that owns this component.
+var _component_owner: Node;
 
 
 func _enter_tree() -> void:
-  if not component_owner:
-    component_owner = get_parent();
+  if not _remote_component_owner:
+    _update_ownership();
 
 
 func _exit_tree() -> void:
-  Component.remove_component(component_owner, self);
+  _deregister_self(_component_owner);
 
-  if component_owner == get_parent():
-    component_owner = null;
+
+## Returns the [Node] this object is a component to. [br]
+##
+## Will return null if this node is the scene root while [member _remote_component_owner] is not
+## set.
+func get_component_owner() -> Node:
+  return _component_owner;
+
+
+## Registers this component with the appropriate owner after a change in configuration,
+## and deregisters it from its previous owner.
+func _update_ownership() -> void:
+  _deregister_self(_component_owner);
+
+  _component_owner = _remote_component_owner if _remote_component_owner else get_parent();
+  _register_self(_component_owner);
+
+
+## Registers this component to [param node].
+func _register_self(node: Node) -> void:
+  Component.set_component(node, self);
+  component_owner_changed.emit();
+
+
+## Removes this component from [param node]'s registry.
+func _deregister_self(node: Node) -> void:
+  Component.remove_component(node, self);

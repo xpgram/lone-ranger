@@ -25,7 +25,7 @@ func _init() -> void:
 func _get_configuration_warnings() -> PackedStringArray:
   var warnings: PackedStringArray;
 
-  if component_owner is not GridEntity:
+  if get_component_owner() is not GridEntity:
     warnings.append("This component's owner should be a GridEntity node.");
 
   return warnings;
@@ -33,7 +33,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 ## Returns the [GridEntity] this object is a component to.
 func get_entity() -> GridEntity:
-  return component_owner;
+  return get_component_owner();
 
 
 ## Readies this entity to act this turn.
