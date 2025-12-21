@@ -22,14 +22,27 @@ static func from(value: Variant) -> StringName:
 
   match typeof(value):
     TYPE_OBJECT:
-      if value.has_method('get_global_name'):
+      if value is Script:
         # Class reference
-        class_string = value.get_global_name();
+        class_string = _get_script_name(value);
       else:
         # Instance of class
-        class_string = value.get_script().get_global_name();
+        class_string = _get_script_name(value.get_script());
     _:
       # Some primitive type
       class_string = type_string(typeof(value));
 
   return class_string
+
+
+## Returns the global name for [param script], or the name of its inherited [Script] if it
+## does not have one. [br]
+##
+## It is assumed that a nameless [Script] cannot inherit from a nameless [Script].
+static func _get_script_name(script: Script) -> StringName:
+  var script_name := script.get_global_name();
+
+  if script_name == '':
+    script_name = script.get_base_script().get_global_name();
+
+  return script_name;

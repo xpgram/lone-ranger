@@ -4,7 +4,7 @@
 ##
 ## Components assign themselves to a metadata key on their parent node, using their class
 ## name as the key. For this reason, extending component classes [b]must override the
-## class_name.[/b] [br]
+## class_name[/b] unless it is intended to be a variant of the same component type. [br]
 ##
 ## To retrieve a component from another node:
 ##
