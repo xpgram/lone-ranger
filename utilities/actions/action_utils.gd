@@ -46,3 +46,18 @@ static func cell_is_wall(cell: Grid.Cell) -> bool:
 static func cell_has_collidables(cell: Grid.Cell) -> bool:
   return cell.entities \
     .any(func (entity: GridEntity): return entity.solid);
+
+
+##
+static func target_within_range(actor: GridEntity, target: GridEntity, range: int) -> bool:
+  if range < 0:
+    return false;
+
+  var distance_vector := (actor.grid_position - target.grid_position).abs();
+  return (distance_vector.x + distance_vector.y) <= range;
+
+
+##
+static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:
+  # TODO Invoke some path-finding algorithm. Get path. Return path.
+  return [];
