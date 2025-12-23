@@ -59,5 +59,8 @@ static func target_within_range(actor: GridEntity, target: GridEntity, range: in
 
 ##
 static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:
-  # TODO Invoke some path-finding algorithm. Get path. Return path.
+  # TODO Use Godot's built-in AStar2D class.
+  #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
+  #  conversion.
+
   return [];
