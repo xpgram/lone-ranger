@@ -1,0 +1,24 @@
+[{
+"name": "Characters",
+"scenes": [{
+&"scene": "res://entities/grid_entities/characters/player/player_module.tscn"
+}]
+}, {
+"name": "Enemies",
+"scenes": [{
+&"scene": "res://entities/grid_entities/enemies/mouth/enemy_mouth.tscn"
+}]
+}, {
+"name": "Objects",
+"scenes": [{
+&"scene": "res://entities/grid_objects/ground/stairs/floor_stairs.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/boulder/boulder.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/chest/chest.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/chest/special_chest.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/chest/ornate_double_chest.tscn"
+}]
+}]
