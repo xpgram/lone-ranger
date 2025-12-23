@@ -58,6 +58,16 @@ static func target_within_range(actor: GridEntity, target: GridEntity, range: in
 
 
 ##
+static func target_within_line_range(actor: GridEntity, target: GridEntity, range: int) -> bool:
+  if range < 0:
+    return false;
+
+  var in_line := (actor.grid_position.x == target.grid_position.x or actor.grid_position.y == target.grid_position.y);
+  var in_range := target_within_range(actor, target, range);
+  return in_line and in_range;
+
+
+##
 static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:
   # TODO Use Godot's built-in AStar2D class.
   #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
