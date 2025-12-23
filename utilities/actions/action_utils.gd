@@ -58,19 +58,19 @@ static func is_cell_traversable(place: Vector2, _entity: GridEntity) -> bool:
 
 
 ##
-static func target_within_line_range(actor: GridEntity, target: GridEntity, range: int) -> bool:
-  if range < 0:
+static func target_within_line_range(actor: GridEntity, target: GridEntity, sight_range: int) -> bool:
+  if sight_range < 0:
     return false;
 
   var in_line := (actor.grid_position.x == target.grid_position.x or actor.grid_position.y == target.grid_position.y);
-  var in_range := target_within_range(actor, target, range);
+  var in_range := target_within_range(actor, target, sight_range);
   return in_line and in_range;
 
 
 ##
-static func target_within_range(actor: GridEntity, target: GridEntity, range: int) -> bool:
-  if range < 0:
+static func target_within_range(actor: GridEntity, target: GridEntity, sight_range: int) -> bool:
+  if sight_range < 0:
     return false;
 
   var distance_vector := (actor.grid_position - target.grid_position).abs();
-  return (distance_vector.x + distance_vector.y) <= range;
+  return (distance_vector.x + distance_vector.y) <= sight_range;
