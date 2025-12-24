@@ -26,7 +26,7 @@ static func search(
     ##
     first_node: Variant,
     ##
-    handle_node: Callable,
+    callbackfn: Callable,
 ) -> Variant:
   var node_queue: Array[NodeCursor] = [NodeCursor.new(first_node, null)];
   var debug_timer = TimeEnforcer.new();
@@ -37,14 +37,15 @@ static func search(
   while true:
     debug_timer.check_time();
 
-    var handler_result: NodeHandlerReturn = handle_node.call(node_cursor);
+    var callback_result: NodeHandlerReturn = callbackfn.call(node_cursor);
 
-    if handler_result is QueueResult:
-      final_result = handler_result.result;
+    if callback_result is QueueResult:
+      final_result = callback_result.result;
       break;
 
     else:
-      _append_additions_to_queue(node_queue, handler_result);
+      var additions := callback_result as QueueAdditions;
+      _append_additions_to_queue(node_queue, additions);
       node_cursor = _pop_next_node(node_queue, search_mode);
 
   return final_result;
@@ -84,7 +85,7 @@ static func _append_additions_to_queue(node_queue: Array[NodeCursor], additions:
   node_queue.append_array(new_cursors);
 
 
-## A struct provided by QueueSearch to node handler functions. [br]
+## A struct provided by QueueSearch to the callbackfn. [br]
 ## Contains the current node in focus and the accumulated result of this node's search
 ## path.
 class NodeCursor:
@@ -107,7 +108,7 @@ class NodeCursor:
   pass
 
 
-## When returned by a node handler function, signals the addition of new nodes to the
+## When returned by a callbackfn, signals the addition of new nodes to the
 ## search queue.
 class QueueAdditions extends NodeHandlerReturn:
   ## Search nodes to append to the search queue.
@@ -125,7 +126,7 @@ class QueueAdditions extends NodeHandlerReturn:
     self.accumulator = accumulator;
 
 
-## When returned by a node handler function, signals the end of the [QueueSearch] operation.
+## When returned by a callbackfn, signals the end of the [QueueSearch] operation.
 class QueueResult extends NodeHandlerReturn:
   ## The final result of the search.
   var result: Variant;
