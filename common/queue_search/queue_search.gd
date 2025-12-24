@@ -1,5 +1,5 @@
 ## @static [br]
-##
+## A utility class for managing the boilerplate of different search algorithms.
 class_name QueueSearch
 
 
@@ -156,13 +156,13 @@ class QueueAdditions extends CallbackReturn:
   ## in [member values] when they are selected by the queue to be in focus.
   var accumulator: Variant;
 
+  ## [param values] Search values to append to the search queue. [br]
   ##
+  ## [param accumulator] The solution value from this call to callbackfn that should be
+  ## bound with each value in [param values]. [br]
   @warning_ignore('shadowed_variable')
-  func _init(
-      nodes: Array,
-      accumulator: Variant = null,
-  ) -> void:
-    self.values = nodes;
+  func _init(values: Array, accumulator: Variant = null) -> void:
+    self.values = values;
     self.accumulator = accumulator;
 
 
@@ -171,11 +171,9 @@ class QueueResult extends CallbackReturn:
   ## The final result of the search.
   var result: Variant;
 
-  ##
+  ## [param result] The value to resolve the search with.
   @warning_ignore('shadowed_variable')
-  func _init(
-    result: Variant,
-  ) -> void:
+  func _init(result: Variant) -> void:
     self.result = result;
 
 
