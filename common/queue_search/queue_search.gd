@@ -3,14 +3,15 @@
 class_name QueueSearch
 
 
-##
-const TIME_TO_WARN_MS := 200;
+## The time in milliseconds a QueueSearch may take before a performance warning is posted.
+const TIME_TO_WARN_MS := 150;
 
-##
-const TIME_TO_ERROR_MS := 1_000;
+## The time in milliseconds a QueueSearch maay take before an error is raised.
+## This check is an important guard against infinite loops.
+const TIME_TO_ERROR_MS := 500;
 
 
-## 
+## Informs the order in which nodes in the search queue are selected.
 enum SearchMode {
   ## Another name for last-in-first-out: prioritizes nodes at the end of the stack.
   DepthFirst,
@@ -20,52 +21,54 @@ enum SearchMode {
 
 
 ## @nullable [br]
+## Begins a QueueSearch from the [param initial_value] and returns the result of that
+## search as determined by [param callbackfn]. [br]
 ##
-## Begins a QueueSearch from the initial value [param first_node] and returns the result
-## of that search as determined by [param callbackfn]. [br]
-##
-## "Nodes" are values of any type that are wrapped by QueueSearch into structs and then
+## The values given to QueueSearch are wrapped into "search node" structs, that are then
 ## provided to the [param callbackfn]. The [param callbackfn], via its function return,
-## determines from the current node value which new values should be added to the search
-## queue. You may think of this as a [b]recursive algorithm.[/b] [br]
+## determines from the current search node which new values should be added to the search
+## queue. You may think of this as a [b]recursive algorithm.[b] [br]
 ##
 ## If the search queue is emptied, the QueueSearch will resolve with a null value. [br]
 ##
-## [param search_mode] Describes the method to select nodes from the search queue.
-## See [enum QueueSearch.SearchMode] for details. [br]
+## [rule]
+##
+## [param initial_value] The starting value to begin the search with.
+##
+## [param search_mode] The method for selecting nodes from the search queue.
 ##
 ## [param callbackfn] has the signature:
 ## [codeblock] callable(cursor: NodeCursor) -> QueueAdditions | QueueResult [/codeblock]
 ##
-## [QueueSearch.QueueAdditions] should be returned if the result of this callbackfn is to append
-## new search nodes to the search queue. [br]
+## [QueueSearch.QueueAdditions] should be returned if the result of this callbackfn is to
+## append new search nodes to the search queue. [br]
 ##
-## [QueueSearch.QueueResult] should be returned when a solution to the search has been found and
-## this search may be resolved with the provided result. [br]
-static func search(first_node: Variant, search_mode: SearchMode, callbackfn: Callable) -> Variant:
-  var node_queue: Array[NodeCursor] = [NodeCursor.new(first_node, null)];
+## [QueueSearch.QueueResult] should be returned when a solution to the search has been
+## found and this search may be resolved with the provided result. [br]
+static func search(initial_value: Variant, search_mode: SearchMode, callbackfn: Callable) -> Variant:
+  var search_queue: Array[NodeCursor] = [NodeCursor.new(initial_value, null)];
   var debug_timer = TimeEnforcer.new();
   var final_result: Variant = null;
 
-  var node_cursor := _pop_next_node(node_queue, search_mode);
+  var search_cursor := _pop_next_cursor(search_queue, search_mode);
 
   while true:
-    # A null node_cursor indicates the queue is empty.
-    if node_cursor == null:
+    # A null search_cursor indicates the queue is empty.
+    if search_cursor == null:
       break;
 
     debug_timer.check_time();
 
-    var callback_result: CallbackReturn = callbackfn.call(node_cursor);
+    var callback_return: CallbackReturn = callbackfn.call(search_cursor);
 
-    if callback_result is QueueResult:
-      final_result = callback_result.result;
+    if callback_return is QueueResult:
+      final_result = callback_return.result;
       break;
 
     else:
-      var additions := callback_result as QueueAdditions;
-      _append_additions_to_queue(node_queue, additions);
-      node_cursor = _pop_next_node(node_queue, search_mode);
+      var additions := callback_return as QueueAdditions;
+      _append_additions_to_queue(search_queue, additions);
+      search_cursor = _pop_next_cursor(search_queue, search_mode);
 
   return final_result;
 
@@ -77,46 +80,46 @@ static func search_async() -> void:
 
 
 ## @nullable [br]
-## Removes and returns the next search node from [param node_queue]. Which node is
+## Removes and returns the next search node from [param search_queue]. Which node is
 ## selected depends on the [param search_mode]. [br]
 ##
 ## [enum SearchMode.BreadthFirst] will retrieve the first node in the queue. [br]
 ## [enum SearchMode.DepthFirst] will retrieve the last node in the queue. [br]
-static func _pop_next_node(node_queue: Array[NodeCursor], search_mode: SearchMode) -> NodeCursor:
-  var node: NodeCursor = null;
+static func _pop_next_cursor(search_queue: Array[NodeCursor], search_mode: SearchMode) -> NodeCursor:
+  var cursor: NodeCursor = null;
 
   match search_mode:
     SearchMode.BreadthFirst:
-      node = node_queue.pop_at(0);
+      cursor = search_queue.pop_at(0);
     SearchMode.DepthFirst:
-      node = node_queue.pop_at(-1);
+      cursor = search_queue.pop_at(-1);
 
-  return node;
+  return cursor;
 
 
-## Modifies [param node_queue] to append [NodeCursor] objects built from [param additions].
-static func _append_additions_to_queue(node_queue: Array[NodeCursor], additions: QueueAdditions) -> void:
+## Modifies [param search_queue] to append [NodeCursor] objects built from [param additions].
+static func _append_additions_to_queue(search_queue: Array[NodeCursor], additions: QueueAdditions) -> void:
   var new_cursors: Array[NodeCursor];
 
-  for node in additions.nodes:
-    new_cursors.append(NodeCursor.new(node, additions.accumulator));
+  for value in additions.values:
+    new_cursors.append(NodeCursor.new(value, additions.accumulator));
   
-  node_queue.append_array(new_cursors);
+  search_queue.append_array(new_cursors);
 
 
 ## A struct provided by QueueSearch to the callbackfn. [br]
 ## Contains the current node in focus and the accumulated result of this node's search
 ## path.
 class NodeCursor:
-  ## The search node currently in focus.
-  var node: Variant = null;
-  ## The value resulting from the previous call to callbackfn that appended this node to
-  ## the search queue.
+  ## The search value currently in focus.
+  var value: Variant = null;
+  ## The solution value resulting from the previous call to callbackfn that appended this
+  ## node to the search queue.
   var accumulator: Variant = null;
 
   @warning_ignore('shadowed_variable')
   func _init(cursor_node: Variant, accumulator: Variant) -> void:
-    self.node = cursor_node;
+    self.value = cursor_node;
     self.accumulator = accumulator;
 
 
@@ -127,21 +130,21 @@ class NodeCursor:
   pass
 
 
-## When returned by a callbackfn, signals the addition of new nodes to the
-## search queue.
+## When returned by a callbackfn, signals the addition of new nodes to the search queue.
 class QueueAdditions extends CallbackReturn:
-  ## Search nodes to append to the search queue.
-  var nodes: Array;
-  ## The result value from this call to callbackfn that should be bound to each node in
-  ## [member nodes] when they are selected by the queue to be in focus.
+  ## Search values to append to the search queue.
+  var values: Array;
+  ## The solution value from this call to callbackfn that should be bound with each value
+  ## in [member values] when they are selected by the queue to be in focus.
   var accumulator: Variant;
 
+  ##
   @warning_ignore('shadowed_variable')
   func _init(
       nodes: Array,
       accumulator: Variant = null,
   ) -> void:
-    self.nodes = nodes;
+    self.values = nodes;
     self.accumulator = accumulator;
 
 
@@ -150,6 +153,7 @@ class QueueResult extends CallbackReturn:
   ## The final result of the search.
   var result: Variant;
 
+  ##
   @warning_ignore('shadowed_variable')
   func _init(
     result: Variant,
@@ -169,11 +173,11 @@ class TimeEnforcer:
     var elapsed_time := _get_timestamp() - _start_timestamp;
 
     if not _warning_was_posted and elapsed_time >= TIME_TO_WARN_MS:
-      push_warning('QueueSearch: search time has elapsed the warning time limit (%s).' % TIME_TO_WARN_MS);
+      push_warning('QueueSearch: search time has elapsed the warning time limit (%s ms).' % TIME_TO_WARN_MS);
       _warning_was_posted = true;
 
     if elapsed_time >= TIME_TO_ERROR_MS:
-      assert(false, 'QueueSearch: search time has elapsed the error time limit (%s).' % TIME_TO_ERROR_MS);
+      assert(false, 'QueueSearch: search time has elapsed the error time limit (%s ms).' % TIME_TO_ERROR_MS);
   
   ## Returns the current time as a comparable int.
   func _get_timestamp() -> int:
