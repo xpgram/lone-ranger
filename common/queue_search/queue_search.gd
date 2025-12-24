@@ -16,91 +16,92 @@ enum SearchMode {
 }
 
 
-## A 'deposit-box' containing the final result of the fully evaluated algorithm.
-var result_node: Variant;
-
-var search_mode: SearchMode;
-
-var node_queue := [];
-
-var handle_node: Callable;
-
-var start_timestamp = Time.get_ticks_msec();
-
-var finished := false;
-
-
-
-# TODO Refactor this script.
-#  This was adapted from QueueSearch in AW, and I think we can do better.
-#  I'm not implementing staccato search right now, so this doesn't need to be a class
-#  object.
-
-
-
-func _init(
+##
+static func search(
     ##
     search_mode: SearchMode,
     ##
     first_node: Variant,
     ##
     handle_node: Callable,
-) -> void:
-  self.search_mode = search_mode;
-  self.node_queue = [first_node];
-  self.handle_node = handle_node;
+) -> Variant:
+  var node_queue := [first_node];
 
-  while not finished:
-    _handle_next_node();
+  var start_timestamp = _get_timestamp();
+  var node_cursor := NodeCursor.new(
+    _pop_next_node(node_queue, search_mode),
+    null,
+  );
 
 
-##
-func _handle_next_node() -> void:
-  if finished:
-    return;
-  
-  var node = _get_next_node();
 
-  if not node:
-    _end_search();
-    return;
-  
-  var process_result = handle_node.call(node);
-
-  if process_result == 'break':
-    result_node = node;
-    _end_search();
-
-  elif process_result != null:
-    if process_result is Array:
-      node_queue.append_array(process_result)
-    else:
-      node_queue.append(process_result);
+  return 1;
 
 
 ##
-func _get_next_node() -> Variant:
-  var node;
+static func search_async() -> void:
+  # IMPLEMENT This returns a promise that can be awaited. Maybe it shouldn't be called async, then.
+  pass
 
-  if search_mode == SearchMode.BreadthFirst:
-    node = node_queue.pop_at(0);
-  elif search_mode == SearchMode.DepthFirst:
-    node = node_queue.pop_at(-1);
-  
+
+## @nullable [br]
+static func _pop_next_node(node_queue: Array[NodeCursor], search_mode: SearchMode) -> NodeCursor:
+  var node: NodeCursor = null;
+
+  match search_mode:
+    SearchMode.BreadthFirst:
+      node = node_queue.pop_at(0);
+    SearchMode.DepthFirst:
+      node = node_queue.pop_at(-1);
+
   return node;
 
 
 ##
-func _end_search() -> void:
-  finished = true;
+static func _get_timestamp() -> int:
+  return Time.get_ticks_msec();
 
 
 ##
-func _error_time_has_elapsed() -> bool:
-  return start_timestamp - Time.get_ticks_msec() >= TIME_TO_ERROR_MS;
-
-
-##
-class SearchState:
-  var node_queue := [];
+class NodeCursor:
+  var node: Variant = null;
   var result: Variant = null;
+
+  @warning_ignore('shadowed_variable')
+  func _init(cursor_node: Variant, result: Variant) -> void:
+    self.node = cursor_node;
+    self.result = result;
+
+
+##
+@abstract class NodeHandlerReturn:
+  ## Whether this NodeHandlerReturn is a solution to the search algorithm. [br]
+  ## Setting this to true will short-circuit the remaining node queue and return
+  ## [member result] as the [QueueSearch]'s final result.
+  var is_solution := false;
+
+
+## When returned by a node handler function, signals the addition of new nodes to the
+## search queue.
+class QueueAdditions extends NodeHandlerReturn:
+  var queue_additions: Array;
+  var result: Variant;
+
+  @warning_ignore('shadowed_variable')
+  func _init(
+    queue_additions: Array,
+    result: Variant = null,
+  ) -> void:
+    self.queue_additions = queue_additions;
+    self.result = result;
+
+
+## When returned by a node handler function, signals the end of the [QueueSearch] operation.
+class QueueResult extends NodeHandlerReturn:
+  var result: Variant;
+
+  @warning_ignore('shadowed_variable')
+  func _init(
+    result: Variant,
+  ) -> void:
+    self.result = result;
