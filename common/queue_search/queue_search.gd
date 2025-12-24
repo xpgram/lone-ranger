@@ -31,8 +31,6 @@ enum SearchMode {
 ##
 ## If the search queue is emptied, the QueueSearch will resolve with a null value. [br]
 ##
-## [rule]
-##
 ## [param initial_value] The starting value to begin the search with.
 ##
 ## [param search_mode] The method for selecting nodes from the search queue.
@@ -128,7 +126,7 @@ static func _append_additions_to_queue(search_queue: Array[NodeCursor], addition
 
 
 ## A struct provided by QueueSearch to the callbackfn. [br]
-## Contains the current node in focus and the accumulated result of this node's search
+## Contains the current value in focus and the accumulated result of this node's search
 ## path.
 class NodeCursor:
   ## The search value currently in focus.
