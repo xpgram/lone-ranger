@@ -19,25 +19,44 @@ enum SearchMode {
 }
 
 
+## @nullable [br]
 ##
-static func search(
-    ##
-    search_mode: SearchMode,
-    ##
-    first_node: Variant,
-    ##
-    callbackfn: Callable,
-) -> Variant:
+## Begins a QueueSearch from the initial value [param first_node] and returns the result
+## of that search as determined by [param callbackfn]. [br]
+##
+## "Nodes" are values of any type that are wrapped by QueueSearch into structs and then
+## provided to the [param callbackfn]. The [param callbackfn], via its function return,
+## determines from the current node value which new values should be added to the search
+## queue. You may think of this as a [b]recursive algorithm.[/b] [br]
+##
+## If the search queue is emptied, the QueueSearch will resolve with a null value. [br]
+##
+## [param search_mode] Describes the method to select nodes from the search queue.
+## See [enum QueueSearch.SearchMode] for details. [br]
+##
+## [param callbackfn] has the signature:
+## [codeblock] callable(cursor: NodeCursor) -> QueueAdditions | QueueResult [/codeblock]
+##
+## [QueueSearch.QueueAdditions] should be returned if the result of this callbackfn is to append
+## new search nodes to the search queue. [br]
+##
+## [QueueSearch.QueueResult] should be returned when a solution to the search has been found and
+## this search may be resolved with the provided result. [br]
+static func search(first_node: Variant, search_mode: SearchMode, callbackfn: Callable) -> Variant:
   var node_queue: Array[NodeCursor] = [NodeCursor.new(first_node, null)];
   var debug_timer = TimeEnforcer.new();
-  var final_result: Variant;
+  var final_result: Variant = null;
 
   var node_cursor := _pop_next_node(node_queue, search_mode);
 
   while true:
+    # A null node_cursor indicates the queue is empty.
+    if node_cursor == null:
+      break;
+
     debug_timer.check_time();
 
-    var callback_result: NodeHandlerReturn = callbackfn.call(node_cursor);
+    var callback_result: CallbackReturn = callbackfn.call(node_cursor);
 
     if callback_result is QueueResult:
       final_result = callback_result.result;
@@ -104,13 +123,13 @@ class NodeCursor:
 ## Abstract class used to describe a Union-type between other classes.
 ## This allows functions to return extensions of this class, but not other types, like
 ## strings, ints, etc.
-@abstract class NodeHandlerReturn:
+@abstract class CallbackReturn:
   pass
 
 
 ## When returned by a callbackfn, signals the addition of new nodes to the
 ## search queue.
-class QueueAdditions extends NodeHandlerReturn:
+class QueueAdditions extends CallbackReturn:
   ## Search nodes to append to the search queue.
   var nodes: Array;
   ## The result value from this call to callbackfn that should be bound to each node in
@@ -127,7 +146,7 @@ class QueueAdditions extends NodeHandlerReturn:
 
 
 ## When returned by a callbackfn, signals the end of the [QueueSearch] operation.
-class QueueResult extends NodeHandlerReturn:
+class QueueResult extends CallbackReturn:
   ## The final result of the search.
   var result: Variant;
 
