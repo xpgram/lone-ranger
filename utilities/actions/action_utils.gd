@@ -24,9 +24,11 @@ static func cell_is_wall(cell: Grid.Cell) -> bool:
   return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Wall;
 
 
-##
+## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
+## to [param target_pos]. If no path could be found, the returned array will be empty.
 static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:
-  # TODO Use Godot's built-in AStar2D class.
+  # IMPLEMENT Use QueueSearch to build a path toward a breadth-found target.
+  # TODO Or use Godot's built-in AStar2D class.
   #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
   #  conversion.
 
@@ -57,20 +59,35 @@ static func is_cell_traversable(place: Vector2, _entity: GridEntity) -> bool:
   );
 
 
-##
-static func target_within_line_range(actor: GridEntity, target: GridEntity, sight_range: int) -> bool:
-  if sight_range < 0:
+## Returns true if [param target_pos] is on the same row or column as [param actor] and
+## within the grid distance [param grid_range].
+static func target_pos_within_line_range(actor: GridEntity, target_pos: Vector2i, grid_range: int) -> bool:
+  if grid_range < 0:
     return false;
 
-  var in_line := (actor.grid_position.x == target.grid_position.x or actor.grid_position.y == target.grid_position.y);
-  var in_range := target_within_range(actor, target, sight_range);
+  var in_line := (actor.grid_position.x == target_pos.x or actor.grid_position.y == target_pos.y);
+  var in_range := target_pos_within_range(actor, target_pos, grid_range);
   return in_line and in_range;
 
 
-##
-static func target_within_range(actor: GridEntity, target: GridEntity, sight_range: int) -> bool:
-  if sight_range < 0:
+
+## Returns true if [param target_pos] is within the grid distance [param grid_range] from
+## [param actor].
+static func target_pos_within_range(actor: GridEntity, target_pos: Vector2i, grid_range: int) -> bool:
+  if grid_range < 0:
     return false;
 
-  var distance_vector := (actor.grid_position - target.grid_position).abs();
-  return (distance_vector.x + distance_vector.y) <= sight_range;
+  var distance_vector := (actor.grid_position - target_pos).abs();
+  return (distance_vector.x + distance_vector.y) <= grid_range;
+
+
+## Returns true if [param target] is on the same row or column as [param actor] and within
+## the grid distance [param grid_range].
+static func target_within_line_range(actor: GridEntity, target: GridEntity, grid_range: int) -> bool:
+  return target_pos_within_line_range(actor, target.grid_position, grid_range);
+
+
+## Returns true if [param target] is within the grid distance [param grid_range] from
+## [param actor].
+static func target_within_range(actor: GridEntity, target: GridEntity, grid_range: int) -> bool:
+  return target_pos_within_range(actor, target.grid_position, grid_range);
