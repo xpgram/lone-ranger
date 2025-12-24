@@ -25,17 +25,34 @@ static func search(
     ##
     handle_node: Callable,
 ) -> Variant:
-  var node_queue := [first_node];
-
+  var node_queue: Array[NodeCursor] = [NodeCursor.new(first_node, null)];
   var start_timestamp = _get_timestamp();
+  var final_result: Variant;
+
   var node_cursor := NodeCursor.new(
     _pop_next_node(node_queue, search_mode),
     null,
   );
 
+  # TODO Debug safety: time tracking
+  while true:
+    var handler_result: NodeHandlerReturn = handle_node.call(node_cursor);
 
+    if handler_result is QueueResult:
+      final_result = handler_result.result;
+      break;
 
-  return 1;
+    # Setup for next iteration of the loop.
+    var additions := handler_result as QueueAdditions;
+    var new_cursors: Array[NodeCursor];
+
+    for node in additions.queue_additions:
+      new_cursors.append(NodeCursor.new(node, additions.result));
+    node_queue.append(new_cursors);
+
+    node_cursor = _pop_next_node(node_queue, search_mode);
+
+  return final_result;
 
 
 ##
