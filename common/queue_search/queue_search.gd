@@ -73,10 +73,30 @@ static func search(initial_value: Variant, search_mode: SearchMode, callbackfn: 
   return final_result;
 
 
+## Begins an async QueueSearch from the [param initial_value] and returns a [Promise] for
+## the result of that search as determined by [param callbackfn]. [br]
 ##
-static func search_async() -> void:
-  # IMPLEMENT This returns a promise that can be awaited. Maybe it shouldn't be called async, then.
-  pass
+## The values given to QueueSearch are wrapped into "search node" structs, that are then
+## provided to the [param callbackfn]. The [param callbackfn], via its function return,
+## determines from the current search node which new values should be added to the search
+## queue. You may think of this as a [b]recursive algorithm.[b] [br]
+##
+## If the search queue is emptied, the QueueSearch will resolve with a null value. [br]
+##
+## [param initial_value] The starting value to begin the search with.
+##
+## [param search_mode] The method for selecting nodes from the search queue.
+##
+## [param callbackfn] has the signature:
+## [codeblock] callable(cursor: NodeCursor) -> QueueAdditions | QueueResult [/codeblock]
+##
+## [QueueSearch.QueueAdditions] should be returned if the result of this callbackfn is to
+## append new search nodes to the search queue. [br]
+##
+## [QueueSearch.QueueResult] should be returned when a solution to the search has been
+## found and this search may be resolved with the provided result. [br]
+static func get_search_promise(initial_value: Variant, search_mode: SearchMode, callbackfn: Callable) -> Promise:
+  return Promise.new(func (): return await search(initial_value, search_mode, callbackfn));
 
 
 ## @nullable [br]
