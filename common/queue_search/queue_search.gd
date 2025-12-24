@@ -1,7 +1,10 @@
 ## @static [br]
-## A
+##
 class_name QueueSearch
 
+
+##
+const TIME_TO_WARN_MS := 500;
 
 ##
 const TIME_TO_ERROR_MS := 1_000;
@@ -29,28 +32,20 @@ static func search(
   var start_timestamp = _get_timestamp();
   var final_result: Variant;
 
-  var node_cursor := NodeCursor.new(
-    _pop_next_node(node_queue, search_mode),
-    null,
-  );
+  var node_cursor := _pop_next_node(node_queue, search_mode);
 
-  # TODO Debug safety: time tracking
   while true:
+    _enforce_debug_time_limits(start_timestamp, _get_timestamp());
+
     var handler_result: NodeHandlerReturn = handle_node.call(node_cursor);
 
     if handler_result is QueueResult:
       final_result = handler_result.result;
       break;
 
-    # Setup for next iteration of the loop.
-    var additions := handler_result as QueueAdditions;
-    var new_cursors: Array[NodeCursor];
-
-    for node in additions.queue_additions:
-      new_cursors.append(NodeCursor.new(node, additions.result));
-    node_queue.append(new_cursors);
-
-    node_cursor = _pop_next_node(node_queue, search_mode);
+    else:
+      _append_additions_to_queue(node_queue, handler_result);
+      node_cursor = _pop_next_node(node_queue, search_mode);
 
   return final_result;
 
@@ -75,8 +70,28 @@ static func _pop_next_node(node_queue: Array[NodeCursor], search_mode: SearchMod
 
 
 ##
+static func _append_additions_to_queue(node_queue: Array[NodeCursor], additions: QueueAdditions) -> void:
+  var new_cursors: Array[NodeCursor];
+
+  for node in additions.queue_additions:
+    new_cursors.append(NodeCursor.new(node, additions.result));
+  
+  node_queue.append_array(new_cursors);
+
+
+##
 static func _get_timestamp() -> int:
   return Time.get_ticks_msec();
+
+
+##
+static func _enforce_debug_time_limits(start_timestamp: int, end_timestamp: int) -> void:
+  var elapsed_time := end_timestamp - start_timestamp;
+
+  if elapsed_time >= TIME_TO_WARN_MS:
+    push_warning('QueueSearch: search time has elapsed the warning time limit (%s).' % TIME_TO_WARN_MS);
+  if elapsed_time >= TIME_TO_ERROR_MS:
+    assert(false, 'QueueSearch: search time has elapsed the error time limit (%s).' % TIME_TO_ERROR_MS);
 
 
 ##
