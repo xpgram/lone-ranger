@@ -25,7 +25,8 @@ static func cell_is_wall(cell: Grid.Cell) -> bool:
 
 
 ## Returns an array of [Vector2i] coordinates on the Grid in the shape of a line extending
-## from [param from] in direction [param direction].
+## from [param from] in direction [param direction]. Does not include [param from] in the
+## result.
 static func get_coordinate_line(from: Vector2i, direction: Vector2i, distance: int) -> Array[Vector2i]:
   var grid_positions := [] as Array[Vector2i];
   var cursor := from + direction;
@@ -46,12 +47,6 @@ static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
   var angle := from.angle_to(to);
   angle = round(angle / Math.HALF_PI) * Math.HALF_PI;
   return Vector2.from_angle(angle).round();
-
-
-## Returns the Manhattan distance between two [Vector2i]'s.
-static func get_grid_distance(from: Vector2i, to: Vector2i) -> int:
-  var distance_vector := (from - to).abs();
-  return (distance_vector.x + distance_vector.y);
 
 
 ## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
