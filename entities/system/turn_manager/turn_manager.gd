@@ -85,11 +85,12 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
   actor_components.assign(
     get_tree()
       .get_nodes_in_group(entity_group)
+      # TODO I may want to just extract this filter to an indent-zero function.
       .filter(func (entity: GridEntity):
         return (
           Component.has_component(entity, GridActorComponent)
-          and (include_golems or not entity.observes_golem_time)
           # TODO observes_golem_time only makes sense to BoardActor's, so should probably be located there.
+          and (include_golems or not entity.observes_golem_time)
         ))
       .map(func (entity: GridEntity): return Component.get_component(entity, GridActorComponent))
   );
@@ -104,7 +105,7 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
   # their list order, avoiding scenarios where one entity obstructs the action of another.
   for i in range(3):
     var actor_promises: Array = actor_components \
-      .filter(func (actor: GridActorComponent): return not actor.has_acted()) \
+      .filter(func (actor: GridActorComponent): return actor.can_act()) \
       .map(func (actor: GridActorComponent): return actor.act_async);
 
     await Promise.all(actor_promises).finished;

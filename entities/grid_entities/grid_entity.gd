@@ -92,6 +92,15 @@ func update_attributes() -> void:
       _attributes.erase(attribute_key);
 
 
+## Returns the Grid distance between this entity and [param other]. [br]
+##
+## [param other] is a [GridEntity] or a [Vector2i].
+func distance_to(other: Variant) -> int:
+  var other_pos: Vector2i = other.grid_position if other is GridEntity else other;
+  var distance_vector := (grid_position - other_pos).abs();
+  return distance_vector.x + distance_vector.y;
+
+
 ## Overridable function called whenever this GridEntity's facing direction is changed.
 ## Useful for updating sprite animations.
 func _facing_changed() -> void:
