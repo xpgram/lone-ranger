@@ -22,9 +22,9 @@ func act_async() -> void:
 
   var direction := ActionUtils.get_direction_to_target(self_entity.grid_position, player.grid_position);
   var inter_distance := self_entity.distance_to(player) - 1;
-  var line := ActionUtils.get_coordinate_line(self_entity.grid_position, direction, inter_distance);
-  var adjacent := (line.size() == 0);
-  var can_see_player: bool = line.all(func (pos: Vector2i): return ActionUtils.is_cell_transparent(pos));
+  var coords_line := ActionUtils.get_coordinate_line(self_entity.grid_position, direction, inter_distance);
+  var is_adjacent := (coords_line.size() == 0);
+  var can_see_player: bool = coords_line.all(func (pos: Vector2i): return ActionUtils.is_cell_transparent(pos));
 
   if not can_see_player:
     return;
@@ -35,11 +35,11 @@ func act_async() -> void:
     direction
   );
 
-  if not adjacent and FieldActionList.move.can_perform(playbill):
+  if not is_adjacent and FieldActionList.move.can_perform(playbill):
     @warning_ignore('redundant_await')
     await FieldActionList.move.perform_async(playbill);
   # TODO FieldActionList.enemy_attack.can_perform(playbill):
-  elif adjacent:
+  elif is_adjacent:
     _attack();
 
   exhaust();
