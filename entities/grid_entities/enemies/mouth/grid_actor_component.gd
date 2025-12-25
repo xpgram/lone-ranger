@@ -39,7 +39,7 @@ func act_async() -> void:
     @warning_ignore('redundant_await')
     await FieldActionList.move.perform_async(playbill);
   # TODO FieldActionList.enemy_attack.can_perform(playbill):
-  else:
+  elif adjacent:
     _attack();
 
   exhaust();
