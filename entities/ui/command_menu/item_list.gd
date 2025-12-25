@@ -249,6 +249,6 @@ func _emit_go_back() -> void:
 
 
 ## A struct to save state information about some variant of this options list.
-class SubmenuMemory:
+class SubmenuMemory extends RefCounted:
   var cursor_index := 0;
   var page_index := 0;

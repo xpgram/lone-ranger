@@ -128,7 +128,7 @@ static func _append_additions_to_queue(search_queue: Array[NodeCursor], addition
 ## A struct provided by QueueSearch to the callbackfn. [br]
 ## Contains the current value in focus and the accumulated result of this node's search
 ## path.
-class NodeCursor:
+class NodeCursor extends RefCounted:
   ## The search value currently in focus.
   var value: Variant = null;
   ## The solution value resulting from the previous call to callbackfn that appended this
@@ -144,7 +144,7 @@ class NodeCursor:
 ## Abstract class used to describe a Union-type between other classes.
 ## This allows functions to return extensions of this class, but not other types, like
 ## strings, ints, etc.
-@abstract class CallbackReturn:
+@abstract class CallbackReturn extends RefCounted:
   pass
 
 
@@ -179,7 +179,7 @@ class QueueResult extends CallbackReturn:
 
 ## A timer class built to handle debug timers for QueueSearch.
 ## Pushes warnings and errors to the Godot console when certain limits have elapsed.
-class TimeEnforcer:
+class TimeEnforcer extends RefCounted:
   var _start_timestamp := _get_timestamp();
   var _warning_was_posted := false;
 

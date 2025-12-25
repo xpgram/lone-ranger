@@ -114,11 +114,11 @@ func _try_destroy_cell(place_key: String) -> void:
 ## described by the tilemap.
 ##
 ## Use [class Cell] for the public API cell data.
-class InternalCell:
+class InternalCell extends RefCounted:
   var entities := [] as Array[GridEntity];
 
 
 ## A struct containing a list of grid entities and other important cell information.
-class Cell:
+class Cell extends RefCounted:
   var tile_data: CellTerrainData;
   var entities: Array[GridEntity];

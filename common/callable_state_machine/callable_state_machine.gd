@@ -94,7 +94,7 @@ func _get_debug_metadata() -> String:
 
 
 ## A struct to package related state callables.
-class CallableState:
+class CallableState extends RefCounted:
   var enter := Callable();
   var process := Callable();
   var exit := Callable();
