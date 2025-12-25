@@ -24,17 +24,6 @@ static func cell_is_wall(cell: Grid.Cell) -> bool:
   return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Wall;
 
 
-## Returns a [Vector2i] in one of the four cardinal directions closest to the angle
-## between [param from] and [param to].
-static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
-  if from == to:
-    return Vector2i.ZERO;
-  
-  var angle := from.angle_to(to);
-  angle = round(angle / Math.HALF_PI) * Math.HALF_PI;
-  return Vector2.from_angle(angle).round();
-
-
 ## Returns an array of [Vector2i] coordinates on the Grid in the shape of a line extending
 ## from [param from] in direction [param direction].
 static func get_coordinate_line(from: Vector2i, direction: Vector2i, distance: int) -> Array[Vector2i]:
@@ -46,6 +35,17 @@ static func get_coordinate_line(from: Vector2i, direction: Vector2i, distance: i
     cursor += direction;
 
   return grid_positions;
+
+
+## Returns a [Vector2i] in one of the four cardinal directions closest to the angle
+## between [param from] and [param to].
+static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
+  if from == to:
+    return Vector2i.ZERO;
+  
+  var angle := from.angle_to(to);
+  angle = round(angle / Math.HALF_PI) * Math.HALF_PI;
+  return Vector2.from_angle(angle).round();
 
 
 ## Returns the Manhattan distance between two [Vector2i]'s.
