@@ -65,6 +65,14 @@ static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array
   return [];
 
 
+## @nullable [br]
+## Returns the player instance if it has been added to the scene. If no player is found,
+## returns null instead.
+static func get_player_entity() -> Player2D:
+  var players: Array = Engine.get_main_loop().get_nodes_in_group(Group.Player);
+  return players[0] if players.size() > 0 else null;
+
+
 ## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
 static func is_cell_idleable(place: Vector2i, _entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
