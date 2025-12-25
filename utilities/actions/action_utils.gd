@@ -24,6 +24,36 @@ static func cell_is_wall(cell: Grid.Cell) -> bool:
   return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Wall;
 
 
+## Returns a [Vector2i] in one of the four cardinal directions closest to the angle
+## between [param from] and [param to].
+static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
+  if from == to:
+    return Vector2i.ZERO;
+  
+  var angle := from.angle_to(to);
+  angle = round(angle / Math.HALF_PI) * Math.HALF_PI;
+  return Vector2.from_angle(angle).round();
+
+
+## Returns an array of [Vector2i] coordinates on the Grid in the shape of a line extending
+## from [param from] in direction [param direction].
+static func get_coordinate_line(from: Vector2i, direction: Vector2i, distance: int) -> Array[Vector2i]:
+  var grid_positions := [] as Array[Vector2i];
+  var cursor := from + direction;
+
+  for i in range(distance):
+    grid_positions.append(cursor);
+    cursor += direction;
+
+  return grid_positions;
+
+
+## Returns the Manhattan distance between two [Vector2i]'s.
+static func get_grid_distance(from: Vector2i, to: Vector2i) -> int:
+  var distance_vector := (from - to).abs();
+  return (distance_vector.x + distance_vector.y);
+
+
 ## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
 ## to [param target_pos]. If no path could be found, the returned array will be empty.
 static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:
@@ -36,7 +66,7 @@ static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array
 
 
 ## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
-static func is_cell_idleable(place: Vector2, _entity: GridEntity) -> bool:
+static func is_cell_idleable(place: Vector2i, _entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
     cell_is_floor(cell)
@@ -45,13 +75,19 @@ static func is_cell_idleable(place: Vector2, _entity: GridEntity) -> bool:
 
 
 ## Returns true if the cell at [param place] contains some solid, collidable object.
-static func is_cell_obstructed(place: Vector2) -> bool:
+static func is_cell_obstructed(place: Vector2i) -> bool:
   var cell := Grid.get_cell(place);
   return cell_is_wall(cell) or cell_has_collidables(cell);
 
 
+## Returns true if the cell at [param place] contains no objects or properties that would
+## obstruct vision lines.
+static func is_cell_transparent(place: Vector2i) -> bool:
+  return not is_cell_obstructed(place);
+
+
 ## Returns true if the cell at [param place] is free of obstructions.
-static func is_cell_traversable(place: Vector2, _entity: GridEntity) -> bool:
+static func is_cell_traversable(place: Vector2i, _entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
     not cell_is_wall(cell)
@@ -79,15 +115,3 @@ static func target_pos_within_range(actor: GridEntity, target_pos: Vector2i, gri
 
   var distance_vector := (actor.grid_position - target_pos).abs();
   return (distance_vector.x + distance_vector.y) <= grid_range;
-
-
-## Returns true if [param target] is on the same row or column as [param actor] and within
-## the grid distance [param grid_range].
-static func target_within_line_range(actor: GridEntity, target: GridEntity, grid_range: int) -> bool:
-  return target_pos_within_line_range(actor, target.grid_position, grid_range);
-
-
-## Returns true if [param target] is within the grid distance [param grid_range] from
-## [param actor].
-static func target_within_range(actor: GridEntity, target: GridEntity, grid_range: int) -> bool:
-  return target_pos_within_range(actor, target.grid_position, grid_range);
