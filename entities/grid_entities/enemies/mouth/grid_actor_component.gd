@@ -41,7 +41,7 @@ func act_async() -> void:
   # TODO FieldActionList.enemy_attack.can_perform(playbill):
   else:
     _attack();
-  
+
   exhaust();
 
 

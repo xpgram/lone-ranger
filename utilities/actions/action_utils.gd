@@ -39,12 +39,14 @@ static func get_coordinate_line(from: Vector2i, direction: Vector2i, distance: i
 
 
 ## Returns a [Vector2i] in one of the four cardinal directions closest to the angle
-## between [param from] and [param to].
+## between [param from] and [param to]. [br]
+## If [param from] and [param to] are the same position, returns [Vector2i.ZERO].
 static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
   if from == to:
     return Vector2i.ZERO;
   
-  var angle := from.angle_to(to);
+  var difference_vector := to - from;
+  var angle := Vector2.RIGHT.angle_to(difference_vector);
   angle = round(angle / Math.HALF_PI) * Math.HALF_PI;
   return Vector2.from_angle(angle).round();
 
