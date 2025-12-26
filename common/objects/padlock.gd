@@ -9,9 +9,32 @@ extends RefCounted
 var _locked := false;
 
 
-## Returns true if this symbolic lock is currently engaged.
+## Returns true if this symbolic lock is currently engaged. [br]
+## To lock a function call, it is preferable to use [method thread_locked].
 func locked() -> bool:
   return _locked;
+
+
+## Returns true if the lock is already locked, otherwise **locks this padlock** and
+## returns false. This eases somewhat the burden of locking a process at the top of its
+## function call. [br]
+##
+## Example:
+## [codeblock]
+## func some_method_async() -> void:
+##     if padlock.thread_locked():
+##         return;
+##
+##     # var data := await network.fetch('...');
+##     # do_something_with_data(data);
+##
+##     padlock.unlock();
+## [/codeblock]
+func thread_locked() -> bool:
+  if locked():
+    return true;
+  lock();
+  return false;
 
 
 ## Engages this symbolic lock. [br]
