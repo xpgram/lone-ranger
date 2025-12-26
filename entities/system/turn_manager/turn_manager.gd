@@ -16,10 +16,10 @@ extends Node
 
 
 ## Used to lock the turn-execution loop, preventing parallel triggers.
-var turn_in_progress := false;
+var _turn_in_progress_padlock := Padlock.new();
 
-## A flag indicating whether any NPC took a turn during the last round.
-var _last_turn_non_players_acted := false;
+## Information about the last-conducted round of player turns.
+var _previous_round_data := RoundData.new();
 
 ## Increments independently of the inaction timer, and triggers different enemies' turn
 ## behavior.
@@ -37,71 +37,116 @@ func _ready() -> void:
   inaction_timer.start(PartialTime.FULL);
 
   inaction_timer.timeout.connect(func ():
-    _advance_time(player.get_wait_action());
+    _advance_time_async(player.get_wait_action());
   );
 
   # TODO Clean this up: I just wanted to try some demo stuff.
   player.action_declared.connect(func (action: FieldActionSchedule, _buffer: bool):
-    _advance_time(action);
+    _advance_time_async(action);
   );
 
+# TODO Remove this block
+# advance_time psuedo code
+# - lock turn advancer
+# - conduct player turn
+#   - perform action
+#   - decrement inventory
+#   - increment player attributes
+# - perform a small wait
+# - (inaction forgiveness)
+# - check real time values, increment golem time; if elapsed:
+#   - perform all entity group turn phases
+# - reset real time value if necessary, golem time as well
+# - unlock turn advancer
 
 ## Advances in-game events by triggering turn actions for each set of actors on the field.
 ## `player_schedule` describes the player's input to this process.
-func _advance_time(player_schedule: FieldActionSchedule) -> void:
-  # Prevent interruptions during long or async operations.
-  if turn_in_progress:
+func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
+  if _turn_in_progress_padlock.thread_locked():
     return;
-  turn_in_progress = true;
 
-  # Player action
+  var current_round_data := RoundData.new();
+
+  await _conduct_player_turn_async(player_schedule);
+  current_round_data.player_acted = player_schedule.action is not Wait_FieldAction;
+
+  var inaction_forgiveness_triggered := (
+    _player_is_inaction_forgiveness_eligible()
+    and current_round_data.player_acted
+  );
+
+  if _round_timers_elapsed() and not inaction_forgiveness_triggered:
+    await _conduct_non_player_turns_async();
+    current_round_data.non_players_acted = true;
+
+  _update_round_timers();
+  _previous_round_data = current_round_data;
+
+  _turn_in_progress_padlock.unlock();
+
+
+##
+func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> void:
+  var player_action := player_schedule.action;
+  var playbill := player_schedule.playbill;
+
   @warning_ignore('redundant_await')
-  await player_schedule.action.perform_async(player_schedule.playbill);
+  await player_action.perform_async(player_schedule.playbill);
 
-  # TODO Is this really how I want to do this? Was this meant to go in the perform script?
-  #  Oh, it probably was. This will 'expend' your normal abilities, too. :p
-  if player_schedule.action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
-    player.inventory.expend(player_schedule.action.action_uid);
-
+  # FIXME Inventory should not expend an unexpendable action. This request possibly shouldn't even go here.
+  if player_action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
+    player.inventory.expend(player_action.action_uid);
+  
   player.update_attributes();
 
-  await _perform_wait_async();
-  # TODO 1 wait_async should be called every turn.
-  #   More than 1 may be called depending on what else is happening.
-  #   Figure out how to orchestrate that.
-  #   But do it *after* adding NPCs and objects that can act independently.
+  _add_time_to_round_timers(player_action.action_time_cost);
+  await _perform_small_pause_async(); # TODO Rename function
 
-  # Inaction forgiveness.
-  if (
-      _inaction_forgiveness_enabled
-      and _last_turn_non_players_acted
-      and inaction_timer.wait_time - inaction_timer.time_left <= _inaction_forgiveness_window
-  ):
-    _last_turn_non_players_acted = false;
-    turn_in_progress = false;
-    return;
 
-  _last_turn_non_players_acted = true;
+##
+func _player_is_inaction_forgiveness_eligible() -> bool:
+  var currently_within_inaction_forgiveness_window := (
+    PartialTime.FULL - inaction_timer.time_left <= _inaction_forgiveness_window
+  );
 
-  var action_time_cost := player_schedule.action.get_variable_action_time_cost()
-  var new_time_remaining := inaction_timer.time_left - action_time_cost;
+  return (
+    _inaction_forgiveness_enabled
+    and currently_within_inaction_forgiveness_window
+    and _previous_round_data.non_players_acted
+    and not _previous_round_data.player_acted
+  );
 
-  golem_time += action_time_cost;
 
-  # Other turn actions
-  if new_time_remaining <= 0:
-    await _perform_group_entity_actions_async(Group.NPC);
-    await _perform_group_entity_actions_async(Group.Enemy);
-    await _perform_group_entity_actions_async(Group.Interactible);
+##
+func _conduct_non_player_turns_async() -> void:
+  await _perform_group_entity_actions_async(Group.NPC);
+  await _perform_group_entity_actions_async(Group.Enemy);
+  await _perform_group_entity_actions_async(Group.Interactible);
 
-  # Reset for next turn
-  var next_time_remaining := new_time_remaining if new_time_remaining > 0 else PartialTime.FULL;
-  inaction_timer.start(next_time_remaining);
 
-  if golem_time >= PartialTime.FULL:
+##
+func _round_timers_elapsed():
+  return (
+    inaction_timer.time_left <= 0
+    or golem_time >= PartialTime.TURN_ELAPSE_LENGTH
+  );
+
+
+##
+func _add_time_to_round_timers(time: float) -> void:
+  golem_time += time;
+
+  var new_real_time_value := maxf(0, inaction_timer.time_left - time);
+  inaction_timer.start(new_real_time_value);
+
+
+##
+func _update_round_timers() -> void:
+  if inaction_timer.time_left <= 0:
+    inaction_timer.start(PartialTime.FULL);
+  
+  if golem_time >= PartialTime.TURN_ELAPSE_LENGTH:
     golem_time = PartialTime.NONE;
-
-  turn_in_progress = false;
 
 
 ## For all [GridEntity]'s in group [param entity_group], request and await their turn
@@ -147,7 +192,7 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
 
 
 ## Trigger a short time break.
-func _perform_wait_async() -> void:
+func _perform_small_pause_async() -> void:
   await get_tree().create_timer(0.075).timeout;
 
 
@@ -162,3 +207,9 @@ func _get_player_entity() -> Player2D:
     return null;
 
   return players[0];
+
+
+##
+class RoundData extends RefCounted:
+  var player_acted := false;
+  var non_players_acted := false;
