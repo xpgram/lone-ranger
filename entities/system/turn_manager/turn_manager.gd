@@ -2,8 +2,24 @@ class_name TurnManager
 extends Node
 
 
+@export_group('Inaction Timer')
+
+## Whether the forgiveness window for accidentally missed turns is enabled. [br]
+##
+## Players who act just after missing their turn, within the accident window, may be given
+## a free turn to avoid the seeming unfairness of letting enemies double-act.
+@export var _inaction_forgiveness_enabled := true;
+
+## The time in seconds that accidentally missed turns may be forgiven by skipping the
+## enemy's next turn.
+@export var _inaction_forgiveness_window := 0.5;
+
+
 ## Used to lock the turn-execution loop, preventing parallel triggers.
 var turn_in_progress := false;
+
+## A flag indicating whether any NPC took a turn during the last round.
+var _last_turn_non_players_acted := false;
 
 ## Increments independently of the inaction timer, and triggers different enemies' turn
 ## behavior.
@@ -54,6 +70,18 @@ func _advance_time(player_schedule: FieldActionSchedule) -> void:
   #   More than 1 may be called depending on what else is happening.
   #   Figure out how to orchestrate that.
   #   But do it *after* adding NPCs and objects that can act independently.
+
+  # Inaction forgiveness.
+  if (
+      _inaction_forgiveness_enabled
+      and _last_turn_non_players_acted
+      and inaction_timer.wait_time - inaction_timer.time_left <= _inaction_forgiveness_window
+  ):
+    _last_turn_non_players_acted = false;
+    turn_in_progress = false;
+    return;
+
+  _last_turn_non_players_acted = true;
 
   var action_time_cost := player_schedule.action.get_variable_action_time_cost()
   var new_time_remaining := inaction_timer.time_left - action_time_cost;
