@@ -1,4 +1,5 @@
-extends Node
+## A utility script containing commonly referenced enums.
+class_name Enums
 
 
 enum FieldActionType {
