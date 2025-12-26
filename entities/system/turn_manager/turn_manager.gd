@@ -60,13 +60,14 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   if _turn_in_progress_padlock.thread_locked():
     return;
 
+  var turn_trigger_time := _inaction_timer.real_time_elapsed;
   var current_round_data := RoundData.new();
 
   await _conduct_player_turn_async(player_schedule);
   current_round_data.player_acted = player_schedule.action is not Wait_FieldAction;
 
   var inaction_forgiveness_triggered := (
-    _player_is_inaction_forgiveness_eligible()
+    _player_is_inaction_forgiveness_eligible(turn_trigger_time, _previous_round_data)
     and current_round_data.player_acted
   );
 
@@ -95,18 +96,18 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> void:
   player.update_attributes();
 
   _inaction_timer.add_time(player_action.action_time_cost);
-  await _perform_small_pause_async(); # TODO Rename function
+  await _perform_small_pause_async();
 
 
 ##
-func _player_is_inaction_forgiveness_eligible() -> bool:
-  var currently_within_inaction_forgiveness_window := (_inaction_timer.real_time_elapsed <= _inaction_forgiveness_window);
+func _player_is_inaction_forgiveness_eligible(time_elapsed: float, previous_round: RoundData) -> bool:
+  var currently_within_inaction_forgiveness_window := (time_elapsed <= _inaction_forgiveness_window);
 
   return (
     _inaction_forgiveness_enabled
     and currently_within_inaction_forgiveness_window
-    and _previous_round_data.non_players_acted
-    and not _previous_round_data.player_acted
+    and previous_round.non_players_acted
+    and not previous_round.player_acted
   );
 
 
