@@ -17,6 +17,7 @@ signal entity_moved();
 ## Whether this entity can be forcibly moved into another Grid position.
 @export var pushable := false;
 
+# TODO observes_golem_time only makes sense to GridActorComponents, so should be located there?
 ## Whether this entity adheres to the more turn-based golem time instead of the ongoing
 ## action timer.
 @export var observes_golem_time := false;

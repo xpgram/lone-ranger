@@ -1,8 +1,8 @@
 extends Label
 
 
-@onready var inaction_timer: Timer = %InactionTimer;
+@export var _inaction_timer: HalfTimeCombatTimer;
 
 
 func _process(_delta: float) -> void:
-  text = 'Time Left: %04.1f' % inaction_timer.time_left;
+  text = 'Time Left: %04.1f' % _inaction_timer.real_time_left;

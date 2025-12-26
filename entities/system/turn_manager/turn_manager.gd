@@ -4,6 +4,9 @@ extends Node
 
 @export_group('Inaction Timer')
 
+## The timer used to count down missed player turns.
+@export var _inaction_timer: HalfTimeCombatTimer;
+
 ## Whether the forgiveness window for accidentally missed turns is enabled. [br]
 ##
 ## Players who act just after missing their turn, within the accident window, may be given
@@ -21,22 +24,14 @@ var _turn_in_progress_padlock := Padlock.new();
 ## Information about the last-conducted round of player turns.
 var _previous_round_data := RoundData.new();
 
-## Increments independently of the inaction timer, and triggers different enemies' turn
-## behavior.
-var golem_time := 0.0;
-
-
 ## The GridEntity operated by the player.
 @onready var player: Player2D = _get_player_entity();
 
-## The timer used to count down missed player turns.
-@onready var inaction_timer: Timer = %InactionTimer;
-
 
 func _ready() -> void:
-  inaction_timer.start(PartialTime.FULL);
+  _inaction_timer.start_and_reset();
 
-  inaction_timer.timeout.connect(func ():
+  _inaction_timer.timeout.connect(func ():
     _advance_time_async(player.get_wait_action());
   );
 
@@ -79,7 +74,7 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
     await _conduct_non_player_turns_async();
     current_round_data.non_players_acted = true;
 
-  _update_round_timers();
+  _inaction_timer.loop_timers();
   _previous_round_data = current_round_data;
 
   _turn_in_progress_padlock.unlock();
@@ -99,15 +94,13 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> void:
   
   player.update_attributes();
 
-  _add_time_to_round_timers(player_action.action_time_cost);
+  _inaction_timer.add_time(player_action.action_time_cost);
   await _perform_small_pause_async(); # TODO Rename function
 
 
 ##
 func _player_is_inaction_forgiveness_eligible() -> bool:
-  var currently_within_inaction_forgiveness_window := (
-    PartialTime.FULL - inaction_timer.time_left <= _inaction_forgiveness_window
-  );
+  var currently_within_inaction_forgiveness_window := (_inaction_timer.real_time_elapsed <= _inaction_forgiveness_window);
 
   return (
     _inaction_forgiveness_enabled
@@ -127,32 +120,16 @@ func _conduct_non_player_turns_async() -> void:
 ##
 func _round_timers_elapsed():
   return (
-    inaction_timer.time_left <= 0
-    or golem_time >= PartialTime.TURN_ELAPSE_LENGTH
+    _inaction_timer.real_time_finished
+    or _inaction_timer.golem_time_finished
   );
-
-
-##
-func _add_time_to_round_timers(time: float) -> void:
-  golem_time += time;
-
-  var new_real_time_value := maxf(0, inaction_timer.time_left - time);
-  inaction_timer.start(new_real_time_value);
-
-
-##
-func _update_round_timers() -> void:
-  if inaction_timer.time_left <= 0:
-    inaction_timer.start(PartialTime.FULL);
-  
-  if golem_time >= PartialTime.TURN_ELAPSE_LENGTH:
-    golem_time = PartialTime.NONE;
 
 
 ## For all [GridEntity]'s in group [param entity_group], request and await their turn
 ## actions and after-effects on the game board.
 func _perform_group_entity_actions_async(entity_group: StringName) -> void:
-  var include_golems := golem_time >= PartialTime.FULL;
+  var include_non_golems := _inaction_timer.real_time_finished;
+  var include_golems := _inaction_timer.golem_time_finished;
 
   var actor_components: Array[GridActorComponent];
   actor_components.assign(
@@ -162,8 +139,10 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
       .filter(func (entity: GridEntity):
         return (
           Component.has_component(entity, GridActorComponent)
-          # TODO observes_golem_time only makes sense to BoardActor's, so should probably be located there.
-          and (include_golems or not entity.observes_golem_time)
+          and (
+            (include_non_golems and not entity.observes_golem_time)
+            or (include_golems and entity.observes_golem_time)
+          )
         ))
       .map(func (entity: GridEntity): return Component.get_component(entity, GridActorComponent))
   );
