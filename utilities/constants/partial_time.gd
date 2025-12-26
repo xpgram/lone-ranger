@@ -28,21 +28,21 @@ const NONE      := TURN_ELAPSE_LENGTH * 0.0;
 ## To get the equivalent real-time seconds for each enum value, either reference them
 ## directly (e.g. [member PartialTime.HALF]), or use [method PartialTime.enum_to_seconds].
 enum TimeSegment {
-  NONE,
-  QUARTER,
-  HALF,
-  MOST,
   FULL,
+  MOST,
+  HALF,
+  QUARTER,
+  NONE,
 };
 
 
 ## A dictionary that maps [TimeSegment] values to their real-time second equivalents.
 static var _conversion_dict: Dictionary[TimeSegment, float] = {
-  TimeSegment.NONE: NONE,
-  TimeSegment.QUARTER: QUARTER,
-  TimeSegment.HALF: HALF,
-  TimeSegment.MOST: MOST,
   TimeSegment.FULL: FULL,
+  TimeSegment.MOST: MOST,
+  TimeSegment.HALF: HALF,
+  TimeSegment.QUARTER: QUARTER,
+  TimeSegment.NONE: NONE,
 };
 
 
