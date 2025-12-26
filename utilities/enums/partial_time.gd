@@ -1,3 +1,4 @@
+## @static [br]
 ## An enum for common Partial Time values.
 ##
 ## Partial Time describes fractions of turn-"seconds" measured in real-time seconds.

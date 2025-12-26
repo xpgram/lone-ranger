@@ -1,3 +1,4 @@
+## @static [br]
 ## A utility script containing information common to the program.
 class_name Constants
 

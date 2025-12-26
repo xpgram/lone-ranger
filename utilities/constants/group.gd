@@ -1,3 +1,4 @@
+## @static [br]
 ## A collection of constants for group StringNames.
 class_name Group
 

@@ -1,3 +1,4 @@
+## @static [br]
 ## A utility script to aid in UI focus management.
 class_name InputFocus
 
