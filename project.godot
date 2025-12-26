@@ -22,7 +22,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Events="*res://utilities/autoload/events.gd"
-InputFocus="*res://utilities/autoload/input_focus.gd"
 Grid="*res://utilities/autoload/grid.gd"
 BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
