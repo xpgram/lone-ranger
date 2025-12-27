@@ -25,6 +25,9 @@ var current_animation_state: StringName = 'idle';
 ##
 @onready var _command_menu: CommandMenu = %CommandMenu;
 
+##
+@onready var _field_cursor: FieldCursor = %FieldCursor;
+
 
 func _init() -> void:
   add_to_group(Group.Player);
@@ -43,7 +46,13 @@ func _ready() -> void:
 
   # Setup focus control.
   focus_node.grab_focus();
+
+  # TODO Write the UI state machine:
   _command_menu.closed.connect(func (): focus_node.grab_focus());
+  _field_cursor.ui_canceled.connect(func ():
+    _field_cursor.close();
+    focus_node.grab_focus();
+  );
 
 
 func _process(_delta: float) -> void:
@@ -99,6 +108,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
   elif event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
+    # _field_cursor.open_from_start();
     focus_node.accept_event();
 
 

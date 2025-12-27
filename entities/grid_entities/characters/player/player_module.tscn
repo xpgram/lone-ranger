@@ -132,7 +132,9 @@ anchors_preset = 0
 script = ExtResource("10_jru4w")
 metadata/_custom_type_script = "uid://dx2don6d2tt38"
 
-[node name="FieldCursor" parent="." instance=ExtResource("12_5jpfb")]
+[node name="FieldCursor" parent="." node_paths=PackedStringArray("_origin_object") instance=ExtResource("12_5jpfb")]
+unique_name_in_owner = true
+_origin_object = NodePath("../Player2D")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
 ignore_rotation = false
