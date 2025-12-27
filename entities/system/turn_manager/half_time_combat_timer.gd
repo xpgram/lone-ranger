@@ -32,8 +32,6 @@ var real_time_elapsed: float:
 ## The timer's remaining real-time seconds.
 var real_time_left: float:
   get():
-    var t := Timer.new();
-    t.time_
     return maxf(0, PartialTime.TURN_ELAPSE_LENGTH - _real_time);
 
 ## @readonly [br]
