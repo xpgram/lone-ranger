@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://dcydrh78pwl4"]
+[gd_scene load_steps=16 format=3 uid="uid://dcydrh78pwl4"]
 
+[ext_resource type="Script" uid="uid://qahld4djrvxi" path="res://entities/ui/field_cursor/field_cursor.gd" id="1_k062e"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="1_xa4pa"]
 [ext_resource type="Texture2D" uid="uid://cai16n3tebrgw" path="res://assets/textures_unused/system/field_cursor/field-cursor-fringed-0.png" id="2_rivf3"]
 [ext_resource type="Texture2D" uid="uid://wyuwramwiljn" path="res://assets/textures_unused/system/field_cursor/field-cursor-fringed-1.png" id="3_uee3l"]
@@ -86,6 +87,57 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="Animation" id="Animation_f5ans"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot_TopLeft/AnimatedSprite2D_TL:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-9, -9)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot_TopRight/AnimatedSprite2D_TR:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9, -9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot_BottomLeft/AnimatedSprite2D_BL:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot_BottomRight/AnimatedSprite2D_BR:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_qdihw"]
 resource_name = "idle"
 loop_mode = 1
@@ -139,57 +191,6 @@ tracks/3/keys = {
 "values": [Vector2(0, 0), Vector2(-1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_f5ans"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Pivot_TopLeft/AnimatedSprite2D_TL:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-9, -9)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Pivot_TopRight/AnimatedSprite2D_TR:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(9, -9)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Pivot_BottomLeft/AnimatedSprite2D_BL:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Pivot_BottomRight/AnimatedSprite2D_BR:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3verx"]
 _data = {
 &"RESET": SubResource("Animation_f5ans"),
@@ -197,6 +198,8 @@ _data = {
 }
 
 [node name="FieldCursor" type="Node2D"]
+script = ExtResource("1_k062e")
+metadata/_custom_type_script = "uid://qahld4djrvxi"
 
 [node name="FocusableControl" type="Control" parent="."]
 layout_mode = 3
@@ -210,6 +213,7 @@ metadata/_custom_type_script = "uid://dx2don6d2tt38"
 position = Vector2(-7, -7)
 
 [node name="AnimatedSprite2D_TL" type="AnimatedSprite2D" parent="Pivot_TopLeft"]
+position = Vector2(-9, -9)
 sprite_frames = SubResource("SpriteFrames_rsgl5")
 autoplay = "default"
 
@@ -217,6 +221,7 @@ autoplay = "default"
 position = Vector2(7, -7)
 
 [node name="AnimatedSprite2D_TR" type="AnimatedSprite2D" parent="Pivot_TopRight"]
+position = Vector2(9, -9)
 sprite_frames = SubResource("SpriteFrames_r3rma")
 autoplay = "default"
 
