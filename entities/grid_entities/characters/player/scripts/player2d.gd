@@ -20,7 +20,7 @@ var current_animation_state: StringName = 'idle';
 @onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
 
 ##
-@onready var focus_node: Control = %FocusableControl;
+@onready var focus_node: FocusableControl = %FocusableControl;
 
 ##
 @onready var _command_menu: CommandMenu = %CommandMenu;
