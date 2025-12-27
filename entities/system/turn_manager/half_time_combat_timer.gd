@@ -47,6 +47,11 @@ var golem_time_finished: bool:
   get():
     return _golem_time >= PartialTime.TURN_ELAPSE_LENGTH;
 
+##
+var finished: bool:
+  get():
+    return real_time_finished or golem_time_finished;
+
 
 func _process(delta: float) -> void:
   if not _started:

@@ -1,3 +1,4 @@
+## Responsible for the game's turn system.
 class_name TurnManager
 extends Node
 
@@ -40,22 +41,9 @@ func _ready() -> void:
     _advance_time_async(action);
   );
 
-# TODO Remove this block
-# advance_time psuedo code
-# - lock turn advancer
-# - conduct player turn
-#   - perform action
-#   - decrement inventory
-#   - increment player attributes
-# - perform a small wait
-# - (inaction forgiveness)
-# - check real time values, increment golem time; if elapsed:
-#   - perform all entity group turn phases
-# - reset real time value if necessary, golem time as well
-# - unlock turn advancer
 
 ## Advances in-game events by triggering turn actions for each set of actors on the field.
-## `player_schedule` describes the player's input to this process.
+## [param player_schedule] describes the player's input to this process.
 func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   if _turn_in_progress_padlock.thread_locked():
     return;
@@ -71,7 +59,7 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
     and current_round_data.player_acted
   );
 
-  if _round_timers_elapsed() and not inaction_forgiveness_triggered:
+  if _inaction_timer.finished and not inaction_forgiveness_triggered:
     await _conduct_non_player_turns_async();
     current_round_data.non_players_acted = true;
 
@@ -81,7 +69,8 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   _turn_in_progress_padlock.unlock();
 
 
-##
+## Orchestrates turn actions for the player entity, the specifics of which are given by
+## [param player_schedule].
 func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> void:
   var player_action := player_schedule.action;
   var playbill := player_schedule.playbill;
@@ -99,7 +88,8 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> void:
   await _perform_small_pause_async();
 
 
-##
+## Returns true if the player is eligible for a free turn as a result of the inaction
+## forgiveness mechanic.
 func _player_is_inaction_forgiveness_eligible(time_elapsed: float, previous_round: RoundData) -> bool:
   var currently_within_inaction_forgiveness_window := (time_elapsed <= _inaction_forgiveness_window);
 
@@ -111,19 +101,11 @@ func _player_is_inaction_forgiveness_eligible(time_elapsed: float, previous_roun
   );
 
 
-##
+## Orchestrates turn actions for non-player entities, batched by entity kind.
 func _conduct_non_player_turns_async() -> void:
   await _perform_group_entity_actions_async(Group.NPC);
   await _perform_group_entity_actions_async(Group.Enemy);
   await _perform_group_entity_actions_async(Group.Interactible);
-
-
-##
-func _round_timers_elapsed():
-  return (
-    _inaction_timer.real_time_finished
-    or _inaction_timer.golem_time_finished
-  );
 
 
 ## For all [GridEntity]'s in group [param entity_group], request and await their turn
@@ -189,7 +171,7 @@ func _get_player_entity() -> Player2D:
   return players[0];
 
 
-##
+## A class to track metadata about a round of the turn system.
 class RoundData extends RefCounted:
   var player_acted := false;
   var non_players_acted := false;
