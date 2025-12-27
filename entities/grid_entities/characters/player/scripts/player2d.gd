@@ -53,6 +53,9 @@ func _ready() -> void:
     _field_cursor.close();
     focus_node.grab_focus();
   );
+  _field_cursor.grid_position_selected.connect(func (grid_pos: Vector2i):
+    prints('selected grid position', grid_pos);
+  );
 
 
 func _process(_delta: float) -> void:
@@ -107,8 +110,8 @@ func _unhandled_input(event: InputEvent) -> void:
     focus_node.accept_event();
 
   elif event.is_action_pressed('open_action_menu'):
-    _command_menu.open_from_start();
-    # _field_cursor.open_from_start();
+    # _command_menu.open_from_start();
+    _field_cursor.open_from_start();
     focus_node.accept_event();
 
 
