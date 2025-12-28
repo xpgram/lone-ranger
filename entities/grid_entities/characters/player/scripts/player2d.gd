@@ -42,7 +42,7 @@ func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 
-  _setup_input_control_transitions();
+  _connect_to_ui_subsystems();
   focus_node.grab_focus();
 
 
@@ -195,7 +195,7 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
 
 
 ## Makes signal connections to the player's [CommandMenu] and [FieldCursor] instances.
-func _setup_input_control_transitions() -> void:
+func _connect_to_ui_subsystems() -> void:
   _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
   _command_menu.action_selected.connect(_on_command_menu_action_selected);
 
