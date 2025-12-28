@@ -46,9 +46,11 @@ func _exit_tree() -> void:
 
 ## Returns the [Node] this object is a component to. [br]
 ##
-## Will return null if this node is the scene root while [member _remote_component_owner] is not
-## set.
+## Will return null if this node is the scene root while [member _remote_component_owner]
+## is not set.
 func get_component_owner() -> Node:
+  if _component_owner is ComponentCombiner:
+    return _component_owner.get_component_owner();
   return _component_owner;
 
 
@@ -70,3 +72,11 @@ func _register_self(node: Node) -> void:
 ## Removes this component from [param node]'s registry.
 func _deregister_self(node: Node) -> void:
   Component.remove_component(node, self);
+
+
+# IMPLEMENT I'm way to brain-dumb to write this right now.
+func _on_combiner_component_owner_changed(new_owner: Node) -> void:
+  pass
+  # _deregister_self from the current _component_owner, which may be a combiner relay.
+  # save new_owner to _component_owner.
+  # _register_self to the new-current _component_owner, which may be a combiner realy.
