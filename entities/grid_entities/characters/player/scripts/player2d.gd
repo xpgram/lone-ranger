@@ -1,18 +1,20 @@
+## Represents a player entity.
 class_name Player2D
 extends GridEntity
 
 
+## Emitted when an action the player would like to perform has been chosen.
 signal action_declared(action: FieldActionSchedule, buffer: bool);
 
 
-##
+## The player's collection of bits and bobs.
 @export var inventory: PlayerInventory;
 
 
-##
+## The [StringName] of this player's current animation.
 var current_animation_state: StringName = 'idle';
 
-##
+## A blackboard variable to retain a reference to the player's chosen command menu action.
 var _selected_command_menu_action: FieldAction;
 
 
@@ -25,10 +27,10 @@ var _selected_command_menu_action: FieldAction;
 ##
 @onready var focus_node: FocusableControl = %FocusableControl;
 
-##
+## The player's unique [CommandMenu] instance.
 @onready var _command_menu: CommandMenu = %CommandMenu;
 
-##
+## The player's unique [FieldCursor] instance.
 @onready var _field_cursor: FieldCursor = %FieldCursor;
 
 
@@ -100,6 +102,7 @@ func _unhandled_input(event: InputEvent) -> void:
     focus_node.accept_event();
 
 
+## Returns the [FieldActionSchedule] for a Wait action respective to this player.
 func get_wait_action() -> FieldActionSchedule:
   return FieldActionSchedule.new(
     FieldActionList.wait,
@@ -111,6 +114,7 @@ func get_wait_action() -> FieldActionSchedule:
   );
 
 
+## Returns a [FieldActionSchedule] for some action resulting from directional input.
 func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
   var chosen_action: FieldAction = FieldActionList.wait;
 
@@ -134,6 +138,8 @@ func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns a [FieldActionSchedule] for some action resulting from directional input while
+## the brace input is also active.
 func get_action_from_brace_move_input(direction: Vector2i) -> FieldActionSchedule:
   var chosen_action: FieldAction = FieldActionList.wait;
   var playbill := FieldActionPlaybill.new(
@@ -148,6 +154,7 @@ func get_action_from_brace_move_input(direction: Vector2i) -> FieldActionSchedul
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns the [FieldActionSchedule] for some action resulting from an interact input.
 func get_interact_action() -> FieldActionSchedule:
   var chosen_action: FieldAction = FieldActionList.wait;
 
@@ -187,7 +194,7 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
   set_animation_state('idle');
 
 
-##
+## Makes signal connections to the player's [CommandMenu] and [FieldCursor] instances.
 func _setup_input_control_transitions() -> void:
   _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
   _command_menu.action_selected.connect(_on_command_menu_action_selected);
@@ -196,25 +203,31 @@ func _setup_input_control_transitions() -> void:
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
 
 
-##
+## Event handler for [signal CommandMenu.ui_canceled]. [br]
+## Reacquires player input focus from sub-UI systems.
 func _on_command_menu_cancelled() -> void:
   _selected_command_menu_action = null;
   focus_node.grab_focus();
 
 
-##
+## Event handler for [signal CommandMenu.action_selected]. [br]
+## Saves a reference to the chosen [FeildAction] and advances the sub-UI system to the
+## [FieldCursor].
 func _on_command_menu_action_selected(action: FieldAction) -> void:
   _selected_command_menu_action = action;
   _command_menu.close();
   _field_cursor.open_from_start();
 
 
-##
+## Event handler for [signal FieldCursor.ui_canceled]. [br]
+## Yields input focus back to the [CommandMenu].
 func _on_field_cursor_canceled() -> void:
   _command_menu.open();
 
 
-##
+## Event handler for [signal FieldCursor.grid_position_selected]. [br]
+## Builds and emits a [FieldActionSchedule] for the chosen [FieldAction] and target
+## coordinates. Also, yields input focus back to the player.
 func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
   _field_cursor.close();
   focus_node.grab_focus();
