@@ -122,27 +122,29 @@ func _connect_to_inventory() -> void:
   _inventory.emit_full_inventory();
 
 
-##
+## Modifies in place the list contents of a [param submenu_list] representing a submenu,
+## then updates the main menu contents.
 func _update_submenu_content(submenu_list: Array[FieldAction], items: Array[FieldAction]) -> void:
   submenu_list.assign(items);
   _update_main_list_options();
 
 
-##
+## Binds event listeners to main and submenu signals.
 func _connect_to_item_lists() -> void:
-  # Listen to ItemList signals.
-  #   Main -> switch to Options
-  #   Main (cancel) -> close()
-  #   Options -> emit action_selected  # TODO I think I can give ItemList a custom signal, here
-  #   Options (cancel) -> switch to Main
-
+  # TODO Refactor this to require less explanation?
+  # Main -> switch to Options
   _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
+
+  # Main (cancel) -> close()
   _main_list.go_back.connect(func ():
     close();
     ui_canceled.emit();
   );
 
+  # Options -> emit action_selected
   _options_list.item_chosen.connect(func (item: FieldAction): action_selected.emit(item));
+
+  # Options (cancel) -> switch to Main
   _options_list.go_back.connect(func (): _switch_to_main_list());
 
 
