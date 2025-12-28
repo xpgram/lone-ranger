@@ -1,7 +1,7 @@
-## Manages a pop-up UI CommandMenu.
+## Manages a pop-up UI CommandMenu. [br]
 ##
 ## This menu maintains a simple construction. It is only 2-layers deep, and only contains
-## a few second layer options for different kinds of player actions.
+## a few second layer options for different kinds of player actions. [br]
 ##
 ## It must listen to a **PlayerInventory** node for updates to content.
 class_name CommandMenu
