@@ -11,8 +11,9 @@ extends Control
 ## Emitted when the player selects a **FieldAction** option.
 signal action_selected(action: FieldAction);
 
-## Emitted when the Command Menu system is closed.
-signal closed();
+## Emitted when the Command Menu system rejects UI control, e.g., when the player backs
+## out until the menu closes.
+signal ui_canceled();
 
 
 enum Submenu {
@@ -86,6 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:
   # If the action menu is open (it is), then allow players to close it.
   if event.is_action_pressed('open_action_menu'):
     close();
+    ui_canceled.emit();
     accept_event();
 
 
@@ -109,7 +111,6 @@ func open_from_start() -> void:
 func close() -> void:
   # Setting visibility here implicitly releases focus on children.
   visible = false;
-  closed.emit();
 
 
 ## Bind listeners to inventory signals.
@@ -136,7 +137,10 @@ func _connect_to_item_lists() -> void:
   #   Options (cancel) -> switch to Main
 
   _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
-  _main_list.go_back.connect(func (): close());
+  _main_list.go_back.connect(func ():
+    close();
+    ui_canceled.emit();
+  );
 
   _options_list.item_chosen.connect(func (item: FieldAction): action_selected.emit(item));
   _options_list.go_back.connect(func (): _switch_to_main_list());

@@ -18,10 +18,14 @@ signal ui_canceled();
 @onready var focus_node: FocusableControl = %FocusableControl;
 
 
+func _ready() -> void:
+  close();
+
+
 func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
-  
+
   if event.is_action_pressed('move_up'):
     move_cursor(Vector2i.UP);
     focus_node.accept_event();
@@ -41,13 +45,14 @@ func _unhandled_input(event: InputEvent) -> void:
     move_cursor(Vector2i.RIGHT);
     focus_node.accept_event();
     return;
-  
+
   elif event.is_action_pressed('interact'):
     select_current_grid_position();
     focus_node.accept_event();
     return;
 
-  elif event.is_action_pressed('cancel'):
+  elif event.is_action_pressed('cancel') \
+      or event.is_action_pressed('open_action_menu'):
     cancel_ui_operation();
     focus_node.accept_event();
     return;
@@ -111,4 +116,5 @@ func select_current_grid_position() -> void:
 
 ##
 func cancel_ui_operation() -> void:
+  close();
   ui_canceled.emit();

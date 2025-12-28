@@ -12,6 +12,9 @@ signal action_declared(action: FieldActionSchedule, buffer: bool);
 ##
 var current_animation_state: StringName = 'idle';
 
+##
+var _selected_command_menu_action: FieldAction;
+
 
 ##
 @onready var animation_player: AnimationPlayer = %AnimationPlayer;
@@ -37,25 +40,8 @@ func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 
-  # Pass through command menu actions as own actions.
-  _command_menu.action_selected.connect(func (action: FieldAction):
-    var playbill := FieldActionPlaybill.new(self, faced_position, faced_direction);
-    var schedule := FieldActionSchedule.new(action, playbill);
-    action_declared.emit(schedule, true);
-  );
-
-  # Setup focus control.
+  _setup_input_control_transitions();
   focus_node.grab_focus();
-
-  # TODO Write the UI state machine:
-  _command_menu.closed.connect(func (): focus_node.grab_focus());
-  _field_cursor.ui_canceled.connect(func ():
-    _field_cursor.close();
-    focus_node.grab_focus();
-  );
-  _field_cursor.grid_position_selected.connect(func (grid_pos: Vector2i):
-    prints('selected grid position', grid_pos);
-  );
 
 
 func _process(_delta: float) -> void:
@@ -110,8 +96,7 @@ func _unhandled_input(event: InputEvent) -> void:
     focus_node.accept_event();
 
   elif event.is_action_pressed('open_action_menu'):
-    # _command_menu.open_from_start();
-    _field_cursor.open_from_start();
+    _command_menu.open_from_start();
     focus_node.accept_event();
 
 
@@ -200,3 +185,43 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
     return;
 
   set_animation_state('idle');
+
+
+##
+func _setup_input_control_transitions() -> void:
+  _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
+  _command_menu.action_selected.connect(_on_command_menu_action_selected);
+
+  _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
+  _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
+
+
+##
+func _on_command_menu_cancelled() -> void:
+  _selected_command_menu_action = null;
+  focus_node.grab_focus();
+
+
+##
+func _on_command_menu_action_selected(action: FieldAction) -> void:
+  _selected_command_menu_action = action;
+  _command_menu.close();
+  _field_cursor.open_from_start();
+
+
+##
+func _on_field_cursor_canceled() -> void:
+  _command_menu.open();
+
+
+##
+func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
+  _field_cursor.close();
+  focus_node.grab_focus();
+
+  # TODO Command Menu action orientation is obtained from the FieldCursor.
+  var orientation := ActionUtils.get_direction_to_target(grid_position, target_pos);
+
+  var playbill := FieldActionPlaybill.new(self, target_pos, orientation);
+  var schedule := FieldActionSchedule.new(_selected_command_menu_action, playbill);
+  action_declared.emit(schedule, true);
