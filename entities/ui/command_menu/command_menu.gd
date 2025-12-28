@@ -1,7 +1,7 @@
-## Manages a pop-up UI CommandMenu.
+## Manages a pop-up UI CommandMenu. [br]
 ##
 ## This menu maintains a simple construction. It is only 2-layers deep, and only contains
-## a few second layer options for different kinds of player actions.
+## a few second layer options for different kinds of player actions. [br]
 ##
 ## It must listen to a **PlayerInventory** node for updates to content.
 class_name CommandMenu
@@ -11,8 +11,9 @@ extends Control
 ## Emitted when the player selects a **FieldAction** option.
 signal action_selected(action: FieldAction);
 
-## Emitted when the Command Menu system is closed.
-signal closed();
+## Emitted when the Command Menu system rejects UI control, e.g., when the player backs
+## out until the menu closes.
+signal ui_canceled();
 
 
 enum Submenu {
@@ -86,6 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:
   # If the action menu is open (it is), then allow players to close it.
   if event.is_action_pressed('open_action_menu'):
     close();
+    ui_canceled.emit();
     accept_event();
 
 
@@ -109,7 +111,6 @@ func open_from_start() -> void:
 func close() -> void:
   # Setting visibility here implicitly releases focus on children.
   visible = false;
-  closed.emit();
 
 
 ## Bind listeners to inventory signals.
@@ -121,24 +122,29 @@ func _connect_to_inventory() -> void:
   _inventory.emit_full_inventory();
 
 
-##
+## Modifies in place the list contents of a [param submenu_list] representing a submenu,
+## then updates the main menu contents.
 func _update_submenu_content(submenu_list: Array[FieldAction], items: Array[FieldAction]) -> void:
   submenu_list.assign(items);
   _update_main_list_options();
 
 
-##
+## Binds event listeners to main and submenu signals.
 func _connect_to_item_lists() -> void:
-  # Listen to ItemList signals.
-  #   Main -> switch to Options
-  #   Main (cancel) -> close()
-  #   Options -> emit action_selected  # TODO I think I can give ItemList a custom signal, here
-  #   Options (cancel) -> switch to Main
-
+  # TODO Refactor this to require less explanation?
+  # Main -> switch to Options
   _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
-  _main_list.go_back.connect(func (): close());
 
+  # Main (cancel) -> close()
+  _main_list.go_back.connect(func ():
+    close();
+    ui_canceled.emit();
+  );
+
+  # Options -> emit action_selected
   _options_list.item_chosen.connect(func (item: FieldAction): action_selected.emit(item));
+
+  # Options (cancel) -> switch to Main
   _options_list.go_back.connect(func (): _switch_to_main_list());
 
 

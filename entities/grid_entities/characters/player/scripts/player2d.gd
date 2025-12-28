@@ -1,16 +1,21 @@
+## Represents a player entity.
 class_name Player2D
 extends GridEntity
 
 
+## Emitted when an action the player would like to perform has been chosen.
 signal action_declared(action: FieldActionSchedule, buffer: bool);
 
 
-##
+## The player's collection of bits and bobs.
 @export var inventory: PlayerInventory;
 
 
-##
+## The [StringName] of this player's current animation.
 var current_animation_state: StringName = 'idle';
+
+## A blackboard variable to retain a reference to the player's chosen command menu action.
+var _selected_command_menu_action: FieldAction;
 
 
 ##
@@ -20,10 +25,13 @@ var current_animation_state: StringName = 'idle';
 @onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
 
 ##
-@onready var focus_node: Control = %FocusableControl;
+@onready var focus_node: FocusableControl = %FocusableControl;
 
-##
+## The player's unique [CommandMenu] instance.
 @onready var _command_menu: CommandMenu = %CommandMenu;
+
+## The player's unique [FieldCursor] instance.
+@onready var _field_cursor: FieldCursor = %FieldCursor;
 
 
 func _init() -> void:
@@ -34,16 +42,8 @@ func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 
-  # Pass through command menu actions as own actions.
-  _command_menu.action_selected.connect(func (action: FieldAction):
-    var playbill := FieldActionPlaybill.new(self, faced_position, faced_direction);
-    var schedule := FieldActionSchedule.new(action, playbill);
-    action_declared.emit(schedule, true);
-  );
-
-  # Setup focus control.
+  _connect_to_ui_subsystems();
   focus_node.grab_focus();
-  _command_menu.closed.connect(func (): focus_node.grab_focus());
 
 
 func _process(_delta: float) -> void:
@@ -102,6 +102,7 @@ func _unhandled_input(event: InputEvent) -> void:
     focus_node.accept_event();
 
 
+## Returns the [FieldActionSchedule] for a Wait action respective to this player.
 func get_wait_action() -> FieldActionSchedule:
   return FieldActionSchedule.new(
     FieldActionList.wait,
@@ -113,6 +114,7 @@ func get_wait_action() -> FieldActionSchedule:
   );
 
 
+## Returns a [FieldActionSchedule] for some action resulting from directional input.
 func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
   var chosen_action: FieldAction = FieldActionList.wait;
 
@@ -136,6 +138,8 @@ func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns a [FieldActionSchedule] for some action resulting from directional input while
+## the brace input is also active.
 func get_action_from_brace_move_input(direction: Vector2i) -> FieldActionSchedule:
   var chosen_action: FieldAction = FieldActionList.wait;
   var playbill := FieldActionPlaybill.new(
@@ -150,6 +154,7 @@ func get_action_from_brace_move_input(direction: Vector2i) -> FieldActionSchedul
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns the [FieldActionSchedule] for some action resulting from an interact input.
 func get_interact_action() -> FieldActionSchedule:
   var chosen_action: FieldAction = FieldActionList.wait;
 
@@ -187,3 +192,49 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
     return;
 
   set_animation_state('idle');
+
+
+## Makes signal connections to the player's [CommandMenu] and [FieldCursor] instances.
+func _connect_to_ui_subsystems() -> void:
+  _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
+  _command_menu.action_selected.connect(_on_command_menu_action_selected);
+
+  _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
+  _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
+
+
+## Event handler for [signal CommandMenu.ui_canceled]. [br]
+## Reacquires player input focus from sub-UI systems.
+func _on_command_menu_cancelled() -> void:
+  _selected_command_menu_action = null;
+  focus_node.grab_focus();
+
+
+## Event handler for [signal CommandMenu.action_selected]. [br]
+## Saves a reference to the chosen [FeildAction] and advances the sub-UI system to the
+## [FieldCursor].
+func _on_command_menu_action_selected(action: FieldAction) -> void:
+  _selected_command_menu_action = action;
+  _command_menu.close();
+  _field_cursor.open_from_start();
+
+
+## Event handler for [signal FieldCursor.ui_canceled]. [br]
+## Yields input focus back to the [CommandMenu].
+func _on_field_cursor_canceled() -> void:
+  _command_menu.open();
+
+
+## Event handler for [signal FieldCursor.grid_position_selected]. [br]
+## Builds and emits a [FieldActionSchedule] for the chosen [FieldAction] and target
+## coordinates. Also, yields input focus back to the player.
+func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
+  _field_cursor.close();
+  focus_node.grab_focus();
+
+  # TODO Command Menu action orientation is obtained from the FieldCursor.
+  var orientation := ActionUtils.get_direction_to_target(grid_position, target_pos);
+
+  var playbill := FieldActionPlaybill.new(self, target_pos, orientation);
+  var schedule := FieldActionSchedule.new(_selected_command_menu_action, playbill);
+  action_declared.emit(schedule, true);
