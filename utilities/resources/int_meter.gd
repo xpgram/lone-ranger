@@ -1,4 +1,5 @@
 ## Maintains a clamped int value and emits signals as it changes.
+@tool
 class_name IntMeter
 extends Resource
 
@@ -15,27 +16,72 @@ signal empty();
 ## when [member value] is set to the same value.
 signal value_changed(value: int);
 
+## Emitted whenever the meter's [member minimum] is set to a new value. It **not** emitted
+## when [member minimum] is set to the same value.
+signal minimum_changed(minimum: int);
 
-@export_group('Value and Limits')
+## Emitted whenever the meter's [member maxnimum] is set to a new value. It **not**
+## emitted when [member maximum] is set to the same value.
+signal maximum_changed(minimum: int);
 
-## The minimum limit for the meter.
-@export var minimum: int = 0;
 
-## The maximum limit for the meter.
-@export var maximum: int = 1;
+## Whether the meter should emit its event signals in the engine editor context.
+@export var _emit_signals_in_editor := false;
 
 ## The current int value of the meter.
-@export var value: int = maximum:
+@export var value: int = 1:
   get():
     return value;
   set(number):
     var old_value := value;
     value = clampi(number, minimum, maximum);
 
-    if old_value != value:
+    if _can_emit_signals() and old_value != value:
       value_changed.emit(value);
 
       if value == minimum:
         empty.emit();
       elif value == maximum:
         full.emit();
+
+## The minimum limit for the meter.
+@export var minimum: int = 0:
+  set(number):
+    var old_minimum := minimum;
+    minimum = number;
+
+    if minimum > maximum:
+      maximum = minimum;
+    if minimum > value:
+      value = minimum;
+
+    if _can_emit_signals() and old_minimum != minimum:
+      minimum_changed.emit(minimum);
+
+## The maximum limit for the meter.
+@export var maximum: int = 1:
+  set(number):
+    var old_maximum := maximum;
+    maximum = number;
+
+    if maximum < minimum:
+      minimum = maximum;
+    if maximum < value:
+      value = maximum;
+
+    if _can_emit_signals() and old_maximum != maximum:
+      maximum_changed.emit(maximum);
+
+## Sets the meter's value to its maximum.
+@export_tool_button('Set Full') var set_meter_to_full = _set_meter_to_full;
+
+
+## Sets the meter's value to its maximum.
+func _set_meter_to_full() -> void:
+  value = maximum;
+  # TODO Add undo/redo?
+
+
+## Returns true if the meter is allowed to emit value-changed event signals.
+func _can_emit_signals() -> bool:
+  return not Engine.is_editor_hint() or _emit_signals_in_editor;
