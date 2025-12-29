@@ -1,3 +1,5 @@
+## @tool [br]
+##
 ## A [BaseComponent] utility node that combines the configuration for a set of components.
 ## This is useful, for instance, to create "component folders" in the scene tree without
 ## also having to set the ownership override for each individual component. [br]
@@ -10,6 +12,7 @@
 ## ┃ ┖╴InventoryComponent
 ## ┖╴Camera2D
 ## [/codeblock]
+@tool
 class_name ComponentCombiner
 extends Node
 
@@ -42,3 +45,13 @@ func get_component_owner() -> Node:
     _remote_component_owner if _remote_component_owner
     else get_parent()
   );
+
+
+## Returns either the [param node] given, or if [param node] is a special component proxy
+## type, returns the registration target at the end of the [code]owner->owner->owner[/code]
+## chain.
+func _get_registration_target(node: Node) -> Node:
+  var target := node;
+  if target is ComponentCombiner:
+    target = target.get_component_owner();
+  return target;
