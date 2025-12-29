@@ -6,7 +6,7 @@ const scene_push_cloud := preload('uid://hua0n75be2w3');
 const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 
 
-func can_perform(playbill: FieldActionPlaybill,) -> bool:
+func can_perform(playbill: FieldActionPlaybill) -> bool:
   var facing_target: bool = (
     playbill.performer.grid_position + playbill.performer.faced_direction == playbill.target_position
   );
