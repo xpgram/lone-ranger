@@ -64,6 +64,14 @@ func _update_ownership() -> void:
   _register_self(_compositor_node);
 
 
+## An event handler for [signal ComponentCombiner.component_owner_changed] that registers
+## and deregisters from the given registration targets: [param new_owner] and
+## [param old_owner].
+func _update_proxied_ownership(new_owner: Node, old_owner: Node) -> void:
+  _deregister_self(old_owner);
+  _register_self(new_owner);
+
+
 ## Returns either the [param node] given, or if [param node] is a special component proxy
 ## type, returns the registration target at the end of the [code]owner->owner->owner[/code]
 ## chain.
@@ -97,12 +105,12 @@ func _deregister_self(node: Node) -> void:
 ## proxy.
 func _try_connect_proxy_listener(node: Node) -> void:
   if node is ComponentCombiner:
-    node.component_owner_changed.connect(_update_ownership);
+    node.component_owner_changed.connect(_update_proxied_ownership);
 
 
 ## If [param node] is a component proxy type object, disconnects from signals emitted by
 ## the proxy.
 func _try_disconnect_proxy_listener(node: Node) -> void:
   if node is ComponentCombiner:
-    if node.component_owner_changed.is_connected(_update_ownership):
-      node.component_owner_changed.disconnect(_update_ownership);
+    if node.component_owner_changed.is_connected(_update_proxied_ownership):
+      node.component_owner_changed.disconnect(_update_proxied_ownership);
