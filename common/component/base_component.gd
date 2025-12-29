@@ -104,4 +104,5 @@ func _try_connect_proxy_listener(node: Node) -> void:
 ## the proxy.
 func _try_disconnect_proxy_listener(node: Node) -> void:
   if node is ComponentCombiner:
-    node.component_owner_changed.disconnect(_update_ownership);
+    if node.component_owner_changed.is_connected(_update_ownership):
+      node.component_owner_changed.disconnect(_update_ownership);
