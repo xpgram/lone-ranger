@@ -37,19 +37,6 @@ action_time_cost = 15.0
 small_icon = ExtResource("7_3k65y")
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="Resource" id="Resource_l0w8i"]
-script = ExtResource("8_p4sl8")
-action_uid = &"burn"
-action_name = "Burn"
-action_type = 1
-action_description = "asdf"
-action_hint = "asdf"
-action_time_cost = 15.0
-small_icon = ExtResource("7_7iogb")
-limit_type = 2
-uses_remaining = 3
-metadata/_custom_type_script = "uid://1co65v7pd4ta"
-
 [sub_resource type="Resource" id="Resource_ybx00"]
 script = ExtResource("5_jru4w")
 action_uid = &"grow"
@@ -63,6 +50,18 @@ command_menu_sort_priority = 1
 limit_type = 2
 uses_remaining = 4
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_p4sl8"]
+script = ExtResource("8_p4sl8")
+action_uid = &"burn"
+action_name = "Burn"
+action_type = 1
+action_description = "asdf"
+action_hint = "asdf"
+action_time_cost = 15.0
+small_icon = ExtResource("7_7iogb")
+limit_type = 2
+uses_remaining = 3
 
 [sub_resource type="Resource" id="Resource_si0qk"]
 script = ExtResource("5_jru4w")
@@ -117,7 +116,7 @@ _abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"push": SubResource("Resource_4tfgr")
 })
 _magic = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"flame": SubResource("Resource_l0w8i"),
+&"burn": SubResource("Resource_p4sl8"),
 &"grow": SubResource("Resource_ybx00")
 })
 _items = Dictionary[StringName, ExtResource("4_08fk3")]({
