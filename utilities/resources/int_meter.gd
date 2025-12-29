@@ -1,6 +1,6 @@
 ## Maintains a clamped int value and emits signals as it changes.
 class_name IntMeter
-extends Node
+extends Resource
 
 
 ## Emitted whenever the meter is set to its maximum value from some value that is not its
@@ -15,6 +15,8 @@ signal empty();
 ## when [member value] is set to the same value.
 signal value_changed(value: int);
 
+
+@export_group('Value and Limits')
 
 ## The minimum limit for the meter.
 @export var minimum: int = 0;
