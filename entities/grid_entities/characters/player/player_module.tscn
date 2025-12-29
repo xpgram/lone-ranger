@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=23 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures_unused/system/icons/icon-orbital.png" id="6_g13rh"]
 [ext_resource type="Texture2D" uid="uid://dkhd2f7ywih0j" path="res://assets/textures_unused/system/icons/icon-orb.png" id="7_3k65y"]
 [ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://assets/textures_unused/system/icons/icon-fire.png" id="7_7iogb"]
+[ext_resource type="Script" uid="uid://1co65v7pd4ta" path="res://utilities/actions/field_actions/scripts/burn_action.gd" id="8_p4sl8"]
 [ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://assets/textures_unused/system/icons/icon-plant.png" id="9_7hiuf"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
@@ -36,18 +37,18 @@ action_time_cost = 15.0
 small_icon = ExtResource("7_3k65y")
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="Resource" id="Resource_7hiuf"]
-script = ExtResource("5_jru4w")
-action_uid = &"flame"
-action_name = "Flame"
+[sub_resource type="Resource" id="Resource_l0w8i"]
+script = ExtResource("8_p4sl8")
+action_uid = &"burn"
+action_name = "Burn"
 action_type = 1
-action_description = "asverave"
-action_hint = "avdsavea"
+action_description = "asdf"
+action_hint = "asdf"
 action_time_cost = 15.0
 small_icon = ExtResource("7_7iogb")
 limit_type = 2
 uses_remaining = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+metadata/_custom_type_script = "uid://1co65v7pd4ta"
 
 [sub_resource type="Resource" id="Resource_ybx00"]
 script = ExtResource("5_jru4w")
@@ -116,7 +117,7 @@ _abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"push": SubResource("Resource_4tfgr")
 })
 _magic = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"flame": SubResource("Resource_7hiuf"),
+&"flame": SubResource("Resource_l0w8i"),
 &"grow": SubResource("Resource_ybx00")
 })
 _items = Dictionary[StringName, ExtResource("4_08fk3")]({
