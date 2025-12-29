@@ -13,4 +13,3 @@ action_hint = "asdf"
 action_time_cost = 15.0
 small_icon = ExtResource("2_wwvf7")
 limit_type = 2
-metadata/_custom_type_script = "uid://1co65v7pd4ta"
