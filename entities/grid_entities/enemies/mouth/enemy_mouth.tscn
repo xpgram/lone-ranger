@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://hd6tv01qq0ed"]
+[gd_scene load_steps=9 format=3 uid="uid://hd6tv01qq0ed"]
 
 [ext_resource type="Texture2D" uid="uid://bn15smo1estix" path="res://entities/grid_entities/enemies/mouth/images/mouth-idle-0.png" id="1_ffl0m"]
 [ext_resource type="Script" uid="uid://83jrylvkrkma" path="res://entities/grid_entities/enemies/enemy2d.gd" id="1_rr1s5"]
 [ext_resource type="Texture2D" uid="uid://bkjae32eo8jlu" path="res://entities/grid_entities/enemies/mouth/images/mouth-idle-1.png" id="2_4nn12"]
+[ext_resource type="Script" uid="uid://dxwyf0pnu6nbg" path="res://utilities/nodes/components/grid_entity_components/health_component.gd" id="4_mxuoe"]
 [ext_resource type="Script" uid="uid://bex05p7bnb6yp" path="res://entities/grid_entities/enemies/mouth/grid_actor_component.gd" id="4_rr1s5"]
 [ext_resource type="Script" uid="uid://bsdfkose05x24" path="res://utilities/resources/int_meter.gd" id="4_twm60"]
 
@@ -20,12 +21,17 @@ animations = [{
 "speed": 2.0
 }]
 
+[sub_resource type="Resource" id="Resource_08vou"]
+script = ExtResource("4_twm60")
+metadata/_custom_type_script = "uid://bsdfkose05x24"
+
 [node name="EnemyMouth" type="Node2D"]
 script = ExtResource("1_rr1s5")
 solid = true
 pushable = true
 metadata/_custom_type_script = "uid://83jrylvkrkma"
 metadata/GridActorComponent = NodePath("GridActorComponent")
+metadata/HealthComponent = NodePath("Stats/HealthComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -34,11 +40,11 @@ animation = &"idle"
 
 [node name="Stats" type="Node" parent="."]
 
-[node name="HP" type="Node" parent="Stats"]
-script = ExtResource("4_twm60")
-maximum = 2
-value = 2
-metadata/_custom_type_script = "uid://bsdfkose05x24"
+[node name="HealthComponent" type="Node" parent="Stats" node_paths=PackedStringArray("_remote_component_owner")]
+script = ExtResource("4_mxuoe")
+meter = SubResource("Resource_08vou")
+_remote_component_owner = NodePath("../..")
+metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
 
 [node name="GridActorComponent" type="Node" parent="."]
 script = ExtResource("4_rr1s5")

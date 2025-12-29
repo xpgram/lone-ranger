@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene load_steps=44 format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://entities/grid_entities/characters/player/scripts/player2d.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://lv8q188gep4i" path="res://entities/grid_entities/characters/player/images/handheld/gray-scepter-right.png" id="2_0vnf7"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://bib46e3dh6n5r" path="res://utilities/nodes/animation_state_switch.gd" id="18_15kbc"]
 [ext_resource type="Script" uid="uid://cpjdc1h6kotna" path="res://utilities/resources/string_cross_switch.gd" id="19_5ce6h"]
 [ext_resource type="Script" uid="uid://bsdfkose05x24" path="res://utilities/resources/int_meter.gd" id="19_bsc4x"]
+[ext_resource type="Script" uid="uid://dxwyf0pnu6nbg" path="res://utilities/nodes/components/grid_entity_components/health_component.gd" id="19_ee7qb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uay6n"]
 animations = [{
@@ -842,9 +843,16 @@ left = &"push_left"
 right = &"push_right"
 metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
+[sub_resource type="Resource" id="Resource_ee7qb"]
+script = ExtResource("19_bsc4x")
+value = 3
+maximum = 3
+metadata/_custom_type_script = "uid://bsdfkose05x24"
+
 [node name="Player2D" type="Node2D"]
 script = ExtResource("1_reh0w")
 solid = true
+metadata/HealthComponent = NodePath("Stats/HealthComponent")
 
 [node name="HandheldItem" type="Node2D" parent="."]
 visible = false
@@ -877,10 +885,9 @@ states = Dictionary[String, ExtResource("19_5ce6h")]({
 })
 
 [node name="Stats" type="Node" parent="."]
-metadata/IntMeterComponent = NodePath("IntMeter")
 
-[node name="IntMeter" type="Node" parent="Stats"]
-script = ExtResource("19_bsc4x")
-maximum = 5
-value = 5
-metadata/_custom_type_script = "uid://bsdfkose05x24"
+[node name="HealthComponent" type="Node" parent="Stats" node_paths=PackedStringArray("_remote_component_owner")]
+script = ExtResource("19_ee7qb")
+meter = SubResource("Resource_ee7qb")
+_remote_component_owner = NodePath("../..")
+metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
