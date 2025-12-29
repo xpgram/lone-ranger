@@ -30,8 +30,6 @@ signal maximum_changed(minimum: int);
 
 ## The current int value of the meter.
 @export var value: int = 1:
-  get():
-    return value;
   set(number):
     var old_value := value;
     value = clampi(number, minimum, maximum);
