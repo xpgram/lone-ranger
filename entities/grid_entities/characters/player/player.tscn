@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cvdx0w6a7ujju" path="res://entities/grid_entities/characters/player/images/gray/gray-up-push-1.png" id="16_ash3l"]
 [ext_resource type="Script" uid="uid://bib46e3dh6n5r" path="res://utilities/nodes/animation_state_switch.gd" id="18_15kbc"]
 [ext_resource type="Script" uid="uid://cpjdc1h6kotna" path="res://utilities/resources/string_cross_switch.gd" id="19_5ce6h"]
-[ext_resource type="Script" uid="uid://bsdfkose05x24" path="res://utilities/nodes/components/int_meter.gd" id="19_bsc4x"]
+[ext_resource type="Script" uid="uid://bsdfkose05x24" path="res://utilities/nodes/int_meter.gd" id="19_bsc4x"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uay6n"]
 animations = [{
@@ -878,7 +878,7 @@ states = Dictionary[String, ExtResource("19_5ce6h")]({
 
 [node name="Stats" type="Node" parent="."]
 
-[node name="HP" type="Node" parent="Stats"]
+[node name="IntMeter" type="Node" parent="Stats"]
 script = ExtResource("19_bsc4x")
 maximum = 5
 value = 5
