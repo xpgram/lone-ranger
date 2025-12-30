@@ -22,6 +22,9 @@ static func set_component(node: Node, component: BaseComponent) -> void:
   if not node:
     return;
 
+  # Note: Saving a String instead of a NodePath is a work-around for metadata getting
+  # stuck to nodes in the editor, but it loses the editor's grasp on persistent paths.
+  # For example, renaming a node will auto-update a NodePath but not a String.
   node.set_meta(TypeString.from(component), node.get_path_to(component));
 
 
