@@ -23,12 +23,13 @@ func _ready() -> void:
   _bind_signals();
 
 
-##
+## Binds listeners to signals.
 func _bind_signals() -> void:
   meter.empty.connect(_on_empty);
 
 
-##
+## Event handler for when the [IntMeter] is emptied. Triggers the death or deletion
+## process for the component owner.
 func _on_empty() -> void:
   var component_owner := get_component_owner();
 
