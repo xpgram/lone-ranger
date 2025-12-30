@@ -852,6 +852,7 @@ metadata/_custom_type_script = "uid://bsdfkose05x24"
 [node name="Player2D" type="Node2D"]
 script = ExtResource("1_reh0w")
 solid = true
+metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 
 [node name="HandheldItem" type="Node2D" parent="."]
 visible = false
