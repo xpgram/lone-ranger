@@ -142,6 +142,7 @@ ignore_rotation = false
 zoom = Vector2(3, 3)
 script = ExtResource("10_yid0f")
 subject = NodePath("../Player2D")
+close_follow_lerp_speed = 12
 metadata/_custom_type_script = "uid://bgl6q243ogu5r"
 
 [node name="UIContainer" type="Control" parent="Camera2D"]
