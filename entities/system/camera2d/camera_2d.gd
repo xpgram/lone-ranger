@@ -29,8 +29,6 @@ var _subpixel_position := Vector2();
 
 func _ready() -> void:
   var new_position := subject.position;
-  # Fix offset caused by UI bar
-  new_position.y += 8;
   position = new_position;
 
 
@@ -47,18 +45,10 @@ func _follow_subject(delta: float) -> void:
   match follow_type:
     FollowType.Instant:
       new_position = subject.position;
-
-      # Fix offset caused by UI bar
-      new_position.y += 8;
-
       _subpixel_position = new_position;
 
     FollowType.Close:
       new_position = subject.position;
-
-      # Fix offset caused by UI bar
-      new_position.y += 8;
-
       _subpixel_position = _subpixel_position.lerp(new_position, delta * close_follow_lerp_speed);
 
     FollowType.Paged:
@@ -68,9 +58,6 @@ func _follow_subject(delta: float) -> void:
       var subject_position := subject.position - Vector2(PAGE_HOR_OFFSET, PAGE_VER_OFFSET);
       new_position = (subject_position / page_vector).floor() * page_vector + half_page_vector;
       new_position += Vector2(PAGE_HOR_OFFSET, PAGE_VER_OFFSET);
-
-      # Fix offset caused by UI bar
-      new_position.y += 8;
 
       _subpixel_position = _subpixel_position.move_toward(new_position, delta * paged_follow_speed);
 
