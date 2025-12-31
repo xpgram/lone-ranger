@@ -28,20 +28,6 @@ signal maximum_changed(maximum: int, old_maximum: int);
 ## Whether the meter should emit its event signals in the engine editor context.
 @export var _emit_signals_in_editor := false;
 
-## The current int value of the meter.
-@export var value: int = 1:
-  set(number):
-    var old_value := value;
-    value = clampi(number, minimum, maximum);
-
-    if _can_emit_signals() and old_value != value:
-      value_changed.emit(value, old_value);
-
-      if value == minimum:
-        empty.emit();
-      elif value == maximum:
-        full.emit();
-
 ## The minimum limit for the meter.
 @export var minimum: int = 0:
   set(number):
@@ -69,6 +55,20 @@ signal maximum_changed(maximum: int, old_maximum: int);
 
     if _can_emit_signals() and old_maximum != maximum:
       maximum_changed.emit(maximum, old_maximum);
+
+## The current int value of the meter.
+@export var value: int = 1:
+  set(number):
+    var old_value := value;
+    value = clampi(number, minimum, maximum);
+
+    if _can_emit_signals() and old_value != value:
+      value_changed.emit(value, old_value);
+
+      if value == minimum:
+        empty.emit();
+      elif value == maximum:
+        full.emit();
 
 ## Sets the meter's value to its maximum.
 @export_tool_button('Set Full') var set_meter_to_full = _set_meter_to_full;
