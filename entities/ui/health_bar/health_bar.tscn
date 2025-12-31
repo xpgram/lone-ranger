@@ -1,13 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://dotya4jwgghk0"]
+[gd_scene load_steps=5 format=3 uid="uid://dotya4jwgghk0"]
 
 [ext_resource type="Script" uid="uid://dy0yp08xkjwjj" path="res://entities/ui/health_bar/health_bar.gd" id="1_fo5am"]
 [ext_resource type="PackedScene" uid="uid://m04hk0pb15rg" path="res://entities/ui/health_bar/heart_container.tscn" id="1_hfemg"]
+[ext_resource type="Texture2D" uid="uid://dtb81el6g0sie" path="res://assets/00 - source/hud_sheet.png" id="2_t3r3w"]
 
-[node name="HealthBar" type="HBoxContainer"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsp67"]
+atlas = ExtResource("2_t3r3w")
+region = Rect2(16, 0, 32, 16)
+
+[node name="HealthBar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 128.0
 offset_bottom = 16.0
-theme_override_constants/separation = 0
 script = ExtResource("1_fo5am")
 
-[node name="HeartContainer" parent="." instance=ExtResource("1_hfemg")]
+[node name="Background" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 16.0
+texture = SubResource("AtlasTexture_lsp67")
+patch_margin_right = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+theme_override_constants/separation = 0
+
+[node name="HeartContainer" parent="HBoxContainer" instance=ExtResource("1_hfemg")]
 layout_mode = 2
