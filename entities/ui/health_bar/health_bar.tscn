@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dotya4jwgghk0"]
+
+[ext_resource type="Script" uid="uid://dy0yp08xkjwjj" path="res://entities/ui/health_bar/health_bar.gd" id="1_fo5am"]
+[ext_resource type="PackedScene" uid="uid://m04hk0pb15rg" path="res://entities/ui/health_bar/heart_container.tscn" id="1_hfemg"]
+
+[node name="HealthBar" type="HBoxContainer"]
+offset_right = 128.0
+offset_bottom = 16.0
+theme_override_constants/separation = 0
+script = ExtResource("1_fo5am")
+
+[node name="HeartContainer" parent="." instance=ExtResource("1_hfemg")]
+layout_mode = 2
