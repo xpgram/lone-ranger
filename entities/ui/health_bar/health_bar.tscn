@@ -22,6 +22,8 @@ offset_right = 32.0
 offset_bottom = 16.0
 texture = SubResource("AtlasTexture_lsp67")
 patch_margin_right = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
