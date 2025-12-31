@@ -17,6 +17,7 @@ script = ExtResource("1_fo5am")
 
 [node name="Background" type="NinePatchRect" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 16.0
