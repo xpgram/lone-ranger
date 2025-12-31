@@ -22,7 +22,7 @@ animations = [{
 "speed": 2.0
 }]
 
-[sub_resource type="Resource" id="Resource_gerjj"]
+[sub_resource type="Resource" id="Resource_08vou"]
 script = ExtResource("4_twm60")
 metadata/_custom_type_script = "uid://bsdfkose05x24"
 
@@ -45,7 +45,7 @@ metadata/_custom_type_script = "uid://bquah6tnohw5e"
 
 [node name="HealthComponent" type="Node" parent="ComponentCombiner"]
 script = ExtResource("4_mxuoe")
-meter = SubResource("Resource_gerjj")
+meter = SubResource("Resource_08vou")
 metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
 
 [node name="GridActorComponent" type="Node" parent="ComponentCombiner"]

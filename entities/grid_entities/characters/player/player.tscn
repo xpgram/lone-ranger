@@ -846,8 +846,8 @@ metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
 [sub_resource type="Resource" id="Resource_y15db"]
 script = ExtResource("19_bsc4x")
-value = 4
 maximum = 4
+value = 4
 metadata/_custom_type_script = "uid://bsdfkose05x24"
 
 [node name="Player2D" type="Node2D"]
