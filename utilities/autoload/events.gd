@@ -4,4 +4,8 @@ extends Node
 @warning_ignore_start('UNUSED_SIGNAL')
 
 
-signal some_example_signal(some_data: Variant);
+## Emitted when the turn system's real-time count changes.
+signal real_time_updated(time_remaining: float);
+
+## Emitted when the turn system's golem-time count changes.
+signal golem_time_updated(time_remaining: float);

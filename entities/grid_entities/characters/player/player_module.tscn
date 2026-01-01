@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=28 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
@@ -16,6 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="15_lxu83"]
+[ext_resource type="Script" uid="uid://80iof325xsg0" path="res://entities/system/debug/debug_ui.gd" id="17_3dwjy"]
+[ext_resource type="Script" uid="uid://dx7w235qhr4bd" path="res://entities/system/debug/inaction_timer_clock/inaction_timer_clock.gd" id="18_5jpfb"]
+[ext_resource type="Texture2D" uid="uid://cyvf3gup4doan" path="res://entities/system/debug/inaction_timer_clock/images/icon-hourglass.png" id="19_5jpfb"]
+[ext_resource type="Texture2D" uid="uid://ca28hwukefv75" path="res://entities/system/debug/inaction_timer_clock/images/icon-puzzle.png" id="20_yibea"]
 
 [sub_resource type="Resource" id="Resource_3k65y"]
 script = ExtResource("5_jru4w")
@@ -173,3 +177,37 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 0
 _inventory = NodePath("../../../Inventory")
+
+[node name="DebugUI" type="Control" parent="Camera2D/UIContainer"]
+anchors_preset = 0
+offset_right = 240.0
+offset_bottom = 56.0
+script = ExtResource("17_3dwjy")
+
+[node name="DebugBackground" type="ColorRect" parent="Camera2D/UIContainer/DebugUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.25)
+
+[node name="InactionTimerClock" type="Control" parent="Camera2D/UIContainer/DebugUI"]
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 16.0
+
+[node name="ClockDrawer" type="Node2D" parent="Camera2D/UIContainer/DebugUI/InactionTimerClock"]
+position = Vector2(8, 8)
+script = ExtResource("18_5jpfb")
+
+[node name="HourglassIcon" type="Sprite2D" parent="Camera2D/UIContainer/DebugUI/InactionTimerClock"]
+position = Vector2(8, 8)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("19_5jpfb")
+
+[node name="PuzzleIcon" type="Sprite2D" parent="Camera2D/UIContainer/DebugUI/InactionTimerClock"]
+position = Vector2(24, 8)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("20_yibea")
