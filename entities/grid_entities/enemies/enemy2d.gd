@@ -15,7 +15,7 @@ func _ready() -> void:
 func _bind_health_listeners() -> void:
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
   if health_component:
-    health_component.meter.empty.connect(_on_health_empty);
+    health_component.empty.connect(_on_health_empty);
 
 
 ## Handler for when the [Enemy2D]'s HP meter (if it has one) drops to zero. [br]

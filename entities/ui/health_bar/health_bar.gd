@@ -23,10 +23,10 @@ func _ready() -> void:
 
   _health_component = Component.get_component(player2d, HealthComponent) as HealthComponent;
 
-  _set_maximum_hearts(_health_component.meter.maximum);
-  _on_health_changed(_health_component.meter.value);
-  _health_component.meter.value_changed.connect(_on_health_changed);
-  _health_component.meter.maximum_changed.connect(_set_maximum_hearts);
+  _set_maximum_hearts(_health_component.maximum);
+  _on_health_changed(_health_component.value);
+  _health_component.value_changed.connect(_on_health_changed);
+  _health_component.maximum_changed.connect(_set_maximum_hearts);
 
 
 ## Returns the number of [HeartContainerUI] children the health bar has.

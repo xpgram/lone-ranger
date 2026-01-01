@@ -4,18 +4,8 @@
 ## values change, which is the preferred method of checking the HP state.
 @tool
 class_name HealthComponent
-extends BaseComponent
+extends IntMeterComponent
 
-
-@export var meter: IntMeter;
-
-
-func _ready() -> void:
-  # FIXME All enemies share the same IntMeter resource, so they all die together, lmao.
-  #  This might be a good case for IntMeter being a Node. It just seemed annoying to implement that.
-  #  IntMeter's simple purpose has grown pretty extravagant anyway, so eh.
-  #  It's either that, or we let HealthComponent extend IntMeter extend BaseComponent, which...
-  #  I guess would be fine? It would require the fewest changes.
-  meter = meter.duplicate();
-
-  # TODO Consider making IntMeter the component instead of a resource of the component.
+# There's nothing here.
+# HealthComponent needs to be a unique class so that the [Component] system knows what
+# key-name to register this component under.

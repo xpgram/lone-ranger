@@ -1,7 +1,7 @@
 ## Maintains a clamped int value and emits signals as it changes.
 @tool
-class_name IntMeter
-extends Resource
+@abstract class_name IntMeterComponent
+extends BaseComponent
 
 
 ## Emitted whenever the meter is set to its maximum value from some value that is not its
@@ -24,6 +24,8 @@ signal minimum_changed(minimum: int, old_minimum: int);
 ## emitted when [member maximum] is set to the same value.
 signal maximum_changed(maximum: int, old_maximum: int);
 
+
+@export_group('Int Meter')
 
 ## Whether the meter should emit its event signals in the engine editor context.
 @export var _emit_signals_in_editor := false;
@@ -71,11 +73,11 @@ signal maximum_changed(maximum: int, old_maximum: int);
         full.emit();
 
 ## Sets the meter's value to its maximum.
-@export_tool_button('Set Full') var set_meter_to_full = _set_meter_to_full;
+@export_tool_button('Set Full') var tool_button_set_hp_to_full = set_hp_to_full;
 
 
 ## Sets the meter's value to its maximum.
-func _set_meter_to_full() -> void:
+func set_hp_to_full() -> void:
   value = maximum;
   # TODO Add undo/redo?
 

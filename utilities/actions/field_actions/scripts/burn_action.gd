@@ -20,4 +20,4 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
   );
 
   for health_component in health_components:
-    health_component.meter.value -= 1;
+    health_component.value -= 1;

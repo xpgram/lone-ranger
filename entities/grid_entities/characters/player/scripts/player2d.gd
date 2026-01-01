@@ -203,8 +203,8 @@ func _connect_to_ui_subsystems() -> void:
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
 
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.meter.value_changed.connect(_on_health_changed);
-  health_component.meter.empty.connect(_on_health_empty);
+  health_component.value_changed.connect(_on_health_changed);
+  health_component.empty.connect(_on_health_empty);
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
@@ -267,4 +267,4 @@ func _on_health_empty() -> void:
   grid_position = _starting_position;
   
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.meter.value = health_component.meter.maximum;
+  health_component.set_hp_to_full();
