@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Burn_FieldAction" load_steps=3 format=3 uid="uid://m4rko02thteq"]
+
+[ext_resource type="Script" uid="uid://1co65v7pd4ta" path="res://utilities/actions/field_actions/scripts/burn_action.gd" id="1_eoyeu"]
+[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://assets/textures_unused/system/icons/icon-fire.png" id="2_wwvf7"]
+
+[resource]
+script = ExtResource("1_eoyeu")
+action_uid = &"burn"
+action_name = "Burn"
+action_type = 1
+action_description = "asdf"
+action_hint = "asdf"
+action_time_cost = 15.0
+small_icon = ExtResource("2_wwvf7")
+limit_type = 2

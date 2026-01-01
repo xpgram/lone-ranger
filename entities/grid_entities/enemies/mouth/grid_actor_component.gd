@@ -40,7 +40,8 @@ func act_async() -> void:
     await FieldActionList.move.perform_async(playbill);
   # TODO FieldActionList.enemy_attack.can_perform(playbill):
   elif is_adjacent:
-    _attack();
+    @warning_ignore('redundant_await')
+    await _attack_async();
 
   exhaust();
 
@@ -49,10 +50,13 @@ func get_entity() -> Enemy2D:
   return super.get_entity();
 
 
-func _attack() -> void:
-  # IMPLEMENT This isn't a real attack. Not to mention, Player2D can handle its own hurt animation.
+## Performs an attack against the global [Player2D] entity.
+func _attack_async() -> void:
+  # IMPLEMENT Animations of any kind.
+  # FIXME Shouldn't this accept an entity parameter and not grab the global player?
   var player := ActionUtils.get_player_entity();
-  player.set_animation_state('injured');
+  var health_component := Component.get_component(player, HealthComponent) as HealthComponent;
+  health_component.value -= 1;
 
 
 func _facing_changed() -> void:

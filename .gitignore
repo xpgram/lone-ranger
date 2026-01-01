@@ -8,3 +8,4 @@
 # Krita source file ignores
 *-autosave.kra
 *.kra~
+*.png~

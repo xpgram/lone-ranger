@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=24 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
@@ -8,11 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures_unused/system/icons/icon-orbital.png" id="6_g13rh"]
 [ext_resource type="Texture2D" uid="uid://dkhd2f7ywih0j" path="res://assets/textures_unused/system/icons/icon-orb.png" id="7_3k65y"]
 [ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://assets/textures_unused/system/icons/icon-fire.png" id="7_7iogb"]
+[ext_resource type="Script" uid="uid://1co65v7pd4ta" path="res://utilities/actions/field_actions/scripts/burn_action.gd" id="8_p4sl8"]
 [ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://assets/textures_unused/system/icons/icon-plant.png" id="9_7hiuf"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
+[ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="15_lxu83"]
 
 [sub_resource type="Resource" id="Resource_3k65y"]
@@ -36,18 +38,17 @@ action_time_cost = 15.0
 small_icon = ExtResource("7_3k65y")
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="Resource" id="Resource_7hiuf"]
-script = ExtResource("5_jru4w")
-action_uid = &"flame"
-action_name = "Flame"
+[sub_resource type="Resource" id="Resource_p4sl8"]
+script = ExtResource("8_p4sl8")
+action_uid = &"burn"
+action_name = "Burn"
 action_type = 1
-action_description = "asverave"
-action_hint = "avdsavea"
+action_description = "asdf"
+action_hint = "asdf"
 action_time_cost = 15.0
 small_icon = ExtResource("7_7iogb")
 limit_type = 2
 uses_remaining = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="Resource" id="Resource_ybx00"]
 script = ExtResource("5_jru4w")
@@ -116,7 +117,7 @@ _abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"push": SubResource("Resource_4tfgr")
 })
 _magic = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"flame": SubResource("Resource_7hiuf"),
+&"burn": SubResource("Resource_p4sl8"),
 &"grow": SubResource("Resource_ybx00")
 })
 _items = Dictionary[StringName, ExtResource("4_08fk3")]({
@@ -141,17 +142,34 @@ ignore_rotation = false
 zoom = Vector2(3, 3)
 script = ExtResource("10_yid0f")
 subject = NodePath("../Player2D")
-close_follow = true
+close_follow_lerp_speed = 12
+metadata/_custom_type_script = "uid://bgl6q243ogu5r"
 
 [node name="UIContainer" type="Control" parent="Camera2D"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -112.0
-offset_top = -72.0
-offset_right = 112.0
-offset_bottom = 72.0
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
+
+[node name="HealthBar" parent="Camera2D/UIContainer" node_paths=PackedStringArray("player2d") instance=ExtResource("15_l0w8i")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+offset_bottom = 0.0
+grow_vertical = 0
+player2d = NodePath("../../../Player2D")
 
 [node name="CommandMenu" parent="Camera2D/UIContainer" node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
 unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+offset_left = -120.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 0
 _inventory = NodePath("../../../Inventory")
