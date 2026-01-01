@@ -244,9 +244,18 @@ func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
   action_declared.emit(schedule, true);
 
 
+## Closes the player's UI subsystems and forces input focus back into the primary
+## character controller.
+func _interrupt_ui_subsystems() -> void:
+  _field_cursor.close();
+  _command_menu.close();
+  focus_node.grab_focus();
+
+
 ## Handler for when the player's HP changes value.
 func _on_health_changed(value: int, old_value: int) -> void:
   if value < old_value and value != 0:
+    _interrupt_ui_subsystems();
     set_animation_state('injured');
 
 
@@ -254,6 +263,7 @@ func _on_health_changed(value: int, old_value: int) -> void:
 @onready var _starting_position: Vector2i = Grid.get_grid_coords(global_position);
 ## Handler for when the player's HP is completely emptied.
 func _on_health_empty() -> void:
+  _interrupt_ui_subsystems();
   grid_position = _starting_position;
   
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
