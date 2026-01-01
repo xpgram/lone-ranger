@@ -3,10 +3,21 @@ class_name Enemy2D
 extends GridEntity
 
 
-# TODO With the addition of BaseComponent, there doesn't seem to be anything for Enemy2D
-#  (or NPC2D, or Interactive2D) to do besides add itself to a special group.
-#  This doesn't seem like an inheritance problem.
-
-
 func _init() -> void:
   add_to_group(Group.Enemy);
+
+
+func _ready() -> void:
+  _bind_health_listeners();
+
+
+## Binds signal listeners to signals.
+func _bind_health_listeners() -> void:
+  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+  if health_component:
+    health_component.meter.empty.connect(_on_health_empty);
+
+
+## Handler for when the [Enemy2D]'s HP meter (if it has one) drops to zero.
+func _on_health_empty() -> void:
+  queue_free();

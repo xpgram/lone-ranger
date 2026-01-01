@@ -202,6 +202,10 @@ func _connect_to_ui_subsystems() -> void:
   _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
 
+  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+  health_component.meter.value_changed.connect(_on_health_changed);
+  health_component.meter.empty.connect(_on_health_empty);
+
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
 ## Reacquires player input focus from sub-UI systems.
@@ -238,3 +242,19 @@ func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
   var playbill := FieldActionPlaybill.new(self, target_pos, orientation);
   var schedule := FieldActionSchedule.new(_selected_command_menu_action, playbill);
   action_declared.emit(schedule, true);
+
+
+## Handler for when the player's HP changes value.
+func _on_health_changed(value: int, old_value: int) -> void:
+  if value < old_value and value != 0:
+    set_animation_state('injured');
+
+
+# FIXME Add an actual death state and restart sequence instead of whatever this is:
+@onready var _starting_position: Vector2i = Grid.get_grid_coords(global_position);
+## Handler for when the player's HP is completely emptied.
+func _on_health_empty() -> void:
+  grid_position = _starting_position;
+  
+  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+  health_component.meter.value = health_component.meter.maximum;

@@ -1,6 +1,7 @@
 ## @tool [br]
 ##
-##
+## A [BaseComponent] to manage an entity's HP value. This component emits signals when its
+## values change, which is the preferred method of checking the HP state.
 @tool
 class_name HealthComponent
 extends BaseComponent
@@ -17,24 +18,4 @@ func _ready() -> void:
   #  I guess would be fine? It would require the fewest changes.
   meter = meter.duplicate();
 
-  if Engine.is_editor_hint():
-    return;
-  
-  _bind_signals();
-
-
-## Binds listeners to signals.
-func _bind_signals() -> void:
-  meter.empty.connect(_on_empty);
-
-
-## Event handler for when the [IntMeter] is emptied. Triggers the death or deletion
-## process for the component owner.
-func _on_empty() -> void:
-  var component_owner := get_component_owner();
-
-  if component_owner is GridEntity:
-    # TODO Call grid_entity.die(), a function that extenders may use to play animations
-    #  or do some other biz. Also configures GridEntity to not be pushable, among other
-    #  things.
-    component_owner.queue_free();
+  # TODO Consider making IntMeter the component instead of a resource of the component.
