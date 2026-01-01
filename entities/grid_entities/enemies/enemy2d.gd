@@ -18,6 +18,8 @@ func _bind_health_listeners() -> void:
     health_component.meter.empty.connect(_on_health_empty);
 
 
-## Handler for when the [Enemy2D]'s HP meter (if it has one) drops to zero.
+## Handler for when the [Enemy2D]'s HP meter (if it has one) drops to zero. [br]
+##
+## If overriding, note that this function normally calls [code]queue_free()[/code].
 func _on_health_empty() -> void:
   queue_free();
