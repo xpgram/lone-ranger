@@ -7,12 +7,13 @@ const HALF_LINE_WIDTH := LINE_WIDTH / 2.0;
 const CIRCLE_RADIUS := 7.0 - HALF_LINE_WIDTH;
 
 
-var _real_time_remaining: float = 1.0;
-var _golem_time_remaining: float = 7.5;
+var _real_time_remaining: float;
+var _golem_time_remaining: float;
 
 
 func _ready() -> void:
   if Engine.is_editor_hint():
+    _set_in_editor_demo_values();
     return;
 
   Events.real_time_updated.connect(_on_real_time_updated);
@@ -22,6 +23,13 @@ func _ready() -> void:
 func _draw() -> void:
   _draw_clock(_real_time_remaining, Vector2.ZERO);
   _draw_clock(_golem_time_remaining, Vector2(Constants.GRID_SIZE, 0));
+
+
+## Sets clock time values to arbitrary values that make the in-editor layout easier to
+## understand.
+func _set_in_editor_demo_values() -> void:
+  _real_time_remaining = 1.0;
+  _golem_time_remaining = 7.5;
 
 
 ## Handler for when the turn system's real-time is updated.

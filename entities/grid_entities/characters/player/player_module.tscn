@@ -204,10 +204,10 @@ script = ExtResource("18_5jpfb")
 
 [node name="HourglassIcon" type="Sprite2D" parent="Camera2D/UIContainer/DebugUI/InactionTimerClock"]
 position = Vector2(8, 8)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.333, 0.333)
 texture = ExtResource("19_5jpfb")
 
 [node name="PuzzleIcon" type="Sprite2D" parent="Camera2D/UIContainer/DebugUI/InactionTimerClock"]
 position = Vector2(24, 8)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.333, 0.333)
 texture = ExtResource("20_yibea")
