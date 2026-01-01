@@ -27,6 +27,7 @@ solid = true
 pushable = true
 metadata/_custom_type_script = "uid://83jrylvkrkma"
 metadata/GridActorComponent = NodePath("ComponentCombiner/GridActorComponent")
+metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
