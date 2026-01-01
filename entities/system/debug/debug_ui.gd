@@ -23,8 +23,8 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 
 ## Shows or hides the debug panel.
-func _set_visible(is_visible: bool) -> void:
-  if not is_visible:
+func _set_visible(visible_enabled: bool) -> void:
+  if not visible_enabled:
     hide();
   else:
     show();
