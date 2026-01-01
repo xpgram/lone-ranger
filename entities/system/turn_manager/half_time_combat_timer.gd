@@ -20,7 +20,10 @@ signal timeout();
 var _started := false;
 
 ## How many real-time seconds have passed since the timer was started.
-var _real_time := 0.0;
+var _real_time := 0.0:
+  set(value):
+    _real_time = value;
+    Events.real_time_updated.emit(_real_time);
 
 ## @readonly [br]
 ## How many real-time seconds have passed since the timer was started.
@@ -41,7 +44,10 @@ var real_time_finished: bool:
     return _real_time >= PartialTime.TURN_ELAPSE_LENGTH;
 
 ## How many golem-time seconds have passed since the timer was started. [br]
-var _golem_time := 0.0;
+var _golem_time := 0.0:
+  set(value):
+    _golem_time = value;
+    Events.golem_time_updated.emit(_golem_time);
 
 ## @readonly [br]
 ## How many golem-time seconds have passed since the timer was started. [br]
