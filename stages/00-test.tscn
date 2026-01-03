@@ -1,14 +1,13 @@
-[gd_scene load_steps=34 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=25 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
 [ext_resource type="Resource" uid="uid://bsvg3r3elpj1n" path="res://utilities/resources/cell_terrain_data/pit.tres" id="3_2ba2c"]
 [ext_resource type="Script" uid="uid://bct4iykxd8atg" path="res://utilities/nodes/grid_tile_map_layer.gd" id="3_mud7x"]
 [ext_resource type="Resource" uid="uid://b0fn783j6lwuc" path="res://utilities/resources/cell_terrain_data/floor.tres" id="4_eadj3"]
-[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="8_eadj3"]
 [ext_resource type="PackedScene" uid="uid://ds7ihux3pahep" path="res://entities/grid_entities/interactives/chest/special_chest.tscn" id="8_ycanp"]
-[ext_resource type="Texture2D" uid="uid://bjvy0k2ybhnsl" path="res://assets/00 - source/dingles_all.png" id="9_eadj3"]
 [ext_resource type="PackedScene" uid="uid://oysxdqutfm51" path="res://entities/grid_entities/interactives/boulder/boulder.tscn" id="10_jadfo"]
+[ext_resource type="PackedScene" uid="uid://cqx4i6o5f7y0t" path="res://entities/grid_entities/interactives/loose_particles/loose_particles.tscn" id="14_2ba2c"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -612,51 +611,6 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2ba2c"]
-particles_animation = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 4
-particles_anim_loop = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qes87"]
-atlas = ExtResource("9_eadj3")
-region = Rect2(0, 0, 4, 4)
-
-[sub_resource type="Curve" id="Curve_mhctp"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.14864866, 1), 0.0, 0.0, 0, 0, Vector2(0.8513514, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_3oxmp"]
-curve = SubResource("Curve_mhctp")
-
-[sub_resource type="Curve" id="Curve_3oxmp"]
-_data = [Vector2(0, 0), 0.0, 1.1562513, 0, 0, Vector2(1, 1), 1.1449356, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_0lxvj"]
-curve = SubResource("Curve_3oxmp")
-
-[sub_resource type="CurveTexture" id="CurveTexture_7oan8"]
-curve = SubResource("Curve_3oxmp")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eadj3"]
-lifetime_randomness = 0.25
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(8, 8, 1)
-spread = 180.0
-initial_velocity_max = 2.0
-gravity = Vector3(0, 0, 0)
-linear_accel_min = -0.10000224
-linear_accel_max = -0.10000224
-alpha_curve = SubResource("CurveTexture_3oxmp")
-hue_variation_min = -2.2351742e-08
-hue_variation_max = -2.2351742e-08
-anim_speed_max = 1.0
-anim_speed_curve = SubResource("CurveTexture_7oan8")
-anim_offset_max = 1.0
-anim_offset_curve = SubResource("CurveTexture_0lxvj")
-
 [sub_resource type="Resource" id="Resource_jadfo"]
 script = ExtResource("38_s5uvd")
 action_uid = &"lock"
@@ -719,19 +673,6 @@ default_cell_terrain_data = ExtResource("3_2ba2c")
 
 [node name="Interactives Container" type="Node2D" parent="."]
 
-[node name="LooseParticles" type="Node2D" parent="Interactives Container"]
-script = ExtResource("8_eadj3")
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Interactives Container/LooseParticles"]
-material = SubResource("CanvasItemMaterial_2ba2c")
-amount = 10
-amount_ratio = 0.8
-texture = SubResource("AtlasTexture_qes87")
-lifetime = 5.0
-randomness = 1.0
-process_material = SubResource("ParticleProcessMaterial_eadj3")
-
 [node name="Chest" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(128, -80)
 contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_jadfo")])
@@ -765,6 +706,12 @@ position = Vector2(400, 16)
 
 [node name="BoulderEntity6" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(496, 112)
+
+[node name="LooseParticles" parent="Interactives Container" instance=ExtResource("14_2ba2c")]
+position = Vector2(48, -80)
+
+[node name="LooseParticles2" parent="Interactives Container" instance=ExtResource("14_2ba2c")]
+position = Vector2(48, -96)
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
