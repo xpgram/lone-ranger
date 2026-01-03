@@ -1,20 +1,14 @@
 shader_type canvas_item;
 
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+
 uniform vec3 gradient_start: source_color;
 uniform vec3 gradient_end: source_color;
 
-void vertex() {
-	// Called for every vertex the material is visible on.
-  //vec2 pos = VERTEX;
-  //
-  //if (VERTEX.y < 0.0) {
-    //VERTEX.x += 20.0;
-  //}
-}
 
 void fragment() {
   // Load color at fragment
-  COLOR = texture(TEXTURE, UV);
+  COLOR = textureLod(screen_texture, SCREEN_UV, 0.0);
 
   // Define a gradient and get the color for this fragment.
   vec3 gradient_color = mix(gradient_start, gradient_end, UV.y);
@@ -26,8 +20,3 @@ void fragment() {
     COLOR.rgb = mix(black, gradient_color, white_level);
   }
 }
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
