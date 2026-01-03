@@ -8,7 +8,7 @@ uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_ne
 uniform float fade_in_progress: hint_range(0.0, 1.0) = 1.0;
 
 // The color-crush threshhold. Fragment brightness values above this value will be
-// rendered white, values equal or below black.
+// rendered unaltered, values equal or below will be black.
 uniform float silhoette_threshhold: hint_range(0.0, 1.0) = 0.0;
 
 // The gradient color key at the top of the screen.
@@ -16,6 +16,9 @@ uniform vec3 gradient_start: source_color = vec3(1.0);
 
 // The gradient color key at the bottom of the screen.
 uniform vec3 gradient_end: source_color = vec3(1.0);
+
+// Whether to invert the brightness value of the fragment color.
+uniform bool invert_colors = false;
 
 
 vec4 apply_fade_in(vec4 color, float progress) {
@@ -41,9 +44,6 @@ vec4 apply_silhoette(vec4 color, float threshhold) {
   if (color.r <= threshhold) {
     color.rgb = vec3(0.0);
   }
-  else {
-    color.rgb = vec3(1.0);
-  }
 
   return color;
 }
@@ -56,7 +56,13 @@ vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
   if (color.a > 0.0) {
     vec3 black = vec3(0.0);
     float white_level = color.r;
-    color.rgb = mix(black, gradient_color, white_level);
+
+    if (!invert_colors) {
+      color.rgb = mix(black, gradient_color, white_level);
+    }
+    else {
+      color.rgb = mix(gradient_color, black, white_level);
+    }
   }
 
   return color;
