@@ -124,6 +124,7 @@ func _instantiate_repeater_timers() -> void:
   _interval_timer.autostart = false;
   _interval_timer.ignore_time_scale = true;
   _interval_timer.wait_time = interval_time;
+  _interval_timer.timeout.connect(_on_interval_timer_timeout);
 
   _first_pulse_timer = Timer.new();
   _first_pulse_timer.name = 'FirstIntervalTimer';
@@ -131,6 +132,7 @@ func _instantiate_repeater_timers() -> void:
   _first_pulse_timer.autostart = false;
   _first_pulse_timer.ignore_time_scale = true;
   _first_pulse_timer.wait_time = _get_first_interval_time(first_interval_time, interval_time);
+  _first_pulse_timer.timeout.connect(_on_first_pulse_timer_timeout);
 
   add_child(_interval_timer);
   add_child(_first_pulse_timer);
