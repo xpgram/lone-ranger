@@ -86,11 +86,11 @@ func _unhandled_input(_event: InputEvent) -> void:
     material.set_shader_parameter('fade_in_progress', progress);
 
   # Adjust silhoette.
-  if Input.is_key_pressed(KEY_I):
+  if Input.is_key_pressed(KEY_K):
     var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
     threshhold = clampf(threshhold + 0.25, 0.0, 1.0);
     material.set_shader_parameter('silhoette_threshhold', threshhold);
-  elif Input.is_key_pressed(KEY_K):
+  elif Input.is_key_pressed(KEY_I):
     var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
     threshhold = clampf(threshhold - 0.25, 0.0, 1.0);
     material.set_shader_parameter('silhoette_threshhold', threshhold);
