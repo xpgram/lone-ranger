@@ -17,6 +17,6 @@ void fragment() {
   if (COLOR.a > 0.0) {
     vec3 black = vec3(0.0);
     float white_level = COLOR.r;
-    COLOR.rgb = mix(black, gradient_color, white_level);
+    COLOR.rgb = mix(gradient_color, black, white_level);
   }
 }

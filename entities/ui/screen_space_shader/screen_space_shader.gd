@@ -22,8 +22,8 @@ var pulse_progress: float:
 
 
 func _ready() -> void:
-  set_color_gradient_start(Color.from_hsv(180 / 360.0, 0.5, 1.0));
-  set_color_gradient_end(Color.from_hsv(120 / 360.0, 0.5, 1.0));
+  _saved_gradient_start = material.get_shader_parameter('gradient_start') as Color;
+  _saved_gradient_end = material.get_shader_parameter('gradient_end') as Color;
 
 
 func set_color_gradient_start(start_color: Color) -> void:
