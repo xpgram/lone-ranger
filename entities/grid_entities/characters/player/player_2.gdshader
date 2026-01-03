@@ -9,7 +9,7 @@ uniform float fade_in_progress: hint_range(0.0, 1.0) = 1.0;
 
 // The color-crush threshhold. Fragment brightness values above this value will be
 // rendered white, values equal or below black.
-uniform float silhoette_threshhold: hint_range(0.0, 1.0) = 0.8;
+uniform float silhoette_threshhold: hint_range(0.0, 1.0) = 0.0;
 
 // The gradient color key at the top of the screen.
 uniform vec3 gradient_start: source_color = vec3(1.0);

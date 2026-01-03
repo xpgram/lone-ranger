@@ -106,6 +106,8 @@ metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
+shader_parameter/fade_in_progress = 1.0
+shader_parameter/silhoette_threshhold = 0.0
 shader_parameter/gradient_start = Color(0, 0.2666668, 0.8, 1)
 shader_parameter/gradient_end = Color(0.16, 0.8, 0.37333342, 1)
 
@@ -203,9 +205,9 @@ layout_mode = 0
 [node name="ScreenSpaceShaderRect" type="ColorRect" parent="Camera2D"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_yibea")
-offset_left = -152.0
-offset_top = -104.0
-offset_right = 152.0
-offset_bottom = 104.0
+offset_left = -136.0
+offset_top = -88.0
+offset_right = 136.0
+offset_bottom = 88.0
 color = Color(1, 1, 1, 0.25)
 script = ExtResource("20_yibea")
