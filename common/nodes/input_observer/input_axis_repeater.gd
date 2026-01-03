@@ -72,7 +72,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
   if (
-      not InputFocus.has_branch_focus(_focus_context)
+      not _focus_context.has_focus()
       or not _event_is_axis_action(event)
   ):
     return;
