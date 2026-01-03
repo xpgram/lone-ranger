@@ -108,8 +108,8 @@ metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 shader = ExtResource("19_5jpfb")
 shader_parameter/fade_in_progress = 1.0
 shader_parameter/silhoette_threshhold = 0.0
-shader_parameter/gradient_start = Color(0, 0.2666668, 0.8, 1)
-shader_parameter/gradient_end = Color(0.16, 0.8, 0.37333342, 1)
+shader_parameter/gradient_start = Color(1, 1, 1, 1)
+shader_parameter/gradient_end = Color(1, 1, 1, 1)
 shader_parameter/invert_colors = false
 
 [node name="PlayerModule" type="Node2D"]
