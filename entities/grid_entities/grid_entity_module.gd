@@ -48,6 +48,7 @@ func _set_element_visibility() -> void:
     return;
 
   for child in get_children():
-    child.visible = false;
+    if child is CanvasItem:
+      child.visible = false;
   
   get_entity().visible = true;

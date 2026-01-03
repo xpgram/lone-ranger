@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=26 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
+[ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="15_lxu83"]
@@ -133,6 +134,20 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("10_jru4w")
 metadata/_custom_type_script = "uid://dx2don6d2tt38"
+
+[node name="InputHelpers" type="Node" parent="."]
+
+[node name="MoveInputRepeater" type="Node" parent="InputHelpers" node_paths=PackedStringArray("_focus_context")]
+unique_name_in_owner = true
+script = ExtResource("13_3dwjy")
+_focus_context = NodePath("../../FocusableControl")
+reset_time_on_direction_change = false
+interval_time = 0.225
+up_axis = &"move_up"
+down_axis = &"move_down"
+left_axis = &"move_left"
+right_axis = &"move_right"
+metadata/_custom_type_script = "uid://bq7ia3l6n5kbw"
 
 [node name="FieldCursor" parent="." node_paths=PackedStringArray("_origin_object") instance=ExtResource("12_5jpfb")]
 unique_name_in_owner = true

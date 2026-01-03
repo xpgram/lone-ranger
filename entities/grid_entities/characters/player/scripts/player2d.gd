@@ -27,6 +27,9 @@ var _selected_command_menu_action: FieldAction;
 ##
 @onready var focus_node: FocusableControl = %FocusableControl;
 
+##
+@onready var _move_input_repeater: InputAxisRepeater = %MoveInputRepeater;
+
 ## The player's unique [CommandMenu] instance.
 @onready var _command_menu: CommandMenu = %CommandMenu;
 
@@ -41,6 +44,7 @@ func _init() -> void:
 func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
+  _bind_input_signals();
 
   _connect_to_ui_subsystems();
   focus_node.grab_focus();
@@ -55,44 +59,6 @@ func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
 
-  # If 'brace' is held, then hold position for movement inputs.
-  if Input.is_action_pressed('brace'):
-    if event.is_action_pressed('move_up'):
-      action_declared.emit(get_action_from_brace_move_input(Vector2.UP), false);
-      focus_node.accept_event();
-      return;
-
-    elif event.is_action_pressed('move_down'):
-      action_declared.emit(get_action_from_brace_move_input(Vector2.DOWN), false);
-      focus_node.accept_event();
-      return;
-
-    elif event.is_action_pressed('move_left'):
-      action_declared.emit(get_action_from_brace_move_input(Vector2.LEFT), false);
-      focus_node.accept_event();
-      return;
-
-    elif event.is_action_pressed('move_right'):
-      action_declared.emit(get_action_from_brace_move_input(Vector2.RIGHT), false);
-      focus_node.accept_event();
-      return;
-
-  elif event.is_action_pressed('move_up'):
-    action_declared.emit(get_action_from_move_input(Vector2.UP), false);
-    focus_node.accept_event();
-
-  elif event.is_action_pressed('move_down'):
-    action_declared.emit(get_action_from_move_input(Vector2.DOWN), false);
-    focus_node.accept_event();
-
-  elif event.is_action_pressed('move_left'):
-    action_declared.emit(get_action_from_move_input(Vector2.LEFT), false);
-    focus_node.accept_event();
-
-  elif event.is_action_pressed('move_right'):
-    action_declared.emit(get_action_from_move_input(Vector2.RIGHT), false);
-    focus_node.accept_event();
-
   elif event.is_action_pressed('interact'):
     action_declared.emit(get_interact_action(), false);
     focus_node.accept_event();
@@ -100,6 +66,20 @@ func _unhandled_input(event: InputEvent) -> void:
   elif event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
     focus_node.accept_event();
+
+
+## Attaches callbacks to input monitor signals.
+func _bind_input_signals() -> void:
+  _move_input_repeater.input_triggered.connect(_on_move_input);
+
+
+## Responds to movement input events, where [param input_vector] is the direction to move
+## in.
+func _on_move_input(input_vector: Vector2i) -> void:
+  if Input.is_action_pressed('brace'):
+    action_declared.emit(get_action_from_brace_move_input(input_vector), false);
+  else:
+    action_declared.emit(get_action_from_move_input(input_vector), false);
 
 
 ## Returns the [FieldActionSchedule] for a Wait action respective to this player.
