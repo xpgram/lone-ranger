@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=30 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://assets/textures_unused/system/icons/icon-plant.png" id="9_7hiuf"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
+[ext_resource type="Resource" uid="uid://bnxi3iwan6g35" path="res://utilities/actions/field_actions/resources/compact_action.tres" id="11_06ww2"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
@@ -130,6 +131,7 @@ _abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
 })
 _magic = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"burn": SubResource("Resource_p4sl8"),
+&"compact": ExtResource("11_06ww2"),
 &"grow": SubResource("Resource_ybx00")
 })
 _items = Dictionary[StringName, ExtResource("4_08fk3")]({
