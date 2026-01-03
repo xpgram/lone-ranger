@@ -23,7 +23,7 @@ signal input_triggered(vector: Vector2i);
 
 ## The time in seconds between input pulses. Cannot be less than 0.
 @export_custom(PROPERTY_HINT_NONE, 'suffix:s')
-var interval_time: float:
+var interval_time: float = 0.25:
   set(time):
     interval_time = maxf(0, time);
     if _interval_timer:

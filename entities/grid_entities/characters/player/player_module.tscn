@@ -142,7 +142,6 @@ unique_name_in_owner = true
 script = ExtResource("13_3dwjy")
 _focus_context = NodePath("../../FocusableControl")
 reset_time_on_direction_change = false
-interval_time = 0.5
 up_axis = &"move_up"
 down_axis = &"move_down"
 left_axis = &"move_left"
