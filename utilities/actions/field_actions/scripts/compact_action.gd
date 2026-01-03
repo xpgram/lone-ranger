@@ -12,13 +12,16 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
   var entities := Grid.get_entities(playbill.target_position);
   
   for entity in entities:
-    if entity.has_attribute('compactible_to_floor'):
+    # FIXME Incorrect check being used here.
+    # if entity.has_attribute('compactible_to_floor'):
+    if entity.name.begins_with('LooseParticles'):
       entity.queue_free();
 
   var tile_layers: Array[GridTileMapLayer];
   tile_layers.assign(Engine.get_main_loop().get_nodes_in_group(Group.TerrainData));
 
-  var changeset := BetterTerrain.create_terrain_changeset(tile_layers[0], {
-    playbill.target_position: 2,
-  });
-  BetterTerrain.apply_terrain_changeset(changeset);
+  BetterTerrain.set_cell(tile_layers[0], playbill.target_position, 2);
+  BetterTerrain.update_terrain_area(
+    tile_layers[0],
+    Rect2i(playbill.target_position, Vector2i(0, 0)),
+  );
