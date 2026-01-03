@@ -28,6 +28,7 @@ var interval_time: float = 0.25:
     interval_time = maxf(0, time);
     if _interval_timer:
       _interval_timer.wait_time = interval_time;
+      _first_pulse_timer.wait_time = _get_first_interval_time(first_interval_time, interval_time);
 
 ## The time in seconds between the first and the second input pulse.
 ## The "first" input pulse is sometimes ignored by [member emit_first_input_trigger], but
