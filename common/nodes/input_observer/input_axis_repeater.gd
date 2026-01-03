@@ -119,12 +119,14 @@ func _check_axes_exist() -> void:
 ## Builds and adds to the scene tree the [InputAxisRepeater]'s pulse timers.
 func _instantiate_repeater_timers() -> void:
   _interval_timer = Timer.new();
+  _interval_timer.name = 'IntervalTimer';
   _interval_timer.one_shot = false;
   _interval_timer.autostart = false;
   _interval_timer.ignore_time_scale = true;
   _interval_timer.wait_time = interval_time;
 
   _first_pulse_timer = Timer.new();
+  _first_pulse_timer.name = 'FirstIntervalTimer';
   _first_pulse_timer.one_shot = true;
   _first_pulse_timer.autostart = false;
   _first_pulse_timer.ignore_time_scale = true;
