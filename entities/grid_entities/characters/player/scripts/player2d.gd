@@ -191,7 +191,11 @@ func _connect_to_ui_subsystems() -> void:
 
   health_component.value_changed.connect(func (value: int, _old_Value: int):
     if value != 0:
-      _shader_rect.pulse_color(Color.from_hsv(0.0, 1.0, 1.0));
+      # FIXME The color used probably shouldn't be defined here.
+      _shader_rect.pulse_color(
+        Color.from_hsv(352.0 / 360.0, 0.75, 1.0),
+        Color.from_hsv(  8.0 / 360.0, 0.75, 1.0),
+      );
   );
 
 
