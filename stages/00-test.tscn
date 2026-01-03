@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=34 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://b0fn783j6lwuc" path="res://utilities/resources/cell_terrain_data/floor.tres" id="4_eadj3"]
 [ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="8_eadj3"]
 [ext_resource type="PackedScene" uid="uid://ds7ihux3pahep" path="res://entities/grid_entities/interactives/chest/special_chest.tscn" id="8_ycanp"]
+[ext_resource type="Texture2D" uid="uid://bjvy0k2ybhnsl" path="res://assets/00 - source/dingles_all.png" id="9_eadj3"]
 [ext_resource type="PackedScene" uid="uid://oysxdqutfm51" path="res://entities/grid_entities/interactives/boulder/boulder.tscn" id="10_jadfo"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
@@ -611,27 +612,15 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2ba2c"]
-load_path = "res://.godot/imported/dingle_01.png-15a6bffc4037db80d4de9678a439ed56.ctex"
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2ba2c"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 4
+particles_anim_loop = true
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eadj3"]
-load_path = "res://.godot/imported/dingle_02.png-d0ffd5e146ee786816aeee95b3d8a20f.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qes87"]
-load_path = "res://.godot/imported/dingle_03.png-9470538d72a49d37e071fa094f8c0d34.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_amsys"]
-load_path = "res://.godot/imported/dingle_04.png-093f889ff264c2db56c8edd2c6127b04.ctex"
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_mhctp"]
-frames = 4
-frame_0/texture = SubResource("CompressedTexture2D_2ba2c")
-frame_1/texture = SubResource("CompressedTexture2D_eadj3")
-frame_1/duration = 1.0
-frame_2/texture = SubResource("CompressedTexture2D_qes87")
-frame_2/duration = 1.0
-frame_3/texture = SubResource("CompressedTexture2D_amsys")
-frame_3/duration = 1.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_qes87"]
+atlas = ExtResource("9_eadj3")
+region = Rect2(0, 0, 4, 4)
 
 [sub_resource type="Curve" id="Curve_mhctp"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.14864866, 1), 0.0, 0.0, 0, 0, Vector2(0.8513514, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -651,10 +640,10 @@ curve = SubResource("Curve_3oxmp")
 curve = SubResource("Curve_3oxmp")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eadj3"]
-lifetime_randomness = 1.0
+lifetime_randomness = 0.25
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(10, 10, 1)
+emission_box_extents = Vector3(8, 8, 1)
 spread = 180.0
 initial_velocity_max = 2.0
 gravity = Vector3(0, 0, 0)
@@ -663,7 +652,7 @@ linear_accel_max = -0.10000224
 alpha_curve = SubResource("CurveTexture_3oxmp")
 hue_variation_min = -2.2351742e-08
 hue_variation_max = -2.2351742e-08
-anim_speed_max = 4.0
+anim_speed_max = 1.0
 anim_speed_curve = SubResource("CurveTexture_7oan8")
 anim_offset_max = 1.0
 anim_offset_curve = SubResource("CurveTexture_0lxvj")
@@ -735,9 +724,10 @@ script = ExtResource("8_eadj3")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Interactives Container/LooseParticles"]
-amount = 6
-amount_ratio = 0.75
-texture = SubResource("AnimatedTexture_mhctp")
+material = SubResource("CanvasItemMaterial_2ba2c")
+amount = 10
+amount_ratio = 0.8
+texture = SubResource("AtlasTexture_qes87")
 lifetime = 5.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_eadj3")
