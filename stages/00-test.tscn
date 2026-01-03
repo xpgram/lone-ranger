@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=28 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -7,8 +7,10 @@
 [ext_resource type="Resource" uid="uid://b0fn783j6lwuc" path="res://utilities/resources/cell_terrain_data/floor.tres" id="4_eadj3"]
 [ext_resource type="PackedScene" uid="uid://ds7ihux3pahep" path="res://entities/grid_entities/interactives/chest/special_chest.tscn" id="8_ycanp"]
 [ext_resource type="PackedScene" uid="uid://oysxdqutfm51" path="res://entities/grid_entities/interactives/boulder/boulder.tscn" id="10_jadfo"]
-[ext_resource type="Script" uid="uid://cpi8hsj31o616" path="res://utilities/actions/field_actions/scripts/compact_action.gd" id="12_eadj3"]
+[ext_resource type="Resource" uid="uid://bnxi3iwan6g35" path="res://utilities/actions/field_actions/resources/compact_action.tres" id="12_qes87"]
+[ext_resource type="Script" uid="uid://1co65v7pd4ta" path="res://utilities/actions/field_actions/scripts/burn_action.gd" id="13_amsys"]
 [ext_resource type="PackedScene" uid="uid://cqx4i6o5f7y0t" path="res://entities/grid_entities/interactives/loose_particles/loose_particles.tscn" id="14_2ba2c"]
+[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://assets/textures_unused/system/icons/icon-fire.png" id="14_mhctp"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -623,10 +625,17 @@ small_icon = ExtResource("39_iylj1")
 limit_type = 1
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="Resource" id="Resource_qes87"]
-script = ExtResource("12_eadj3")
+[sub_resource type="Resource" id="Resource_3oxmp"]
+script = ExtResource("13_amsys")
+action_uid = &"burn"
+action_name = "Burn"
+action_type = 1
+action_description = "asdf"
+action_hint = "asdf"
+action_time_cost = 15.0
+small_icon = ExtResource("14_mhctp")
+limit_type = 2
 uses_remaining = 3
-metadata/_custom_type_script = "uid://cpi8hsj31o616"
 
 [sub_resource type="Resource" id="Resource_ycanp"]
 script = ExtResource("38_s5uvd")
@@ -674,11 +683,11 @@ contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_jadfo")])
 
 [node name="Chest3" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(576, -96)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_qes87")])
+contents = Array[ExtResource("37_yg3mu")]([ExtResource("12_qes87")])
 
 [node name="Chest4" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(336, -240)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_ycanp")])
+contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_3oxmp")])
 
 [node name="Chest5" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(80, -208)
