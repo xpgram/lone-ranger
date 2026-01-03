@@ -36,6 +36,9 @@ var _selected_command_menu_action: FieldAction;
 ## The player's unique [FieldCursor] instance.
 @onready var _field_cursor: FieldCursor = %FieldCursor;
 
+##
+@onready var _shader_rect: ScreenSpaceShader = %ScreenSpaceShaderRect
+
 
 func _init() -> void:
   add_to_group(Group.Player);
@@ -185,6 +188,11 @@ func _connect_to_ui_subsystems() -> void:
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
   health_component.value_changed.connect(_on_health_changed);
   health_component.empty.connect(_on_health_empty);
+
+  health_component.value_changed.connect(func (value: int, _old_Value: int):
+    if value != 0:
+      _shader_rect.pulse_color(Color.from_hsv(0.0, 1.0, 1.0));
+  );
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]

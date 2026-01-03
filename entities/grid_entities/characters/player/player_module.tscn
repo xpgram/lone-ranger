@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=29 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="15_lxu83"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/grid_entities/characters/player/player_2.gdshader" id="19_5jpfb"]
+[ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
 
 [sub_resource type="Resource" id="Resource_3k65y"]
 script = ExtResource("5_jru4w")
@@ -105,8 +106,8 @@ metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
-shader_parameter/gradient_start = Color(1, 0.39999998, 0.39999998, 1)
-shader_parameter/gradient_end = Color(1, 0.39999998, 0.39999998, 1)
+shader_parameter/gradient_start = Color(1, 1, 1, 1)
+shader_parameter/gradient_end = Color(1, 1, 1, 1)
 
 [node name="PlayerModule" type="Node2D"]
 script = ExtResource("1_g13rh")
@@ -199,10 +200,12 @@ _inventory = NodePath("../../../Inventory")
 [node name="DebugUI" parent="Camera2D/UIContainer" instance=ExtResource("17_h7fwu")]
 layout_mode = 0
 
-[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+[node name="ScreenSpaceShaderRect" type="ColorRect" parent="Camera2D"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_yibea")
 offset_left = -152.0
 offset_top = -104.0
 offset_right = 152.0
 offset_bottom = 104.0
 color = Color(1, 1, 1, 0.25)
+script = ExtResource("20_yibea")
