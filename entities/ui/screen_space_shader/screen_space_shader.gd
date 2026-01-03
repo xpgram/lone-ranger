@@ -71,3 +71,40 @@ func pulse_color(screen_pulse_color: Color, screen_pulse_gradient_end := NULL_CO
   tween = create_tween();
   tween.tween_property(self, 'pulse_progress', 0.0, 0.5);
   await tween.finished;
+
+
+# FIXME Remove these debug controls.
+func _unhandled_input(_event: InputEvent) -> void:
+  # Adjust fade-in.
+  if Input.is_key_pressed(KEY_U):
+    var progress: float = material.get_shader_parameter('fade_in_progress');
+    progress = clampf(progress + 0.25, 0.0, 1.0);
+    material.set_shader_parameter('fade_in_progress', progress);
+  elif Input.is_key_pressed(KEY_J):
+    var progress: float = material.get_shader_parameter('fade_in_progress');
+    progress = clampf(progress - 0.25, 0.0, 1.0);
+    material.set_shader_parameter('fade_in_progress', progress);
+
+  # Adjust silhoette.
+  if Input.is_key_pressed(KEY_I):
+    var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
+    threshhold = clampf(threshhold + 0.25, 0.0, 1.0);
+    material.set_shader_parameter('silhoette_threshhold', threshhold);
+  elif Input.is_key_pressed(KEY_K):
+    var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
+    threshhold = clampf(threshhold - 0.25, 0.0, 1.0);
+    material.set_shader_parameter('silhoette_threshhold', threshhold);
+
+  # Toggle gradient.
+  if Input.is_key_pressed(KEY_O):
+    set_color_gradient_start(Color.WHITE);
+    set_color_gradient_end(Color.WHITE);
+  elif Input.is_key_pressed(KEY_L):
+    set_color_gradient_start(Color.from_hsv(200 / 360.0, 1.0, 1.0));
+    set_color_gradient_end(Color.from_hsv(160 / 360.0, 1.0, 1.0));
+
+  # Toggle color invert.
+  if Input.is_key_pressed(KEY_P):
+    material.set_shader_parameter('invert_colors', true);
+  elif Input.is_key_pressed(KEY_SEMICOLON):
+    material.set_shader_parameter('invert_colors', false);
