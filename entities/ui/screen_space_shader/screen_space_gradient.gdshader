@@ -26,11 +26,11 @@ vec4 apply_fade_in(vec4 color, float progress) {
   float white_level = color.r * progress;
 
   // Snap the brightness value to one of these values: 0.0, 0.5, 0.75, 1.0.
-  if (white_level > 0.5) {
-    white_level = round(white_level * 4.0) / 4.0;
+  if (white_level >= 0.5) {
+    white_level = floor(white_level * 4.0) / 4.0;
   }
   else {
-    white_level = round(white_level * 2.0) / 2.0;
+    white_level = floor(white_level * 2.0) / 2.0;
   }
 
   // Apply the brightness value.
