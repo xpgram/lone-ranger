@@ -22,12 +22,15 @@ uniform bool invert_colors = false;
 
 
 vec4 apply_fade_in(vec4 color, float progress) {
+  // FIXME This function should kick the current color down to the next one in the palette.
+  //  But that's not what it does. round() and floor() down there only work via math quirks.
+
   // Shift the brightness value down proportional to [param progress].
   float white_level = color.r * progress;
 
   // Snap the brightness value to one of these values: 0.0, 0.5, 0.75, 1.0.
   if (white_level >= 0.5) {
-    white_level = floor(white_level * 4.0) / 4.0;
+    white_level = round(white_level * 4.0) / 4.0;
   }
   else {
     white_level = floor(white_level * 2.0) / 2.0;
