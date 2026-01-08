@@ -17,11 +17,7 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
     if entity.name.begins_with('LooseParticles'):
       entity.queue_free();
 
-  var tile_layers: Array[GridTileMapLayer];
-  tile_layers.assign(Engine.get_main_loop().get_nodes_in_group(Group.TerrainData));
-
-  BetterTerrain.set_cell(tile_layers[0], playbill.target_position, 2);
-  BetterTerrain.update_terrain_area(
-    tile_layers[0],
-    Rect2i(playbill.target_position, Vector2i(0, 0)),
-  );
+  # TODO How do we know that '2' is a floor? I wish I could define these numbers somewhere.
+  #  I think I can get rid of the magic number, at least, by asking BetterTerrain to tell
+  #  me which type index is for 'floor' or whatever I've called it.
+  Grid.set_tile_type(playbill.target_position, 2);

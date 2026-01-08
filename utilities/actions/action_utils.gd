@@ -70,8 +70,14 @@ static func get_player_entity() -> Player2D:
   return players[0] if players.size() > 0 else null;
 
 
+## Returns true if the cell at [param place] is a pit-type tile.
+static func place_is_floor(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_floor(cell);
+
+
 ## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
-static func is_cell_idleable(place: Vector2i, _entity: GridEntity) -> bool:
+static func place_is_idleable(place: Vector2i, _entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
     cell_is_floor(cell)
@@ -80,24 +86,36 @@ static func is_cell_idleable(place: Vector2i, _entity: GridEntity) -> bool:
 
 
 ## Returns true if the cell at [param place] contains some solid, collidable object.
-static func is_cell_obstructed(place: Vector2i) -> bool:
+static func place_is_obstructed(place: Vector2i) -> bool:
   var cell := Grid.get_cell(place);
   return cell_is_wall(cell) or cell_has_collidables(cell);
 
 
+## Returns true if the cell at [param place] is a floor-type tile.
+static func place_is_pit(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_pit(cell);
+
+
 ## Returns true if the cell at [param place] contains no objects or properties that would
 ## obstruct vision lines.
-static func is_cell_transparent(place: Vector2i) -> bool:
-  return not is_cell_obstructed(place);
+static func place_is_transparent(place: Vector2i) -> bool:
+  return not place_is_obstructed(place);
 
 
 ## Returns true if the cell at [param place] is free of obstructions.
-static func is_cell_traversable(place: Vector2i, _entity: GridEntity) -> bool:
+static func place_is_traversable(place: Vector2i, _entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
     not cell_is_wall(cell)
     and not cell_has_collidables(cell)
   );
+
+
+## Returns true if the cell at [param place] is a wall-type tile.
+static func place_is_wall(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_wall(cell);
 
 
 ## Returns true if [param target_pos] is on the same row or column as [param actor] and

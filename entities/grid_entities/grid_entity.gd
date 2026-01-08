@@ -51,6 +51,9 @@ var grid_position: Vector2i:
     Grid.put(self, grid_position);
     entity_moved.emit();
 
+    if ActionUtils.place_is_pit(grid_position):
+      _on_free_fall();
+
 
 func _enter_tree() -> void:
   Grid.put(self, grid_position);
@@ -106,3 +109,14 @@ func distance_to(other: Variant) -> int:
 ## Useful for updating sprite animations.
 func _facing_changed() -> void:
   pass
+
+
+## Overridable function called whenever the Grid cell at this GridEntity's location is
+## missing a floor to stand on. [br]
+##
+## By default, this function waits a small amount of time and then queues self for
+## deletion.
+func _on_free_fall() -> void:
+  # TODO Create a drop effect animation.
+  await get_tree().create_timer(0.5).timeout;
+  queue_free();

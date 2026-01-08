@@ -24,7 +24,7 @@ func act_async() -> void:
   var inter_distance := self_entity.distance_to(player) - 1;
   var coords_line := ActionUtils.get_coordinate_line(self_entity.grid_position, direction, inter_distance);
   var is_adjacent := (coords_line.size() == 0);
-  var can_see_player: bool = coords_line.all(func (pos: Vector2i): return ActionUtils.is_cell_transparent(pos));
+  var can_see_player: bool = coords_line.all(func (pos: Vector2i): return ActionUtils.place_is_transparent(pos));
 
   if not can_see_player:
     return;
