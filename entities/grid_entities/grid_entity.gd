@@ -6,6 +6,9 @@ extends Node2D
 ## Emitted when this entity changes its position on the Grid.
 signal entity_moved();
 
+## Emitted when this entity is not supported by a floor tile.
+signal falling();
+
 
 # TODO As I add more conditions here, I should consider extracting them to a Resource.
 #   Having to go through every monster and object I've ever created just to check
@@ -50,6 +53,9 @@ var grid_position: Vector2i:
     global_position = Grid.get_world_coords(grid_vector);
     Grid.put(self, grid_position);
     entity_moved.emit();
+
+    if ActionUtils.place_is_pit(grid_position):
+      falling.emit();
 
 
 func _enter_tree() -> void:
