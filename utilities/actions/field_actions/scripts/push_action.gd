@@ -11,7 +11,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
     playbill.performer.grid_position + playbill.performer.faced_direction == playbill.target_position
   );
 
-  var tile_obstructed: bool = ActionUtils.is_cell_obstructed(playbill.target_position);
+  var tile_obstructed: bool = ActionUtils.place_is_obstructed(playbill.target_position);
 
   return facing_target and tile_obstructed;
 
@@ -39,7 +39,7 @@ func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> voi
   
   var current_position := pushable_entities[0].grid_position;
   var push_to_position := current_position + direction;
-  var tile_is_obstructed := ActionUtils.is_cell_obstructed(push_to_position);
+  var tile_is_obstructed := ActionUtils.place_is_obstructed(push_to_position);
 
   if tile_is_obstructed:
     # TODO If entity is not pushable, but is a collidable (i.e. not a wall or something),
