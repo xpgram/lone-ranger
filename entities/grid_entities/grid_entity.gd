@@ -6,9 +6,6 @@ extends Node2D
 ## Emitted when this entity changes its position on the Grid.
 signal entity_moved();
 
-## Emitted when this entity is not supported by a floor tile.
-signal falling();
-
 
 # TODO As I add more conditions here, I should consider extracting them to a Resource.
 #   Having to go through every monster and object I've ever created just to check
@@ -55,7 +52,7 @@ var grid_position: Vector2i:
     entity_moved.emit();
 
     if ActionUtils.place_is_pit(grid_position):
-      falling.emit();
+      _on_free_fall();
 
 
 func _enter_tree() -> void:
@@ -112,3 +109,14 @@ func distance_to(other: Variant) -> int:
 ## Useful for updating sprite animations.
 func _facing_changed() -> void:
   pass
+
+
+## Overridable function called whenever the Grid cell at this GridEntity's location is
+## missing a floor to stand on. [br]
+##
+## By default, this function waits a small amount of time and then queues self for
+## deletion.
+func _on_free_fall() -> void:
+  # TODO Create a drop effect animation.
+  await get_tree().create_timer(0.5).timeout;
+  queue_free();

@@ -260,3 +260,9 @@ func _on_health_empty() -> void:
   
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
   health_component.set_hp_to_full();
+
+
+func _on_free_fall() -> void:
+  # TODO On position moved: save a new safe position, if it is.
+  # TODO On free fall, if actually falling, return to safe position, take damage.
+  pass
