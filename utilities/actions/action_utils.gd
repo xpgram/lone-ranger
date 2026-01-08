@@ -100,6 +100,24 @@ static func is_cell_traversable(place: Vector2i, _entity: GridEntity) -> bool:
   );
 
 
+## Returns true if the cell at [param place] is a pit-type tile.
+static func place_is_floor(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_floor(cell);
+
+
+## Returns true if the cell at [param place] is a floor-type tile.
+static func place_is_pit(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_pit(cell);
+
+
+## Returns true if the cell at [param place] is a wall-type tile.
+static func place_is_wall(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_wall(cell);
+
+
 ## Returns true if [param target_pos] is on the same row or column as [param actor] and
 ## within the grid distance [param grid_range].
 static func target_pos_within_line_range(actor: GridEntity, target_pos: Vector2i, grid_range: int) -> bool:
