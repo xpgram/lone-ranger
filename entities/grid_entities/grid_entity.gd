@@ -28,7 +28,7 @@ signal entity_moved();
 
 
 ## The map of stimulus events to entity reaction behaviors.
-var _stimulus_event_map: InternalEventMap;
+var _stimulus_event_map := InternalEventMap.new();
 
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
