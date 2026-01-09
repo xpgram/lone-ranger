@@ -65,6 +65,21 @@ func set_tile_type(place: Vector2i, terrain_type: int) -> void:
   BetterTerrain.update_terrain_area(tilemap, update_dimensions);
 
 
+## Invokes the [GridEntity] stimulus reaction system by notifying the entities at
+## [param place] that [param stimulus_name] has occurred.
+func notify_entities_async(place: Vector2i, stimulus_name: StringName) -> void:
+  var entities := get_entities(place);
+  var notify_promises: Array[Promise];
+
+  for entity in entities:
+    var promise := Promise.new(func ():
+      await entity.react_async(stimulus_name);
+    );
+    notify_promises.append(promise);
+
+  await Promise.all(notify_promises).finished;
+
+
 ## Returns an array of [CellTerrainData] for the tile at [param place].
 ## If the array is empty, no tilemap data exists in the terrain-data group.
 func get_tile_data(place: Vector2) -> CellTerrainData:
