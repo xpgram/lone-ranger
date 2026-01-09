@@ -51,6 +51,28 @@ I can also add an equippable that makes the shimmer effect longer, happen multip
 You know what's fucked? :p 
 Void Stranger actually already does this, haha. Ahh, it's for some end game bosses and such, though, it's a little different.
 
+---
+
+##### Jan 7, 2026
+
+Half-time can be measured in 4-beats per bar, where a bar is usually 15 seconds or so. Whatever I decide.
+
+A 'bar' is an official turn. Typically the player goes, and then all the enemies go, etc. A 'beat' is for free actions, like an enemy counter-attack. Free actions really only make sense in real-time (not golem-time), but they should feel pretty cool. Seeing an enemy prime to counter-attack you and then taking a quick action to get out of the way would be neat.
+
+This would imply something, though. Here's a turn event list:
+
+- Player attacks Enemy C.
+- Enemies A and B take their turn. Enemy C flinches, hurt, but primes to counter-attack one beat later.
+- Player dodges by normal movement.
+- Enemies A and B take their turn. Enemy C uses their counter-attack as their turn, missing.
+  - [*If the player had not dodged, Enemy C would counter attack, and then later, Enemies A, B, and C would all have acted after the player did as they normally would.*]
+
+So, what feels weird here is that you're not dodging quickly. C's counter attack is 'fast' but you end up triggering the 'slow' A and B when you evade it.
+
+I think this problem is already solved, though. Enemy C not getting to counter-attack and then also follow you like A and B do already feels pretty good.
+
+If the player wants to dodge C without triggering A and B, maybe they can get some Haste or something to speed their own movement up. Moving the real-time meter beyond C's counter-attack beat should trigger the counter attack miss whether or not it's an official 4-beat turn.
+
 ### Minotaur
 
 Since we're still travelling around a big stone-walled labyrinth, why not have a big, invulnerable monster chase you?
