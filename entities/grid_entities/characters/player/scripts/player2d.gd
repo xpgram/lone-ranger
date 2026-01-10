@@ -295,6 +295,9 @@ func _on_free_fall() -> void:
   # What does player state look like in this turn-based game?
   # I'm gonna think about it in the shower, maybe.
 
+  # CallableStateMachine needs to implement the struct assembler and unhandled_input.
+  # Player2D changes which unhandled_input it uses depending on its state.
+
   await get_tree().create_timer(0.5).timeout;
 
   grid_position = _last_safe_position;
