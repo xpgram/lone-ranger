@@ -281,6 +281,20 @@ func _on_entity_moved() -> void:
 
 
 func _on_free_fall() -> void:
+  # TODO Implement fall certainty (cannot move further spaces while falling)
+  # TODO Implement fall recovery (can retreat to safe position while falling)
+  # TODO Implement turn consistency (enemies do not act until falling is complete)
+  # TODO Implement fall animation (for now, can be simple shaking)
+
+  # _on_free_fall needs to change the player's state.
+  # While we are in the Falling state,
+  #   TurnManager considers the Player 'busy' and will not advance time,
+  #   Most Player inputs are ignored, leaving only the retreat button,
+  #   A timer is started, which will trigger the fall's effects when finished.
+  #
+  # What does player state look like in this turn-based game?
+  # I'm gonna think about it in the shower, maybe.
+
   await get_tree().create_timer(0.5).timeout;
 
   grid_position = _last_safe_position;
