@@ -3,7 +3,7 @@ extends FieldAction
 
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
-  return ActionUtils.place_is_idleable(playbill.target_position, playbill.performer);
+  return ActionUtils.place_is_traversable(playbill.target_position, playbill.performer);
 
 
 func perform_async(playbill: FieldActionPlaybill) -> void:

@@ -17,6 +17,10 @@ var current_animation_state: StringName = 'idle';
 ## A blackboard variable to retain a reference to the player's chosen command menu action.
 var _selected_command_menu_action: FieldAction;
 
+## A grid position that is safe to teleport the player to when they get stuck or lost
+## (such as after falling into a pit).
+var _last_safe_position: Vector2i;
+
 
 ##
 @onready var animation_player: AnimationPlayer = %AnimationPlayer;
@@ -45,8 +49,12 @@ func _init() -> void:
 
 
 func _ready() -> void:
+  super._ready();
+
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
+
+  _bind_inherited_signals();
   _bind_input_signals();
 
   _connect_to_ui_subsystems();
@@ -69,6 +77,11 @@ func _unhandled_input(event: InputEvent) -> void:
   elif event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
     focus_node.accept_event();
+
+
+## Attaches callbacks to signals emitted by the extended script.
+func _bind_inherited_signals() -> void:
+  entity_moved.connect(_on_entity_moved);
 
 
 ## Attaches callbacks to input monitor signals.
@@ -262,7 +275,15 @@ func _on_health_empty() -> void:
   health_component.set_hp_to_full();
 
 
+func _on_entity_moved() -> void:
+  if ActionUtils.place_is_idleable(grid_position, self):
+    _last_safe_position = grid_position;
+
+
 func _on_free_fall() -> void:
-  # TODO On position moved: save a new safe position, if it is.
-  # TODO On free fall, if actually falling, return to safe position, take damage.
-  pass
+  await get_tree().create_timer(0.5).timeout;
+
+  grid_position = _last_safe_position;
+
+  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+  health_component.value -= 1;

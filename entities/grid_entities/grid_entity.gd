@@ -71,7 +71,7 @@ func _ready() -> void:
   if Engine.is_editor_hint():
     return;
 
-  _bind_notify_callbacks();
+  _bind_stimulus_callbacks();
 
 
 ## Returns true if `param attribute_name` is among the _attributes applied to this entity.
@@ -131,7 +131,7 @@ func _facing_changed() -> void:
 ## Binds methods to event signals in the GridEntity stimulus reaction system. [br]
 ##
 ## If overriding, remember to call super().
-func _bind_notify_callbacks() -> void:
+func _bind_stimulus_callbacks() -> void:
   _stimulus_event_map.add_events({
     Stimulus.is_over_pit: _on_free_fall,
   });
