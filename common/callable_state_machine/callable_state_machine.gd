@@ -31,6 +31,14 @@
 class_name CallableStateMachine
 extends RefCounted
 
+# IMPLEMENT Integrate the new CallableState.gd with this script.
+#   State machine is now completely agnostic of its state-type. You do not call
+#   state_machine.process(), instead you call state_machine.get_state().process();
+#   This will save me a lot of extension headache.
+#
+#   Oh, it also needs to get the machine_key from states as they are added instead of
+#   assembling that itself.
+
 
 ## A [Callable] used for culling non-provided callables.
 const NULL_CALLABLE := Callable();
