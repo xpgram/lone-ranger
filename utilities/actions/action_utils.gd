@@ -60,6 +60,7 @@ static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array
   #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
   #  conversion.
 
+  print('make the warnings stop: ', actor, target_pos);
   return [];
 
 
