@@ -208,8 +208,16 @@ func _get_machine_key_role() -> StringName:
 func _sort_functions_by_roles_into_methods_dict(functions: Array[Callable]) -> void:
   for function in functions:
     var role := _get_function_role(function);
-    assert(not _methods.has(role),
-      "CallableState has already defined a callback method for '%s'." % role);
+
+    if _methods.has(role):
+      var present_func_string: String = _methods.get(role).get_method();
+      var incoming_func_string: String = function.get_method();
+      var error_message := (
+        "CallableState has already defined a callback method for '%s': ('%s' -> '%s')."
+        % [role, present_func_string, incoming_func_string]
+      );
+      assert(false, error_message);
+
     _methods.set(role, function);
 
 
