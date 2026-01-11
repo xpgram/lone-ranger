@@ -88,7 +88,7 @@
 ##         var keywords: Array[StringName];
 ##         keywords.assign(
 ##             super._get_role_keywords() + [
-##                 &'move_input'
+##                 &'physics'
 ##             ]
 ##         );
 ##
@@ -178,7 +178,7 @@ func _init(functions: Array[Callable], state_key: Variant = null) -> void:
 ##         var keywords: Array[StringName];
 ##         keywords.assign(
 ##             super._get_role_keywords() + [
-##                 &'move_input'
+##                 &'physics'
 ##             ]
 ##         );
 ##
