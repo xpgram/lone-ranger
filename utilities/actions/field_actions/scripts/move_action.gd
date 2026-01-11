@@ -11,6 +11,3 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
 
   actor.grid_position = playbill.target_position;
   actor.faced_direction = playbill.orientation;
-
-  if actor is Player2D:
-    actor.set_animation_state('idle');

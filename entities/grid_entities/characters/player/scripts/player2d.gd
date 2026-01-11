@@ -193,6 +193,12 @@ func set_animation_state(state_key: StringName) -> void:
   animation_state_switch.play(state_key, faced_direction);
 
 
+## Replays the active animation, but with current context, such as the faced direction,
+## etc.
+func retrigger_animation_state() -> void:
+  animation_state_switch.play(current_animation_state, faced_direction);
+
+
 ## Resets the animation state to the idle animation set.
 func _on_animation_finished(_from_animation: StringName = '') -> void:
   # FIXME This is not necessary anymore; 'injured' won't end on its own, player state can
@@ -295,6 +301,12 @@ func _on_entity_moved() -> void:
   if ActionUtils.place_is_idleable(grid_position, self):
     _last_safe_position = grid_position;
 
+  retrigger_animation_state();
+
+
+func _facing_changed() -> void:
+  retrigger_animation_state();
+
 
 func _on_free_fall() -> void:
   # TODO Implement fall certainty (cannot move further spaces while falling)
@@ -364,7 +376,7 @@ func _state_injured() -> void:
 
 ## The Falling state enter function.
 func _state_falling() -> void:
-  # TODO set_animation_state('falling');
+  set_animation_state('coyote_fall');
   # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
 
   # FIXME If falling kills you, you get teleported somewhere while still in the falling state.
