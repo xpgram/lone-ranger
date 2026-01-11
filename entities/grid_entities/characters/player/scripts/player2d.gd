@@ -314,12 +314,7 @@ func _on_free_fall() -> void:
   # CallableStateMachine needs to implement the struct assembler and unhandled_input.
   # Player2D changes which unhandled_input it uses depending on its state.
 
-  await get_tree().create_timer(0.5).timeout;
-
-  grid_position = _last_safe_position;
-
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.value -= 1;
+  _state_machine.switch_to(_state_falling);
 
 
 ## The Idle state enter function.
@@ -369,18 +364,35 @@ func _state_injured() -> void:
 
 ## The Falling state enter function.
 func _state_falling() -> void:
-  # set_animation_state('falling');
-
+  # TODO set_animation_state('falling');
   # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
-  pass
+
+  # FIXME If falling kills you, you get teleported somewhere while still in the falling state.
+  #   This ought to be fixed just fine by a proper death state, which I need for animations anyway.
+  # FIXME This timer needs to be reset between different falls.
+  get_tree().create_timer(0.75).timeout.connect(func ():
+    if not _state_machine.is_state(_state_falling):
+      return;
+
+    # Injure and reset player position.
+    grid_position = _last_safe_position;
+
+    var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+    health_component.value -= 1;
+  );
+
 
 func _state_falling__input(_event: InputEvent) -> void:
   # IMPLEMENT Should accept nothing. 'Floating' or 'standing' is probably where flying movements happen.
   pass
 
-func _state_falling__move_input(_vector: Vector2i) -> void:
-  # IMPLEMENT Should accept only the direction away from the faced_direction to reverse the coyote-time fall.
-  pass
+
+func _state_falling__move_input(input_vector: Vector2i) -> void:
+  if input_vector + faced_direction != Vector2i.ZERO:
+    return;
+
+  grid_position += input_vector;
+  _state_machine.switch_to(_state_idle);
 
 
 class PlayerState extends CallableState:
