@@ -92,6 +92,9 @@ func _assemble_machine_states() -> void:
       _state_standing__move_input
     ], 'standing'),
     PlayerState.new([
+      _state_injured__enter,
+    ], 'injured'),
+    PlayerState.new([
       _state_falling__enter,
       _state_falling__input,
       _state_falling__move_input
@@ -201,6 +204,8 @@ func set_animation_state(state_key: StringName) -> void:
 
 ## Resets the animation state to the idle animation set.
 func _on_animation_finished(_from_animation: StringName = '') -> void:
+  # FIXME This is not necessary anymore; 'injured' won't end on its own, player state can
+  #   control which animations are active and when.
   var non_resetting_states: Array[StringName] = [
     &'item_get!',
   ];
@@ -282,6 +287,11 @@ func _interrupt_ui_subsystems() -> void:
 func _on_health_changed(value: int, old_value: int) -> void:
   if value < old_value and value != 0:
     _interrupt_ui_subsystems();
+
+    # FIXME I can't remember how, but setting this animation implies that player input is not listened to.
+    #   This will be handled by Player2D's own state logic from now on.
+    #   I can't find the code, though.
+    #   Is the await actually in a FieldAction script? Or where enemies touch you? Or TurnManager? I dunno.
     set_animation_state('injured');
 
 
@@ -327,6 +337,7 @@ func _on_free_fall() -> void:
   health_component.value -= 1;
 
 
+# TODO State name: 'idle' or something that communicates 'adventuring' or some other normal state?
 func _state_standing__enter() -> void:
   # IMPLEMENT Should nullify Player2D's busy status, allowing TurnManager to advance time again.
   pass
@@ -338,6 +349,16 @@ func _state_standing__input(_event: InputEvent) -> void:
 func _state_standing__move_input(_vector: Vector2i) -> void:
   # IMPLEMENT Take what's in the current handle_move_input() method.
   pass
+
+
+func _state_injured__enter() -> void:
+  # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
+  set_animation_state('injured');
+  # FIXME The animation state should not be how input knows not to listen.
+
+  # TODO The injured animation should loop if we're going to control time in this way:
+  await get_tree().create_timer(0.5).timeout;
+  _state_machine.switch_to('standing');
 
 
 func _state_falling__enter() -> void:
