@@ -21,8 +21,8 @@
 ##     # name keywords (details of this described further down).
 ##     state_machine.add_states([
 ##         CallableState.new([state_idle]),
-##         CallableState.new([state_walking, state_walking_enter]),
-##         CallableState.new([state_running, state_running_enter], 'running'),
+##         CallableState.new([state_walking, state_walking__enter]),
+##         CallableState.new([state_running, state_running__enter], 'running'),
 ##     ]);
 ##
 ##     # Sets the first state object.
@@ -39,10 +39,10 @@
 ## # We will skip the implementation of state_idle, state_walking, and state_running.
 ## # Assume that they handle player input and movement.
 ##
-## func state_walking_enter() -> void:
+## func state_walking__enter() -> void:
 ##     move_speed = 20;
 ##
-## func state_running_enter() -> void:
+## func state_running__enter() -> void:
 ##     move_speed = 30;
 ## [/codeblock]
 ##
@@ -53,14 +53,19 @@
 ## automatically determine what purpose each function serves through keywords found at the
 ## end of its string name. [br]
 ##
-## Unless extended, [CallableState] accepts four keywords by default. Here is an example
+## Unless extended, [CallableState] accepts four keywords by default, which when included
+## in a function's name, must be preceded by two underscores '__'. Here is an example
 ## of each with their expected function signatures:
 ## [codeblock]
-## func state_idle_enter() -> void;
-## func state_idle_exit() -> void;
-## func state_idle_process(delta: float) -> void;
-## func state_idle_input(event: InputEvent) -> void;
+## func state_idle__enter() -> void;
+## func state_idle__exit() -> void;
+## func state_idle__process(delta: float) -> void;
+## func state_idle__input(event: InputEvent) -> void;
 ## [/codeblock]
+##
+## These double-underscores help the interpreter understand where a keyword begins, but
+## also provide clarity to the reader about which part is the state's name and which is
+## the subprocess being defined. [br]
 ##
 ## Unless extended, [CallableState]'s process function is special in that it does not
 ## require a keyword: it is the default role for any behavior function without a keyword,
@@ -121,14 +126,15 @@ var _machine_key: Variant;
 ## [codeblock]
 ## state_machine.add_states([
 ##     CallableState.new([state_idle]),
-##     CallableState.new([state_walking, state_walking_enter, state_walking_exit]),
-##     CallableState.new([state_falling_enter, state_falling_exit], 'falling'),
+##     CallableState.new([state_walking, state_walking__enter, state_walking__exit]),
+##     CallableState.new([state_falling__enter, state_falling__exit], 'falling'),
 ## ]);
 ## [/codeblock]
 ##
 ## The behaviors the given functions are meant to fulfill (enter, exit, etc.) do not need
 ## to be explicitly stated, except by keywords contained at the end of each function's
-## string name. [br]
+## string name. Note that these keywords must be preceded by two underscores '__' to
+## separate them from the state's name. [br]
 ##
 ## The default role keywords are 'enter', 'exit', 'process', and 'input', but more may be
 ## added by extending this class and overriding [method _get_role_keywords]. [br]
@@ -139,14 +145,14 @@ var _machine_key: Variant;
 ## This allows you to write:
 ## [codeblock]state_machine.switch_to(state_running);[/codeblock]
 ## Instead of:
-## [codeblock]state_machine.switch_to(state_running_process);[/codeblock]
+## [codeblock]state_machine.switch_to(state_running__process);[/codeblock]
 ##
 ## [b]Note:[/b] 'process' and 'input' reflect standard Godot virtual methods and must have
 ## matching function signatures or they will break. [br]
 ##
 ## [codeblock]
-## func process(delta: float) -> void;
-## func input(event: InputEvent) -> void;
+## func state_example__process(delta: float) -> void;
+## func state_example__input(event: InputEvent) -> void;
 ## [/codeblock]
 func _init(functions: Array[Callable], state_key: Variant = null) -> void:
   _sort_functions_by_roles_into_methods_dict(functions);
@@ -168,6 +174,7 @@ func _get_role_keywords() -> Array[StringName]:
 ## role keywords.
 func _get_default_role() -> StringName:
   return &'process';
+
 
 ## Returns the role keyword to use when fetching the state's default Callable-type machine
 ## key. That is, which of this state's behavior functions should be the "name" of this
@@ -194,11 +201,21 @@ func _get_function_role(function: Callable) -> StringName:
   var chosen_keyword := _get_default_role();
 
   for keyword in _get_role_keywords():
-    if func_name.ends_with(keyword):
+    var token := _convert_to_role_token(keyword);
+    if func_name.ends_with(token):
       chosen_keyword = keyword;
       break;
-  
+
   return chosen_keyword;
+
+
+## Used by [CallableState] internally to get the syntax-correct function name token that
+## identifies which role a function is to be sorted into.
+func _convert_to_role_token(role: String) -> StringName:
+  return (
+    role if role.begins_with('__')
+    else '__' + _get_default_role()
+  );
 
 
 ## A helper method to assign this [CallableState]'s machine key, used by
