@@ -71,25 +71,15 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  if not focus_node.has_focus():
-    return;
-
-  elif event.is_action_pressed('interact'):
-    action_declared.emit(get_interact_action(), false);
-    focus_node.accept_event();
-
-  elif event.is_action_pressed('open_action_menu'):
-    _command_menu.open_from_start();
-    focus_node.accept_event();
+  var state := _state_machine.get_state() as PlayerState;
+  state.input(event);
 
 
 ## Responds to movement input events, where [param input_vector] is the direction to move
 ## in.
 func _on_move_input(input_vector: Vector2i) -> void:
-  if Input.is_action_pressed('brace'):
-    action_declared.emit(get_action_from_brace_move_input(input_vector), false);
-  else:
-    action_declared.emit(get_action_from_move_input(input_vector), false);
+  var state := _state_machine.get_state() as PlayerState;
+  state.move_input(input_vector);
 
 
 ##
@@ -109,6 +99,7 @@ func _assemble_machine_states() -> void:
       _state_falling__move_input
     ]),
   ]);
+
   _state_machine.switch_to(_state_idle);
 
 
@@ -339,22 +330,41 @@ func _on_free_fall() -> void:
 
 ## The Idle state enter function.
 func _state_idle() -> void:
+  set_animation_state('idle');
+
   # IMPLEMENT Should nullify Player2D's busy status, allowing TurnManager to advance time again.
   pass
 
-func _state_idle__input(_event: InputEvent) -> void:
-  # IMPLEMENT Take what's in the current _input() method.
-  pass
 
-func _state_idle__move_input(_vector: Vector2i) -> void:
-  # IMPLEMENT Take what's in the current handle_move_input() method.
-  pass
+func _state_idle__exit() -> void:
+  _interrupt_ui_subsystems();
+
+
+func _state_idle__input(event: InputEvent) -> void:
+  if not focus_node.has_focus():
+    return;
+
+  elif event.is_action_pressed('interact'):
+    action_declared.emit(get_interact_action(), false);
+    focus_node.accept_event();
+
+  elif event.is_action_pressed('open_action_menu'):
+    _command_menu.open_from_start();
+    focus_node.accept_event();
+
+
+func _state_idle__move_input(input_vector: Vector2i) -> void:
+  if Input.is_action_pressed('brace'):
+    action_declared.emit(get_action_from_brace_move_input(input_vector), false);
+  else:
+    action_declared.emit(get_action_from_move_input(input_vector), false);
 
 
 ## The Injured state enter function.
 func _state_injured() -> void:
-  # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
   set_animation_state('injured');
+
+  # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
   # FIXME The animation state should not be how input knows not to listen.
 
   # TODO The injured animation should loop if we're going to control time in this way:
@@ -364,6 +374,8 @@ func _state_injured() -> void:
 
 ## The Falling state enter function.
 func _state_falling() -> void:
+  # set_animation_state('falling');
+
   # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
   pass
 
