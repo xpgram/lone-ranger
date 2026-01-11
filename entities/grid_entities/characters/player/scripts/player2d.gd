@@ -301,7 +301,13 @@ func _on_entity_moved() -> void:
   if ActionUtils.place_is_idleable(grid_position, self):
     _last_safe_position = grid_position;
 
-  retrigger_animation_state();
+  # FIXME Consider that this is a side-effect. Are we sure this won't interfere with
+  #   FieldAction scripted animations? They set an animation, then move the actor, not
+  #   realizing that movement also sets the animation?
+  #
+  #   The falling state is handled via Stimulus, maybe resting neatly on solid ground
+  #   should also trigger a Stimulus.
+  set_animation_state('idle');
 
 
 func _facing_changed() -> void:
