@@ -83,6 +83,15 @@ func _unhandled_input(event: InputEvent) -> void:
     focus_node.accept_event();
 
 
+## Responds to movement input events, where [param input_vector] is the direction to move
+## in.
+func _on_move_input(input_vector: Vector2i) -> void:
+  if Input.is_action_pressed('brace'):
+    action_declared.emit(get_action_from_brace_move_input(input_vector), false);
+  else:
+    action_declared.emit(get_action_from_move_input(input_vector), false);
+
+
 ##
 func _assemble_machine_states() -> void:
   _state_machine.add_states([
@@ -111,15 +120,6 @@ func _bind_inherited_signals() -> void:
 ## Attaches callbacks to input monitor signals.
 func _bind_input_signals() -> void:
   _move_input_repeater.input_triggered.connect(_on_move_input);
-
-
-## Responds to movement input events, where [param input_vector] is the direction to move
-## in.
-func _on_move_input(input_vector: Vector2i) -> void:
-  if Input.is_action_pressed('brace'):
-    action_declared.emit(get_action_from_brace_move_input(input_vector), false);
-  else:
-    action_declared.emit(get_action_from_move_input(input_vector), false);
 
 
 ## Returns the [FieldActionSchedule] for a Wait action respective to this player.
