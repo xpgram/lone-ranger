@@ -57,7 +57,7 @@ func add_state(state: CallableState) -> void:
   _states_map.set(machine_key, state);
 
 
-## Adds a list of [CallableStates] to the machine's dictionary of known states.
+## Adds a list of [CallableState] objects to the machine's dictionary of known states.
 func add_states(states: Array[CallableState]) -> void:
   for state in states:
     add_state(state);
