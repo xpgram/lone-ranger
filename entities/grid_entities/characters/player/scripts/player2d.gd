@@ -82,7 +82,7 @@ func _on_move_input(input_vector: Vector2i) -> void:
   state.move_input(input_vector);
 
 
-##
+## Builds the Player2D state machine out of its state-related functions.
 func _assemble_machine_states() -> void:
   _state_machine.add_states([
     PlayerState.new([
