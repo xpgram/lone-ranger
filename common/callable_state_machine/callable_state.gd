@@ -202,7 +202,9 @@ func _get_role_keywords() -> Array[StringName]:
 
 
 ## Returns the default role keyword for any functions whose names do not match any defined
-## role keywords.
+## role keywords. [br]
+##
+## Unless its been overridden, this will also affect [method _get_machine_key_role].
 func _get_default_role() -> StringName:
   return &'process';
 

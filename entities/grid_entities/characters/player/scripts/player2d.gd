@@ -96,20 +96,20 @@ func _on_move_input(input_vector: Vector2i) -> void:
 func _assemble_machine_states() -> void:
   _state_machine.add_states([
     PlayerState.new([
-      _state_idle__enter,
+      _state_idle,
       _state_idle__input,
       _state_idle__move_input
-    ], 'idle'),
+    ]),
     PlayerState.new([
-      _state_injured__enter,
-    ], 'injured'),
+      _state_injured,
+    ]),
     PlayerState.new([
-      _state_falling__enter,
+      _state_falling,
       _state_falling__input,
       _state_falling__move_input
-    ], 'falling'),
+    ]),
   ]);
-  _state_machine.switch_to('idle');
+  _state_machine.switch_to(_state_idle);
 
 
 ## Attaches callbacks to signals emitted by the extended script.
@@ -337,8 +337,8 @@ func _on_free_fall() -> void:
   health_component.value -= 1;
 
 
-# TODO State name: 'idle' or something that communicates 'adventuring' or some other normal state?
-func _state_idle__enter() -> void:
+## The Idle state enter function.
+func _state_idle() -> void:
   # IMPLEMENT Should nullify Player2D's busy status, allowing TurnManager to advance time again.
   pass
 
@@ -351,17 +351,19 @@ func _state_idle__move_input(_vector: Vector2i) -> void:
   pass
 
 
-func _state_injured__enter() -> void:
+## The Injured state enter function.
+func _state_injured() -> void:
   # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
   set_animation_state('injured');
   # FIXME The animation state should not be how input knows not to listen.
 
   # TODO The injured animation should loop if we're going to control time in this way:
   await get_tree().create_timer(0.5).timeout;
-  _state_machine.switch_to('standing');
+  _state_machine.switch_to(_state_idle);
 
 
-func _state_falling__enter() -> void:
+## The Falling state enter function.
+func _state_falling() -> void:
   # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
   pass
 
@@ -375,6 +377,9 @@ func _state_falling__move_input(_vector: Vector2i) -> void:
 
 
 class PlayerState extends CallableState:
+  func _get_default_role() -> StringName:
+    return &'enter';
+
   func _get_role_keywords() -> Array[StringName]:
     var keywords: Array[StringName];
     keywords.assign(
