@@ -81,6 +81,14 @@ func set_fade_in(value: float) -> void:
   material.set_shader_parameter('fade_in_progress', value);
 
 
+func set_silhoette_threshhold(value: float) -> void:
+  # This should limit the value to increments of 0.25.
+  value = round(value * 4) / 4.0;
+
+  value = clampf(value, 0.0, 1.0);
+  material.set_shader_parameter('silhoette_threshhold', value);
+
+
 # FIXME Remove these debug controls.
 func _unhandled_input(_event: InputEvent) -> void:
   # FIXME These are being called like 16,000 times a second now. Wtf?
