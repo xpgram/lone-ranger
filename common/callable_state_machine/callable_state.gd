@@ -241,7 +241,7 @@ func _get_function_role(function: Callable) -> StringName:
 func _convert_to_role_token(role: String) -> StringName:
   return (
     role if role.begins_with('__')
-    else '__' + _get_default_role()
+    else '__' + role
   );
 
 
