@@ -72,6 +72,11 @@ func get_state() -> CallableState:
   return _current_state;
 
 
+## Returns true if [param state_key] is the machine key for the currently active state.
+func is_state(state_key: Variant) -> bool:
+  return _states_map.get(state_key) == _current_state;
+
+
 ## Changes the current state to the state associated with [param state_key].
 ## If the change succeeds, this will call the exit method of the current state and the
 ## enter method of the next state, without calling the process method of the next state. [br]
