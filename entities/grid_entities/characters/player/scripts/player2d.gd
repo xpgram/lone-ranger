@@ -46,6 +46,11 @@ var _last_safe_position: Vector2i;
 ##
 @onready var _shader_rect: ScreenSpaceShader = %ScreenSpaceShaderRect
 
+# FIXME This should be their last reset point, probably something to do with the last seen
+#   angel statue when I finally implement those.
+## Where the player spawned in.
+@onready var _starting_position: Vector2i = Grid.get_grid_coords(global_position);
+
 
 func _init() -> void:
   add_to_group(Group.Player);
@@ -97,6 +102,9 @@ func _assemble_machine_states() -> void:
       _state_falling,
       _state_falling__input,
       _state_falling__move_input
+    ]),
+    PlayerState.new([
+      _state_death,
     ]),
   ]);
 
@@ -289,15 +297,9 @@ func _on_health_changed(value: int, old_value: int) -> void:
     _state_machine.switch_to(_state_injured);
 
 
-# FIXME Add an actual death state and restart sequence instead of whatever this is:
-@onready var _starting_position: Vector2i = Grid.get_grid_coords(global_position);
 ## Handler for when the player's HP is completely emptied.
 func _on_health_empty() -> void:
-  _interrupt_ui_subsystems();
-  grid_position = _starting_position;
-
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.set_hp_to_full();
+  _state_machine.switch_to(_state_death);
 
 
 func _on_entity_moved() -> void:
@@ -413,6 +415,46 @@ func _state_falling__move_input(input_vector: Vector2i) -> void:
     return;
 
   grid_position += input_vector;
+  _state_machine.switch_to(_state_idle);
+
+
+## The Death state enter function.
+func _state_death() -> void:
+  _interrupt_ui_subsystems();
+  # IMPLEMENT Tell TurnManager we're busy. Or more than busy, even.
+
+  set_animation_state('injured');
+
+  var fade_time := 4.0;
+  var fade_transition := Tween.TRANS_QUAD;
+
+  # FIXME This animation schedule is scuffed as hell, though it does look really cool.
+
+  # Pause briefly.
+  await get_tree().create_timer(0.25).timeout;
+
+  # Fade out.
+  var fade_tween := get_tree().create_tween();
+  fade_tween.set_trans(fade_transition);
+  fade_tween.set_ease(Tween.EASE_IN);
+  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_time);
+  await fade_tween.finished;
+
+  # Reset player state.
+  set_animation_state('idle');
+  grid_position = _starting_position;
+  faced_direction = Vector2i.DOWN;
+
+  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+  health_component.set_hp_to_full();
+
+  # Fade in.
+  fade_tween = get_tree().create_tween();
+  fade_tween.set_trans(fade_transition);
+  fade_tween.set_ease(Tween.EASE_IN);
+  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_time);
+  await fade_tween.finished;
+
   _state_machine.switch_to(_state_idle);
 
 

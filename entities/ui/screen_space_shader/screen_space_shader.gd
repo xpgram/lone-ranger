@@ -73,8 +73,15 @@ func pulse_color(screen_pulse_color: Color, screen_pulse_gradient_end := NULL_CO
   await tween.finished;
 
 
+func set_fade_in(value: float) -> void:
+  value = clampf(value, 0.0, 1.0);
+  material.set_shader_parameter('fade_in_progress', value);
+
+
 # FIXME Remove these debug controls.
 func _unhandled_input(_event: InputEvent) -> void:
+  # FIXME These are being called like 16,000 times a second now. Wtf?
+
   # Adjust fade-in.
   if Input.is_key_pressed(KEY_U):
     var progress: float = material.get_shader_parameter('fade_in_progress');
