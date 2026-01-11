@@ -148,10 +148,6 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
   for actor in actor_components:
     actor.get_entity().update_attributes();
 
-  # FIXME This obviously shouldn't go here.
-  if player.current_animation_state == 'injured':
-    await get_tree().create_timer(0.5).timeout;
-
 
 ## Trigger a short time break.
 func _perform_small_pause_async() -> void:
