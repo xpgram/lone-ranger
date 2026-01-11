@@ -236,14 +236,14 @@ func _connect_to_ui_subsystems() -> void:
   health_component.value_changed.connect(_on_health_changed);
   health_component.empty.connect(_on_health_empty);
 
-  health_component.value_changed.connect(func (value: int, _old_Value: int):
-    if value != 0:
-      # FIXME The color used probably shouldn't be defined here.
-      _shader_rect.pulse_color(
-        Color.from_hsv(352.0 / 360.0, 0.75, 1.0),
-        Color.from_hsv(  8.0 / 360.0, 0.75, 1.0),
-      );
-  );
+  # health_component.value_changed.connect(func (value: int, _old_Value: int):
+  #   if value > -1:
+  #     # FIXME The color used probably shouldn't be defined here.
+  #     _shader_rect.pulse_color(
+  #       Color.from_hsv(352.0 / 360.0, 0.75, 1.0),
+  #       Color.from_hsv(  8.0 / 360.0, 0.75, 1.0),
+  #     );
+  # );
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
@@ -425,15 +425,14 @@ func _state_death() -> void:
 
   set_animation_state('injured');
 
-  var fade_time := 4.0;
-  var fade_transition := Tween.TRANS_QUAD;
+  var fade_time := 2.0;
+  var fade_transition := Tween.TRANS_SINE;
 
   # FIXME This animation schedule is scuffed as hell, though it does look really cool.
 
-  # Pause briefly.
-  await get_tree().create_timer(0.25).timeout;
-
   # Fade out.
+  await get_tree().create_timer(0.5).timeout;
+
   var fade_tween := get_tree().create_tween();
   fade_tween.set_trans(fade_transition);
   fade_tween.set_ease(Tween.EASE_IN);
@@ -449,9 +448,11 @@ func _state_death() -> void:
   health_component.set_hp_to_full();
 
   # Fade in.
+  await get_tree().create_timer(1.5).timeout;
+
   fade_tween = get_tree().create_tween();
   fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_IN);
+  fade_tween.set_ease(Tween.EASE_OUT);
   fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_time);
   await fade_tween.finished;
 
