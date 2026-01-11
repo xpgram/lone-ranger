@@ -160,7 +160,26 @@ func _init(functions: Array[Callable], state_key: Variant = null) -> void:
 
 
 ## Returns a list of keywords that are used by the method solver to sort loose functions
-## into their state callback roles.
+## into their state callback roles. [br]
+##
+## If you are overriding the available keywords, you will need to provide new accessor
+## functions for them. Here's an example which adds a physics_process step to the standard
+## set:
+## [codeblock]
+## class KinematicState extends CallableState:
+##     func _get_role_keywords() -> Array[StringName]:
+##         return super._get_role_keywords() + [
+##           &'physics',
+##         ];
+##
+##     func physics_process(delta: float) -> void:
+##         _call_role_func(&'physics', [delta]);
+##
+## # In the "Kinematic" object's physics step:
+## func _physics_process(delta: float) -> void:
+##     var state := state_machine.get_state() as KinematicState;
+##     state.physics_process(delta);
+## [/codeblock]
 func _get_role_keywords() -> Array[StringName]:
   return [
     &'process',
