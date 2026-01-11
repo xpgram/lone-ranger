@@ -301,7 +301,7 @@ func _on_health_changed(value: int, old_value: int) -> void:
 func _on_health_empty() -> void:
   _interrupt_ui_subsystems();
   grid_position = _starting_position;
-  
+
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
   health_component.set_hp_to_full();
 
@@ -376,9 +376,14 @@ func _state_falling__move_input(_vector: Vector2i) -> void:
 
 class PlayerState extends CallableState:
   func _get_role_keywords() -> Array[StringName]:
-    return super._get_role_keywords() + [
-      &'move_input',
-    ];
+    var keywords: Array[StringName];
+    keywords.assign(
+      super._get_role_keywords() + [
+        &'move_input'
+      ]
+    );
+
+    return keywords;
 
   func move_input(vector: Vector2i) -> void:
     _call_role_func(&'move_input', [vector]);
