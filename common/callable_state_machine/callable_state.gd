@@ -1,20 +1,83 @@
-## TODO Write a doc string explaining how to use this class in a CallableStateMachine,
-##   including instantiation and state method calls.
+## Represents an individual state for a [CallableStateMachine]. [br]
 ##
-## [codeblock]
-## state_machine.add_states([
-##     CallableState.new([state_idle]),
-##     CallableState.new([state_walking, state_walking_enter, state_walking_exit]),
-##     CallableState.new([state_running, state_running_enter]),
-## ]);
-## [/codeblock]
-##
-## TODO Write a doc string explaining how to extend this class appropriately.
+## This is a structural class to abstract the boilerplate of state subtypes and in most
+## cases only needs to be loaded with references to its behavior functions. This allows
+## behavior for different states to all be contained in a single script, improving
+## developer context and ease of object-state management (i.e., blackboarding of common
+## values). [br]
 ##
 ## Example:
-##
 ## [codeblock]
-## class PlayerCallableState extends CallableState:
+## class_name Player2D extends Node2D
+##
+## var health := 100;
+## var move_speed := 20;
+##
+## var state_machine := CallableStateMachine.new();
+##
+## func _ready() -> void:
+##     # State behaviors are added to CallableStates as a loose list of functions.
+##     # CallableState will sort these functions into their designated roles via function
+##     # name keywords (details of this described further down).
+##     state_machine.add_states([
+##         CallableState.new([state_idle]),
+##         CallableState.new([state_walking, state_walking_enter]),
+##         CallableState.new([state_running, state_running_enter], 'running'),
+##     ]);
+##
+##     # Sets the first state object.
+##     state_machine.switch_to(state_idle);
+##
+##     # Alternatively, you can set a state's machine-reference key explicitly, as with
+##     # state_running above:
+##     state_machine.switch_to('running');
+##
+## func _process(delta: float) -> void:
+##     # The state's methods, except for enter and exit, must be called manually.
+##     state_machine.get_state().process(delta);
+##
+## # We will skip the implementation of state_idle, state_walking, and state_running.
+## # Assume that they handle player input and movement.
+##
+## func state_walking_enter() -> void:
+##     move_speed = 20;
+##
+## func state_running_enter() -> void:
+##     move_speed = 30;
+## [/codeblock]
+##
+##
+## [b]Function Keyword Sorting[/b] [br]
+##
+## [CallableState] accepts a loose list of behavior functions when constructed and will
+## automatically determine what purpose each function serves through keywords found at the
+## end of its string name. [br]
+##
+## Unless extended, [CallableState] accepts four keywords by default. Here is an example
+## of each with their expected function signatures:
+## [codeblock]
+## func state_idle_enter() -> void;
+## func state_idle_exit() -> void;
+## func state_idle_process(delta: float) -> void;
+## func state_idle_input(event: InputEvent) -> void;
+## [/codeblock]
+##
+## Unless extended, [CallableState]'s process function is special in that it does not
+## require a keyword: it is the default role for any behavior function without a keyword,
+## and also serves as the state's machine key in its [CallableStateMachine].
+## [codeblock]
+## func state_idle(delta: float) -> void;
+## state_machine.switch_to(state_idle);
+## [/codeblock]
+##
+##
+## [b]Extending CallableState[/b] [br]
+##
+## The behavior and number of role functions [CallableState] has can be modified,
+## naturally, by extending the class. If we wanted to add a physics_process step in
+## addition to the normal process step, we might do so like this:
+## [codeblock]
+## class KinematicState extends CallableState:
 ##     func _get_role_keywords() -> Array[StringName]:
 ##         return super._get_role_keywords().append(
 ##           &'physics',
@@ -22,6 +85,18 @@
 ##
 ##     func physics_process(delta: float) -> void:
 ##         _call_role_func(&'physics', [delta]);
+##
+## # In the "Kinematic" object's physics step:
+## func _physics_process(delta: float) -> void:
+##     var state := state_machine.get_state() as KinematicState;
+##     state.physics_process(delta);
+## [/codeblock]
+##
+## The [CallableState]'s default role and machine-key role can also be modified by
+## overriding private _get functions in the base class.
+## [codeblock]
+## func _get_default_role() -> StringName;
+## func _get_machine_key_role() -> StringName;
 ## [/codeblock]
 class_name CallableState
 extends RefCounted
