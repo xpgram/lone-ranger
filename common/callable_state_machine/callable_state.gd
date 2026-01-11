@@ -79,9 +79,9 @@
 ## [codeblock]
 ## class KinematicState extends CallableState:
 ##     func _get_role_keywords() -> Array[StringName]:
-##         return super._get_role_keywords().append(
+##         return super._get_role_keywords() + [
 ##           &'physics',
-##         );
+##         ];
 ##
 ##     func physics_process(delta: float) -> void:
 ##         _call_role_func(&'physics', [delta]);
