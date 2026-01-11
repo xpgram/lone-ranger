@@ -96,10 +96,10 @@ func _on_move_input(input_vector: Vector2i) -> void:
 func _assemble_machine_states() -> void:
   _state_machine.add_states([
     PlayerState.new([
-      _state_standing__enter,
-      _state_standing__input,
-      _state_standing__move_input
-    ], 'standing'),
+      _state_idle__enter,
+      _state_idle__input,
+      _state_idle__move_input
+    ], 'idle'),
     PlayerState.new([
       _state_injured__enter,
     ], 'injured'),
@@ -109,7 +109,7 @@ func _assemble_machine_states() -> void:
       _state_falling__move_input
     ], 'falling'),
   ]);
-  _state_machine.switch_to('standing');
+  _state_machine.switch_to('idle');
 
 
 ## Attaches callbacks to signals emitted by the extended script.
@@ -338,15 +338,15 @@ func _on_free_fall() -> void:
 
 
 # TODO State name: 'idle' or something that communicates 'adventuring' or some other normal state?
-func _state_standing__enter() -> void:
+func _state_idle__enter() -> void:
   # IMPLEMENT Should nullify Player2D's busy status, allowing TurnManager to advance time again.
   pass
 
-func _state_standing__input(_event: InputEvent) -> void:
+func _state_idle__input(_event: InputEvent) -> void:
   # IMPLEMENT Take what's in the current _input() method.
   pass
 
-func _state_standing__move_input(_vector: Vector2i) -> void:
+func _state_idle__move_input(_vector: Vector2i) -> void:
   # IMPLEMENT Take what's in the current handle_move_input() method.
   pass
 
