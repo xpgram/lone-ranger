@@ -149,6 +149,11 @@ func _call_role_func_async(func_key: StringName, arguments: Array = []) -> void:
   await _methods.get(func_key).callv(arguments);
 
 
+## Returns the key used by [CallableStateMachine] to refer to this state in its records.
+func get_machine_key() -> Variant:
+  return _machine_key;
+
+
 ## Called when this state is transitioned [i]to.[/i] Useful for setting up systems that
 ## the state depends on.
 func enter() -> void:
