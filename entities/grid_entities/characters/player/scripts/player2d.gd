@@ -11,6 +11,9 @@ signal action_declared(action: FieldActionSchedule, buffer: bool);
 @export var inventory: PlayerInventory;
 
 
+##
+var _state_machine := CallableStateMachine.new();
+
 ## The [StringName] of this player's current animation.
 var current_animation_state: StringName = 'idle';
 
@@ -54,6 +57,7 @@ func _ready() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
   animation_player.animation_finished.connect(_on_animation_finished);
 
+  _assemble_machine_states();
   _bind_inherited_signals();
   _bind_input_signals();
 
@@ -77,6 +81,23 @@ func _unhandled_input(event: InputEvent) -> void:
   elif event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
     focus_node.accept_event();
+
+
+##
+func _assemble_machine_states() -> void:
+  _state_machine.add_states([
+    PlayerState.new([
+      _state_standing__enter,
+      _state_standing__input,
+      _state_standing__move_input
+    ], 'standing'),
+    PlayerState.new([
+      _state_falling__enter,
+      _state_falling__input,
+      _state_falling__move_input
+    ], 'falling'),
+  ]);
+  _state_machine.switch_to('standing');
 
 
 ## Attaches callbacks to signals emitted by the extended script.
@@ -304,3 +325,39 @@ func _on_free_fall() -> void:
 
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
   health_component.value -= 1;
+
+
+func _state_standing__enter() -> void:
+  # IMPLEMENT Should nullify Player2D's busy status, allowing TurnManager to advance time again.
+  pass
+
+func _state_standing__input(_event: InputEvent) -> void:
+  # IMPLEMENT Take what's in the current _input() method.
+  pass
+
+func _state_standing__move_input(_vector: Vector2i) -> void:
+  # IMPLEMENT Take what's in the current handle_move_input() method.
+  pass
+
+
+func _state_falling__enter() -> void:
+  # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
+  pass
+
+func _state_falling__input(_event: InputEvent) -> void:
+  # IMPLEMENT Should accept nothing. 'Floating' or 'standing' is probably where flying movements happen.
+  pass
+
+func _state_falling__move_input(_vector: Vector2i) -> void:
+  # IMPLEMENT Should accept only the direction away from the faced_direction to reverse the coyote-time fall.
+  pass
+
+
+class PlayerState extends CallableState:
+  func _get_role_keywords() -> Array[StringName]:
+    return super._get_role_keywords() + [
+      &'move_input',
+    ];
+
+  func move_input(vector: Vector2i) -> void:
+    _call_role_func(&'move_input', [vector]);
