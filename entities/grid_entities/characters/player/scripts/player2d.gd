@@ -203,6 +203,9 @@ func retrigger_animation_state() -> void:
 func _on_animation_finished(_from_animation: StringName = '') -> void:
   # FIXME This is not necessary anymore; 'injured' won't end on its own, player state can
   #   control which animations are active and when.
+  #
+  #   Except this is necessary for animations like "Item Get!", I think.
+  #   Actually, see this? Why does item_get! not reset again? I don't remember.
   var non_resetting_states: Array[StringName] = [
     &'item_get!',
   ];
