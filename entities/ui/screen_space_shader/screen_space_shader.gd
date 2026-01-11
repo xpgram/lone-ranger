@@ -81,6 +81,8 @@ func set_fade_in(value: float) -> void:
 # FIXME Remove these debug controls.
 func _unhandled_input(_event: InputEvent) -> void:
   # FIXME These are being called like 16,000 times a second now. Wtf?
+  #   I've determined that was my PS5 controller somehow. Was it doing that before?
+  #   That's really weird.
 
   # Adjust fade-in.
   if Input.is_key_pressed(KEY_U):
