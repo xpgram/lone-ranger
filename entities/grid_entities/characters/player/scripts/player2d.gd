@@ -425,7 +425,8 @@ func _state_death() -> void:
 
   set_animation_state('injured');
 
-  var fade_time := 2.0;
+  var fade_out_time := 1.5;
+  var fade_in_time := 1.0;
   var fade_transition := Tween.TRANS_SINE;
 
   # FIXME This animation schedule is scuffed as hell, though it does look really cool.
@@ -436,7 +437,7 @@ func _state_death() -> void:
   var fade_tween := get_tree().create_tween();
   fade_tween.set_trans(fade_transition);
   fade_tween.set_ease(Tween.EASE_IN);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_time);
+  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
   await fade_tween.finished;
 
   # Reset player state.
@@ -448,12 +449,12 @@ func _state_death() -> void:
   health_component.set_hp_to_full();
 
   # Fade in.
-  await get_tree().create_timer(1.5).timeout;
+  await get_tree().create_timer(3.0).timeout;
 
   fade_tween = get_tree().create_tween();
   fade_tween.set_trans(fade_transition);
   fade_tween.set_ease(Tween.EASE_OUT);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_time);
+  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_in_time);
   await fade_tween.finished;
 
   _state_machine.switch_to(_state_idle);
