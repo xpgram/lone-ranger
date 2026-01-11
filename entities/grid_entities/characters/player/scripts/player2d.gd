@@ -277,13 +277,7 @@ func _interrupt_ui_subsystems() -> void:
 ## Handler for when the player's HP changes value.
 func _on_health_changed(value: int, old_value: int) -> void:
   if value < old_value and value != 0:
-    _interrupt_ui_subsystems();
-
-    # FIXME I can't remember how, but setting this animation implies that player input is not listened to.
-    #   This will be handled by Player2D's own state logic from now on.
-    #   I can't find the code, though.
-    #   Is the await actually in a FieldAction script? Or where enemies touch you? Or TurnManager? I dunno.
-    set_animation_state('injured');
+    _state_machine.switch_to(_state_injured);
 
 
 # FIXME Add an actual death state and restart sequence instead of whatever this is:
@@ -362,12 +356,13 @@ func _state_idle__move_input(input_vector: Vector2i) -> void:
 
 ## The Injured state enter function.
 func _state_injured() -> void:
+  # FIXME The animation state has something that prevents input. I don't know how.
+  #   This injured state should be sufficient, now, so that needs to be removed.
+  # TODO Also, the injured animation should loop now.
   set_animation_state('injured');
 
   # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
-  # FIXME The animation state should not be how input knows not to listen.
 
-  # TODO The injured animation should loop if we're going to control time in this way:
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);
 
