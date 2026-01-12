@@ -58,6 +58,17 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   await _conduct_player_turn_async(player_schedule);
   current_round_data.player_acted = player_schedule.action is not Wait_FieldAction;
 
+  # TODO If the player's conducted turn was 'cancelled',
+  #   loop timers if necessary,
+  #   do not conduct anyone else's turn,
+  #
+  # Actually, this is a trickier problem than I thought.
+  # I need to think about a few possible cases. When should enemies get to take a turn?
+  # Should Move_FieldAction be responsible for awaiting the player's affairs? Then, if the
+  # move action didn't proceed properly, it could be the one to 'cancel' itself?
+  # Wait_FieldAction would never cancel itself, so we wouldn't have to worry about the
+  # inaction_timer at all, really.
+
   var inaction_forgiveness_triggered := (
     _player_is_inaction_forgiveness_eligible(turn_trigger_time, _previous_round_data)
     and current_round_data.player_acted
