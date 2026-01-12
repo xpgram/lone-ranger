@@ -465,14 +465,9 @@ class PlayerState extends CallableState:
     return &'enter';
 
   func _get_role_keywords() -> Array[StringName]:
-    var keywords: Array[StringName];
-    keywords.assign(
-      super._get_role_keywords() + [
-        &'move_input'
-      ]
-    );
-
-    return keywords;
+    return super._get_role_keywords() + ([
+      &'move_input'
+    ] as Array[StringName]);
 
   func move_input(vector: Vector2i) -> void:
     _call_role_func(&'move_input', [vector]);

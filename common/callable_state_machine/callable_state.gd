@@ -84,15 +84,9 @@
 ## [codeblock]
 ## class KinematicState extends CallableState:
 ##     func _get_role_keywords() -> Array[StringName]:
-##         # I wish this could be shorter, but typed arrays are a PITA in GDScript.
-##         var keywords: Array[StringName];
-##         keywords.assign(
-##             super._get_role_keywords() + [
-##                 &'physics'
-##             ]
-##         );
-##
-##         return keywords;
+##         return super._get_role_keywords() + ([
+##               &'physics'
+##         ] as Array[StringName]);
 ##
 ##     func physics_process(delta: float) -> void:
 ##         _call_role_func(&'physics', [delta]);
@@ -174,15 +168,9 @@ func _init(functions: Array[Callable], state_key: Variant = null) -> void:
 ## [codeblock]
 ## class KinematicState extends CallableState:
 ##     func _get_role_keywords() -> Array[StringName]:
-##         # I wish this could be shorter, but typed arrays are a PITA in GDScript.
-##         var keywords: Array[StringName];
-##         keywords.assign(
-##             super._get_role_keywords() + [
-##                 &'physics'
-##             ]
-##         );
-##
-##         return keywords;
+##         return super._get_role_keywords() + ([
+##               &'physics'
+##         ] as Array[StringName]);
 ##
 ##     func physics_process(delta: float) -> void:
 ##         _call_role_func(&'physics', [delta]);
