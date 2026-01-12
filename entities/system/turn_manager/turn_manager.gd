@@ -48,6 +48,10 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   if _turn_in_progress_padlock.thread_locked():
     return;
 
+  # This prevents the inaction timer from causing any undue effects while the player is in
+  # an unstable state.
+  await player.wait_until_affairs_settled_async();
+
   var turn_trigger_time := _inaction_timer.real_time_elapsed;
   var current_round_data := RoundData.new();
 

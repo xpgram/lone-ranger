@@ -6,12 +6,20 @@ extends GridEntity
 ## Emitted when an action the player would like to perform has been chosen.
 signal action_declared(action: FieldActionSchedule, buffer: bool);
 
+## Emitted when a player leaves a 'busy' state, one which suspends their participation
+## in the game proper. [br]
+##
+## External features that depend on [Player2D] being stable and ready to participate
+## should await [method wait_until_affairs_settled_async] as this signal is only emitted
+## after some affair has been assumed.
+signal _affairs_settled();
+
 
 ## The player's collection of bits and bobs.
 @export var inventory: PlayerInventory;
 
 
-##
+## Manages [Player2D] state.
 var _state_machine := CallableStateMachine.new();
 
 ## The [StringName] of this player's current animation.
@@ -23,6 +31,14 @@ var _selected_command_menu_action: FieldAction;
 ## A grid position that is safe to teleport the player to when they get stuck or lost
 ## (such as after falling into a pit).
 var _last_safe_position: Vector2i;
+
+## [b]Note:[/b] Use [method _unsettle_affairs] instead of setting this value directly. [br]
+##
+## Whether the player controller is free of preoccupations with animations or minigame-
+## like activities that make their current board state unknowable or erratic, or that make
+## them unable to participate in the normal procession of board game mechanics where it
+## would be unfair to proceed without them.
+var _affairs_are_settled := true;
 
 
 ##
@@ -100,7 +116,7 @@ func _assemble_machine_states() -> void:
     ]),
     PlayerState.new([
       _state_falling,
-      _state_falling__input,
+      _state_falling__exit,
       _state_falling__move_input
     ]),
     PlayerState.new([
@@ -193,6 +209,43 @@ func get_interact_action() -> FieldActionSchedule:
       break;
 
   return FieldActionSchedule.new(chosen_action, playbill);
+
+
+## Indicates the [Player2D] is preoccupied with something that prevents it from
+## participating in the game proper. [br]
+##
+## This is a useful flag for game mechanics that depend on the player state being stable,
+## predictable, and "ready to respond."
+func _unsettle_affairs() -> void:
+  _affairs_are_settled = false;
+
+
+## Indicates the [Player2D] is free of preoccupations that would prevent it from
+## participating in the game proper. [br]
+##
+## This is a useful flag for game mechanics that depend on the player state being stable,
+## predictable, and "ready to respond."
+func _settle_affairs() -> void:
+  if _affairs_are_settled == false:
+      _affairs_settled.emit();
+  _affairs_are_settled = true;
+
+
+## A coroutine that yields when the [Player2D] is not 'busy'. [br]
+##
+## To be 'busy' means that the [Player2D] is locked in some animation or minigame-like
+## activity that makes certain aspects of itself not entirely knowable, or to which it
+## would be unfair for a game mechanic to proceed without it. [br]
+##
+## An example of unsettled affairs: The recovery QTE played when a player is falling.
+## During this activity, the player may fall into a pit tile they've moved to, or they may
+## retreat quickly to the tile they moved from. In a sense, the player occupies [i]both[/i]
+## of these tiles until the QTE has finished, which makes it difficult for other mechanics
+## like enemy movement to know which tiles they are allowed to move to.
+func wait_until_affairs_settled_async():
+  if not _affairs_are_settled:
+    await _affairs_settled;
+
 
 
 ## Sets the animation state to `param state_key`.
@@ -340,12 +393,10 @@ func _on_free_fall() -> void:
   _state_machine.switch_to(_state_falling);
 
 
-## The Idle state enter function.
+## The idle state is the "at rest" state. All, or most, player gameplay features can be
+## accessed from here.
 func _state_idle() -> void:
   set_animation_state('idle');
-
-  # IMPLEMENT Should nullify Player2D's busy status, allowing TurnManager to advance time again.
-  pass
 
 
 func _state_idle__exit() -> void:
@@ -372,26 +423,26 @@ func _state_idle__move_input(input_vector: Vector2i) -> void:
     action_declared.emit(get_action_from_move_input(input_vector), false);
 
 
-## The Injured state enter function.
+## The injured state handles player flinch animations and input suspension after losing HP.
 func _state_injured() -> void:
-  # FIXME The animation state has something that prevents input. I don't know how.
-  #   This injured state should be sufficient, now, so that needs to be removed.
-  # TODO Also, the injured animation should loop now.
+  _unsettle_affairs();
+
   set_animation_state('injured');
-
-  # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
-
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);
 
+  _settle_affairs();
 
-## The Falling state enter function.
+
+## The falling state occurs when the player is about to fall into a pit or hole. [br]
+##
+## When this hole would hurt them, a "coyote time" QTE is played where the player may save
+## themselves from taking damage.
 func _state_falling() -> void:
-  set_animation_state('coyote_fall');
-  # IMPLEMENT Should notify TurnManager somehow that Player2D is busy.
+  _unsettle_affairs();
 
-  # FIXME If falling kills you, you get teleported somewhere while still in the falling state.
-  #   This ought to be fixed just fine by a proper death state, which I need for animations anyway.
+  set_animation_state('coyote_fall');
+
   # FIXME This timer needs to be reset between different falls.
   get_tree().create_timer(0.75).timeout.connect(func ():
     if not _state_machine.is_state(_state_falling):
@@ -400,14 +451,14 @@ func _state_falling() -> void:
     # Injure and reset player position.
     grid_position = _last_safe_position;
 
+    # FIXME Put this damn thing in an @onready already.
     var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
     health_component.value -= 1;
   );
 
 
-func _state_falling__input(_event: InputEvent) -> void:
-  # IMPLEMENT Should accept nothing. 'Floating' or 'standing' is probably where flying movements happen.
-  pass
+func _state_falling__exit() -> void:
+  _settle_affairs();
 
 
 func _state_falling__move_input(input_vector: Vector2i) -> void:
@@ -418,22 +469,20 @@ func _state_falling__move_input(input_vector: Vector2i) -> void:
   _state_machine.switch_to(_state_idle);
 
 
-## The Death state enter function.
+## The death state handles death animations and resets some player systems before
+## triggering a revive at the last checkpoint.
 func _state_death() -> void:
-  _interrupt_ui_subsystems();
-  # IMPLEMENT Tell TurnManager we're busy. Or more than busy, even.
+  _unsettle_affairs();
 
+  _interrupt_ui_subsystems();
   set_animation_state('injured');
 
   var fade_out_time := 1.5;
   var fade_in_time := 1.0;
   var fade_transition := Tween.TRANS_SINE;
 
-  # FIXME This animation schedule is scuffed as hell, though it does look really cool.
-
   # Fade out.
   await get_tree().create_timer(0.5).timeout;
-
   var fade_tween := get_tree().create_tween();
   fade_tween.set_trans(fade_transition);
   fade_tween.set_ease(Tween.EASE_IN);
@@ -450,7 +499,6 @@ func _state_death() -> void:
 
   # Fade in.
   await get_tree().create_timer(3.0).timeout;
-
   fade_tween = get_tree().create_tween();
   fade_tween.set_trans(fade_transition);
   fade_tween.set_ease(Tween.EASE_OUT);
@@ -458,6 +506,8 @@ func _state_death() -> void:
   await fade_tween.finished;
 
   _state_machine.switch_to(_state_idle);
+
+  _settle_affairs();
 
 
 class PlayerState extends CallableState:
