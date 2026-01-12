@@ -40,6 +40,10 @@ var _last_safe_position: Vector2i;
 ## would be unfair to proceed without them.
 var _affairs_are_settled := true;
 
+## @nullable [br]
+## A reference to the last-created coyote fall timer.
+var _coyote_fall_timer: Timer;
+
 
 ##
 @onready var animation_player: AnimationPlayer = %AnimationPlayer;
@@ -441,10 +445,34 @@ func _state_injured() -> void:
 func _state_falling() -> void:
   _unsettle_affairs();
 
+  # FIXME This whole thing is *fucked*, yo.
+  #   You know what didn't occur to me?
+  #   Should you be able to 'recover' if you're falling not because you moved over a pit
+  #   but because something cracked the floor beneath you?
+  #   This coyote thing is actually a much more niche feature than I thought. It's very
+  #   specific to Move_FieldAction, actually, so should probably just go in there.
+  #
+  #   It's okay, though. All the state-management improvements are nice for other reasons.
+  #
+  #   The player will still need a fall-state, anyway, I think, just to handle the actual
+  #   fall animation and safe repositioning, which *is* agnostic of Move_FieldAction or
+  #   floor-cracking.
+  #
+  #   Oh, wow. One other thing handling this 'minigame' in Move_FieldAction will fix:
+  #   The between-turn delay timer of 0.25 seconds or so prevents you from saving yourself,
+  #   which feels really bad, haha.
+
   set_animation_state('coyote_fall');
 
-  # FIXME This timer needs to be reset between different falls.
-  get_tree().create_timer(0.75).timeout.connect(func ():
+  # TODO A utils method for one-shot, auto-freeing Timers would be nice.
+  #   The get_tree() method is nice for waits, but if such a timer ever needs to be
+  #   cancelled, it has nothing to work with.
+  _coyote_fall_timer = Timer.new();
+  _coyote_fall_timer.wait_time = 0.75;
+  _coyote_fall_timer.autostart = true;
+  add_child(_coyote_fall_timer);
+
+  _coyote_fall_timer.timeout.connect(func ():
     if not _state_machine.is_state(_state_falling):
       return;
 
@@ -458,6 +486,9 @@ func _state_falling() -> void:
 
 
 func _state_falling__exit() -> void:
+  if _coyote_fall_timer:
+    _coyote_fall_timer.stop();
+    _coyote_fall_timer.queue_free();
   _settle_affairs();
 
 
