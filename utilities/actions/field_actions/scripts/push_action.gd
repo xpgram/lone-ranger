@@ -16,7 +16,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
   return facing_target and tile_obstructed;
 
 
-func perform_async(playbill: FieldActionPlaybill,) -> void:
+func perform_async(playbill: FieldActionPlaybill,) -> bool:
   var actor := playbill.performer;
   actor.faced_direction = playbill.orientation;
 
@@ -26,6 +26,8 @@ func perform_async(playbill: FieldActionPlaybill,) -> void:
   if actor is Player2D:
     actor.set_animation_state('push');
     await Engine.get_main_loop().create_timer(0.25).timeout;
+
+  return true;
 
 
 func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> void:

@@ -7,5 +7,5 @@ func can_perform(_playbill: FieldActionPlaybill) -> bool:
   return true;
 
 
-func perform_async(_playbill: FieldActionPlaybill) -> void:
-  pass;
+func perform_async(_playbill: FieldActionPlaybill) -> bool:
+  return true;
