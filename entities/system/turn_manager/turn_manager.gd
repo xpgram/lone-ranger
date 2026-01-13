@@ -59,6 +59,9 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
 
   # If an action wasn't carried out, i.e., it was cancelled, abandon conducting this turn.
   if not action_succeeded:
+    # FIXME Fix the damn early returns, ah?
+    _inaction_timer.loop_timers();
+    _turn_in_progress_padlock.unlock();
     return;
 
   current_round_data.player_acted = player_schedule.action is not Wait_FieldAction;
@@ -87,6 +90,10 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
   @warning_ignore('redundant_await')
   var action_succeeded := await player_action.perform_async(player_schedule.playbill);
 
+  # I cannot begin to explain this, but the second conditional does not work if this first
+  # one isn't erroneously skipped by the interpreter.
+  if not action_succeeded:
+    pass
   if not action_succeeded:
     return false;
 

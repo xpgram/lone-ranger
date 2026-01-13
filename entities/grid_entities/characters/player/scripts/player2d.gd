@@ -14,6 +14,10 @@ signal action_declared(action: FieldActionSchedule, buffer: bool);
 ## after some affair has been assumed.
 signal _affairs_settled();
 
+## Emitted after a Coyote Fall minigame, indicating whether the recovery QTE was
+## successfully performed or not.
+signal coyote_fall_recovered_result(recovered: bool);
+
 
 ## The player's collection of bits and bobs.
 @export var inventory: PlayerInventory;
@@ -31,6 +35,12 @@ var _selected_command_menu_action: FieldAction;
 ## A grid position that is safe to teleport the player to when they get stuck or lost
 ## (such as after falling into a pit).
 var _last_safe_position: Vector2i;
+
+# TODO Question: Player2D is bound to have tons of little metric numbers like this, do I
+#   really want to list them all in this script right here? I could put this in a big
+#   numbers repository resource, I guess.
+## How many steps the player can take over pits before falling.
+var _air_steps_remaining: int = 0;
 
 ## [b]Note:[/b] Use [method _unsettle_affairs] instead of setting this value directly. [br]
 ##
@@ -119,9 +129,12 @@ func _assemble_machine_states() -> void:
       _state_injured,
     ]),
     PlayerState.new([
-      _state_falling,
-      _state_falling__exit,
-      _state_falling__move_input
+      _state_coyote_fall,
+      _state_coyote_fall__exit,
+      _state_coyote_fall__move_input
+    ]),
+    PlayerState.new([
+      _state_fall,
     ]),
     PlayerState.new([
       _state_death,
@@ -213,6 +226,20 @@ func get_interact_action() -> FieldActionSchedule:
       break;
 
   return FieldActionSchedule.new(chosen_action, playbill);
+
+
+## Returns the number of steps the player can take over pits before falling.
+func get_air_steps_remaining() -> int:
+  return _air_steps_remaining;
+
+
+## Starts the Coyote Fall minigame, where the [Player2D] animates themselves falling into
+## the tile it's facing, and the player has an opportunity to save themselves with a QTE. [br]
+##
+## The calling script should await [signal coyote_fall_recovered_result] to get the result
+## of this QTE.
+func start_coyote_fall() -> void:
+  _state_machine.switch_to(_state_coyote_fall);
 
 
 ## Indicates the [Player2D] is preoccupied with something that prevents it from
@@ -394,7 +421,7 @@ func _on_free_fall() -> void:
   # CallableStateMachine needs to implement the struct assembler and unhandled_input.
   # Player2D changes which unhandled_input it uses depending on its state.
 
-  _state_machine.switch_to(_state_falling);
+  _state_machine.switch_to(_state_fall);
 
 
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be
@@ -438,11 +465,10 @@ func _state_injured() -> void:
   _settle_affairs();
 
 
-## The falling state occurs when the player is about to fall into a pit or hole. [br]
-##
-## When this hole would hurt them, a "coyote time" QTE is played where the player may save
-## themselves from taking damage.
-func _state_falling() -> void:
+## The coyote fall state occurs when the player is risking a fall into a pit or hole. This
+## state runs a QTE minigame that succeeds or fails, and reports this result via
+## [signal coyote_fall_recovered_result].
+func _state_coyote_fall() -> void:
   _unsettle_affairs();
 
   # FIXME This whole thing is *fucked*, yo.
@@ -473,31 +499,45 @@ func _state_falling() -> void:
   add_child(_coyote_fall_timer);
 
   _coyote_fall_timer.timeout.connect(func ():
-    if not _state_machine.is_state(_state_falling):
+    if not _state_machine.is_state(_state_coyote_fall):
       return;
-
-    # Injure and reset player position.
-    grid_position = _last_safe_position;
-
-    # FIXME Put this damn thing in an @onready already.
-    var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-    health_component.value -= 1;
+    coyote_fall_recovered_result.emit(false);
   );
 
 
-func _state_falling__exit() -> void:
+func _state_coyote_fall__exit() -> void:
   if _coyote_fall_timer:
     _coyote_fall_timer.stop();
     _coyote_fall_timer.queue_free();
   _settle_affairs();
 
 
-func _state_falling__move_input(input_vector: Vector2i) -> void:
+func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
   if input_vector + faced_direction != Vector2i.ZERO:
     return;
 
-  grid_position += input_vector;
+  coyote_fall_recovered_result.emit(true);
   _state_machine.switch_to(_state_idle);
+
+
+## The fall state is a transition state that handles the animation and effects of falling
+## into a pit or hole.
+func _state_fall() -> void:
+  _unsettle_affairs();
+
+  # TODO Animation:
+  # - hide player avatar
+  # - play drop vfx
+  # - move player back to safe position
+  # - show player avatar
+
+  grid_position = _last_safe_position;
+
+  # FIXME Put this damn thing in an @onready already.
+  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+  health_component.value -= 1;
+
+  _settle_affairs();
 
 
 ## The death state handles death animations and resets some player systems before
