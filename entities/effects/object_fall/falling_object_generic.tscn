@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3dfb7ml0p2ln"]
+
+[ext_resource type="Texture2D" uid="uid://bj4uhue67auyb" path="res://assets/00 - source/effects_sheet.png" id="1_5836s"]
+[ext_resource type="Script" uid="uid://bwaarisv8qymj" path="res://entities/effects/one_shot_effect.gd" id="2_1c44g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oikrk"]
+atlas = ExtResource("1_5836s")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdqfe"]
+atlas = ExtResource("1_5836s")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psc8e"]
+atlas = ExtResource("1_5836s")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uki4t"]
+atlas = ExtResource("1_5836s")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrbcm"]
+atlas = ExtResource("1_5836s")
+region = Rect2(192, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_focbn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oikrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdqfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psc8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uki4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hrbcm")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 8.0
+}]
+
+[node name="FallingObjectGeneric" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_focbn")
+animation = &"fall"
+autoplay = "fall"
+script = ExtResource("2_1c44g")

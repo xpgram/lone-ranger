@@ -3,6 +3,9 @@ class_name GridEntity
 extends Node2D
 
 
+const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
+
+
 ## Emitted when this entity changes its position on the Grid.
 signal entity_moved();
 
@@ -143,8 +146,12 @@ func _bind_stimulus_callbacks() -> void:
 ## By default, this function waits a small amount of time and then queues self for
 ## deletion.
 func _on_free_fall() -> void:
-  # TODO Create a drop effect animation.
   await get_tree().create_timer(0.5).timeout;
+
+  var fall_effect := _scene_object_fall.instantiate();
+  fall_effect.position = position;
+  add_sibling(fall_effect);
+
   queue_free();
 
 

@@ -471,23 +471,6 @@ func _state_injured() -> void:
 func _state_coyote_fall() -> void:
   _unsettle_affairs();
 
-  # FIXME This whole thing is *fucked*, yo.
-  #   You know what didn't occur to me?
-  #   Should you be able to 'recover' if you're falling not because you moved over a pit
-  #   but because something cracked the floor beneath you?
-  #   This coyote thing is actually a much more niche feature than I thought. It's very
-  #   specific to Move_FieldAction, actually, so should probably just go in there.
-  #
-  #   It's okay, though. All the state-management improvements are nice for other reasons.
-  #
-  #   The player will still need a fall-state, anyway, I think, just to handle the actual
-  #   fall animation and safe repositioning, which *is* agnostic of Move_FieldAction or
-  #   floor-cracking.
-  #
-  #   Oh, wow. One other thing handling this 'minigame' in Move_FieldAction will fix:
-  #   The between-turn delay timer of 0.25 seconds or so prevents you from saving yourself,
-  #   which feels really bad, haha.
-
   set_animation_state('coyote_fall');
 
   # TODO A utils method for one-shot, auto-freeing Timers would be nice.
@@ -525,13 +508,17 @@ func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
 func _state_fall() -> void:
   _unsettle_affairs();
 
-  # TODO Animation:
-  # - hide player avatar
-  # - play drop vfx
-  # - move player back to safe position
-  # - show player avatar
+  hide();
+
+  # TODO A utils for creating one-shot vfx like this would be nice.
+  var fall_effect := _scene_object_fall.instantiate() as OneShotEffect;
+  fall_effect.position = position;
+  add_sibling(fall_effect);
+  await fall_effect.animation_finished;
 
   grid_position = _last_safe_position;
+
+  show();
 
   # FIXME Put this damn thing in an @onready already.
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
