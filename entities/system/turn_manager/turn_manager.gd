@@ -55,19 +55,13 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   var turn_trigger_time := _inaction_timer.real_time_elapsed;
   var current_round_data := RoundData.new();
 
-  await _conduct_player_turn_async(player_schedule);
-  current_round_data.player_acted = player_schedule.action is not Wait_FieldAction;
+  var action_succeeded := await _conduct_player_turn_async(player_schedule);
 
-  # TODO If the player's conducted turn was 'cancelled',
-  #   loop timers if necessary,
-  #   do not conduct anyone else's turn,
-  #
-  # Actually, this is a trickier problem than I thought.
-  # I need to think about a few possible cases. When should enemies get to take a turn?
-  # Should Move_FieldAction be responsible for awaiting the player's affairs? Then, if the
-  # move action didn't proceed properly, it could be the one to 'cancel' itself?
-  # Wait_FieldAction would never cancel itself, so we wouldn't have to worry about the
-  # inaction_timer at all, really.
+  # If an action wasn't carried out, i.e., it was cancelled, abandon conducting this turn.
+  if not action_succeeded:
+    return;
+
+  current_round_data.player_acted = player_schedule.action is not Wait_FieldAction;
 
   var inaction_forgiveness_triggered := (
     _player_is_inaction_forgiveness_eligible(turn_trigger_time, _previous_round_data)
@@ -86,21 +80,26 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
 
 ## Orchestrates turn actions for the player entity, the specifics of which are given by
 ## [param player_schedule].
-func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> void:
+func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
   var player_action := player_schedule.action;
   var playbill := player_schedule.playbill;
 
   @warning_ignore('redundant_await')
-  await player_action.perform_async(player_schedule.playbill);
+  var action_succeeded := await player_action.perform_async(player_schedule.playbill);
+
+  if not action_succeeded:
+    return false;
 
   # FIXME Inventory should not expend an unexpendable action. This request possibly shouldn't even go here.
   if player_action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
     player.inventory.expend(player_action.action_uid);
-  
+
   player.update_attributes();
 
   _inaction_timer.add_time(player_action.action_time_cost);
   await _perform_small_pause_async();
+
+  return true;
 
 
 ## Returns true if the player is eligible for a free turn as a result of the inaction
