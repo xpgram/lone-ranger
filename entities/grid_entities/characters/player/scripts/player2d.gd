@@ -557,9 +557,6 @@ func _state_death() -> void:
 
 
 class PlayerState extends CallableState:
-  func _get_default_role() -> StringName:
-    return &'enter';
-
   func _get_role_keywords() -> Array[StringName]:
     return super._get_role_keywords() + ([
       &'move_input'

@@ -10,10 +10,10 @@
 ## # (See CallableState's documentation for more info.)
 ## state_machine.add_states(
 ##     CallableState.new([state_idle]),
-##     CallableState.new([state_walking, state_walking_enter, state_walking_exit]),
+##     CallableState.new([state_walking, state_walking_process, state_walking_exit]),
 ## );
 ##
-## # Switch to your initial state using the same process function it was added with.
+## # Switch to your initial state using the same enter function it was added with.
 ## state_machine.switch_to(state_idle);
 ##
 ## # Or switch states with a key you've set yourself.
@@ -84,7 +84,7 @@ func is_state(state_key: Variant) -> bool:
 ## This will fail if [param state_key] is not associated with any states known to this
 ## state machine. [br]
 ##
-## Unless extended, a [CallableState] will default to its 'process' [Callable] as its
+## Unless extended, a [CallableState] will default to its 'enter' [Callable] as its
 ## [param state_key], which you might call like this:
 ## [codeblock]state_machine.switch_to(state_walking); [/codeblock]
 func switch_to(state_key: Variant) -> void:

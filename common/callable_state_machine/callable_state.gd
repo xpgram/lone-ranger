@@ -67,11 +67,11 @@
 ## also provide clarity to the reader about which part is the state's name and which is
 ## the subprocess being defined. [br]
 ##
-## Unless extended, [CallableState]'s process function is special in that it does not
+## Unless extended, [CallableState]'s enter function is special in that it does not
 ## require a keyword: it is the default role for any behavior function without a keyword,
 ## and also serves as the state's machine key in its [CallableStateMachine].
 ## [codeblock]
-## func state_idle(delta: float) -> void;
+## func state_idle() -> void;
 ## state_machine.switch_to(state_idle);
 ## [/codeblock]
 ##
@@ -140,15 +140,15 @@ var _machine_key: Variant;
 ## added by extending this class and overriding [method _get_role_keywords]. [br]
 ##
 ## The "default role" is special and does not actually require a keyword. By default, this
-## is 'process', and is intended to reduce the noise of state switch requests. [br]
+## is 'enter', and is intended to reduce the noise of state switch requests. [br]
 ##
 ## This allows you to write:
 ## [codeblock]state_machine.switch_to(state_running);[/codeblock]
 ## Instead of:
-## [codeblock]state_machine.switch_to(state_running__process);[/codeblock]
+## [codeblock]state_machine.switch_to(state_running__enter);[/codeblock]
 ##
-## [b]Note:[/b] 'process' and 'input' reflect standard Godot virtual methods and must have
-## matching function signatures or they will break. [br]
+## [b]Note:[/b] The 'process' and 'input' functions reflect standard Godot virtual methods
+## and must have matching function signatures or they will break. [br]
 ##
 ## [codeblock]
 ## func state_example__process(delta: float) -> void;
@@ -194,7 +194,7 @@ func _get_role_keywords() -> Array[StringName]:
 ##
 ## Unless its been overridden, this will also affect [method _get_machine_key_role].
 func _get_default_role() -> StringName:
-  return &'process';
+  return &'enter';
 
 
 ## Returns the role keyword to use when fetching the state's default Callable-type machine
