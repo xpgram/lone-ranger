@@ -48,10 +48,22 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   if _turn_in_progress_padlock.thread_locked():
     return;
 
+  # This prevents the inaction timer from causing any undue effects while the player is in
+  # an unstable state.
+  await player.wait_until_affairs_settled_async();
+
   var turn_trigger_time := _inaction_timer.real_time_elapsed;
   var current_round_data := RoundData.new();
 
-  await _conduct_player_turn_async(player_schedule);
+  var action_succeeded := await _conduct_player_turn_async(player_schedule);
+
+  # If an action wasn't carried out, i.e., it was cancelled, abandon conducting this turn.
+  if not action_succeeded:
+    # FIXME Fix the damn early returns, ah?
+    _inaction_timer.loop_timers();
+    _turn_in_progress_padlock.unlock();
+    return;
+
   current_round_data.player_acted = player_schedule.action is not Wait_FieldAction;
 
   var inaction_forgiveness_triggered := (
@@ -71,21 +83,30 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
 
 ## Orchestrates turn actions for the player entity, the specifics of which are given by
 ## [param player_schedule].
-func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> void:
+func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
   var player_action := player_schedule.action;
   var playbill := player_schedule.playbill;
 
   @warning_ignore('redundant_await')
-  await player_action.perform_async(player_schedule.playbill);
+  var action_succeeded := await player_action.perform_async(player_schedule.playbill);
+
+  # I cannot begin to explain this, but the second conditional does not work if this first
+  # one isn't erroneously skipped by the interpreter.
+  if not action_succeeded:
+    pass
+  if not action_succeeded:
+    return false;
 
   # FIXME Inventory should not expend an unexpendable action. This request possibly shouldn't even go here.
   if player_action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
     player.inventory.expend(player_action.action_uid);
-  
+
   player.update_attributes();
 
   _inaction_timer.add_time(player_action.action_time_cost);
   await _perform_small_pause_async();
+
+  return true;
 
 
 ## Returns true if the player is eligible for a free turn as a result of the inaction
@@ -147,10 +168,6 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
 
   for actor in actor_components:
     actor.get_entity().update_attributes();
-
-  # FIXME This obviously shouldn't go here.
-  if player.current_animation_state == 'injured':
-    await get_tree().create_timer(0.5).timeout;
 
 
 ## Trigger a short time break.

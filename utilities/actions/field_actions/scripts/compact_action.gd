@@ -8,7 +8,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
     .any(func (entity: GridEntity): return entity.has_attribute('compactible_to_floor'));
 
 
-func perform_async(playbill: FieldActionPlaybill) -> void:
+func perform_async(playbill: FieldActionPlaybill) -> bool:
   var entities := Grid.get_entities(playbill.target_position);
   
   for entity in entities:
@@ -21,3 +21,5 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
   #  I think I can get rid of the magic number, at least, by asking BetterTerrain to tell
   #  me which type index is for 'floor' or whatever I've called it.
   Grid.set_tile_type(playbill.target_position, 2);
+
+  return true;

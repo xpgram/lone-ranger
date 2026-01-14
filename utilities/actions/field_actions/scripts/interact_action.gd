@@ -48,7 +48,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
   );
 
 
-func perform_async(playbill: FieldActionPlaybill) -> void:
+func perform_async(playbill: FieldActionPlaybill) -> bool:
   var interact_position := playbill.performer.faced_position;
   var entities := Grid.get_entities(interact_position);
   var interactive_idx := entities.find_custom(func (entity):
@@ -65,3 +65,5 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
 
   @warning_ignore('redundant_await')
   await context_action.perform_interaction_async(playbill.performer);
+
+  return true;

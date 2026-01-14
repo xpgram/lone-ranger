@@ -8,7 +8,7 @@ func can_perform(_playbill: FieldActionPlaybill) -> bool:
   return true;
 
 
-func perform_async(playbill: FieldActionPlaybill) -> void:
+func perform_async(playbill: FieldActionPlaybill) -> bool:
   var entities := Grid.get_entities(playbill.target_position);
 
   var health_components: Array[HealthComponent];
@@ -21,3 +21,5 @@ func perform_async(playbill: FieldActionPlaybill) -> void:
 
   for health_component in health_components:
     health_component.value -= 1;
+
+  return true;

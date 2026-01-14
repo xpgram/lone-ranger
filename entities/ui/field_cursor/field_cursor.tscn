@@ -21,9 +21,6 @@ animations = [{
 "texture": ExtResource("2_rivf3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_rivf3")
-}, {
-"duration": 1.0,
 "texture": ExtResource("3_uee3l")
 }, {
 "duration": 1.0,
@@ -31,22 +28,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("5_vymja")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_vymja")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_vymja")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_7l4j4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_uee3l")
 }],
 "loop": true,
 "name": &"default",
-"speed": 8.0
+"speed": 12.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r3rma"]
@@ -59,9 +44,6 @@ animations = [{
 "texture": ExtResource("6_xv0lc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_xv0lc")
-}, {
-"duration": 1.0,
 "texture": ExtResource("7_ddv36")
 }, {
 "duration": 1.0,
@@ -69,22 +51,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("9_eo2k7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_eo2k7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_eo2k7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_my6ly")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_ddv36")
 }],
 "loop": true,
 "name": &"default",
-"speed": 8.0
+"speed": 12.0
 }]
 
 [sub_resource type="Animation" id="Animation_f5ans"]

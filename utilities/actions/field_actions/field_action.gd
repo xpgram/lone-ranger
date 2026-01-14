@@ -125,5 +125,9 @@ func get_variable_action_time_cost() -> float:
 
 
 ## Given a performing actor and a cast-to position, coordinate the animation and ratify
-## the effects of this action.
-@abstract func perform_async(playbill: FieldActionPlaybill) -> void;
+## the effects of this action. [br]
+##
+## Returns a boolean indicating whether the action was successfully carried out. A result
+## of false generally means the [FieldAction] had no effects on the game board and may be
+## discarded.
+@abstract func perform_async(playbill: FieldActionPlaybill) -> bool;

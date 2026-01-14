@@ -3,10 +3,11 @@
 class_name ActionUtils
 
 
-## Returns true if [param cell] has any inhabiting entity that is collidable.
-static func cell_has_collidables(cell: Grid.Cell) -> bool:
+## Returns true if [param cell] has any inhabiting entity that is collidable. If given,
+## [param self_entity] will not count toward a cell's collidable objects.
+static func cell_has_collidables(cell: Grid.Cell, self_entity: GridEntity = null) -> bool:
   return cell.entities \
-    .any(func (entity: GridEntity): return entity.solid);
+    .any(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 
 ## Returns true if [param cell] is a floor-type tile.
@@ -59,6 +60,7 @@ static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array
   #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
   #  conversion.
 
+  print('make the warnings stop: ', actor, target_pos);
   return [];
 
 
@@ -77,11 +79,11 @@ static func place_is_floor(place: Vector2i) -> bool:
 
 
 ## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
-static func place_is_idleable(place: Vector2i, _entity: GridEntity) -> bool:
+static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
     cell_is_floor(cell)
-    and not cell_has_collidables(cell)
+    and not cell_has_collidables(cell, self_entity)
   );
 
 
