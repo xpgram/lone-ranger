@@ -293,11 +293,8 @@ func retrigger_animation_state() -> void:
 
 ## Resets the animation state to the idle animation set.
 func _on_animation_finished(_from_animation: StringName = '') -> void:
-  # FIXME This is not necessary anymore; 'injured' won't end on its own, player state can
-  #   control which animations are active and when.
-  #
-  #   Except this is necessary for animations like "Item Get!", I think.
-  #   Actually, see this? Why does item_get! not reset again? I don't remember.
+  # FIXME This function is not necessary anymore. 'injured' is a state now.
+  #  'item_get!' should also be a state.
   var non_resetting_states: Array[StringName] = [
     &'item_get!',
   ];
@@ -319,15 +316,6 @@ func _connect_to_ui_subsystems() -> void:
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
   health_component.value_changed.connect(_on_health_changed);
   health_component.empty.connect(_on_health_empty);
-
-  # health_component.value_changed.connect(func (value: int, _old_Value: int):
-  #   if value > -1:
-  #     # FIXME The color used probably shouldn't be defined here.
-  #     _shader_rect.pulse_color(
-  #       Color.from_hsv(352.0 / 360.0, 0.75, 1.0),
-  #       Color.from_hsv(  8.0 / 360.0, 0.75, 1.0),
-  #     );
-  # );
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
