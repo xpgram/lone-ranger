@@ -40,7 +40,7 @@ var _last_safe_position: Vector2i;
 #   really want to list them all in this script right here? I could put this in a big
 #   numbers repository resource, I guess.
 ## How many steps the player can take over pits before falling.
-var _air_steps_remaining: int = 0;
+var air_steps_remaining: int = 0;
 
 ## [b]Note:[/b] Use [method _unsettle_affairs] instead of setting this value directly. [br]
 ##
@@ -230,7 +230,7 @@ func get_interact_action() -> FieldActionSchedule:
 
 ## Returns the number of steps the player can take over pits before falling.
 func get_air_steps_remaining() -> int:
-  return _air_steps_remaining;
+  return air_steps_remaining;
 
 
 ## Starts the Coyote Fall minigame, where the [Player2D] animates themselves falling into
