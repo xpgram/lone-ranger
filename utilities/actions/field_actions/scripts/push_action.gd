@@ -60,7 +60,7 @@ func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> voi
 
 func _create_push_cloud(entry_node: Node, grid_position: Vector2i, direction: Vector2i) -> void:
   var push_cloud := scene_push_cloud.instantiate();
+  entry_node.add_sibling(push_cloud);
+
   push_cloud.position = Grid.get_world_coords(grid_position);
   push_cloud.set_direction(direction);
-
-  entry_node.add_sibling(push_cloud);
