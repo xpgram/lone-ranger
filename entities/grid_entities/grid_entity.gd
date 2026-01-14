@@ -3,6 +3,9 @@ class_name GridEntity
 extends Node2D
 
 
+const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
+
+
 ## Emitted when this entity changes its position on the Grid.
 signal entity_moved();
 
@@ -25,6 +28,10 @@ signal entity_moved();
 # TODO This attribute-tag system should be a component node, actually.
 ## A dictionary of applied effects and qualities.
 @export var _attributes: Dictionary[StringName, GridEntityAttribute];
+
+
+## The map of stimulus events to entity reaction behaviors.
+var _stimulus_event_map := InternalEventMap.new();
 
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
@@ -51,6 +58,9 @@ var grid_position: Vector2i:
     Grid.put(self, grid_position);
     entity_moved.emit();
 
+    if ActionUtils.place_is_pit(grid_position):
+      react_async(Stimulus.is_over_pit);
+
 
 func _enter_tree() -> void:
   Grid.put(self, grid_position);
@@ -58,6 +68,13 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
   Grid.remove(self, grid_position);
+
+
+func _ready() -> void:
+  if Engine.is_editor_hint():
+    return;
+
+  _bind_stimulus_callbacks();
 
 
 ## Returns true if `param attribute_name` is among the _attributes applied to this entity.
@@ -93,6 +110,12 @@ func update_attributes() -> void:
       _attributes.erase(attribute_key);
 
 
+## Notifies the [GridEntity] that [param stimulus_name] has occurred and executes its
+## associated behavior, if any is defined.
+func react_async(stimulus_name: StringName) -> void:
+  await _stimulus_event_map.call_event_async(stimulus_name);
+
+
 ## Returns the Grid distance between this entity and [param other]. [br]
 ##
 ## [param other] is a [GridEntity] or a [Vector2i].
@@ -106,3 +129,77 @@ func distance_to(other: Variant) -> int:
 ## Useful for updating sprite animations.
 func _facing_changed() -> void:
   pass
+
+
+## Binds methods to event signals in the GridEntity stimulus reaction system. [br]
+##
+## If overriding, remember to call super().
+func _bind_stimulus_callbacks() -> void:
+  _stimulus_event_map.add_events({
+    Stimulus.is_over_pit: _on_free_fall,
+  });
+
+
+## Overridable function called whenever the Grid cell at this GridEntity's location is
+## missing a floor to stand on. [br]
+##
+## By default, this function waits a small amount of time and then queues self for
+## deletion.
+func _on_free_fall() -> void:
+  await get_tree().create_timer(0.5).timeout;
+
+  var fall_effect := _scene_object_fall.instantiate();
+  fall_effect.position = position;
+  add_sibling(fall_effect);
+
+  queue_free();
+
+
+## @internal-only [br]
+## An event-key dictionary manager to facilitate [GridEntity]'s stimulus reaction system. [br]
+##
+## The purpose of this is to enforce stronger parity between types that implement similar
+## functions, but which may not implement them at all. It is recommended to use a
+## collection of constants to manage event keys consistently. [br]
+##
+## Usage example:
+## [codeblock]
+## class_name Enemy2D extends GridEntity
+##
+## func _ready() -> void:
+##     stimulus_map.add_events({
+##         Stimulus.is_burning: _on_burning,
+##         # ...
+##     });
+##
+## func _on_burning() -> void:
+##     # ...
+##
+## func self_combust() -> void:
+##     # ...
+##     stimulus_map.call_event(Stimulus.is_burning);
+## [/codeblock]
+class InternalEventMap extends RefCounted:
+  var _events: Dictionary[StringName, Callable];
+
+  ## Merges [param event_map] with the collection of event callbacks. [br]
+  ##
+  ## This will raise an error when a key conflict is detected. Event handler overrides
+  ## should be done the inheritance way, by overriding the super's function directly.
+  func add_events(event_map: Dictionary[StringName, Callable]) -> void:
+    for key in event_map.keys():
+      assert(not _events.has(key), "Cannot overwrite GridEntity event key '%s'.");
+
+    _events.merge(event_map);
+
+
+  ## If [param event_name] exists in the event map, calls its associated function.
+  func call_event(event_name: StringName) -> void:
+    call_event_async(event_name);
+
+
+  ## If [param event_name] exists in the event map, calls and awaits its associated
+  ## function.
+  func call_event_async(event_name: StringName) -> void:
+    if _events.has(event_name):
+      await _events.get(event_name).call();

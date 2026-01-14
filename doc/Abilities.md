@@ -131,6 +131,11 @@ Players collect Burn. They may try using it on the first golem enemies. Those ar
 
 - Creates a 3x3 hole in space.
 
+### Remember
+
+- On any empty tile (besides you), creates a checkpoint you can respawn to. Max 1.
+- Makes objects persistent? But persistent through what...
+
 ## Items
 
 ### Vial

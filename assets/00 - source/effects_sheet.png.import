@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dquvtulwq8nhw"
-path="res://.godot/imported/push-cloud-right-1.png-9d3d87c2a9f389f950713a1bbf46bda7.ctex"
+uid="uid://bj4uhue67auyb"
+path="res://.godot/imported/effects_sheet.png-c0cc610c1f3477b25bc23b8196343449.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/effects/push_cloud/images/push-cloud-right-1.png"
-dest_files=["res://.godot/imported/push-cloud-right-1.png-9d3d87c2a9f389f950713a1bbf46bda7.ctex"]
+source_file="res://assets/00 - source/effects_sheet.png"
+dest_files=["res://.godot/imported/effects_sheet.png-c0cc610c1f3477b25bc23b8196343449.ctex"]
 
 [params]
 

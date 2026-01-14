@@ -8,6 +8,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
+  super._ready();
   _bind_health_listeners();
 
 

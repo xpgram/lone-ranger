@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2jpnog1iqtfm"
-path="res://.godot/imported/push-cloud-right-6.png-d99e2281c3ef444adbd180dac869798d.ctex"
+uid="uid://b2vnxx70kjdc8"
+path="res://.godot/imported/dingle_04.png-093f889ff264c2db56c8edd2c6127b04.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/effects/push_cloud/images/push-cloud-right-6.png"
-dest_files=["res://.godot/imported/push-cloud-right-6.png-d99e2281c3ef444adbd180dac869798d.ctex"]
+source_file="res://assets/00 - source/dingle_04.png"
+dest_files=["res://.godot/imported/dingle_04.png-093f889ff264c2db56c8edd2c6127b04.ctex"]
 
 [params]
 

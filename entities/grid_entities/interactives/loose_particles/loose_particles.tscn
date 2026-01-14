@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqx4i6o5f7y0t"]
+
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_pvh1i"]
+[ext_resource type="Texture2D" uid="uid://bjvy0k2ybhnsl" path="res://assets/00 - source/dingles_all.png" id="2_6nxbn"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2ba2c"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qes87"]
+atlas = ExtResource("2_6nxbn")
+region = Rect2(0, 0, 4, 4)
+
+[sub_resource type="Curve" id="Curve_mhctp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.14864866, 1), 0.0, 0.0, 0, 0, Vector2(0.8513514, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_3oxmp"]
+curve = SubResource("Curve_mhctp")
+
+[sub_resource type="Curve" id="Curve_3oxmp"]
+_data = [Vector2(0, 0), 0.0, 1.1562513, 0, 0, Vector2(1, 1), 1.1449356, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0lxvj"]
+curve = SubResource("Curve_3oxmp")
+
+[sub_resource type="CurveTexture" id="CurveTexture_7oan8"]
+curve = SubResource("Curve_3oxmp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eadj3"]
+lifetime_randomness = 0.25
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(8, 8, 1)
+spread = 180.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -0.10000224
+linear_accel_max = -0.10000224
+alpha_curve = SubResource("CurveTexture_3oxmp")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = -2.2351742e-08
+anim_speed_max = 1.0
+anim_speed_curve = SubResource("CurveTexture_7oan8")
+anim_offset_max = 1.0
+anim_offset_curve = SubResource("CurveTexture_0lxvj")
+
+[node name="LooseParticles" type="Node2D"]
+script = ExtResource("1_pvh1i")
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_2ba2c")
+amount = 10
+amount_ratio = 0.8
+texture = SubResource("AtlasTexture_qes87")
+lifetime = 5.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_eadj3")

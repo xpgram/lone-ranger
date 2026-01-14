@@ -3,10 +3,11 @@
 class_name ActionUtils
 
 
-## Returns true if [param cell] has any inhabiting entity that is collidable.
-static func cell_has_collidables(cell: Grid.Cell) -> bool:
+## Returns true if [param cell] has any inhabiting entity that is collidable. If given,
+## [param self_entity] will not count toward a cell's collidable objects.
+static func cell_has_collidables(cell: Grid.Cell, self_entity: GridEntity = null) -> bool:
   return cell.entities \
-    .any(func (entity: GridEntity): return entity.solid);
+    .any(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 
 ## Returns true if [param cell] is a floor-type tile.
@@ -59,6 +60,7 @@ static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array
   #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
   #  conversion.
 
+  print('make the warnings stop: ', actor, target_pos);
   return [];
 
 
@@ -70,34 +72,52 @@ static func get_player_entity() -> Player2D:
   return players[0] if players.size() > 0 else null;
 
 
+## Returns true if the cell at [param place] is a pit-type tile.
+static func place_is_floor(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_floor(cell);
+
+
 ## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
-static func is_cell_idleable(place: Vector2i, _entity: GridEntity) -> bool:
+static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
     cell_is_floor(cell)
-    and not cell_has_collidables(cell)
+    and not cell_has_collidables(cell, self_entity)
   );
 
 
 ## Returns true if the cell at [param place] contains some solid, collidable object.
-static func is_cell_obstructed(place: Vector2i) -> bool:
+static func place_is_obstructed(place: Vector2i) -> bool:
   var cell := Grid.get_cell(place);
   return cell_is_wall(cell) or cell_has_collidables(cell);
 
 
+## Returns true if the cell at [param place] is a floor-type tile.
+static func place_is_pit(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_pit(cell);
+
+
 ## Returns true if the cell at [param place] contains no objects or properties that would
 ## obstruct vision lines.
-static func is_cell_transparent(place: Vector2i) -> bool:
-  return not is_cell_obstructed(place);
+static func place_is_transparent(place: Vector2i) -> bool:
+  return not place_is_obstructed(place);
 
 
 ## Returns true if the cell at [param place] is free of obstructions.
-static func is_cell_traversable(place: Vector2i, _entity: GridEntity) -> bool:
+static func place_is_traversable(place: Vector2i, _entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
     not cell_is_wall(cell)
     and not cell_has_collidables(cell)
   );
+
+
+## Returns true if the cell at [param place] is a wall-type tile.
+static func place_is_wall(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return cell_is_wall(cell);
 
 
 ## Returns true if [param target_pos] is on the same row or column as [param actor] and
