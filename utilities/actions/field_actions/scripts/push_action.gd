@@ -6,6 +6,14 @@ const scene_push_cloud := preload('uid://hua0n75be2w3');
 const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 
 
+## How many objects in sequence may be pushed at once.
+@export var _push_length := 1;
+
+## A measure of how heavy the objects pushed may be.
+@warning_ignore('unused_private_class_variable')
+@export var _push_strength := 1;
+
+
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var facing_target: bool = (
     playbill.performer.grid_position + playbill.performer.faced_direction == playbill.target_position
@@ -20,6 +28,14 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
   var actor := playbill.performer;
   actor.faced_direction = playbill.orientation;
 
+  var cells_to_push := _get_cells_to_push(playbill.target_position, playbill.orientation);
+
+  # TODO Plan:
+  # o Get array of pushed tiles, in order of closest to farthest.
+  # - Verify all can be pushed.
+  # - _push_entity() from the last to the first.
+  # - Create push_cloud on first only.
+
   var entities := Grid.get_entities(playbill.target_position);
   _try_push_entities(entities, playbill.orientation);
 
@@ -28,6 +44,22 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
     await Engine.get_main_loop().create_timer(0.25).timeout;
 
   return true;
+
+
+## Returns a list of [Grid.Cell] that may be affected by the push, starting at position
+## [param from] and extending in [param direction]. The list is at most size
+## [member _push_length], but may be less if the line of pushed objects contains a gap.
+func _get_cells_to_push(from: Vector2i, direction: Vector2i) -> Array[Grid.Cell]:
+  var grid_cells := [] as Array[Grid.Cell];
+  var cursor := from;
+
+  for i in range(_push_length):
+    if not ActionUtils.place_is_obstructed(cursor):
+      break;
+    grid_cells.append(Grid.get_cell(cursor));
+    cursor += direction;
+
+  return grid_cells;
 
 
 func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> void:
