@@ -32,7 +32,7 @@ func act_async() -> void:
   var playbill := FieldActionPlaybill.new(
     self_entity,
     self_entity.grid_position + direction,
-    direction
+    direction,
   );
 
   if not is_adjacent and FieldActionList.move.can_perform(playbill):
