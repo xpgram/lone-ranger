@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Push_FieldAction" load_steps=2 format=3 uid="uid://dp3a2pno7lxyr"]
+
+[ext_resource type="Script" uid="uid://cr14jkqg2alan" path="res://utilities/actions/field_actions/scripts/push_action.gd" id="1_ymuau"]
+
+[resource]
+script = ExtResource("1_ymuau")
+_push_length = 3
+action_uid = &"shove"
+action_name = "Shove"
+action_description = "Move 3 targets in a line one tile over."
+action_time_cost = 15.0
+metadata/_custom_type_script = "uid://cr14jkqg2alan"

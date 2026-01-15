@@ -177,8 +177,8 @@ func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
   );
 
   var actions := [
-    FieldActionList.move,
-    FieldActionList.push,
+    _get_move_action(),
+    _get_push_action(),
     FieldActionList.spin,
   ] as Array[FieldAction];
 
@@ -316,6 +316,17 @@ func _connect_to_ui_subsystems() -> void:
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
   health_component.value_changed.connect(_on_health_changed);
   health_component.empty.connect(_on_health_empty);
+
+
+## Returns the [FieldAction] variant the [Player2D] will use for movement.
+func _get_move_action() -> FieldAction:
+  return FieldActionList.move;
+
+
+## Returns the [FieldAction] variant the [Player2D] will use for pushing objects.
+func _get_push_action() -> FieldAction:
+  # TODO Check the inventory for a push-enhancing key item, return 'shove' if so.
+  return FieldActionList.push;
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]

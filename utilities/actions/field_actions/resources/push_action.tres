@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_lplxr")
+action_uid = &"push"
 action_name = "Push"
 action_description = "Move a target one tile over."
 action_time_cost = 15.0
