@@ -40,9 +40,8 @@ func _charge_forward_in_faced_direction_async() -> void:
     await _attack_async();
     _is_charging = false;
 
-  elif FieldActionList.move.can_perform(playbill):
-    @warning_ignore('redundant_await')
-    await FieldActionList.move.perform_async(playbill);
+  elif _can_move(playbill):
+    await _perform_move_async(playbill);
 
   else:
     _is_charging = false;
@@ -73,9 +72,8 @@ func _idle_until_player_seen_async() -> void:
     direction,
   );
 
-  if not is_adjacent and FieldActionList.move.can_perform(playbill):
-    @warning_ignore('redundant_await')
-    await FieldActionList.move.perform_async(playbill);
+  if not is_adjacent and _can_move(playbill):
+    await _perform_move_async(playbill);
     _is_charging = true;
 
   elif is_adjacent:
@@ -87,6 +85,17 @@ func _idle_until_player_seen_async() -> void:
 
 func get_entity() -> Enemy2D:
   return super.get_entity();
+
+
+func _can_move(playbill: FieldActionPlaybill) -> bool:
+  var is_idleable := ActionUtils.place_is_idleable(playbill.target_position, playbill.performer);
+  var can_perform := FieldActionList.move.can_perform(playbill);
+  return is_idleable and can_perform;
+
+
+func _perform_move_async(playbill: FieldActionPlaybill) -> void:
+  @warning_ignore('redundant_await')
+  await FieldActionList.move.perform_async(playbill);
 
 
 func _attack_async() -> void:
