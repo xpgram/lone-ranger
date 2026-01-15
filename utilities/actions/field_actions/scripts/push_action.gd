@@ -32,9 +32,10 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
 
   # TODO Plan:
   # o Get array of pushed tiles, in order of closest to farthest.
-  # - Verify all can be pushed.
+  # o Verify all can be pushed.
   # - _push_entity() from the last to the first.
-  # - Create push_cloud on first only.
+  #   - for each: if cannot be pushed, bump instead
+  #   - if last (first), create push_cloud where pushed from.
 
   var entities := Grid.get_entities(playbill.target_position);
   _try_push_entities(entities, playbill.orientation);
@@ -48,15 +49,24 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
 
 ## Returns a list of [Grid.Cell] that may be affected by the push, starting at position
 ## [param from] and extending in [param direction]. The list is at most size
-## [member _push_length], but may be less if the line of pushed objects contains a gap.
+## [member _push_length], but may be less if the line of pushed objects contains a gap or
+## an obstruction.
 func _get_cells_to_push(from: Vector2i, direction: Vector2i) -> Array[Grid.Cell]:
   var grid_cells := [] as Array[Grid.Cell];
   var cursor := from;
 
   for i in range(_push_length):
-    if not ActionUtils.place_is_obstructed(cursor):
+    var cell := Grid.get_cell(cursor);
+
+    var cell_is_empty := cell.entities.size() == 0;
+    var all_entities_pushable := cell.entities.all(func (entity: GridEntity):
+      return entity.pushable;
+    );
+
+    if cell_is_empty or not all_entities_pushable:
       break;
-    grid_cells.append(Grid.get_cell(cursor));
+
+    grid_cells.append(cell);
     cursor += direction;
 
   return grid_cells;
