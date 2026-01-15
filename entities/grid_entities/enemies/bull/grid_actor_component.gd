@@ -28,7 +28,7 @@ func _charge_forward_in_faced_direction_async() -> void:
   var player := ActionUtils.get_player_entity();
 
   var to_player_distance_vector := self_entity.grid_position - player.grid_position;
-  var to_player_distance := roundi(to_player_distance_vector.length());
+  var to_player_distance := to_player_distance_vector.x + to_player_distance_vector.y;
   var is_player_adjacent := to_player_distance == 1;
 
   var playbill := FieldActionPlaybill.new(
