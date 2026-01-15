@@ -32,7 +32,7 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
   for cell in cells_to_push_reversed:
     _try_push_entities(cell.entities, playbill.orientation);
 
-  var entities_were_pushed := (Grid.get_entities(playbill.target_position).size() == 0);
+  var entities_were_pushed := not ActionUtils.place_is_obstructed(playbill.target_position);
   if entities_were_pushed:
     _create_push_cloud(actor, playbill.target_position, playbill.orientation);
 
