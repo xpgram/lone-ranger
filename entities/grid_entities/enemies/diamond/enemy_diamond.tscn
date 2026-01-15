@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://cokxrxu6mgxob"]
+
+[ext_resource type="Script" uid="uid://83jrylvkrkma" path="res://entities/grid_entities/enemies/enemy2d.gd" id="1_ar4kq"]
+[ext_resource type="Texture2D" uid="uid://b4v8nlcnvuu5y" path="res://assets/00 - source/enemies_sheet.png" id="2_52rys"]
+[ext_resource type="Script" uid="uid://bquah6tnohw5e" path="res://common/component/component_combiner.gd" id="3_nptom"]
+[ext_resource type="Script" uid="uid://dxwyf0pnu6nbg" path="res://utilities/nodes/components/grid_entity_components/health_component.gd" id="4_mtp5w"]
+[ext_resource type="Script" uid="uid://dl5b20q8jsqiy" path="res://entities/grid_entities/enemies/diamond/grid_actor_component.gd" id="5_ar4kq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ar4kq"]
+atlas = ExtResource("2_52rys")
+region = Rect2(64, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52rys"]
+atlas = ExtResource("2_52rys")
+region = Rect2(80, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nptom"]
+atlas = ExtResource("2_52rys")
+region = Rect2(96, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtp5w"]
+atlas = ExtResource("2_52rys")
+region = Rect2(112, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xh840"]
+atlas = ExtResource("2_52rys")
+region = Rect2(64, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3ne4"]
+atlas = ExtResource("2_52rys")
+region = Rect2(80, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ijwdy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ar4kq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52rys")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nptom")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtp5w")
+}],
+"loop": true,
+"name": &"active",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xh840")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3ne4")
+}],
+"loop": true,
+"name": &"inactive",
+"speed": 2.0
+}]
+
+[node name="EnemyDiamond" type="Node2D"]
+script = ExtResource("1_ar4kq")
+solid = true
+pushable = true
+observes_golem_time = true
+metadata/_custom_type_script = "uid://83jrylvkrkma"
+metadata/GridActorComponent = NodePath("ComponentCombiner/GridActorComponent")
+metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_ijwdy")
+animation = &"active"
+autoplay = "inactive"
+
+[node name="ComponentCombiner" type="Node" parent="."]
+script = ExtResource("3_nptom")
+metadata/_custom_type_script = "uid://bquah6tnohw5e"
+
+[node name="HealthComponent" type="Node" parent="ComponentCombiner"]
+script = ExtResource("4_mtp5w")
+metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
+
+[node name="GridActorComponent" type="Node" parent="ComponentCombiner"]
+script = ExtResource("5_ar4kq")
+metadata/_custom_type_script = "uid://bkh4aef0dxaiy"
