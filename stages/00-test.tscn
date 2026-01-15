@@ -731,9 +731,6 @@ position = Vector2(320, -48)
 [node name="EnemyMouth2" parent="Enemy Container" instance=ExtResource("40_nbivo")]
 position = Vector2(304, -224)
 
-[node name="EnemyMouth3" parent="Enemy Container" instance=ExtResource("40_nbivo")]
-position = Vector2(352, -144)
-
 [node name="EnemyMouth4" parent="Enemy Container" instance=ExtResource("40_nbivo")]
 position = Vector2(400, -336)
 
@@ -747,7 +744,7 @@ position = Vector2(656, -16)
 position = Vector2(688, -144)
 
 [node name="EnemyBull" parent="Enemy Container" instance=ExtResource("20_3oxmp")]
-position = Vector2(112, 80)
+position = Vector2(352, -144)
 
 [node name="NPC Container" type="Node2D" parent="."]
 
