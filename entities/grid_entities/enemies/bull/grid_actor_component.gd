@@ -108,7 +108,7 @@ func _facing_changed() -> void:
       Vector2i.DOWN:
         animated_sprite.play('charge_down');
       Vector2i.LEFT:
-        animated_sprite.play('charge_left');
+        animated_sprite.play('charge_right');
         animated_sprite.flip_h = true;
       Vector2i.RIGHT:
         animated_sprite.play('charge_right');
