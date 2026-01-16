@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://cwpfqmqnobovf"]
+
+[ext_resource type="Script" uid="uid://83jrylvkrkma" path="res://entities/grid_entities/enemies/enemy2d.gd" id="1_wh05f"]
+[ext_resource type="Texture2D" uid="uid://b4v8nlcnvuu5y" path="res://assets/00 - source/enemies_sheet.png" id="2_jmu8v"]
+[ext_resource type="Script" uid="uid://bquah6tnohw5e" path="res://common/component/component_combiner.gd" id="3_stuhm"]
+[ext_resource type="Script" uid="uid://dxwyf0pnu6nbg" path="res://utilities/nodes/components/grid_entity_components/health_component.gd" id="4_ba0as"]
+[ext_resource type="Script" uid="uid://c2n6lq6d5xdvg" path="res://entities/grid_entities/enemies/snake/grid_actor_component.gd" id="5_wh05f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wh05f"]
+atlas = ExtResource("2_jmu8v")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmu8v"]
+atlas = ExtResource("2_jmu8v")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ijwdy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wh05f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmu8v")
+}],
+"loop": true,
+"name": &"face_right",
+"speed": 2.0
+}]
+
+[node name="EnemySnake" type="Node2D"]
+script = ExtResource("1_wh05f")
+solid = true
+pushable = true
+metadata/_custom_type_script = "uid://83jrylvkrkma"
+metadata/GridActorComponent = NodePath("ComponentCombiner/GridActorComponent")
+metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_ijwdy")
+animation = &"face_right"
+autoplay = "face_right"
+
+[node name="ComponentCombiner" type="Node" parent="."]
+script = ExtResource("3_stuhm")
+metadata/_custom_type_script = "uid://bquah6tnohw5e"
+
+[node name="HealthComponent" type="Node" parent="ComponentCombiner"]
+script = ExtResource("4_ba0as")
+metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
+
+[node name="GridActorComponent" type="Node" parent="ComponentCombiner"]
+script = ExtResource("5_wh05f")
+metadata/_custom_type_script = "uid://bkh4aef0dxaiy"

@@ -13,6 +13,8 @@
 &"scene": "res://entities/grid_entities/enemies/diamond/enemy_diamond.tscn"
 }, {
 &"scene": "res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn"
+}, {
+&"scene": "res://entities/grid_entities/enemies/snake/enemy_snake.tscn"
 }]
 }, {
 "name": "Objects",
