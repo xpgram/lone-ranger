@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtux3ehasyvly"]
+
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_xtm8q"]
+[ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_lskyr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dar42"]
+atlas = ExtResource("2_lskyr")
+region = Rect2(0, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x57cp"]
+atlas = ExtResource("2_lskyr")
+region = Rect2(16, 112, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1sjut"]
+animations = [{
+"frames": [{
+"duration": 9.0,
+"texture": SubResource("AtlasTexture_dar42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x57cp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dar42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x57cp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="GrowableTwig" type="Node2D"]
+script = ExtResource("1_xtm8q")
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1sjut")
+autoplay = "default"
+frame_progress = 0.46200252
