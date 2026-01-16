@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://v76t6hfbja7y"]
+
+[ext_resource type="Script" uid="uid://83jrylvkrkma" path="res://entities/grid_entities/enemies/enemy2d.gd" id="1_xi4rg"]
+[ext_resource type="Texture2D" uid="uid://b4v8nlcnvuu5y" path="res://assets/00 - source/enemies_sheet.png" id="2_vxskh"]
+[ext_resource type="Script" uid="uid://bquah6tnohw5e" path="res://common/component/component_combiner.gd" id="3_uiq7y"]
+[ext_resource type="Script" uid="uid://dxwyf0pnu6nbg" path="res://utilities/nodes/components/grid_entity_components/health_component.gd" id="4_wfh3j"]
+[ext_resource type="Script" uid="uid://gn3tyej1ao5n" path="res://entities/grid_entities/enemies/maggot/grid_actor_component.gd" id="5_xi4rg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xi4rg"]
+atlas = ExtResource("2_vxskh")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxskh"]
+atlas = ExtResource("2_vxskh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uiq7y"]
+atlas = ExtResource("2_vxskh")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfh3j"]
+atlas = ExtResource("2_vxskh")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ijwdy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xi4rg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxskh")
+}],
+"loop": true,
+"name": &"face_down",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uiq7y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfh3j")
+}],
+"loop": true,
+"name": &"face_up",
+"speed": 2.0
+}]
+
+[node name="EnemyMaggot" type="Node2D"]
+script = ExtResource("1_xi4rg")
+solid = true
+pushable = true
+observes_golem_time = true
+metadata/_custom_type_script = "uid://83jrylvkrkma"
+metadata/GridActorComponent = NodePath("ComponentCombiner/GridActorComponent")
+metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_ijwdy")
+animation = &"face_down"
+autoplay = "face_down"
+
+[node name="ComponentCombiner" type="Node" parent="."]
+script = ExtResource("3_uiq7y")
+metadata/_custom_type_script = "uid://bquah6tnohw5e"
+
+[node name="HealthComponent" type="Node" parent="ComponentCombiner"]
+script = ExtResource("4_wfh3j")
+metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
+
+[node name="GridActorComponent" type="Node" parent="ComponentCombiner"]
+script = ExtResource("5_xi4rg")
+metadata/_custom_type_script = "uid://bkh4aef0dxaiy"

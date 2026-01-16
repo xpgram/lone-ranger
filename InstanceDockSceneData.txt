@@ -11,6 +11,8 @@
 &"scene": "res://entities/grid_entities/enemies/bull/enemy_bull.tscn"
 }, {
 &"scene": "res://entities/grid_entities/enemies/diamond/enemy_diamond.tscn"
+}, {
+&"scene": "res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn"
 }]
 }, {
 "name": "Objects",

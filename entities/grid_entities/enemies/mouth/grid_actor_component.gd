@@ -59,6 +59,7 @@ func _attack_async() -> void:
   health_component.value -= 1;
 
 
+# FIXME Oh my god. This function is not connected to anything. I can't believe I never noticed.
 func _facing_changed() -> void:
   match get_entity().faced_direction:
     Vector2.UP:
