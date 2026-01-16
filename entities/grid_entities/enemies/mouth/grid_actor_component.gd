@@ -43,6 +43,9 @@ func act_async() -> void:
     @warning_ignore('redundant_await')
     await _attack_async();
 
+  # TODO This is a bandaid patch for _facing_changed() not being a thing on ActorComponents.
+  _facing_changed();
+
   exhaust();
 
 
@@ -61,12 +64,7 @@ func _attack_async() -> void:
 
 # FIXME Oh my god. This function is not connected to anything. I can't believe I never noticed.
 func _facing_changed() -> void:
-  match get_entity().faced_direction:
-    Vector2.UP:
-      animated_sprite.scale.x = -1;
-    Vector2.DOWN:
-      animated_sprite.scale.x = 1;
-    Vector2.LEFT:
-      animated_sprite.scale.x = -1;
-    Vector2.RIGHT:
-      animated_sprite.scale.x = 1;
+  animated_sprite.flip_h = false;
+
+  if get_entity().faced_direction in [Vector2i.DOWN, Vector2i.LEFT]:
+    animated_sprite.flip_h = true;
