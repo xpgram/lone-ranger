@@ -2,7 +2,13 @@
 extends GridActorComponent
 
 
-@export var vision_range := 10;
+enum Facing {
+  LEFT,
+  RIGHT,
+};
+
+
+@export var _initial_facing := Facing.RIGHT;
 
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
 
@@ -10,47 +16,58 @@ extends GridActorComponent
 func _ready() -> void:
   animated_sprite.play();
 
+  var self_entity := get_entity();
+  match _initial_facing:
+    Facing.LEFT:
+      self_entity.faced_direction = Vector2i.LEFT;
+    Facing.RIGHT:
+      self_entity.faced_direction = Vector2i.RIGHT;
+
 
 # TODO Reexamine this function implementation later: Is it fine? Do I hate it?
 func act_async() -> void:
   var self_entity := get_entity();
   var player := ActionUtils.get_player_entity();
 
-  if not ActionUtils.target_pos_within_line_range(self_entity, player.grid_position, vision_range):
-    exhaust();
-    return;
-
-  var direction := ActionUtils.get_direction_to_target(self_entity.grid_position, player.grid_position);
-  var inter_distance := self_entity.distance_to(player) - 1;
-  var coords_line := ActionUtils.get_coordinate_line(self_entity.grid_position, direction, inter_distance);
-  var is_adjacent := (coords_line.size() == 0);
-  var can_see_player: bool = coords_line.all(func (pos: Vector2i): return ActionUtils.place_is_transparent(pos));
-
-  if not can_see_player:
-    return;
+  var is_adjacent := self_entity.faced_position == player.grid_position;
 
   var playbill := FieldActionPlaybill.new(
     self_entity,
-    self_entity.grid_position + direction,
-    direction,
+    self_entity.faced_position,
+    self_entity.faced_direction,
   );
 
-  if not is_adjacent and FieldActionList.move.can_perform(playbill):
-    @warning_ignore('redundant_await')
-    await FieldActionList.move.perform_async(playbill);
-  # TODO FieldActionList.enemy_attack.can_perform(playbill):
-  elif is_adjacent:
+  if is_adjacent:
     @warning_ignore('redundant_await')
     await _attack_async();
 
-  # TODO This is a bandaid patch for _facing_changed() not being a thing on ActorComponents.
-  _facing_changed();
+  elif _can_move(playbill):
+    await _perform_move_async(playbill);
+
+  else:
+    match self_entity.faced_direction:
+      Vector2i.LEFT:
+        self_entity.faced_direction = Vector2i.RIGHT;
+      Vector2i.RIGHT:
+        self_entity.faced_direction = Vector2i.LEFT;
+    _facing_changed();
 
   exhaust();
 
 
 func get_entity() -> Enemy2D:
   return super.get_entity();
+
+
+func _can_move(playbill: FieldActionPlaybill) -> bool:
+  var is_idleable := ActionUtils.place_is_idleable(playbill.target_position, playbill.performer);
+  var can_perform := FieldActionList.move.can_perform(playbill);
+  return is_idleable and can_perform;
+
+
+func _perform_move_async(playbill: FieldActionPlaybill) -> void:
+  @warning_ignore('redundant_await')
+  await FieldActionList.move.perform_async(playbill);
 
 
 ## Performs an attack against the global [Player2D] entity.
@@ -62,7 +79,6 @@ func _attack_async() -> void:
   health_component.value -= 1;
 
 
-# FIXME Oh my god. This function is not connected to anything. I can't believe I never noticed.
 func _facing_changed() -> void:
   match get_entity().faced_direction:
     Vector2i.LEFT:
