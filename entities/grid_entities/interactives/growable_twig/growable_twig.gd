@@ -42,9 +42,9 @@ func activate_growth_async() -> void:
     var grid_point := relative_point + grid_position;
 
     if ActionUtils.place_is_pit(grid_point):
-      Grid.set_tile_type(grid_point, 1);
+      Grid.set_tile_type(grid_point, 2);
 
-    await get_tree().create_timer(0.25).timeout;
+    await get_tree().create_timer(0.125).timeout;
 
 
 ## Gets editor interface references and connects to editor signals.
