@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=23 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://utilities/actions/field_actions/field_action.gd" id="4_08fk3"]
 [ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://utilities/actions/field_actions/scripts/print_log_action.gd" id="5_jru4w"]
 [ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures_unused/system/icons/icon-orbital.png" id="6_g13rh"]
+[ext_resource type="Script" uid="uid://bwwnwk5uaghol" path="res://utilities/actions/field_actions/scripts/grow_action.gd" id="7_3dwjy"]
+[ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://assets/textures_unused/system/icons/icon-plant.png" id="8_5jpfb"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
@@ -27,6 +29,18 @@ action_time_cost = 15.0
 small_icon = ExtResource("6_g13rh")
 command_menu_sort_priority = 1
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_yibea"]
+script = ExtResource("7_3dwjy")
+action_uid = &"grow"
+action_name = "Grow"
+action_type = 1
+action_description = "Hastens the growth of living things."
+action_hint = "It's brimming with life energy."
+action_time_cost = 15.0
+small_icon = ExtResource("8_5jpfb")
+command_menu_sort_priority = 1
+limit_type = 2
 
 [sub_resource type="Resource" id="Resource_si0qk"]
 script = ExtResource("5_jru4w")
@@ -62,6 +76,9 @@ pushable = true
 script = ExtResource("3_08fk3")
 _abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"orbital": SubResource("Resource_3k65y")
+})
+_magic = Dictionary[StringName, ExtResource("4_08fk3")]({
+&"grow": SubResource("Resource_yibea")
 })
 _items = Dictionary[StringName, ExtResource("4_08fk3")]({
 &"heart": SubResource("Resource_si0qk")
