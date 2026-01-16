@@ -13,7 +13,6 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   
   for entity in entities:
     if entity is GrowableTwigEntity:
-      await entity.activate_growth_async();
-      entity.queue_free();
+      entity.activate_growth_async();
 
   return true;
