@@ -64,7 +64,8 @@ func _attack_async() -> void:
 
 # FIXME Oh my god. This function is not connected to anything. I can't believe I never noticed.
 func _facing_changed() -> void:
-  animated_sprite.flip_h = false;
-
-  if get_entity().faced_direction in [Vector2i.DOWN, Vector2i.LEFT]:
-    animated_sprite.flip_h = true;
+  match get_entity().faced_direction:
+    Vector2i.LEFT:
+      animated_sprite.flip_h = true;
+    Vector2i.RIGHT:
+      animated_sprite.flip_h = false;
