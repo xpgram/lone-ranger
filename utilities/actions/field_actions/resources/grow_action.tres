@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Grow_FieldAction" load_steps=3 format=3 uid="uid://dx6yyw024ctch"]
+
+[ext_resource type="Script" uid="uid://bwwnwk5uaghol" path="res://utilities/actions/field_actions/scripts/grow_action.gd" id="1_iaxok"]
+[ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://assets/textures_unused/system/icons/icon-plant.png" id="2_s3h1a"]
+
+[resource]
+script = ExtResource("1_iaxok")
+action_uid = &"grow"
+action_name = "Grow"
+action_type = 1
+action_description = "Hastens the growth of living things."
+action_hint = "It's brimming with life energy."
+action_time_cost = 15.0
+small_icon = ExtResource("2_s3h1a")
+command_menu_sort_priority = 1
+limit_type = 2
