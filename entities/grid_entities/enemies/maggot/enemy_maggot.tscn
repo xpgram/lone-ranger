@@ -51,7 +51,6 @@ animations = [{
 script = ExtResource("1_xi4rg")
 solid = true
 pushable = true
-observes_golem_time = true
 metadata/_custom_type_script = "uid://83jrylvkrkma"
 metadata/GridActorComponent = NodePath("ComponentCombiner/GridActorComponent")
 metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
