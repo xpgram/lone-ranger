@@ -60,7 +60,7 @@ func _draw_editor_path_dots() -> void:
     return;
 
   for point in _platform_points:
-    var world_point := Vector2(point * Constants.GRID_SIZE) + global_position;
+    var world_point := Vector2(point * Constants.GRID_SIZE);
 
     draw_circle(
       world_point,
