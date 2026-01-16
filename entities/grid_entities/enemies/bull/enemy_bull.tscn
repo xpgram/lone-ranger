@@ -96,7 +96,7 @@ metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_ijwdy")
-animation = &"charge_down"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="ComponentCombiner" type="Node" parent="."]
