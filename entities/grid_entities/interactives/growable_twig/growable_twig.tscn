@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dtux3ehasyvly"]
 
-[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_xtm8q"]
+[ext_resource type="Script" uid="uid://j6hgjbapt2qy" path="res://entities/grid_entities/interactives/growable_twig/growable_twig.gd" id="1_xtm8q"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_lskyr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dar42"]
