@@ -14,6 +14,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:
   var raised_block := _raised_block_scene.instantiate();
+  # FIXME This adds the block to the PlayerModule instead of the entities node.
   playbill.performer.add_sibling(raised_block);
 
   raised_block.grid_position = playbill.target_position;
