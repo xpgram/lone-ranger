@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="HeartItem_FieldAction" load_steps=3 format=3 uid="uid://c7tnmstfkbpqw"]
+
+[ext_resource type="Script" uid="uid://c2gxgdyqwbu1o" path="res://utilities/actions/field_actions/scripts/heart_item_action.gd" id="1_mbemj"]
+[ext_resource type="Texture2D" uid="uid://dkhd2f7ywih0j" path="res://assets/textures_unused/system/icons/icon-orb.png" id="2_tg1mf"]
+
+[resource]
+script = ExtResource("1_mbemj")
+action_uid = &"heart_item"
+action_name = "Heart"
+action_type = 2
+small_icon = ExtResource("2_tg1mf")
+metadata/_custom_type_script = "uid://c2gxgdyqwbu1o"

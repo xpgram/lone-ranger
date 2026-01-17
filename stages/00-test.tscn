@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=30 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://b0fn783j6lwuc" path="res://utilities/resources/cell_terrain_data/floor.tres" id="4_eadj3"]
 [ext_resource type="PackedScene" uid="uid://ds7ihux3pahep" path="res://entities/grid_entities/interactives/chest/special_chest.tscn" id="8_ycanp"]
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="9_7oan8"]
+[ext_resource type="Resource" uid="uid://c7tnmstfkbpqw" path="res://utilities/actions/field_actions/resources/heart_item_action.tres" id="10_7oan8"]
 [ext_resource type="PackedScene" uid="uid://oysxdqutfm51" path="res://entities/grid_entities/interactives/boulder/boulder.tscn" id="10_jadfo"]
 [ext_resource type="Resource" uid="uid://dx6yyw024ctch" path="res://utilities/actions/field_actions/resources/grow_action.tres" id="10_mhctp"]
 [ext_resource type="Resource" uid="uid://cswtlyl54v4ck" path="res://utilities/actions/field_actions/resources/raise_action.tres" id="11_mhctp"]
@@ -617,6 +618,12 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
+[sub_resource type="Resource" id="Resource_udc2h"]
+script = ExtResource("9_7oan8")
+action = ExtResource("10_7oan8")
+quantity = 2
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
 [sub_resource type="Resource" id="Resource_7oan8"]
 script = ExtResource("9_7oan8")
 action = ExtResource("10_mhctp")
@@ -644,6 +651,7 @@ default_cell_terrain_data = ExtResource("3_2ba2c")
 
 [node name="Chest" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(128, -80)
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_udc2h")])
 
 [node name="Chest3" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(576, -96)
