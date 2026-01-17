@@ -22,7 +22,7 @@ extends Resource
 # [ ] Inventory has a tool button to add a FieldAction to itself.
 #     - Setting dictionary keys myself is not necessary.
 #     - Ability/Magic/Item is sorted by Inventory automatically.
-# [ ] ActionTimeCost is FULL by default.
+# [x] ActionTimeCost is FULL by default.
 # [ ] ActionTimeCost uses the enum; scripts get the time cost via a get_number() method.
 #     - Oh, scripts are supposed to use get_variable_time_cost() anyway.
 # [ ] Sort Priority uses enum keywords over unintelligible numbers.
@@ -83,7 +83,7 @@ extends Resource
 # TODO While accurate, this should be a dropdown of enum names.
 ## The Partial Time cost for this action. In addition to animations that must be sat
 ## through, this number will be subtracted from the player's inaction timer when used.
-@export_range(0, 15, 3.75) var action_time_cost: float;
+@export_range(0, 15, 3.75) var action_time_cost: float = PartialTime.FULL;
 
 
 @export_group('Icons')
