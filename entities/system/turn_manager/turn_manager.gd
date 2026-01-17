@@ -78,6 +78,8 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   _inaction_timer.loop_timers();
   _previous_round_data = current_round_data;
 
+  Events.round_passed.emit();
+
   _turn_in_progress_padlock.unlock();
 
 
