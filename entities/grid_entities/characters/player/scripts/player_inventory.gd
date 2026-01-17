@@ -67,6 +67,11 @@ func add_item(item: PlayerInventoryItem) -> void:
   _emit_update_signal(update_signal, dict);
 
 
+## Adds the equipment keyitem [param item] to the inventory.
+func add_equipment(item: StringName) -> void:
+  _equipment.append(item);
+
+
 ## Returns true if `param action_uid` is held somewhere in this inventory.
 func has(action_uid: StringName) -> bool:
   return (
@@ -74,6 +79,11 @@ func has(action_uid: StringName) -> bool:
     or _magic.has(action_uid)
     or _items.has(action_uid)
   );
+
+
+## Returns true if [param item] is in the inventory's list of equipment keyitems.
+func has_equipment(item: StringName) -> bool:
+  return (item in _equipment);
 
 
 ## Returns the **FieldAction** held under the key `param action_uid`.

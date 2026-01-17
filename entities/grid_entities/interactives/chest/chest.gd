@@ -2,8 +2,13 @@
 class_name ChestEntity
 extends Interactive2D
 
+# TODO These content fields should probably be consolidated.
+
 ## The contents of this chest.
 @export var contents: Array[PlayerInventoryItem];
+
+## The equipment-type contents of this chest.
+@export var equipment_contents: Array[StringName];
 
 ## Whether this Chest has been opened.
 @export var is_open := false:

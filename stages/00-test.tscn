@@ -620,7 +620,6 @@ script = ExtResource("38_s5uvd")
 action_uid = &"gate_lock"
 action_name = "Gate Lock"
 action_type = 3
-action_time_cost = 15.0
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="Resource" id="Resource_dar42"]
@@ -645,7 +644,6 @@ script = ExtResource("38_s5uvd")
 action_uid = &"libra"
 action_name = "Libra"
 action_type = 1
-action_time_cost = 15.0
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
 [sub_resource type="Resource" id="Resource_0lxvj"]
