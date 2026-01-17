@@ -1,64 +1,17 @@
-[gd_scene load_steps=26 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=14 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
-[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://utilities/actions/field_actions/scripts/print_log_action.gd" id="5_jru4w"]
-[ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures_unused/system/icons/icon-orbital.png" id="6_g13rh"]
-[ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="7_06ww2"]
-[ext_resource type="Resource" uid="uid://cswtlyl54v4ck" path="res://utilities/actions/field_actions/resources/raise_action.tres" id="8_5jpfb"]
-[ext_resource type="Resource" uid="uid://dx6yyw024ctch" path="res://utilities/actions/field_actions/resources/grow_action.tres" id="9_yibea"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
-[ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="15_lxu83"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/screen_space_gradient.gdshader" id="19_5jpfb"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
-
-[sub_resource type="Resource" id="Resource_1ol17"]
-script = ExtResource("5_jru4w")
-action_uid = &"orbital"
-action_name = "Orbital"
-action_time_cost = 3.75
-small_icon = ExtResource("6_g13rh")
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_06ww2"]
-script = ExtResource("7_06ww2")
-action = SubResource("Resource_1ol17")
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
-
-[sub_resource type="Resource" id="Resource_3dwjy"]
-script = ExtResource("7_06ww2")
-action = ExtResource("9_yibea")
-quantity = 3
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
-
-[sub_resource type="Resource" id="Resource_5jpfb"]
-script = ExtResource("7_06ww2")
-action = ExtResource("8_5jpfb")
-quantity = 3
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
-
-[sub_resource type="Resource" id="Resource_si0qk"]
-script = ExtResource("5_jru4w")
-action_uid = &"heart"
-action_name = "Heart"
-action_type = 2
-action_description = "aveavfdsaf"
-action_hint = "avesvasef"
-small_icon = ExtResource("15_lxu83")
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_qdihw"]
-script = ExtResource("7_06ww2")
-action = SubResource("Resource_si0qk")
-quantity = 3
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
@@ -81,16 +34,6 @@ pushable = true
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_08fk3")
-_abilities = Dictionary[StringName, ExtResource("7_06ww2")]({
-&"orbital": SubResource("Resource_06ww2")
-})
-_magic = Dictionary[StringName, ExtResource("7_06ww2")]({
-&"grow": SubResource("Resource_3dwjy"),
-&"raise": SubResource("Resource_5jpfb")
-})
-_items = Dictionary[StringName, ExtResource("7_06ww2")]({
-&"heart": SubResource("Resource_qdihw")
-})
 
 [node name="FocusableControl" type="Control" parent="."]
 unique_name_in_owner = true
