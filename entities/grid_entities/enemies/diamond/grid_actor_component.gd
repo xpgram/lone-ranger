@@ -39,19 +39,24 @@ func act_async() -> void:
     direction,
   );
 
-  if not is_adjacent and FieldActionList.move.can_perform(playbill):
-    @warning_ignore('redundant_await')
-    await FieldActionList.move.perform_async(playbill);
-  # TODO FieldActionList.enemy_attack.can_perform(playbill):
-  elif is_adjacent:
+  if is_adjacent:
     @warning_ignore('redundant_await')
     await _attack_async();
+  elif _can_move(playbill):
+    @warning_ignore('redundant_await')
+    await FieldActionList.move.perform_async(playbill);
 
   exhaust();
 
 
 func get_entity() -> Enemy2D:
   return super.get_entity();
+
+
+func _can_move(playbill: FieldActionPlaybill) -> bool:
+  var is_idleable := ActionUtils.place_is_idleable(playbill.target_position, playbill.performer);
+  var can_perform := FieldActionList.move.can_perform(playbill);
+  return is_idleable and can_perform;
 
 
 ## Performs an attack against the global [Player2D] entity.
