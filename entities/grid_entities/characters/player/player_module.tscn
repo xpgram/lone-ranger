@@ -3,13 +3,11 @@
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
-[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://utilities/actions/field_actions/field_action.gd" id="4_08fk3"]
 [ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://utilities/actions/field_actions/scripts/print_log_action.gd" id="5_jru4w"]
 [ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures_unused/system/icons/icon-orbital.png" id="6_g13rh"]
-[ext_resource type="Script" uid="uid://bwwnwk5uaghol" path="res://utilities/actions/field_actions/scripts/grow_action.gd" id="7_3dwjy"]
-[ext_resource type="Texture2D" uid="uid://b8rrweskhi56k" path="res://assets/textures_unused/system/icons/icon-plant.png" id="8_5jpfb"]
-[ext_resource type="Script" uid="uid://blg3pg11wjt6k" path="res://utilities/actions/field_actions/scripts/raise_action.gd" id="9_yibea"]
-[ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://assets/textures_unused/system/icons/icon-skill.png" id="10_06ww2"]
+[ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="7_06ww2"]
+[ext_resource type="Resource" uid="uid://cswtlyl54v4ck" path="res://utilities/actions/field_actions/resources/raise_action.tres" id="8_5jpfb"]
+[ext_resource type="Resource" uid="uid://dx6yyw024ctch" path="res://utilities/actions/field_actions/resources/grow_action.tres" id="9_yibea"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
@@ -21,40 +19,30 @@
 [ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/screen_space_gradient.gdshader" id="19_5jpfb"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
 
-[sub_resource type="Resource" id="Resource_3k65y"]
+[sub_resource type="Resource" id="Resource_1ol17"]
 script = ExtResource("5_jru4w")
 action_uid = &"orbital"
 action_name = "Orbital"
-action_description = "asvavdsave"
-action_hint = "aveaveav"
-action_time_cost = 15.0
+action_time_cost = 3.75
 small_icon = ExtResource("6_g13rh")
-command_menu_sort_priority = 1
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="Resource" id="Resource_yibea"]
-script = ExtResource("7_3dwjy")
-action_uid = &"grow"
-action_name = "Grow"
-action_type = 1
-action_description = "Hastens the growth of living things."
-action_hint = "It's brimming with life energy."
-action_time_cost = 15.0
-small_icon = ExtResource("8_5jpfb")
-command_menu_sort_priority = 1
-limit_type = 2
+[sub_resource type="Resource" id="Resource_06ww2"]
+script = ExtResource("7_06ww2")
+action = SubResource("Resource_1ol17")
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
-[sub_resource type="Resource" id="Resource_txwd0"]
-script = ExtResource("9_yibea")
-action_uid = &"raise"
-action_name = "Raise"
-action_type = 1
-action_time_cost = 15.0
-small_icon = ExtResource("10_06ww2")
-command_menu_sort_priority = 1
-limit_type = 2
-uses_remaining = 3
-metadata/_custom_type_script = "uid://blg3pg11wjt6k"
+[sub_resource type="Resource" id="Resource_3dwjy"]
+script = ExtResource("7_06ww2")
+action = ExtResource("9_yibea")
+quantity = 3
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
+[sub_resource type="Resource" id="Resource_5jpfb"]
+script = ExtResource("7_06ww2")
+action = ExtResource("8_5jpfb")
+quantity = 3
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="Resource" id="Resource_si0qk"]
 script = ExtResource("5_jru4w")
@@ -64,9 +52,13 @@ action_type = 2
 action_description = "aveavfdsaf"
 action_hint = "avesvasef"
 small_icon = ExtResource("15_lxu83")
-limit_type = 1
-uses_remaining = 3
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_qdihw"]
+script = ExtResource("7_06ww2")
+action = SubResource("Resource_si0qk")
+quantity = 3
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
@@ -88,15 +80,15 @@ pushable = true
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_08fk3")
-_abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"orbital": SubResource("Resource_3k65y")
+_abilities = Dictionary[StringName, ExtResource("7_06ww2")]({
+&"orbital": SubResource("Resource_06ww2")
 })
-_magic = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"grow": SubResource("Resource_yibea"),
-&"raise": SubResource("Resource_txwd0")
+_magic = Dictionary[StringName, ExtResource("7_06ww2")]({
+&"grow": SubResource("Resource_3dwjy"),
+&"raise": SubResource("Resource_5jpfb")
 })
-_items = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"heart": SubResource("Resource_si0qk")
+_items = Dictionary[StringName, ExtResource("7_06ww2")]({
+&"heart": SubResource("Resource_qdihw")
 })
 
 [node name="FocusableControl" type="Control" parent="."]

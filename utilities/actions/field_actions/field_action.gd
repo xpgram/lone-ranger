@@ -13,8 +13,8 @@ extends Resource
 
 
 # TODO Refactor the Inventory
-# [ ] FieldActions are not concerned with LimitedUse at all.
-#     [ ] LimitedUse is a separate resource used by Inventory:
+# [x] FieldActions are not concerned with LimitedUse at all.
+#     [x] LimitedUse is a separate resource used by Inventory:
 #         - Measures remaining uses.
 #         - Lists a FieldAction as its target.
 #         - Observes FieldAction properties (e.g., type = Magic) when decrementing.
@@ -106,15 +106,6 @@ extends Resource
 
 ## The second-level sort order for this action in the command menu.
 @export var command_menu_sort_sub_priority: int;
-
-
-@export_group('Limited Use')
-
-## Which kind of limited quantity system to use.
-@export var limit_type := Enums.LimitedUseType.NoLimit;
-
-## Counts the number of times this action may still be used, sort of like an inventory.
-@export var uses_remaining := 1;
 
 
 # TODO Add export group 'Targeting'

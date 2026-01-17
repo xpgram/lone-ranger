@@ -3,7 +3,7 @@ class_name ChestEntity
 extends Interactive2D
 
 ## The contents of this chest.
-@export var contents: Array[FieldAction];
+@export var contents: Array[PlayerInventoryItem];
 
 ## Whether this Chest has been opened.
 @export var is_open := false:

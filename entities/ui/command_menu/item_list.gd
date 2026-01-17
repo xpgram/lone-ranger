@@ -172,7 +172,7 @@ func _change_to_page(page_number: int) -> void:
   var page_content := _menu_content.slice(page_start_idx, page_start_idx + page_size);
 
   for item in page_content:
-    if item is FieldAction:
+    if item is PlayerInventoryItem:
       _add_field_action_item(item);
     else:
       _add_normal_item(item);
@@ -188,14 +188,14 @@ func _add_normal_item(item: Variant) -> void:
   add_item(item_name, item_icon);
 
 
-## Adds [param action] to the items list.
-func _add_field_action_item(action: FieldAction) -> void:
-  add_item(action.action_name, action.small_icon);
+## Adds [param item] to the items list.
+func _add_field_action_item(item: PlayerInventoryItem) -> void:
+  add_item(item.action.action_name, item.action.small_icon);
 
   # TODO Demo code that should be cleaned up.
-  if action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
+  if item.action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
     var label = $Label.duplicate();
-    label.text = str(action.uses_remaining);
+    label.text = str(item.quantity);
     label.position.y = 10 * (item_count - 1) + 8;
     label.visible = true;
     add_child(label);
