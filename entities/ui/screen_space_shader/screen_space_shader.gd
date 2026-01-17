@@ -120,13 +120,13 @@ func _unhandled_input(_event: InputEvent) -> void:
     var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
     set_silhoette_threshhold(threshhold - 0.25);
 
+  # Adjust white-silhoette
   if Input.is_key_pressed(KEY_I):
     var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
     set_silhoette_white_threshhold(threshhold + 0.25);
   elif Input.is_key_pressed(KEY_K):
     var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
     set_silhoette_white_threshhold(threshhold - 0.25);
-    
 
   # Toggle gradient.
   if Input.is_key_pressed(KEY_O):
@@ -141,3 +141,12 @@ func _unhandled_input(_event: InputEvent) -> void:
     material.set_shader_parameter('invert_colors', true);
   elif Input.is_key_pressed(KEY_SEMICOLON):
     material.set_shader_parameter('invert_colors', false);
+
+  # Do a color pulse.
+  if Input.is_key_pressed(KEY_COMMA):
+    pulse_color(
+      Color.from_hsv( 0 / 360.0, 0.80, 1.00),
+      # Color.from_hsv( 15 / 360.0, 0.80, 1.00),
+    );
+  if Input.is_key_pressed(KEY_PERIOD):
+    pulse_color(Color.PURPLE, Color.MAROON);
