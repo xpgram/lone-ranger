@@ -40,7 +40,7 @@ var _last_safe_position: Vector2i;
 #   really want to list them all in this script right here? I could put this in a big
 #   numbers repository resource, I guess.
 ## How many steps the player can take over pits before falling.
-var air_steps_remaining: int = 0;
+var _air_steps_remaining: int = 0;
 
 ## [b]Note:[/b] Use [method _unsettle_affairs] instead of setting this value directly. [br]
 ##
@@ -230,7 +230,15 @@ func get_interact_action() -> FieldActionSchedule:
 
 ## Returns the number of steps the player can take over pits before falling.
 func get_air_steps_remaining() -> int:
-  return air_steps_remaining;
+  return _air_steps_remaining;
+
+## Resets to full the [Player2D]'s air steps.
+func reset_air_steps_remaining() -> void:
+  _air_steps_remaining = (
+    # FIXME Get these numbers from a constants file somewhere.
+    1 if inventory.has_equipment(&'wings')
+    else 0
+  );
 
 
 ## Starts the Coyote Fall minigame, where the [Player2D] animates themselves falling into
@@ -388,6 +396,7 @@ func _on_health_empty() -> void:
 func _on_entity_moved() -> void:
   if ActionUtils.place_is_idleable(grid_position, self):
     _last_safe_position = grid_position;
+    reset_air_steps_remaining();
 
   # FIXME Consider that this is a side-effect. Are we sure this won't interfere with
   #   FieldAction scripted animations? They set an animation, then move the actor, not
@@ -403,7 +412,10 @@ func _facing_changed() -> void:
 
 
 func _on_free_fall() -> void:
-  _state_machine.switch_to(_state_fall);
+  if _air_steps_remaining <= 0:
+    _state_machine.switch_to(_state_fall);
+  else:
+    _air_steps_remaining -= 1;
 
 
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be

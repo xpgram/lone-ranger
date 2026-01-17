@@ -14,7 +14,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
     var player := actor as Player2D;
 
     var place_is_pit := ActionUtils.place_is_pit(playbill.target_position);
-    var cannot_float := player.air_steps_remaining <= 0;
+    var cannot_float := player.get_air_steps_remaining() <= 0;
 
     if place_is_pit and cannot_float:
       player.start_coyote_fall();
