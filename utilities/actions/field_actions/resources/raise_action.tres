@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Raise_FieldAction" load_steps=3 format=3 uid="uid://cswtlyl54v4ck"]
+
+[ext_resource type="Script" uid="uid://blg3pg11wjt6k" path="res://utilities/actions/field_actions/scripts/raise_action.gd" id="1_74kyb"]
+[ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://assets/textures_unused/system/icons/icon-skill.png" id="2_73r7i"]
+
+[resource]
+script = ExtResource("1_74kyb")
+action_uid = &"raise"
+action_name = "Raise"
+action_type = 1
+action_time_cost = 15.0
+small_icon = ExtResource("2_73r7i")
+command_menu_sort_priority = 1
+limit_type = 2
+metadata/_custom_type_script = "uid://blg3pg11wjt6k"
