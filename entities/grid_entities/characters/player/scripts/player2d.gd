@@ -333,8 +333,10 @@ func _get_move_action() -> FieldAction:
 
 ## Returns the [FieldAction] variant the [Player2D] will use for pushing objects.
 func _get_push_action() -> FieldAction:
-  # TODO Check the inventory for a push-enhancing key item, return 'shove' if so.
-  return FieldActionList.push;
+  return (
+    FieldActionList.shove if inventory.has_equipment('shove')
+    else FieldActionList.push
+  );
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
