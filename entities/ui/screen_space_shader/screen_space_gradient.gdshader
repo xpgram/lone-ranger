@@ -7,9 +7,13 @@ uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_ne
 // fully rendered.
 uniform float fade_in_progress: hint_range(0.0, 1.0) = 1.0;
 
-// The color-crush threshhold. Fragment brightness values above this value will be
-// rendered unaltered, values equal or below will be black.
+// The color-crush threshhold for grays to black. Fragment brightness values above this
+// value will be rendered unaltered, values equal or below will be black.
 uniform float silhoette_threshhold: hint_range(0.0, 1.0) = 0.0;
+
+// The color-crush threshhold for grays to white. Fragment brightness values below this
+// value will be rendered unaltered, values equal or above will be white.
+uniform float silhoette_white_threshhold: hint_range(0.0, 1.0) = 1.0;
 
 // The gradient color key at the top of the screen.
 uniform vec3 gradient_start: source_color = vec3(1.0);
@@ -43,12 +47,16 @@ vec4 apply_fade_in(vec4 color, float progress) {
 }
 
 
-vec4 apply_silhoette(vec4 color, float threshhold) {
+vec4 apply_silhoette(vec4 color, float threshhold, float white_threshhold) {
   // Nudge the thresshold to account for floating-point rounding errors.
-  threshhold += 0.0025;
+  threshhold += 0.005;
+  white_threshhold -= 0.005;
 
   if (color.r <= threshhold) {
     color.rgb = vec3(0.0);
+  }
+  if (color.r >= white_threshhold) {
+    color.rgb = vec3(1.0);
   }
 
   return color;
@@ -79,7 +87,7 @@ void fragment() {
   // Load screen-texture color for this fragment.
   COLOR = textureLod(screen_texture, SCREEN_UV, 0.0);
 
-  COLOR = apply_silhoette(COLOR, silhoette_threshhold);
+  COLOR = apply_silhoette(COLOR, silhoette_threshhold, silhoette_white_threshhold);
   COLOR = apply_fade_in(COLOR, fade_in_progress);
   COLOR = apply_gradient_to_blacks(COLOR, UV);
 }

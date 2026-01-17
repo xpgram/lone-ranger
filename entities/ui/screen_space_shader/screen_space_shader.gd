@@ -89,6 +89,13 @@ func set_silhoette_threshhold(value: float) -> void:
   material.set_shader_parameter('silhoette_threshhold', value);
 
 
+func set_silhoette_white_threshhold(value: float) -> void:
+  value = round(value * 4) / 4.0;
+
+  value = clampf(value, 0.0, 1.0);
+  material.set_shader_parameter('silhoette_white_threshhold', value);
+
+
 # FIXME Remove these debug controls.
 func _unhandled_input(_event: InputEvent) -> void:
   # FIXME These are being called like 16,000 times a second now. Wtf?
@@ -96,24 +103,30 @@ func _unhandled_input(_event: InputEvent) -> void:
   #   That's really weird.
 
   # Adjust fade-in.
-  if Input.is_key_pressed(KEY_U):
+  if Input.is_key_pressed(KEY_Y):
     var progress: float = material.get_shader_parameter('fade_in_progress');
     progress = clampf(progress + 0.25, 0.0, 1.0);
     material.set_shader_parameter('fade_in_progress', progress);
-  elif Input.is_key_pressed(KEY_J):
+  elif Input.is_key_pressed(KEY_H):
     var progress: float = material.get_shader_parameter('fade_in_progress');
     progress = clampf(progress - 0.25, 0.0, 1.0);
     material.set_shader_parameter('fade_in_progress', progress);
 
   # Adjust silhoette.
-  if Input.is_key_pressed(KEY_K):
+  if Input.is_key_pressed(KEY_J):
     var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
-    threshhold = clampf(threshhold + 0.25, 0.0, 1.0);
-    material.set_shader_parameter('silhoette_threshhold', threshhold);
-  elif Input.is_key_pressed(KEY_I):
+    set_silhoette_threshhold(threshhold + 0.25);
+  elif Input.is_key_pressed(KEY_U):
     var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
-    threshhold = clampf(threshhold - 0.25, 0.0, 1.0);
-    material.set_shader_parameter('silhoette_threshhold', threshhold);
+    set_silhoette_threshhold(threshhold - 0.25);
+
+  if Input.is_key_pressed(KEY_I):
+    var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
+    set_silhoette_white_threshhold(threshhold + 0.25);
+  elif Input.is_key_pressed(KEY_K):
+    var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
+    set_silhoette_white_threshhold(threshhold - 0.25);
+    
 
   # Toggle gradient.
   if Input.is_key_pressed(KEY_O):
