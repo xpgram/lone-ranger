@@ -12,6 +12,28 @@ class_name FieldAction
 extends Resource
 
 
+# TODO Refactor the Inventory
+# [ ] FieldActions are not concerned with LimitedUse at all.
+#     [ ] LimitedUse is a separate resource used by Inventory:
+#         - Measures remaining uses.
+#         - Lists a FieldAction as its target.
+#         - Observes FieldAction properties (e.g., type = Magic) when decrementing.
+#             - "Magic mastered" is still a respected FieldAction property, somehow.
+# [ ] Inventory has a tool button to add a FieldAction to itself.
+#     - Setting dictionary keys myself is not necessary.
+#     - Ability/Magic/Item is sorted by Inventory automatically.
+# [ ] ActionTimeCost is FULL by default.
+# [ ] ActionTimeCost uses the enum; scripts get the time cost via a get_number() method.
+#     - Oh, scripts are supposed to use get_variable_time_cost() anyway.
+# [ ] Sort Priority uses enum keywords over unintelligible numbers.
+#
+# May as well add these as well:
+# [ ] AoE is a measured FieldAction property. By default, a single tile at the AoE origin.
+# [ ] Range min/max is a measured FieldAction property.
+#     - Should Range also be an AoE thing? Probably, yeah. Tools can quickly set up basic
+#       min/max shapes if needed.
+
+
 ## The unique identifier for this FieldAction.
 ## Often used as a key for this FieldAction when stored in a Dictionary.
 @export var action_uid: StringName;
