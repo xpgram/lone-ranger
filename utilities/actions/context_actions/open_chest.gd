@@ -26,7 +26,13 @@ func _give_items_to_actor(actor: Player2D) -> void:
     actor.inventory.add_item(item);
 
     # TODO If such a message is logged, it should probably be logged by the inventory itself.
-    print('%s obtained a %s...' % [actor.name, item.action.action_name]);
+    print('%s obtained %s %s...' % [actor.name, item.quantity, item.action.action_name]);
+
+  for equipment in chest.equipment_contents:
+    actor.inventory.add_equipment(equipment);
+
+    # TODO If such a message is logged, it should probably be logged by the inventory itself.
+    print('%s obtained %s...' % [actor.name, equipment]);
 
 
 ## Plays a scripted animation using [param actor].
