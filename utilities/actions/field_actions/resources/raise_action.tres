@@ -11,5 +11,4 @@ action_type = 1
 action_time_cost = 15.0
 small_icon = ExtResource("2_73r7i")
 command_menu_sort_priority = 1
-limit_type = 2
 metadata/_custom_type_script = "uid://blg3pg11wjt6k"

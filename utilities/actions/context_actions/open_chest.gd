@@ -23,10 +23,10 @@ func perform_interaction_async(actor: GridEntity) -> void:
 ## Add the chest's contents to the inventory of [param actor].
 func _give_items_to_actor(actor: Player2D) -> void:
   for item in chest.contents:
-    actor.inventory.add(item);
+    actor.inventory.add_item(item);
 
     # TODO If such a message is logged, it should probably be logged by the inventory itself.
-    print('%s obtained a %s...' % [actor.name, item.action_name]);
+    print('%s obtained a %s...' % [actor.name, item.action.action_name]);
 
 
 ## Plays a scripted animation using [param actor].

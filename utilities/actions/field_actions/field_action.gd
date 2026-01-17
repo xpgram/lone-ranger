@@ -12,6 +12,28 @@ class_name FieldAction
 extends Resource
 
 
+# TODO Refactor the Inventory
+# [x] FieldActions are not concerned with LimitedUse at all.
+#     [x] LimitedUse is a separate resource used by Inventory:
+#         - Measures remaining uses.
+#         - Lists a FieldAction as its target.
+#         - Observes FieldAction properties (e.g., type = Magic) when decrementing.
+#             - "Magic mastered" is still a respected FieldAction property, somehow.
+# [ ] Inventory has a tool button to add a FieldAction to itself.
+#     - Setting dictionary keys myself is not necessary.
+#     - Ability/Magic/Item is sorted by Inventory automatically.
+# [x] ActionTimeCost is FULL by default.
+# [ ] ActionTimeCost uses the enum; scripts get the time cost via a get_number() method.
+#     - Oh, scripts are supposed to use get_variable_time_cost() anyway.
+# [ ] Sort Priority uses enum keywords over unintelligible numbers.
+#
+# May as well add these as well:
+# [ ] AoE is a measured FieldAction property. By default, a single tile at the AoE origin.
+# [ ] Range min/max is a measured FieldAction property.
+#     - Should Range also be an AoE thing? Probably, yeah. Tools can quickly set up basic
+#       min/max shapes if needed.
+
+
 ## The unique identifier for this FieldAction.
 ## Often used as a key for this FieldAction when stored in a Dictionary.
 @export var action_uid: StringName;
@@ -61,7 +83,7 @@ extends Resource
 # TODO While accurate, this should be a dropdown of enum names.
 ## The Partial Time cost for this action. In addition to animations that must be sat
 ## through, this number will be subtracted from the player's inaction timer when used.
-@export_range(0, 15, 3.75) var action_time_cost: float;
+@export_range(0, 15, 3.75) var action_time_cost: float = PartialTime.FULL;
 
 
 @export_group('Icons')
@@ -84,15 +106,6 @@ extends Resource
 
 ## The second-level sort order for this action in the command menu.
 @export var command_menu_sort_sub_priority: int;
-
-
-@export_group('Limited Use')
-
-## Which kind of limited quantity system to use.
-@export var limit_type := Enums.LimitedUseType.NoLimit;
-
-## Counts the number of times this action may still be used, sort of like an inventory.
-@export var uses_remaining := 1;
 
 
 # TODO Add export group 'Targeting'

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=32 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -6,20 +6,18 @@
 [ext_resource type="Script" uid="uid://bct4iykxd8atg" path="res://utilities/nodes/grid_tile_map_layer.gd" id="3_mud7x"]
 [ext_resource type="Resource" uid="uid://b0fn783j6lwuc" path="res://utilities/resources/cell_terrain_data/floor.tres" id="4_eadj3"]
 [ext_resource type="PackedScene" uid="uid://ds7ihux3pahep" path="res://entities/grid_entities/interactives/chest/special_chest.tscn" id="8_ycanp"]
+[ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="9_7oan8"]
 [ext_resource type="PackedScene" uid="uid://oysxdqutfm51" path="res://entities/grid_entities/interactives/boulder/boulder.tscn" id="10_jadfo"]
+[ext_resource type="Resource" uid="uid://m4rko02thteq" path="res://utilities/actions/field_actions/resources/burn_action.tres" id="12_0lxvj"]
 [ext_resource type="Resource" uid="uid://bnxi3iwan6g35" path="res://utilities/actions/field_actions/resources/compact_action.tres" id="12_qes87"]
-[ext_resource type="Script" uid="uid://1co65v7pd4ta" path="res://utilities/actions/field_actions/scripts/burn_action.gd" id="13_amsys"]
 [ext_resource type="PackedScene" uid="uid://cqx4i6o5f7y0t" path="res://entities/grid_entities/interactives/loose_particles/loose_particles.tscn" id="14_2ba2c"]
-[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://assets/textures_unused/system/icons/icon-fire.png" id="14_mhctp"]
 [ext_resource type="PackedScene" uid="uid://dowqydii3t2w0" path="res://entities/grid_entities/interactives/statue_platform/statue_platform_entity.tscn" id="18_mhctp"]
 [ext_resource type="PackedScene" uid="uid://dtux3ehasyvly" path="res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn" id="19_0lxvj"]
 [ext_resource type="PackedScene" uid="uid://bby6nr1v10a5c" path="res://entities/grid_entities/enemies/bull/enemy_bull.tscn" id="20_3oxmp"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
-[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://utilities/actions/field_actions/field_action.gd" id="37_yg3mu"]
 [ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://utilities/actions/field_actions/scripts/print_log_action.gd" id="38_s5uvd"]
-[ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://assets/textures_unused/system/icons/icon-magic.png" id="39_iylj1"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://entities/grid_entities/enemies/mouth/enemy_mouth.tscn" id="40_nbivo"]
 [ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://entities/grid_entities/characters/player/player_module.tscn" id="41_p22wk"]
 
@@ -617,55 +615,56 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
-[sub_resource type="Resource" id="Resource_jadfo"]
+[sub_resource type="Resource" id="Resource_udc2h"]
 script = ExtResource("38_s5uvd")
-action_uid = &"lock"
+action_uid = &"gate_lock"
 action_name = "Gate Lock"
-action_type = 2
-action_description = "aveavd"
-action_hint = "avdsvae"
-small_icon = ExtResource("39_iylj1")
-limit_type = 1
+action_type = 3
+action_time_cost = 15.0
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="Resource" id="Resource_3oxmp"]
-script = ExtResource("13_amsys")
-action_uid = &"burn"
-action_name = "Burn"
-action_type = 1
-action_description = "asdf"
-action_hint = "asdf"
-action_time_cost = 15.0
-small_icon = ExtResource("14_mhctp")
-limit_type = 2
-uses_remaining = 3
+[sub_resource type="Resource" id="Resource_dar42"]
+script = ExtResource("9_7oan8")
+action = SubResource("Resource_udc2h")
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
-[sub_resource type="Resource" id="Resource_ycanp"]
+[sub_resource type="Resource" id="Resource_7oan8"]
+script = ExtResource("9_7oan8")
+action = ExtResource("12_qes87")
+quantity = 3
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
+[sub_resource type="Resource" id="Resource_x57cp"]
+script = ExtResource("9_7oan8")
+action = ExtResource("12_0lxvj")
+quantity = 3
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
+[sub_resource type="Resource" id="Resource_3oxmp"]
 script = ExtResource("38_s5uvd")
 action_uid = &"libra"
 action_name = "Libra"
 action_type = 1
-action_description = "aveavd"
-action_hint = "avdsvae"
 action_time_cost = 15.0
-small_icon = ExtResource("39_iylj1")
-limit_type = 2
-uses_remaining = 3
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jadfo"]
-load_path = "res://.godot/imported/icon-magic.png-470bed3d6ce52f2d10bb7ad2c9941c45.ctex"
+[sub_resource type="Resource" id="Resource_0lxvj"]
+script = ExtResource("9_7oan8")
+action = SubResource("Resource_3oxmp")
+quantity = 2
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
-[sub_resource type="Resource" id="Resource_mud7x"]
+[sub_resource type="Resource" id="Resource_mhctp"]
 script = ExtResource("38_s5uvd")
 action_uid = &"gate_key"
 action_name = "Gate Key"
 action_type = 3
-action_description = "aveavd"
-action_hint = "avdsvae"
-small_icon = SubResource("CompressedTexture2D_jadfo")
-limit_type = 3
 metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+
+[sub_resource type="Resource" id="Resource_1sjut"]
+script = ExtResource("9_7oan8")
+action = SubResource("Resource_mhctp")
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [node name="Game" type="Node2D"]
 
@@ -682,23 +681,23 @@ default_cell_terrain_data = ExtResource("3_2ba2c")
 
 [node name="Chest" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(128, -80)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_jadfo")])
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_dar42")])
 
 [node name="Chest3" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(576, -96)
-contents = Array[ExtResource("37_yg3mu")]([ExtResource("12_qes87")])
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_7oan8")])
 
 [node name="Chest4" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(336, -240)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_3oxmp")])
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_x57cp")])
 
 [node name="Chest5" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(80, -208)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_ycanp")])
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_0lxvj")])
 
 [node name="SpecialChest" parent="Interactives Container" instance=ExtResource("8_ycanp")]
 position = Vector2(496, 0)
-contents = Array[ExtResource("37_yg3mu")]([SubResource("Resource_mud7x")])
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_1sjut")])
 
 [node name="BoulderEntity" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(384, 48)

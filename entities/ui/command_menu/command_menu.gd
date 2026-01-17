@@ -63,13 +63,13 @@ var active_menu := Submenu.Main;
 var active_page := 0;
 
 ## The list options for the Abilities submenu.
-var _abilities_submenu_content: Array[FieldAction];
+var _abilities_submenu_content: Array[PlayerInventoryItem];
 
 ## The list options for the Magic submenu.
-var _magic_submenu_content: Array[FieldAction];
+var _magic_submenu_content: Array[PlayerInventoryItem];
 
 ## The list options for the Items submenu.
-var _items_submenu_content: Array[FieldAction];
+var _items_submenu_content: Array[PlayerInventoryItem];
 
 
 func _ready() -> void:
@@ -124,7 +124,7 @@ func _connect_to_inventory() -> void:
 
 ## Modifies in place the list contents of a [param submenu_list] representing a submenu,
 ## then updates the main menu contents.
-func _update_submenu_content(submenu_list: Array[FieldAction], items: Array[FieldAction]) -> void:
+func _update_submenu_content(submenu_list: Array[PlayerInventoryItem], items: Array[PlayerInventoryItem]) -> void:
   submenu_list.assign(items);
   _update_main_list_options();
 
@@ -142,7 +142,7 @@ func _connect_to_item_lists() -> void:
   );
 
   # Options -> emit action_selected
-  _options_list.item_chosen.connect(func (item: FieldAction): action_selected.emit(item));
+  _options_list.item_chosen.connect(func (item: PlayerInventoryItem): action_selected.emit(item.action));
 
   # Options (cancel) -> switch to Main
   _options_list.go_back.connect(func (): _switch_to_main_list());
