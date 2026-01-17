@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=34 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://oysxdqutfm51" path="res://entities/grid_entities/interactives/boulder/boulder.tscn" id="10_jadfo"]
 [ext_resource type="Resource" uid="uid://dx6yyw024ctch" path="res://utilities/actions/field_actions/resources/grow_action.tres" id="10_mhctp"]
 [ext_resource type="Resource" uid="uid://cswtlyl54v4ck" path="res://utilities/actions/field_actions/resources/raise_action.tres" id="11_mhctp"]
+[ext_resource type="Resource" uid="uid://m4rko02thteq" path="res://utilities/actions/field_actions/resources/burn_action.tres" id="12_0lxvj"]
+[ext_resource type="Resource" uid="uid://bnxi3iwan6g35" path="res://utilities/actions/field_actions/resources/compact_action.tres" id="12_qes87"]
 [ext_resource type="PackedScene" uid="uid://cqx4i6o5f7y0t" path="res://entities/grid_entities/interactives/loose_particles/loose_particles.tscn" id="14_2ba2c"]
 [ext_resource type="PackedScene" uid="uid://cokxrxu6mgxob" path="res://entities/grid_entities/enemies/diamond/enemy_diamond.tscn" id="17_mhctp"]
 [ext_resource type="PackedScene" uid="uid://dowqydii3t2w0" path="res://entities/grid_entities/interactives/statue_platform/statue_platform_entity.tscn" id="18_mhctp"]
@@ -624,10 +626,22 @@ action = ExtResource("10_7oan8")
 quantity = 2
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="Resource" id="Resource_1sjut"]
+script = ExtResource("9_7oan8")
+action = ExtResource("12_qes87")
+quantity = 4
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
 [sub_resource type="Resource" id="Resource_7oan8"]
 script = ExtResource("9_7oan8")
 action = ExtResource("10_mhctp")
 quantity = 4
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
+[sub_resource type="Resource" id="Resource_dar42"]
+script = ExtResource("9_7oan8")
+action = ExtResource("12_0lxvj")
+quantity = 3
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="Resource" id="Resource_x57cp"]
@@ -655,7 +669,7 @@ contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_udc2h")])
 
 [node name="Chest3" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(576, -96)
-contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_7oan8")])
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_1sjut")])
 
 [node name="Chest9" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(688, -160)
@@ -663,7 +677,7 @@ contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_7oan8")])
 
 [node name="Chest4" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(336, -240)
-contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_x57cp")])
+contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_dar42")])
 
 [node name="Chest10" parent="Interactives Container" instance=ExtResource("36_pqjox")]
 position = Vector2(288, -176)
