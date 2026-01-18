@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=36 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://bby6nr1v10a5c" path="res://entities/grid_entities/enemies/bull/enemy_bull.tscn" id="20_3oxmp"]
 [ext_resource type="PackedScene" uid="uid://v76t6hfbja7y" path="res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn" id="21_0lxvj"]
 [ext_resource type="PackedScene" uid="uid://bo66fm465v8jl" path="res://entities/grid_entities/interactives/diggable_spot/diggable_spot.tscn" id="21_x57cp"]
+[ext_resource type="PackedScene" uid="uid://og6pitcncbhr" path="res://entities/grid_entities/interactives/pickups/heart_piece_pickup/heart_piece_pickup.tscn" id="22_1sjut"]
 [ext_resource type="PackedScene" uid="uid://cwpfqmqnobovf" path="res://entities/grid_entities/enemies/snake/enemy_snake.tscn" id="22_7oan8"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
@@ -624,31 +625,31 @@ metadata/_better_terrain = {
 [sub_resource type="Resource" id="Resource_udc2h"]
 script = ExtResource("9_7oan8")
 action = ExtResource("10_7oan8")
-quantity = 2
+quantity = 3
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="Resource" id="Resource_1sjut"]
 script = ExtResource("9_7oan8")
 action = ExtResource("12_qes87")
-quantity = 4
+quantity = 5
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="Resource" id="Resource_7oan8"]
 script = ExtResource("9_7oan8")
 action = ExtResource("10_mhctp")
-quantity = 4
+quantity = 5
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="Resource" id="Resource_dar42"]
 script = ExtResource("9_7oan8")
 action = ExtResource("12_0lxvj")
-quantity = 3
+quantity = 4
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="Resource" id="Resource_x57cp"]
 script = ExtResource("9_7oan8")
 action = ExtResource("11_mhctp")
-quantity = 3
+quantity = 4
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [node name="Game" type="Node2D"]
@@ -751,6 +752,7 @@ position = Vector2(688, -144)
 
 [node name="DiggableSpot" parent="Interactives Container" instance=ExtResource("21_x57cp")]
 position = Vector2(256, 0)
+_pickup_spawn = ExtResource("22_1sjut")
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
