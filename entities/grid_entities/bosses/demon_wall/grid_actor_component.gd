@@ -2,6 +2,13 @@
 extends GridActorComponent
 
 
+@export var hurt_trigger_container: Node;
+
+@export var wall_spot_container: Node;
+
+@export var turn_timer: Timer;
+
+
 var activated := false:
   set(value):
     activated = value;
@@ -10,22 +17,31 @@ var activated := false:
       _on_activated();
 
 
+func _ready() -> void:
+  turn_timer.timeout.connect(_on_turn_timer_timeout);
+
+
 func act_async() -> void:
   if not activated:
     return;
-  # Check the hurt triggers for the player:
-  #   hurt the player, do nothing
-  # if no player:
-  #   clear all boulders from the hurt triggers
-  #   advance forward one tile
-  #   set wall tiles in new locations
-  #   set floor tiles in old locations
-  pass
+  
+  if _is_player_in_hurt_spot():
+    _attack_async();
+    return;
+
+  _advance_tiles_forward();
 
 
 func _on_activated() -> void:
-  # create walls
-  pass
+  turn_timer.start();
+
+  for child in wall_spot_container.get_children():
+    var wall_spot := child as GridEntity;
+    wall_spot.activate();
+
+
+func _on_turn_timer_timeout() -> void:
+  act_async();
 
 
 ## Performs an attack against the global [Player2D] entity.
@@ -35,3 +51,27 @@ func _attack_async() -> void:
   var player := ActionUtils.get_player_entity();
   var health_component := Component.get_component(player, HealthComponent) as HealthComponent;
   health_component.value -= 1;
+
+
+##
+func _is_player_in_hurt_spot() -> bool:
+  var player := ActionUtils.get_player_entity();
+  var result := false;
+
+  for child in hurt_trigger_container.get_children():
+    var hurt_spot := child as GridEntity;
+    if player.grid_position == hurt_spot.grid_position:
+      result = true;
+
+  return result;
+
+
+##
+func _advance_tiles_forward() -> void:
+  for child in hurt_trigger_container.get_children():
+    var hurt_spot := child as GridEntity;
+    hurt_spot.grid_position.x += 1;
+
+  for child in wall_spot_container.get_children():
+    var wall_spot := child as GridEntity;
+    wall_spot.grid_position.x += 1;
