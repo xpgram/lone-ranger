@@ -15,6 +15,10 @@ func _on_entity_moved() -> void:
   #     _attack_async();
 
 
+func _on_free_fall() -> void:
+  pass;
+
+
 ## Performs an attack against the global [Player2D] entity.
 func _attack_async() -> void:
   # IMPLEMENT Animations of any kind.

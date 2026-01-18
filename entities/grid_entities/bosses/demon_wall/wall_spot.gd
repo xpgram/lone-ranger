@@ -16,3 +16,7 @@ func activate() -> void:
 
 func _on_entity_moved() -> void:
   Grid.set_tile_type(grid_position, terrain_type);
+
+
+func _on_free_fall() -> void:
+  pass
