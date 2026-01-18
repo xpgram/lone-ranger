@@ -36,7 +36,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"raise",
-"speed": 12.0
+"speed": 6.0
 }]
 
 [node name="RaisedBlock" type="Node2D"]
@@ -48,5 +48,3 @@ metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 sprite_frames = SubResource("SpriteFrames_pagcw")
 animation = &"raise"
 autoplay = "raise"
-frame = 3
-frame_progress = 1.0
