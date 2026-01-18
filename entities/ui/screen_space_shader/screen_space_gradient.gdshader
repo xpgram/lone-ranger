@@ -24,13 +24,16 @@ uniform vec3 gradient_end: source_color = vec3(1.0);
 // Whether to invert the brightness value of the fragment color.
 uniform bool invert_colors = false;
 
+// An 'infinitesimal' amount to adjust float limits by to account for rounding errors.
+const float FLOAT_ERROR_MARGIN = 0.005;
+
 
 vec4 apply_fade_in(vec4 color, float progress) {
   // FIXME This function should kick the current color down to the next one in the palette.
   //  But that's not what it does. round() and floor() down there only work via math quirks.
 
   // Shift the brightness value down proportional to [param progress].
-  float white_level = color.r * progress;
+  float white_level = (color.r + FLOAT_ERROR_MARGIN) * progress;
 
   // Snap the brightness value to one of these values: 0.0, 0.5, 0.75, 1.0.
   if (white_level >= 0.5) {
@@ -49,8 +52,8 @@ vec4 apply_fade_in(vec4 color, float progress) {
 
 vec4 apply_silhoette(vec4 color, float threshhold, float white_threshhold) {
   // Nudge the thresshold to account for floating-point rounding errors.
-  threshhold += 0.005;
-  white_threshhold -= 0.005;
+  threshhold += FLOAT_ERROR_MARGIN;
+  white_threshhold -= FLOAT_ERROR_MARGIN;
 
   if (color.r <= threshhold) {
     color.rgb = vec3(0.0);
