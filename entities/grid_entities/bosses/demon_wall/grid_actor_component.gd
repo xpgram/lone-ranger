@@ -6,6 +6,8 @@ extends GridActorComponent
 
 @export var wall_spot_container: Node;
 
+@export var spikes_container: Node;
+
 @export var turn_timer: Timer;
 
 
@@ -18,6 +20,9 @@ var activated := false:
 
 
 func _ready() -> void:
+  for node in spikes_container.get_children():
+    node.hide();
+
   turn_timer.timeout.connect(_on_turn_timer_timeout);
 
 
@@ -41,6 +46,9 @@ func _on_activated() -> void:
   for child in wall_spot_container.get_children():
     var wall_spot := child as GridEntity;
     wall_spot.activate();
+
+  for node in spikes_container.get_children():
+    node.show();
 
 
 func _on_turn_timer_timeout() -> void:
@@ -100,3 +108,6 @@ func _advance_tiles_forward() -> void:
   for child in wall_spot_container.get_children():
     var wall_spot := child as GridEntity;
     wall_spot.grid_position.x += 1;
+
+  for node in spikes_container.get_children():
+    node.position.x += 16;
