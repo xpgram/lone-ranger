@@ -905,6 +905,9 @@ position = Vector2(704, 384)
 [node name="BoulderEntity47" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(640, 384)
 
+[node name="HeartPiecePickup" parent="Interactives Container" instance=ExtResource("22_1sjut")]
+position = Vector2(112, 304)
+
 [node name="Enemy Container" type="Node2D" parent="."]
 
 [node name="EnemyMouth" parent="Enemy Container" instance=ExtResource("40_nbivo")]
