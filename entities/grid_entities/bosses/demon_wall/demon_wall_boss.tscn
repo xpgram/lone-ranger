@@ -120,9 +120,9 @@ metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 [node name="SpikeSprites" type="Node2D" parent="."]
 
 [node name="SpikesSprite" type="Sprite2D" parent="SpikeSprites"]
-position = Vector2(0, 8)
+position = Vector2(1, 8)
 texture = SubResource("AtlasTexture_kislp")
 
 [node name="SpikesSprite2" type="Sprite2D" parent="SpikeSprites"]
-position = Vector2(0, 40)
+position = Vector2(1, 40)
 texture = SubResource("AtlasTexture_kislp")
