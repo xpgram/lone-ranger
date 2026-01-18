@@ -33,7 +33,8 @@ func act_async() -> void:
 
 
 func _on_activated() -> void:
-  turn_timer.start();
+  if turn_timer.is_stopped():
+    turn_timer.start();
 
   for child in wall_spot_container.get_children():
     var wall_spot := child as GridEntity;
