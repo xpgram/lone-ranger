@@ -34,5 +34,7 @@
 &"scene": "res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn"
 }, {
 &"scene": "res://entities/grid_entities/interactives/raised_block/raised_block.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn"
 }]
 }]

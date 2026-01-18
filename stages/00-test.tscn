@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=37 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bo66fm465v8jl" path="res://entities/grid_entities/interactives/diggable_spot/diggable_spot.tscn" id="21_x57cp"]
 [ext_resource type="PackedScene" uid="uid://og6pitcncbhr" path="res://entities/grid_entities/interactives/pickups/heart_piece_pickup/heart_piece_pickup.tscn" id="22_1sjut"]
 [ext_resource type="PackedScene" uid="uid://cwpfqmqnobovf" path="res://entities/grid_entities/enemies/snake/enemy_snake.tscn" id="22_7oan8"]
+[ext_resource type="PackedScene" uid="uid://cieqoiwkjqwtb" path="res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn" id="23_l5wv4"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -666,7 +667,7 @@ default_cell_terrain_data = ExtResource("3_2ba2c")
 [node name="Interactives Container" type="Node2D" parent="."]
 
 [node name="Chest" parent="Interactives Container" instance=ExtResource("36_pqjox")]
-position = Vector2(128, -80)
+position = Vector2(96, -64)
 contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_udc2h")])
 
 [node name="Chest3" parent="Interactives Container" instance=ExtResource("36_pqjox")]
@@ -754,6 +755,18 @@ position = Vector2(688, -144)
 position = Vector2(256, 0)
 _pickup_spawn = ExtResource("22_1sjut")
 
+[node name="AngelStatue" parent="Interactives Container" instance=ExtResource("23_l5wv4")]
+position = Vector2(128, -80)
+
+[node name="AngelStatue2" parent="Interactives Container" instance=ExtResource("23_l5wv4")]
+position = Vector2(640, -256)
+
+[node name="BoulderEntity6" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+position = Vector2(16, -48)
+
+[node name="BoulderEntity7" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+position = Vector2(0, -48)
+
 [node name="Enemy Container" type="Node2D" parent="."]
 
 [node name="EnemyMouth" parent="Enemy Container" instance=ExtResource("40_nbivo")]
@@ -765,22 +778,16 @@ position = Vector2(304, -224)
 [node name="EnemyBull" parent="Enemy Container" instance=ExtResource("20_3oxmp")]
 position = Vector2(352, -144)
 
+[node name="EnemyMaggot" parent="Enemy Container" instance=ExtResource("21_0lxvj")]
+position = Vector2(400, -336)
+
+[node name="EnemySnake" parent="Enemy Container" instance=ExtResource("22_7oan8")]
+position = Vector2(448, -336)
+
+[node name="EnemyMaggot2" parent="Enemy Container" instance=ExtResource("21_0lxvj")]
+position = Vector2(512, -256)
+
 [node name="NPC Container" type="Node2D" parent="."]
 
 [node name="PlayerModule" parent="." instance=ExtResource("41_p22wk")]
 position = Vector2(128, 160)
-
-[node name="BoulderEntity" parent="." instance=ExtResource("10_jadfo")]
-position = Vector2(16, -48)
-
-[node name="BoulderEntity2" parent="." instance=ExtResource("10_jadfo")]
-position = Vector2(0, -48)
-
-[node name="EnemyMaggot" parent="." instance=ExtResource("21_0lxvj")]
-position = Vector2(400, -336)
-
-[node name="EnemySnake" parent="." instance=ExtResource("22_7oan8")]
-position = Vector2(448, -336)
-
-[node name="EnemyMaggot2" parent="." instance=ExtResource("21_0lxvj")]
-position = Vector2(512, -256)

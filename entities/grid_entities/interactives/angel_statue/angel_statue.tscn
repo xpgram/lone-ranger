@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cieqoiwkjqwtb"]
+
+[ext_resource type="Script" uid="uid://f8wof0bqh7u6" path="res://entities/grid_entities/interactives/interactive2d.gd" id="1_4oody"]
+[ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_mle5y"]
+[ext_resource type="Script" uid="uid://b0hnuus52jfdx" path="res://entities/grid_entities/interactives/angel_statue/context_action.gd" id="3_mle5y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vc71r"]
+atlas = ExtResource("2_mle5y")
+region = Rect2(144, 48, 16, 16)
+
+[node name="AngelStatue" type="Node2D"]
+script = ExtResource("1_4oody")
+solid = true
+metadata/_custom_type_script = "uid://f8wof0bqh7u6"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_vc71r")
+
+[node name="ContextAction" type="Node" parent="." node_paths=PackedStringArray("save_idol")]
+script = ExtResource("3_mle5y")
+save_idol = NodePath("..")
+metadata/_custom_type_script = "uid://cqilrqw1pi3ai"
