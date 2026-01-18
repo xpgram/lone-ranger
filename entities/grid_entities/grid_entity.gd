@@ -133,7 +133,8 @@ func _facing_changed() -> void:
 
 ## Binds methods to event signals in the GridEntity stimulus reaction system. [br]
 ##
-## If overriding, remember to call super().
+## If overriding, remember to call super(). You can add new stimulus callbacks with
+## [method _stimulus_event_map.add_events].
 func _bind_stimulus_callbacks() -> void:
   _stimulus_event_map.add_events({
     Stimulus.is_over_pit: _on_free_fall,

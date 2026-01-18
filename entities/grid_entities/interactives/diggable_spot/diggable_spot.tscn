@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://bo66fm465v8jl"]
+
+[ext_resource type="Script" uid="uid://d0u0fw6aneseo" path="res://entities/grid_entities/interactives/diggable_spot/diggable_spot.gd" id="1_5tk7a"]
+[ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_trbf8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vw4a0"]
+atlas = ExtResource("2_trbf8")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyjc2"]
+atlas = ExtResource("2_trbf8")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jx0xd"]
+atlas = ExtResource("2_trbf8")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7u74a"]
+atlas = ExtResource("2_trbf8")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ouhr"]
+atlas = ExtResource("2_trbf8")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ge87"]
+atlas = ExtResource("2_trbf8")
+region = Rect2(80, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmv8l"]
+atlas = ExtResource("2_trbf8")
+region = Rect2(96, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gcv67"]
+animations = [{
+"frames": [{
+"duration": 32.0,
+"texture": SubResource("AtlasTexture_vw4a0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fyjc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jx0xd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7u74a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ouhr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ge87")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_mmv8l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ge87")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ouhr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7u74a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jx0xd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fyjc2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="DiggableSpot" type="Node2D"]
+script = ExtResource("1_5tk7a")
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gcv67")
+frame_progress = 0.606432

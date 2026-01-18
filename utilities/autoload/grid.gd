@@ -16,9 +16,17 @@ func put(entity: GridEntity, place: Vector2) -> void:
   # Ensure that entities are not double-placed in the given cell.
   remove(entity, place);
 
-  # Place entity in the desired cell.
   _try_create_cell(place_key);
+  var collided_entities := get_entities(place);
+
+  # Place entity in the desired cell.
   _map[place_key].entities.append(entity);
+
+  # Run collisions.
+  for collided_entity in collided_entities:
+    # TODO Add function signature: Who was collided with?
+    entity.react_async(Stimulus.entity_collision);
+    collided_entity.react_async(Stimulus.entity_collision);
 
 
 ## Removes an entity from the grid at position 'place'.

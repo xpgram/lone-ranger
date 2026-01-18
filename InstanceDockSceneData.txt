@@ -28,5 +28,11 @@
 &"scene": "res://entities/grid_entities/interactives/chest/special_chest.tscn"
 }, {
 &"scene": "res://entities/grid_entities/interactives/chest/ornate_double_chest.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/diggable_spot/diggable_spot.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/raised_block/raised_block.tscn"
 }]
 }]
