@@ -959,4 +959,4 @@ metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 [node name="NPC Container" type="Node2D" parent="."]
 
 [node name="PlayerModule" parent="." instance=ExtResource("41_p22wk")]
-position = Vector2(128, 320)
+position = Vector2(128, 160)
