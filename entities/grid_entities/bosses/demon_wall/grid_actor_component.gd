@@ -24,7 +24,9 @@ func _ready() -> void:
 func act_async() -> void:
   if not activated:
     return;
-  
+
+  _break_boulders();
+
   if _is_player_in_hurt_spot():
     _attack_async();
     return;
@@ -73,6 +75,20 @@ func _is_player_in_hurt_spot() -> bool:
       result = true;
 
   return result;
+
+
+func _break_boulders() -> void:
+  for child in hurt_trigger_container.get_children():
+    var hurt_spot := child as GridEntity;
+
+    var entities := Grid.get_entities(hurt_spot.grid_position);
+
+    for entity in entities:
+      if (
+          entity != hurt_spot
+          and entity is not Player2D
+      ):
+        entity.queue_free();
 
 
 ##

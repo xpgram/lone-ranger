@@ -10,14 +10,9 @@ func _ready() -> void:
 func _on_entity_moved() -> void:
   var entities := Grid.get_entities(grid_position);
 
-  for entity in entities:
-    if entity == self:
-      continue;
-
-    if entity is not Player2D:
-      entity.queue_free();
-    else:
-      _attack_async();
+  # for entity in entities:
+  #   if entity is Player2D:
+  #     _attack_async();
 
 
 ## Performs an attack against the global [Player2D] entity.
