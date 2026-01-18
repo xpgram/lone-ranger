@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_v6i07")
+action_uid = &"move_fast"
 action_name = "Move"
 action_description = "Move one tile on the field."
 action_time_cost = 7.5

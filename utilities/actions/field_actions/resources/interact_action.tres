@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_qrrg1")
+action_uid = &"interact"
 action_name = "Interact"
 action_description = "Perform context actions in the field."
 metadata/_custom_type_script = "uid://cmlvujlh6bqmd"

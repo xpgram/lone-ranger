@@ -1,15 +1,17 @@
-[gd_resource type="Resource" script_class="Burn_FieldAction" load_steps=3 format=3 uid="uid://m4rko02thteq"]
+[gd_resource type="Resource" script_class="Burn_FieldAction" load_steps=4 format=3 uid="uid://m4rko02thteq"]
 
 [ext_resource type="Script" uid="uid://1co65v7pd4ta" path="res://utilities/actions/field_actions/scripts/burn_action.gd" id="1_eoyeu"]
-[ext_resource type="Texture2D" uid="uid://dkubi1rt8v81h" path="res://assets/textures_unused/system/icons/icon-fire.png" id="2_wwvf7"]
+[ext_resource type="Texture2D" uid="uid://c2osmodhe2l35" path="res://assets/00 - source/icons_small_sheet.png" id="2_eoyeu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwvf7"]
+atlas = ExtResource("2_eoyeu")
+region = Rect2(16, 8, 8, 8)
 
 [resource]
 script = ExtResource("1_eoyeu")
 action_uid = &"burn"
 action_name = "Burn"
 action_type = 1
-action_description = "asdf"
-action_hint = "asdf"
-action_time_cost = 15.0
-small_icon = ExtResource("2_wwvf7")
-limit_type = 2
+action_description = "Creates a whirlwind of fire in a large area."
+action_hint = "Heat emanates from the shard."
+small_icon = SubResource("AtlasTexture_wwvf7")

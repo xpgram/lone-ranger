@@ -1,13 +1,19 @@
-[gd_resource type="Resource" script_class="Raise_FieldAction" load_steps=3 format=3 uid="uid://cswtlyl54v4ck"]
+[gd_resource type="Resource" script_class="Raise_FieldAction" load_steps=4 format=3 uid="uid://cswtlyl54v4ck"]
 
 [ext_resource type="Script" uid="uid://blg3pg11wjt6k" path="res://utilities/actions/field_actions/scripts/raise_action.gd" id="1_74kyb"]
-[ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://assets/textures_unused/system/icons/icon-skill.png" id="2_73r7i"]
+[ext_resource type="Texture2D" uid="uid://c2osmodhe2l35" path="res://assets/00 - source/icons_small_sheet.png" id="2_73r7i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_peyxk"]
+atlas = ExtResource("2_73r7i")
+region = Rect2(56, 8, 8, 8)
 
 [resource]
 script = ExtResource("1_74kyb")
 action_uid = &"raise"
 action_name = "Raise"
 action_type = 1
-small_icon = ExtResource("2_73r7i")
+action_description = "Lifts objects, including out of the ground."
+action_hint = "The shard is very lightweight. A negative weight, even."
+small_icon = SubResource("AtlasTexture_peyxk")
 command_menu_sort_priority = 1
 metadata/_custom_type_script = "uid://blg3pg11wjt6k"

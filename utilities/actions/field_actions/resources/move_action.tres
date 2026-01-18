@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_sgdw5")
+action_uid = &"move"
 action_name = "Move"
 action_description = "Move one tile on the field."
-action_time_cost = 15.0
 metadata/_custom_type_script = "uid://b1we8bvlckfot"

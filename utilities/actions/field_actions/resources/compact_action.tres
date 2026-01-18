@@ -1,15 +1,18 @@
-[gd_resource type="Resource" script_class="Compact_FieldAction" load_steps=3 format=3 uid="uid://bnxi3iwan6g35"]
+[gd_resource type="Resource" script_class="Compact_FieldAction" load_steps=4 format=3 uid="uid://bnxi3iwan6g35"]
 
 [ext_resource type="Script" uid="uid://cpi8hsj31o616" path="res://utilities/actions/field_actions/scripts/compact_action.gd" id="1_1lwy6"]
-[ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures_unused/system/icons/icon-orbital.png" id="2_0wmr6"]
+[ext_resource type="Texture2D" uid="uid://c2osmodhe2l35" path="res://assets/00 - source/icons_small_sheet.png" id="2_1lwy6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wmr6"]
+atlas = ExtResource("2_1lwy6")
+region = Rect2(48, 8, 8, 8)
 
 [resource]
 script = ExtResource("1_1lwy6")
 action_uid = &"compact"
 action_name = "Compact"
 action_type = 1
-action_time_cost = 15.0
-small_icon = ExtResource("2_0wmr6")
-limit_type = 2
-uses_remaining = 3
+action_description = "Compresses objects."
+action_hint = "The shard collects a lot of dust."
+small_icon = SubResource("AtlasTexture_0wmr6")
 metadata/_custom_type_script = "uid://cpi8hsj31o616"
