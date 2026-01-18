@@ -6,4 +6,5 @@
 script = ExtResource("1_a3fas")
 action_name = "Spin"
 action_description = "Turn in place to face a new direction."
+action_time_cost = 0.0
 metadata/_custom_type_script = "uid://ca6r8ig5bt6h8"
