@@ -18,7 +18,7 @@ turn_timer = NodePath("../TurnTimer")
 metadata/_custom_type_script = "uid://bkh4aef0dxaiy"
 
 [node name="TurnTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.5
 
 [node name="HurtTriggers" type="Node2D" parent="."]
 

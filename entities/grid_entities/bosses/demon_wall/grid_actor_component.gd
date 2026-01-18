@@ -43,6 +43,11 @@ func _on_activated() -> void:
 func _on_turn_timer_timeout() -> void:
   act_async();
 
+  # Speed up the wall over time.
+  var next_wait_time := turn_timer.wait_time - 0.5;
+  next_wait_time = max(1.0, next_wait_time);
+  turn_timer.wait_time = next_wait_time;
+
 
 ## Performs an attack against the global [Player2D] entity.
 func _attack_async() -> void:
@@ -57,6 +62,9 @@ func _attack_async() -> void:
 func _is_player_in_hurt_spot() -> bool:
   var player := ActionUtils.get_player_entity();
   var result := false;
+
+  if not player:
+    return result;
 
   for child in hurt_trigger_container.get_children():
     var hurt_spot := child as GridEntity;
