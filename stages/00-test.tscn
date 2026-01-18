@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=40 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
@@ -19,11 +19,12 @@
 [ext_resource type="PackedScene" uid="uid://dtux3ehasyvly" path="res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn" id="19_0lxvj"]
 [ext_resource type="PackedScene" uid="uid://bby6nr1v10a5c" path="res://entities/grid_entities/enemies/bull/enemy_bull.tscn" id="20_3oxmp"]
 [ext_resource type="PackedScene" uid="uid://v76t6hfbja7y" path="res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn" id="21_0lxvj"]
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="21_1sjut"]
 [ext_resource type="PackedScene" uid="uid://bo66fm465v8jl" path="res://entities/grid_entities/interactives/diggable_spot/diggable_spot.tscn" id="21_x57cp"]
 [ext_resource type="PackedScene" uid="uid://og6pitcncbhr" path="res://entities/grid_entities/interactives/pickups/heart_piece_pickup/heart_piece_pickup.tscn" id="22_1sjut"]
 [ext_resource type="PackedScene" uid="uid://cwpfqmqnobovf" path="res://entities/grid_entities/enemies/snake/enemy_snake.tscn" id="22_7oan8"]
 [ext_resource type="PackedScene" uid="uid://cieqoiwkjqwtb" path="res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn" id="23_l5wv4"]
-[ext_resource type="Script" uid="uid://f8wof0bqh7u6" path="res://entities/grid_entities/interactives/interactive2d.gd" id="24_vw4a0"]
+[ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -784,285 +785,125 @@ position = Vector2(16, -48)
 [node name="BoulderEntity7" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(0, -48)
 
-[node name="BoulderEntity8" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity8" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(352, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity9" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity9" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(336, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity10" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity10" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(336, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity11" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity11" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(352, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity12" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity12" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(352, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity13" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity13" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(336, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity14" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity14" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(400, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity15" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity15" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(416, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity16" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity16" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(416, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity17" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity17" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(432, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity18" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity18" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(416, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity19" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity19" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(400, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity20" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity20" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(384, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity21" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity21" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(448, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity22" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity22" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(480, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity23" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity23" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(496, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity24" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity24" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(496, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity25" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity25" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(480, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity26" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity26" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(496, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity27" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity27" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(528, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity28" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity28" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(560, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity29" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity29" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(544, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity30" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity30" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(576, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity31" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity31" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(528, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity32" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity32" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(544, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity33" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity33" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(560, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity34" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity34" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(576, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity35" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity35" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(592, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity36" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity36" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(576, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity37" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity37" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(640, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity38" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity38" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(656, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity39" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity39" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(656, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity40" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity40" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(672, 352)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity41" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity41" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(672, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity42" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity42" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(688, 336)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity43" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity43" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(688, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity44" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity44" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(704, 368)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity45" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity45" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(672, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity46" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity46" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(704, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="BoulderEntity47" type="Node2D" parent="Interactives Container" instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity47" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(640, 384)
-script = ExtResource("24_vw4a0")
-solid = true
-pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
@@ -1083,6 +924,18 @@ position = Vector2(448, -336)
 
 [node name="EnemyMaggot2" parent="Enemy Container" instance=ExtResource("21_0lxvj")]
 position = Vector2(512, -256)
+
+[node name="DemonWallBossContainer" type="Node2D" parent="Enemy Container"]
+
+[node name="DemonWallBoss" parent="Enemy Container/DemonWallBossContainer" instance=ExtResource("28_fyjc2")]
+position = Vector2(240, 336)
+
+[node name="StepTriggers" type="Node2D" parent="Enemy Container/DemonWallBossContainer"]
+
+[node name="TriggerSpot" type="Node2D" parent="Enemy Container/DemonWallBossContainer/StepTriggers"]
+position = Vector2(288, 336)
+script = ExtResource("21_1sjut")
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="NPC Container" type="Node2D" parent="."]
 
