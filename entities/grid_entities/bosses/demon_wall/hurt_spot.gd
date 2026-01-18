@@ -11,6 +11,9 @@ func _on_entity_moved() -> void:
   var entities := Grid.get_entities(grid_position);
 
   for entity in entities:
+    if entity == self:
+      continue;
+
     if entity is not Player2D:
       entity.queue_free();
     else:
