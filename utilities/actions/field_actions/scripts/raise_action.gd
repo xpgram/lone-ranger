@@ -19,4 +19,14 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
 
   raised_block.grid_position = playbill.target_position;
 
+  _trigger_dig_effects(playbill.target_position);
+
   return true;
+
+
+func _trigger_dig_effects(place: Vector2i) -> void:
+  var entities := Grid.get_entities(place);
+
+  for entity in entities:
+    if entity is DiggableSpotEntity:
+      entity.on_spell_activated__raise();

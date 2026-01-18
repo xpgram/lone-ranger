@@ -5,7 +5,7 @@ extends GridEntity
 @export var _pickup_spawn: PackedScene;
 
 
-func _on_spell_activated__raise() -> void:
+func on_spell_activated__raise() -> void:
   _spawn_pickup();
   queue_free();
 
