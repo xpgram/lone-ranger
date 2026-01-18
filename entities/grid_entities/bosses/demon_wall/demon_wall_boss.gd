@@ -1,0 +1,1 @@
+extends Enemy2D
