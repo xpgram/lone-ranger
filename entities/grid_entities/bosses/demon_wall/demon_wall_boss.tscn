@@ -31,13 +31,13 @@ metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="WallSpotF" type="Node2D" parent="WallSpots"]
 script = ExtResource("3_2xxmn")
-terrain_type = 1
+terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="WallSpotB" type="Node2D" parent="WallSpots"]
 position = Vector2(-16, 0)
 script = ExtResource("3_2xxmn")
-terrain_type = 1
+terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="FloorSpot" type="Node2D" parent="WallSpots"]

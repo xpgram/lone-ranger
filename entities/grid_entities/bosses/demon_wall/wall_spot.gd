@@ -1,7 +1,7 @@
 extends GridEntity
 
 
-## 2 = floor, 1 = wall
+## 2 = floor, 0 = wall
 @export var terrain_type: int = 2;
 
 
