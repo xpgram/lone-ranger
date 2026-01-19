@@ -207,8 +207,8 @@ func get_action_from_brace_move_input(direction: Vector2i) -> FieldActionSchedul
 
 
 ## Returns the [FieldActionSchedule] for some action resulting from an interact input.
-func get_interact_action() -> FieldActionSchedule:
-  var chosen_action: FieldAction = FieldActionList.wait;
+func get_action_from_interact_input() -> FieldActionSchedule:
+  var chosen_action: FieldAction = FieldActionList.null_action;
 
   var playbill := FieldActionPlaybill.new(
     self,
@@ -218,10 +218,11 @@ func get_interact_action() -> FieldActionSchedule:
 
   var actions := [
     FieldActionList.interact,
+    _get_sword_action(),
   ];
 
   for action in actions:
-    if action.can_perform(playbill):
+    if action and action.can_perform(playbill):
       chosen_action = action;
       break;
 
@@ -339,6 +340,14 @@ func _get_push_action() -> FieldAction:
   );
 
 
+## Returns the [FieldAction] variant the [Player2D] will use for melee attacks.
+func _get_sword_action() -> FieldAction:
+  return (
+    FieldActionList.sword_strike if inventory.has_equipment('sword')
+    else FieldActionList.null_action
+  );
+
+
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
 ## Reacquires player input focus from sub-UI systems.
 func _on_command_menu_cancelled() -> void:
@@ -435,7 +444,9 @@ func _state_idle__input(event: InputEvent) -> void:
     return;
 
   elif event.is_action_pressed('interact'):
-    action_declared.emit(get_interact_action(), false);
+    var action_schedule := get_action_from_interact_input();
+    if action_schedule.action != FieldActionList.null_action:
+      action_declared.emit(get_action_from_interact_input(), false);
     focus_node.accept_event();
 
   elif event.is_action_pressed('open_action_menu'):

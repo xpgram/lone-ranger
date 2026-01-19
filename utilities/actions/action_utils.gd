@@ -45,11 +45,25 @@ static func get_coordinate_line(from: Vector2i, direction: Vector2i, distance: i
 static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
   if from == to:
     return Vector2i.ZERO;
-  
+
   var difference_vector := to - from;
   var angle := Vector2.RIGHT.angle_to(difference_vector);
   angle = round(angle / Math.HALF_PI) * Math.HALF_PI;
   return Vector2.from_angle(angle).round();
+
+
+## Returns a list of all [param component_type] that exist among [param entities].
+static func get_entity_components(entities: Array[GridEntity], component_type: Variant) -> Array:
+  return entities \
+    .filter(func (entity: GridEntity): return Component.has_component(entity, component_type)) \
+    .map(func (entity: GridEntity): return Component.get_component(entity, component_type));
+
+
+## Returns a list of all [HealthComponent] that exist among [param entities].
+static func get_entity_health_components(entities) -> Array[HealthComponent]:
+  var components: Array[HealthComponent];
+  components.assign(get_entity_components(entities, HealthComponent));
+  return components;
 
 
 ## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
@@ -118,6 +132,14 @@ static func place_is_traversable(place: Vector2i, _entity: GridEntity) -> bool:
 static func place_is_wall(place: Vector2i) -> bool:
   var cell := Grid.get_cell(place);
   return cell_is_wall(cell);
+
+
+## Asks [param actor] to play their standard attack animation, if it has one.
+static func play_attack_animation(actor: GridEntity, direction: Vector2i) -> void:
+  if actor is Player2D:
+    # TODO Set handheld item to sword.
+    actor.faced_direction = direction;
+    actor.set_animation_state('item_use');
 
 
 ## Asks [param actor] to play their cast or item-use animation, if it has one.
