@@ -81,4 +81,5 @@ metadata/_custom_type_script = "uid://d0u0fw6aneseo"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gcv67")
+autoplay = "default"
 frame_progress = 0.606432
