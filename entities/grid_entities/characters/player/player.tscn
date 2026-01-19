@@ -1,9 +1,11 @@
-[gd_scene load_steps=48 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene load_steps=52 format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://entities/grid_entities/characters/player/scripts/player2d.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://lv8q188gep4i" path="res://entities/grid_entities/characters/player/images/handheld/gray-scepter-right.png" id="2_0vnf7"]
 [ext_resource type="Texture2D" uid="uid://s1cvx3j8l7jp" path="res://entities/grid_entities/characters/player/images/gray/gray-down-0.png" id="2_dgrao"]
+[ext_resource type="Script" uid="uid://bkhprfg6558u4" path="res://entities/grid_entities/characters/player/scripts/handheld_item.gd" id="2_y15db"]
 [ext_resource type="Texture2D" uid="uid://juvbaoa7apyf" path="res://entities/grid_entities/characters/player/images/gray/gray-down-1.png" id="3_hnwa4"]
+[ext_resource type="Texture2D" uid="uid://bi257xfxmooyj" path="res://assets/00 - source/items_sheet.png" id="3_q38re"]
 [ext_resource type="Texture2D" uid="uid://cj6r65eoxhgsk" path="res://entities/grid_entities/characters/player/images/gray/gray-right-0.png" id="4_jmcxn"]
 [ext_resource type="Texture2D" uid="uid://bjwptwrkhglmb" path="res://entities/grid_entities/characters/player/images/gray/gray-right-1.png" id="5_kr0tl"]
 [ext_resource type="Texture2D" uid="uid://cyhlf5apnt7ol" path="res://entities/grid_entities/characters/player/images/gray/gray-up-0.png" id="6_ndj21"]
@@ -20,6 +22,14 @@
 [ext_resource type="Script" uid="uid://cpjdc1h6kotna" path="res://utilities/resources/string_cross_switch.gd" id="19_5ce6h"]
 [ext_resource type="Script" uid="uid://dxwyf0pnu6nbg" path="res://utilities/nodes/components/grid_entity_components/health_component.gd" id="19_ee7qb"]
 [ext_resource type="Script" uid="uid://bquah6tnohw5e" path="res://common/component/component_combiner.gd" id="21_y15db"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6hj0"]
+atlas = ExtResource("3_q38re")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ncg4"]
+atlas = ExtResource("3_q38re")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uay6n"]
 animations = [{
@@ -1050,8 +1060,14 @@ script = ExtResource("1_reh0w")
 solid = true
 metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 
-[node name="HandheldItem" type="Node2D" parent="."]
+[node name="HandheldItem" type="Node2D" parent="." node_paths=PackedStringArray("handheld_sprite")]
 visible = false
+script = ExtResource("2_y15db")
+item_textures = Dictionary[int, Texture2D]({
+0: SubResource("AtlasTexture_e6hj0"),
+1: SubResource("AtlasTexture_6ncg4")
+})
+handheld_sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="HandheldItem"]
 position = Vector2(15, 0)

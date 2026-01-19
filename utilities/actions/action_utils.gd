@@ -137,16 +137,16 @@ static func place_is_wall(place: Vector2i) -> bool:
 ## Asks [param actor] to play their standard attack animation, if it has one.
 static func play_attack_animation(actor: GridEntity, direction: Vector2i) -> void:
   if actor is Player2D:
-    # TODO Set handheld item to sword.
     actor.faced_direction = direction;
+    actor.set_handheld_item(PlayerHandheldItem.HandheldItemType.Sword);
     actor.set_animation_state('item_use');
 
 
 ## Asks [param actor] to play their cast or item-use animation, if it has one.
 static func play_cast_animation(actor: GridEntity, direction: Vector2i) -> void:
   if actor is Player2D:
-    # TODO Set handheld item to scepter.
     actor.faced_direction = direction;
+    actor.set_handheld_item(PlayerHandheldItem.HandheldItemType.Scepter);
     actor.set_animation_state('item_use');
 
 

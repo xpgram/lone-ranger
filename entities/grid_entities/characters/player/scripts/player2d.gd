@@ -294,6 +294,11 @@ func set_animation_state(state_key: StringName) -> void:
   animation_state_switch.play(state_key, faced_direction);
 
 
+## Sets the player avatar's handheld item type to [param item_type].
+func set_handheld_item(item_type: PlayerHandheldItem.HandheldItemType) -> void:
+  $HandheldItem.set_item(item_type);
+
+
 ## Replays the active animation, but with current context, such as the faced direction,
 ## etc.
 func retrigger_animation_state() -> void:
