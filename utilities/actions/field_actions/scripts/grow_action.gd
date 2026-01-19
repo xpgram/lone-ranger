@@ -9,6 +9,8 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
 
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:
+  ActionUtils.play_cast_animation(playbill.performer, playbill.orientation);
+
   var entities := Grid.get_entities(playbill.target_position);
   
   for entity in entities:

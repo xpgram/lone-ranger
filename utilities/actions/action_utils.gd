@@ -120,6 +120,14 @@ static func place_is_wall(place: Vector2i) -> bool:
   return cell_is_wall(cell);
 
 
+## Asks [param actor] to play their cast or item-use animation, if it has one.
+static func play_cast_animation(actor: GridEntity, direction: Vector2i) -> void:
+  if actor is Player2D:
+    # TODO Set handheld item to scepter.
+    actor.faced_direction = direction;
+    actor.set_animation_state('item_use');
+
+
 ## Returns true if [param target_pos] is on the same row or column as [param actor] and
 ## within the grid distance [param grid_range].
 static func target_pos_within_line_range(actor: GridEntity, target_pos: Vector2i, grid_range: int) -> bool:
