@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Null_FieldAction" load_steps=2 format=3 uid="uid://dkf6dygsavtxn"]
+
+[ext_resource type="Script" uid="uid://dappginc3mggn" path="res://utilities/actions/field_actions/scripts/null_action.gd" id="1_om4dg"]
+
+[resource]
+script = ExtResource("1_om4dg")
+action_uid = &"null"
+action_name = "NULL"
+action_description = "Not an action."
+action_time_cost = 0.0
