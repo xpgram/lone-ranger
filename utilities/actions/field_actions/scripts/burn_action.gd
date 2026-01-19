@@ -9,6 +9,8 @@ func can_perform(_playbill: FieldActionPlaybill) -> bool:
 
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:
+  ActionUtils.play_cast_animation(playbill.performer, playbill.orientation);
+
   var entities := Grid.get_entities(playbill.target_position);
 
   var health_components: Array[HealthComponent];
