@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnlxd7xlmu475"]
+
+[ext_resource type="Script" uid="uid://c0ps6u4vs8ghd" path="res://entities/grid_entities/characters/player/equipment/hookshot/hookshot.gd" id="1_udiny"]
+[ext_resource type="Texture2D" uid="uid://bi257xfxmooyj" path="res://assets/00 - source/items_sheet.png" id="1_xcl5k"]
+[ext_resource type="Script" uid="uid://b3604gdg1qtii" path="res://entities/grid_entities/characters/player/equipment/hookshot/chain.gd" id="3_udiny"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udiny"]
+atlas = ExtResource("1_xcl5k")
+region = Rect2(8, 16, 8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5iey"]
+atlas = ExtResource("1_xcl5k")
+region = Rect2(39, 16, 9, 16)
+margin = Rect2(7, 0, 7, 0)
+
+[node name="Hookshot" type="Node2D" node_paths=PackedStringArray("_head_sprite")]
+script = ExtResource("1_udiny")
+_head_sprite = NodePath("Head")
+
+[node name="Chain" type="Node2D" parent="."]
+script = ExtResource("3_udiny")
+tiled_length = 0
+_texture = SubResource("AtlasTexture_udiny")
+
+[node name="Head" type="Sprite2D" parent="."]
+position = Vector2(-4, 0)
+texture = SubResource("AtlasTexture_p5iey")
+region_rect = Rect2(-6, 0, 16, 16)
+
+[node name="Cannon" type="Sprite2D" parent="."]
+texture = ExtResource("1_xcl5k")
+offset = Vector2(-4.5, 0)
+region_enabled = true
+region_rect = Rect2(0, 16, 7, 16)

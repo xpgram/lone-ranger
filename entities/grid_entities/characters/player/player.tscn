@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene load_steps=53 format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://entities/grid_entities/characters/player/scripts/player2d.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://lv8q188gep4i" path="res://entities/grid_entities/characters/player/images/handheld/gray-scepter-right.png" id="2_0vnf7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://juvbaoa7apyf" path="res://entities/grid_entities/characters/player/images/gray/gray-down-1.png" id="3_hnwa4"]
 [ext_resource type="Texture2D" uid="uid://bi257xfxmooyj" path="res://assets/00 - source/items_sheet.png" id="3_q38re"]
 [ext_resource type="Texture2D" uid="uid://cj6r65eoxhgsk" path="res://entities/grid_entities/characters/player/images/gray/gray-right-0.png" id="4_jmcxn"]
+[ext_resource type="PackedScene" uid="uid://bnlxd7xlmu475" path="res://entities/grid_entities/characters/player/equipment/hookshot/hookshot.tscn" id="5_e6hj0"]
 [ext_resource type="Texture2D" uid="uid://bjwptwrkhglmb" path="res://entities/grid_entities/characters/player/images/gray/gray-right-1.png" id="5_kr0tl"]
 [ext_resource type="Texture2D" uid="uid://cyhlf5apnt7ol" path="res://entities/grid_entities/characters/player/images/gray/gray-up-0.png" id="6_ndj21"]
 [ext_resource type="Texture2D" uid="uid://q824tawgpent" path="res://entities/grid_entities/characters/player/images/gray/gray-up-1.png" id="7_bari4"]
@@ -1070,8 +1071,12 @@ item_textures = Dictionary[int, Texture2D]({
 handheld_sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="HandheldItem"]
+visible = false
 position = Vector2(15, 0)
 texture = ExtResource("2_0vnf7")
+
+[node name="Hookshot" parent="HandheldItem" instance=ExtResource("5_e6hj0")]
+position = Vector2(15, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_uay6n")
