@@ -31,13 +31,18 @@ func _update_display() -> void:
 ## Extends or retracts the chain-segments component to match the current
 ## [member chain_length].
 func _match_chain_to_chain_length() -> void:
-  $Chain.tiled_length = chain_length;
+  var tiles_travelled := maxi(0, chain_length - 1);
+  $Chain.tiled_length = tiles_travelled;
 
 
 ## Moves the chain head sprite to the current end of the chain, as determined from
 ## [member chain_length].
 func _move_chain_head() -> void:
   if chain_length > 0:
-    _head_sprite.position.x = chain_length * Constants.GRID_SIZE;
+    # We must account for the fact that the length=0 and length=1 positions are visually
+    # the same on screen; the difference being whether the chain head is loaded in the
+    # cannon.
+    var tiles_travelled := chain_length - 1;
+    _head_sprite.position.x = tiles_travelled * Constants.GRID_SIZE;
   else:
     _head_sprite.position.x = CHAIN_HEAD_RESTING_POSITION_X;
