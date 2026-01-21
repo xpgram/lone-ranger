@@ -56,7 +56,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
       await Engine.get_main_loop().create_timer(0.03).timeout;
       hookshot.chain_length += 1;
 
-    await Engine.get_main_loop().create_timer(0.5).timeout;
+    await Engine.get_main_loop().create_timer(0.4).timeout;
 
   # TODO If hitchable, animate player toward hitch spot
   #   I need to animate the avatar, not the GridEntity: I don't want to trigger fall stimulations, etc.
