@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnlxd7xlmu475"]
+
+[ext_resource type="Script" uid="uid://c0ps6u4vs8ghd" path="res://entities/grid_entities/characters/player/equipment/hookshot/hookshot.gd" id="1_udiny"]
+[ext_resource type="Texture2D" uid="uid://bi257xfxmooyj" path="res://assets/00 - source/items_sheet.png" id="1_xcl5k"]
+[ext_resource type="Script" uid="uid://b3604gdg1qtii" path="res://entities/grid_entities/characters/player/equipment/hookshot/chain.gd" id="3_udiny"]
+[ext_resource type="Script" uid="uid://bpk4h7l5wpxpe" path="res://entities/grid_entities/characters/player/equipment/hookshot/head.gd" id="4_p5iey"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udiny"]
+atlas = ExtResource("1_xcl5k")
+region = Rect2(8, 16, 8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5iey"]
+atlas = ExtResource("1_xcl5k")
+region = Rect2(35, 16, 10, 16)
+margin = Rect2(3, 0, 6, 0)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5fnrx"]
+load_path = "res://.godot/imported/items_sheet.png-19ffcae660a2c3e9dbcf606cd636b12b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ip88i"]
+atlas = SubResource("CompressedTexture2D_5fnrx")
+region = Rect2(23, 32, 11, 16)
+margin = Rect2(7, 0, 7, 0)
+
+[node name="Hookshot" type="Node2D"]
+script = ExtResource("1_udiny")
+
+[node name="Chain" type="Node2D" parent="."]
+script = ExtResource("3_udiny")
+tiled_length = 0
+_texture = SubResource("AtlasTexture_udiny")
+
+[node name="Head" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("4_p5iey")
+free_texture = SubResource("AtlasTexture_p5iey")
+lodged_texture = SubResource("AtlasTexture_ip88i")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Head"]
+texture = SubResource("AtlasTexture_p5iey")
+region_rect = Rect2(-6, 0, 16, 16)
+
+[node name="Cannon" type="Sprite2D" parent="."]
+texture = ExtResource("1_xcl5k")
+offset = Vector2(-4.5, 0)
+region_enabled = true
+region_rect = Rect2(0, 16, 7, 16)

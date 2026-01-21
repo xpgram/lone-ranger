@@ -229,6 +229,29 @@ func get_action_from_interact_input() -> FieldActionSchedule:
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns a [FieldActionSchedule] for some action resulting from an interact input while
+## the brace input is also active.
+func get_action_from_brace_interact_input() -> FieldActionSchedule:
+  var chosen_action: FieldAction = FieldActionList.null_action;
+
+  var playbill := FieldActionPlaybill.new(
+    self,
+    faced_position,
+    faced_direction,
+  );
+
+  var actions := [
+    _get_hookshot_action(),
+  ];
+
+  for action in actions:
+    if action and action.can_perform(playbill):
+      chosen_action = action;
+      break;
+
+  return FieldActionSchedule.new(chosen_action, playbill);
+
+
 ## Returns the number of steps the player can take over pits before falling.
 func get_air_steps_remaining() -> int:
   return _air_steps_remaining;
@@ -237,7 +260,7 @@ func get_air_steps_remaining() -> int:
 func reset_air_steps_remaining() -> void:
   _air_steps_remaining = (
     # FIXME Get these numbers from a constants file somewhere.
-    1 if inventory.has_equipment(&'wings')
+    1 if inventory.has_equipment(PlayerEquipment.wings)
     else 0
   );
 
@@ -299,6 +322,13 @@ func set_handheld_item(item_type: PlayerHandheldItem.HandheldItemType) -> void:
   $HandheldItem.set_item(item_type);
 
 
+## @nullable [br]
+## Returns the node object associated with [param item_type], or null if no association
+## exists.
+func get_handheld_tool(item_type: PlayerHandheldItem.HandheldItemType) -> Node2D:
+  return $HandheldItem.get_tool_node(item_type);
+
+
 ## Replays the active animation, but with current context, such as the faced direction,
 ## etc.
 func retrigger_animation_state() -> void:
@@ -340,7 +370,7 @@ func _get_move_action() -> FieldAction:
 ## Returns the [FieldAction] variant the [Player2D] will use for pushing objects.
 func _get_push_action() -> FieldAction:
   return (
-    FieldActionList.shove if inventory.has_equipment('shove')
+    FieldActionList.shove if inventory.has_equipment(PlayerEquipment.shove)
     else FieldActionList.push
   );
 
@@ -348,9 +378,17 @@ func _get_push_action() -> FieldAction:
 ## Returns the [FieldAction] variant the [Player2D] will use for melee attacks.
 func _get_sword_action() -> FieldAction:
   return (
-    FieldActionList.sword_strike if inventory.has_equipment('sword')
+    FieldActionList.sword_strike if inventory.has_equipment(PlayerEquipment.sword)
     else FieldActionList.null_action
   );
+
+
+## Returns the [FieldAction] variant the [Player2D] will use for hookshot actions.
+func _get_hookshot_action() -> FieldAction:
+  return (
+    FieldActionList.hookshot if inventory.has_equipment(PlayerEquipment.hookshot)
+    else FieldActionList.null_action
+  )
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
@@ -447,11 +485,18 @@ func _state_idle__exit() -> void:
 func _state_idle__input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
+  
+  elif Input.is_action_pressed('brace'):
+    if event.is_action_pressed('interact'):
+      var action_schedule := get_action_from_brace_interact_input();
+      if action_schedule.action != FieldActionList.null_action:
+        action_declared.emit(action_schedule, false);
+      focus_node.accept_event();
 
   elif event.is_action_pressed('interact'):
     var action_schedule := get_action_from_interact_input();
     if action_schedule.action != FieldActionList.null_action:
-      action_declared.emit(get_action_from_interact_input(), false);
+      action_declared.emit(action_schedule, false);
     focus_node.accept_event();
 
   elif event.is_action_pressed('open_action_menu'):

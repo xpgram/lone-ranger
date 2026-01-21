@@ -34,6 +34,7 @@ pushable = true
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_08fk3")
+_equipment = Array[StringName]([&"hookshot"])
 
 [node name="FocusableControl" type="Control" parent="."]
 unique_name_in_owner = true
