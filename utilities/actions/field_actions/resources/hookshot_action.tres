@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Hookshot_FieldAction" load_steps=2 format=3 uid="uid://dsu74k4p2n1x"]
+
+[ext_resource type="Script" uid="uid://7prl5havckgd" path="res://utilities/actions/field_actions/scripts/hookshot_action.gd" id="1_gd23v"]
+
+[resource]
+script = ExtResource("1_gd23v")
+action_uid = &"hookshot"
+action_name = "Hookshot"
+action_description = "Extends a chain rope with a metal head that can attach to objects."
+action_time_cost = 0.0
+metadata/_custom_type_script = "uid://7prl5havckgd"

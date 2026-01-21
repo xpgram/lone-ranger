@@ -1061,13 +1061,16 @@ script = ExtResource("1_reh0w")
 solid = true
 metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 
-[node name="HandheldItem" type="Node2D" parent="." node_paths=PackedStringArray("handheld_sprite")]
+[node name="HandheldItem" type="Node2D" parent="." node_paths=PackedStringArray("_item_nodes", "handheld_sprite")]
 visible = false
 script = ExtResource("2_y15db")
 item_textures = Dictionary[int, Texture2D]({
 1: SubResource("AtlasTexture_e6hj0"),
 2: SubResource("AtlasTexture_6ncg4")
 })
+_item_nodes = {
+3: NodePath("Hookshot")
+}
 handheld_sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="HandheldItem"]
