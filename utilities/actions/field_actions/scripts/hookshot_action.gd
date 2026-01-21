@@ -39,8 +39,10 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
 
   # TODO Identify target spot is hitchable vs clinkable (e.g. wood vs. metal)
   var extendable_length := (
-    viable_coords.size() - 1 if is_hitched
-    else viable_coords.size()
+    # One space is removed because lodging the chain head happens in the space of one tile.
+    # One space is removed because the cannon is one tile ahead of the player.
+    viable_coords.size() - 2 if is_hitched
+    else viable_coords.size() - 1
   );
 
   # TODO Identify target spot is retractable (e.g. a pickup the hookshot brings back to you)
@@ -50,11 +52,15 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
     actor.set_animation_state('item_use');
 
     var hookshot: Hookshot_PlayerTool = actor.get_handheld_tool(PlayerHandheldItem.HandheldItemType.Hookshot);
-    hookshot.chain_length = 0;
+    hookshot.reset_to_loaded_position();
 
     for i in range(extendable_length):
       await Engine.get_main_loop().create_timer(0.03).timeout;
       hookshot.chain_length += 1;
+
+    if is_hitched:
+      await Engine.get_main_loop().create_timer(0.03).timeout;
+      hookshot.head_lodged = true;
 
     await Engine.get_main_loop().create_timer(0.4).timeout;
 
