@@ -58,6 +58,15 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
 
     await Engine.get_main_loop().create_timer(0.4).timeout;
 
+    # FIXME I need a more sophisticated system for animation puppeteering.
+    #  This method, set_animation_state, is cursed. Being able to play 'item_use' or
+    #  'item_get!' as one-shots is neat, but now that I have a player state controller,
+    #  it really muddles Player2D's internal consistency. I can't know if 'idle' is
+    #  appropriate here. Player2D should be the one returning to its pre-one-shot state.
+    #
+    #  Also, not all animations are one-shots.
+    actor.set_animation_state('idle');
+
   # TODO If hitchable, animate player toward hitch spot
   #   I need to animate the avatar, not the GridEntity: I don't want to trigger fall stimulations, etc.
   # TODO If retractable, animate target toward player
