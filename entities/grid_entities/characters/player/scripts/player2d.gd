@@ -260,7 +260,7 @@ func get_air_steps_remaining() -> int:
 func reset_air_steps_remaining() -> void:
   _air_steps_remaining = (
     # FIXME Get these numbers from a constants file somewhere.
-    1 if inventory.has_equipment(&'wings')
+    1 if inventory.has_equipment(PlayerEquipment.wings)
     else 0
   );
 
@@ -370,7 +370,7 @@ func _get_move_action() -> FieldAction:
 ## Returns the [FieldAction] variant the [Player2D] will use for pushing objects.
 func _get_push_action() -> FieldAction:
   return (
-    FieldActionList.shove if inventory.has_equipment('shove')
+    FieldActionList.shove if inventory.has_equipment(PlayerEquipment.shove)
     else FieldActionList.push
   );
 
@@ -378,7 +378,7 @@ func _get_push_action() -> FieldAction:
 ## Returns the [FieldAction] variant the [Player2D] will use for melee attacks.
 func _get_sword_action() -> FieldAction:
   return (
-    FieldActionList.sword_strike if inventory.has_equipment('sword')
+    FieldActionList.sword_strike if inventory.has_equipment(PlayerEquipment.sword)
     else FieldActionList.null_action
   );
 
@@ -386,7 +386,7 @@ func _get_sword_action() -> FieldAction:
 ## Returns the [FieldAction] variant the [Player2D] will use for hookshot actions.
 func _get_hookshot_action() -> FieldAction:
   return (
-    FieldActionList.hookshot if inventory.has_equipment('hookshot')
+    FieldActionList.hookshot if inventory.has_equipment(PlayerEquipment.hookshot)
     else FieldActionList.null_action
   )
 
