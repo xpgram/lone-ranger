@@ -919,9 +919,6 @@ position = Vector2(304, -224)
 [node name="EnemyBull" parent="Enemy Container" instance=ExtResource("20_3oxmp")]
 position = Vector2(352, -144)
 
-[node name="EnemyMaggot" parent="Enemy Container" instance=ExtResource("21_0lxvj")]
-position = Vector2(400, -336)
-
 [node name="EnemySnake" parent="Enemy Container" instance=ExtResource("22_7oan8")]
 position = Vector2(448, -336)
 
