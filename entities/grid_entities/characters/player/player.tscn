@@ -1065,17 +1065,17 @@ metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 visible = false
 script = ExtResource("2_y15db")
 item_textures = Dictionary[int, Texture2D]({
-0: SubResource("AtlasTexture_e6hj0"),
-1: SubResource("AtlasTexture_6ncg4")
+1: SubResource("AtlasTexture_e6hj0"),
+2: SubResource("AtlasTexture_6ncg4")
 })
 handheld_sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="HandheldItem"]
-visible = false
 position = Vector2(15, 0)
 texture = ExtResource("2_0vnf7")
 
 [node name="Hookshot" parent="HandheldItem" instance=ExtResource("5_e6hj0")]
+visible = false
 position = Vector2(15, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
