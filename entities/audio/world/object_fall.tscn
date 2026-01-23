@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://wk5w0neyylsi"]
+
+[ext_resource type="AudioStream" uid="uid://b5td4t8tyy66b" path="res://assets/audio/sounds/fall_01.wav" id="1_sdpm6"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_kwqt8"]
+
+[node name="ObjectFall" type="AudioStreamPlayer"]
+stream = ExtResource("1_sdpm6")
+bus = &"SoundEffects"
+script = ExtResource("2_kwqt8")
