@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvkl4d3g51ocn"]
+
+[ext_resource type="AudioStream" uid="uid://efhv4qb1754g" path="res://assets/audio/sounds/push_bump_01.wav" id="1_u4vks"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_pmse4"]
+
+[node name="PushBump" type="AudioStreamPlayer"]
+stream = ExtResource("1_u4vks")
+script = ExtResource("2_pmse4")
