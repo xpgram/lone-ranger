@@ -5,4 +5,5 @@
 
 [node name="RaiseBlock" type="AudioStreamPlayer"]
 stream = ExtResource("1_i438s")
+bus = &"SoundEffects"
 script = ExtResource("2_7xm0m")

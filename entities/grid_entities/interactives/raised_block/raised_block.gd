@@ -9,6 +9,8 @@ const RECOVERY_PER_ROUND := 1;
 const DAMAGE_PER_BUMP := 2;
 const BUMP_DAMAGE_TO_DESTROY := 4;
 
+const _block_rising_audio_scene := preload('uid://caud4wfb4q3ty');
+
 ## The accumulated bump damage.
 var _bump_damage := 0;
 
@@ -16,6 +18,8 @@ var _bump_damage := 0;
 func _ready() -> void:
   super._ready();
   _bind_event_handlers();
+
+  Events.one_shot_sound_emitted.emit(_block_rising_audio_scene);
 
 
 func _bind_event_handlers() -> void:

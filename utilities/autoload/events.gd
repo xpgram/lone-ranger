@@ -12,3 +12,6 @@ signal golem_time_updated(time_remaining: float);
 
 ## Emitted when the turn system completes a full round.
 signal round_passed();
+
+## Emitted when a sound object is created.
+signal one_shot_sound_emitted(audio_scene: PackedScene);

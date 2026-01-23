@@ -5,4 +5,5 @@
 
 [node name="FireSwell" type="AudioStreamPlayer"]
 stream = ExtResource("1_0p123")
+bus = &"SoundEffects"
 script = ExtResource("2_2t3m2")

@@ -5,4 +5,5 @@
 
 [node name="PushBump" type="AudioStreamPlayer"]
 stream = ExtResource("1_u4vks")
+bus = &"SoundEffects"
 script = ExtResource("2_pmse4")

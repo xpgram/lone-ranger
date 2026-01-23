@@ -22,8 +22,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
-Grid="*res://utilities/autoload/grid.gd"
 Events="*res://utilities/autoload/events.gd"
+AudioBus="*res://utilities/autoload/audio_bus.gd"
+Grid="*res://utilities/autoload/grid.gd"
 
 [display]
 
