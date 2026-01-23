@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfuot400wgl4m"]
+
+[ext_resource type="AudioStream" uid="uid://1ll4m6iq04h7" path="res://assets/audio/sounds/click_harsh_01.wav" id="1_5mhh0"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="1_f3w60"]
+
+[node name="SoundOpenChest" type="AudioStreamPlayer"]
+stream = ExtResource("1_5mhh0")
+bus = &"SoundEffects"
+script = ExtResource("1_f3w60")
+metadata/_custom_type_script = "uid://me30ja85krjn"

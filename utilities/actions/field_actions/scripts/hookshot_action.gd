@@ -2,6 +2,11 @@ class_name Hookshot_FieldAction
 extends FieldAction
 
 
+const _scene_hookshot_chink_audio := preload('uid://dhafiaxut071o');
+const _scene_hookshot_ping_audio := preload('uid://efbifjoiie3q');
+const _scene_hookshot_hitch_audio := preload('uid://crvt1l2upalb');
+
+
 @export var max_chain_tile_length := 4;
 
 
@@ -57,10 +62,14 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
     for i in range(extendable_length):
       await Engine.get_main_loop().create_timer(0.03).timeout;
       hookshot.chain_length += 1;
+      Events.one_shot_sound_emitted.emit(_scene_hookshot_chink_audio);
 
     if is_hitched:
       await Engine.get_main_loop().create_timer(0.03).timeout;
       hookshot.head_lodged = true;
+      Events.one_shot_sound_emitted.emit(_scene_hookshot_hitch_audio);
+    else:
+      Events.one_shot_sound_emitted.emit(_scene_hookshot_ping_audio);
 
     await Engine.get_main_loop().create_timer(0.4).timeout;
 

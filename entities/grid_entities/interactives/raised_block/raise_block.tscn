@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://caud4wfb4q3ty"]
+
+[ext_resource type="AudioStream" uid="uid://bprj8dls12lly" path="res://assets/audio/sounds/shifting_dirt_01.wav" id="1_i438s"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_7xm0m"]
+
+[node name="RaiseBlock" type="AudioStreamPlayer"]
+stream = ExtResource("1_i438s")
+bus = &"SoundEffects"
+script = ExtResource("2_7xm0m")

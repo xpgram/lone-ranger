@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckshk52e1bn74"]
+
+[ext_resource type="AudioStream" uid="uid://rx5rl54nolf7" path="res://assets/audio/sounds/push_01.wav" id="1_iyfoh"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_f4qx5"]
+
+[node name="PushScrape" type="AudioStreamPlayer"]
+stream = ExtResource("1_iyfoh")
+bus = &"SoundEffects"
+script = ExtResource("2_f4qx5")

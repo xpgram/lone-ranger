@@ -1,6 +1,9 @@
 extends ContextAction
 
 
+const _scene_open_audio := preload('uid://dfuot400wgl4m');
+
+
 @export var chest: ChestEntity;
 
 
@@ -17,6 +20,7 @@ func perform_interaction_async(actor: GridEntity) -> void:
 
   if actor is Player2D:
     _give_items_to_actor(actor);
+    Events.one_shot_sound_emitted.emit(_scene_open_audio);
     await _play_animation_async(actor);
 
 
