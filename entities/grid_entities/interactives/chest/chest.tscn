@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqm128gxj3t0x"]
+[gd_scene load_steps=8 format=3 uid="uid://dqm128gxj3t0x"]
 
 [ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://entities/grid_entities/interactives/chest/chest.gd" id="1_ask4u"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_yr0pa"]
 [ext_resource type="Script" uid="uid://dct8xv6bwi7al" path="res://utilities/actions/context_actions/open_chest.gd" id="4_4ml27"]
+[ext_resource type="AudioStream" uid="uid://6wwrgv1wcvv" path="res://assets/audio/sounds/chest_open_01.wav" id="4_s4qmw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s4qmw"]
 atlas = ExtResource("2_yr0pa")
@@ -45,3 +46,8 @@ animation = &"closed"
 script = ExtResource("4_4ml27")
 chest = NodePath("..")
 metadata/_custom_type_script = "uid://cqilrqw1pi3ai"
+
+[node name="Audio" type="Node" parent="ContextAction"]
+
+[node name="ChestOpen" type="AudioStreamPlayer" parent="ContextAction/Audio"]
+stream = ExtResource("4_s4qmw")

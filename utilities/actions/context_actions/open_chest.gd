@@ -17,6 +17,7 @@ func perform_interaction_async(actor: GridEntity) -> void:
 
   if actor is Player2D:
     _give_items_to_actor(actor);
+    $Audio/ChestOpen.play();
     await _play_animation_async(actor);
 
 
