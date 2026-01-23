@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://crvt1l2upalb"]
+
+[ext_resource type="AudioStream" uid="uid://cr7uk78gv4o3k" path="res://assets/audio/sounds/hookshot_hitch_01.wav" id="1_m7ymv"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_mhdt0"]
+
+[node name="HookshotExtendedPing" type="AudioStreamPlayer"]
+stream = ExtResource("1_m7ymv")
+volume_db = -5.0
+bus = &"SoundEffects"
+script = ExtResource("2_mhdt0")
+metadata/_custom_type_script = "uid://me30ja85krjn"
