@@ -516,6 +516,8 @@ func _state_injured() -> void:
   _unsettle_affairs();
 
   set_animation_state('injured');
+  $Audio/PlayerHurt.play();
+
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);
 
@@ -591,6 +593,7 @@ func _state_death() -> void:
 
   _interrupt_ui_subsystems();
   set_animation_state('injured');
+  $Audio/PlayerHurt.play();
 
   var fade_out_time := 1.5;
   var fade_in_time := 1.0;

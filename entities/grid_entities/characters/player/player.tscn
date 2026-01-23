@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene load_steps=54 format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://entities/grid_entities/characters/player/scripts/player2d.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://lv8q188gep4i" path="res://entities/grid_entities/characters/player/images/handheld/gray-scepter-right.png" id="2_0vnf7"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://cpjdc1h6kotna" path="res://utilities/resources/string_cross_switch.gd" id="19_5ce6h"]
 [ext_resource type="Script" uid="uid://dxwyf0pnu6nbg" path="res://utilities/nodes/components/grid_entity_components/health_component.gd" id="19_ee7qb"]
 [ext_resource type="Script" uid="uid://bquah6tnohw5e" path="res://common/component/component_combiner.gd" id="21_y15db"]
+[ext_resource type="AudioStream" uid="uid://dau0qapmkoawt" path="res://assets/audio/sounds/player_hurt_01.wav" id="24_6ncg4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e6hj0"]
 atlas = ExtResource("3_q38re")
@@ -1114,3 +1115,8 @@ script = ExtResource("19_ee7qb")
 maximum = 4
 value = 4
 metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="PlayerHurt" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("24_6ncg4")
