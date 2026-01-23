@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://efbifjoiie3q"]
 
-[ext_resource type="AudioStream" uid="uid://cf3afuk50y4jn" path="res://assets/audio/sounds/hookshot_ping_01.wav" id="1_hsmdi"]
+[ext_resource type="AudioStream" uid="uid://f1j26ghvp4h8" path="res://assets/audio/sounds/hookshot_ping_02.wav" id="1_5fitj"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="1_rreki"]
 
 [node name="HookshotExtendedPing" type="AudioStreamPlayer"]
-stream = ExtResource("1_hsmdi")
+stream = ExtResource("1_5fitj")
 volume_db = -5.0
 bus = &"SoundEffects"
 script = ExtResource("1_rreki")
