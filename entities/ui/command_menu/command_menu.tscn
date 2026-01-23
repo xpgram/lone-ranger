@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://du02pajmhvinl"]
+[gd_scene load_steps=20 format=3 uid="uid://du02pajmhvinl"]
 
 [ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://entities/ui/command_menu/command_menu.gd" id="1_ipv67"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://assets/textures_unused/system/command-menu.png" id="2_jcfl5"]
@@ -7,6 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="5_1rpdr"]
 [ext_resource type="Script" uid="uid://372k1qqga746" path="res://entities/ui/command_menu/item_list.gd" id="6_u6tlb"]
 [ext_resource type="Texture2D" uid="uid://cro06oopey0eh" path="res://assets/textures_unused/system/icons/icon-pointer.png" id="7_kdjjn"]
+[ext_resource type="AudioStream" uid="uid://bfk3q2wam726g" path="res://assets/audio/sounds/cmd_menu_cursor_01.wav" id="8_y4i8d"]
+[ext_resource type="AudioStream" uid="uid://c854vwv5ixthy" path="res://assets/audio/sounds/cmd_menu_select_01.wav" id="9_1rpdr"]
+[ext_resource type="AudioStream" uid="uid://u8j3en85hu5n" path="res://assets/audio/sounds/cmd_menu_cancel_01.wav" id="10_u6tlb"]
+[ext_resource type="AudioStream" uid="uid://bokxickp3w8gg" path="res://assets/audio/sounds/cmd_menu_open_01.wav" id="11_u6tlb"]
+[ext_resource type="AudioStream" uid="uid://c4v0m3vm0d6c2" path="res://assets/audio/sounds/cmd_menu_close_01.wav" id="12_kdjjn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
 
@@ -73,7 +78,7 @@ _data = {
 &"wiggle": SubResource("Animation_u44ev")
 }
 
-[node name="CommandMenu" type="Control" node_paths=PackedStringArray("_inventory", "_main_list", "_options_list")]
+[node name="CommandMenu" type="Control" node_paths=PackedStringArray("_main_list", "_options_list", "sound_menu_select", "sound_menu_confirm", "sound_menu_cancel", "sound_menu_open", "sound_menu_close")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,9 +86,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ipv67")
-_inventory = NodePath("")
 _main_list = NodePath("NinePatchRect/MainList")
 _options_list = NodePath("NinePatchRect/OptionsList")
+sound_menu_select = NodePath("Audio/MenuSelect")
+sound_menu_confirm = NodePath("Audio/MenuConfirm")
+sound_menu_cancel = NodePath("Audio/MenuCancel")
+sound_menu_open = NodePath("Audio/MenuOpen")
+sound_menu_close = NodePath("Audio/MenuClose")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 1
@@ -177,3 +186,25 @@ libraries = {
 &"": SubResource("AnimationLibrary_u2uj7")
 }
 autoplay = "wiggle"
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="MenuSelect" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("8_y4i8d")
+bus = &"SoundEffects"
+
+[node name="MenuConfirm" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("9_1rpdr")
+bus = &"SoundEffects"
+
+[node name="MenuCancel" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("10_u6tlb")
+bus = &"SoundEffects"
+
+[node name="MenuOpen" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("11_u6tlb")
+bus = &"SoundEffects"
+
+[node name="MenuClose" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("12_kdjjn")
+bus = &"SoundEffects"

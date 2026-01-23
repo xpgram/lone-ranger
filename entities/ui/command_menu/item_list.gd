@@ -8,6 +8,9 @@ signal item_chosen(item: Variant);
 ## Emitted when the menu wishes to close or yield focus back to some other context.
 signal go_back();
 
+## Emitted whenever the cursor moves between items or pages.
+signal cursor_moved();
+
 
 ## Whether the cursor position is remembered the next time this menu is opened after
 ## closing it.
@@ -226,6 +229,7 @@ func _move_cursor(direction: int) -> void:
   _memory.cursor_index = wrapi(_memory.cursor_index, 0, item_count);
 
   _self_select_item(_memory.cursor_index);
+  cursor_moved.emit();
 
 
 ## Moves the page_cursor left or right, relative to its current position, then updates the
@@ -235,6 +239,7 @@ func _move_page_cursor(direction: int) -> void:
   _memory.page_index = wrapi(_memory.page_index, 0, get_page_count());
 
   _change_to_page(_memory.page_index);
+  cursor_moved.emit();
 
 
 ## Emits the item_chosen signal with the data of the list-item that was activated.

@@ -56,6 +56,24 @@ const MAIN_LIST_OPTIONS = [
 @export var _options_list: CommandMenuItemList;
 
 
+@export_group('Audio')
+
+## An audio node to trigger when the menu cursor moves.
+@export var sound_menu_select: AudioStreamPlayer;
+
+## An audio node to trigger when a choice is made.
+@export var sound_menu_confirm: AudioStreamPlayer;
+
+## An audio node to trigger when a cancel input is given.
+@export var sound_menu_cancel: AudioStreamPlayer;
+
+## An audio node to trigger when the menu opens.
+@export var sound_menu_open: AudioStreamPlayer;
+
+## An audio node to trigger when the menu closes.
+@export var sound_menu_close: AudioStreamPlayer;
+
+
 ## Which submenu of the CommandMenu is being shown.
 var active_menu := Submenu.Main;
 
@@ -88,6 +106,7 @@ func _unhandled_input(event: InputEvent) -> void:
   if event.is_action_pressed('open_action_menu'):
     close();
     ui_canceled.emit();
+    sound_menu_close.play();
     accept_event();
 
 
@@ -99,6 +118,8 @@ func open() -> void:
     _switch_to_main_list();
   else:
     _switch_to_options_list(active_menu);
+
+  sound_menu_open.play();
 
 
 ## Opens the menu after resetting the active menu to main.
@@ -134,18 +155,26 @@ func _connect_to_item_lists() -> void:
   # TODO Refactor this to require less explanation?
   # Main -> switch to Options
   _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
+  _main_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
+
+  _main_list.cursor_moved.connect(func (): sound_menu_select.play());
 
   # Main (cancel) -> close()
   _main_list.go_back.connect(func ():
     close();
     ui_canceled.emit();
   );
+  _main_list.go_back.connect(func (): sound_menu_close.play());
 
   # Options -> emit action_selected
   _options_list.item_chosen.connect(func (item: PlayerInventoryItem): action_selected.emit(item.action));
+  _options_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
+
+  _options_list.cursor_moved.connect(func (): sound_menu_select.play());
 
   # Options (cancel) -> switch to Main
   _options_list.go_back.connect(func (): _switch_to_main_list());
+  _options_list.go_back.connect(func (): sound_menu_cancel.play());
 
 
 ## Configure child ItemList nodes.
