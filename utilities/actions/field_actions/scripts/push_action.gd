@@ -3,6 +3,8 @@ extends FieldAction
 
 
 const scene_push_cloud := preload('uid://hua0n75be2w3');
+const scene_bump_audio := preload('uid://cvkl4d3g51ocn');
+const scene_scrape_audio := preload('uid://ckshk52e1bn74');
 const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 
 
@@ -32,9 +34,14 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
   for cell in cells_to_push_reversed:
     _try_push_entities(cell.entities, playbill.orientation);
 
+  # TODO Maybe _try_push_entities() should just return a boolean?
   var entities_were_pushed := not ActionUtils.place_is_obstructed(playbill.target_position);
+
   if entities_were_pushed:
     _create_push_cloud(actor, playbill.target_position, playbill.orientation);
+    Events.one_shot_sound_emitted.emit(scene_scrape_audio);
+  else:
+    Events.one_shot_sound_emitted.emit(scene_bump_audio);
 
   if actor is Player2D:
     # TODO Use actor.play_one_shot_animation('push', true) to interrupt the player's idle

@@ -2,6 +2,9 @@ class_name Burn_FieldAction
 extends FieldAction
 
 
+const _burn_audio_scene := preload('uid://x6flo6meb5s1');
+
+
 func can_perform(_playbill: FieldActionPlaybill) -> bool:
   # TODO Does anything need to be checked here?
   #  Seems everything is covered by the inventory/field_cursor systems.
@@ -10,6 +13,7 @@ func can_perform(_playbill: FieldActionPlaybill) -> bool:
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:
   ActionUtils.play_cast_animation(playbill.performer, playbill.orientation);
+  Events.one_shot_sound_emitted.emit(_burn_audio_scene);
 
   var entities := Grid.get_entities(playbill.target_position);
 
