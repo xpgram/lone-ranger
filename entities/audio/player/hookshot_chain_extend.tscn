@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhafiaxut071o"]
+
+[ext_resource type="AudioStream" uid="uid://duky3vum3h3gl" path="res://assets/audio/sounds/hookshot_chain_01.wav" id="1_1bkco"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="1_qk40l"]
+
+[node name="HookshotChainExtend" type="AudioStreamPlayer"]
+stream = ExtResource("1_1bkco")
+bus = &"SoundEffects"
+script = ExtResource("1_qk40l")
+metadata/_custom_type_script = "uid://me30ja85krjn"
