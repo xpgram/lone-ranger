@@ -26,6 +26,26 @@ func _ready() -> void:
   turn_timer.timeout.connect(_on_turn_timer_timeout);
 
 
+var _is_near_player := false;
+func _process(_delta: float) -> void:
+  # FIXME Get this out of the process step.
+  var player := ActionUtils.get_player_entity();
+  var boss_grid_position := get_entity().grid_position;
+
+  var in_boss_zone := (
+    player.grid_position.x >= boss_grid_position.x + 3
+    and player.grid_position.y >= boss_grid_position.y
+  );
+
+  if not _is_near_player and in_boss_zone:
+    _is_near_player = true;
+    Events.enemy_appeared.emit();
+
+  if _is_near_player and not in_boss_zone:
+    _is_near_player = false;
+    Events.enemy_disappeared.emit();
+
+
 func act_async() -> void:
   if not activated:
     return;

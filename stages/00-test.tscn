@@ -1,5 +1,6 @@
-[gd_scene load_steps=40 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=44 format=4 uid="uid://5elbiihgljqp"]
 
+[ext_resource type="Script" uid="uid://diglkc70n8ywq" path="res://stages/00_test.gd" id="1_7u74a"]
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
 [ext_resource type="Resource" uid="uid://bapo7igdusiqf" path="res://utilities/resources/cell_terrain_data/wall.tres" id="2_fmasa"]
 [ext_resource type="Resource" uid="uid://bsvg3r3elpj1n" path="res://utilities/resources/cell_terrain_data/pit.tres" id="3_2ba2c"]
@@ -25,6 +26,9 @@
 [ext_resource type="PackedScene" uid="uid://cieqoiwkjqwtb" path="res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn" id="23_l5wv4"]
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
 [ext_resource type="Script" uid="uid://bjwpwtqramwd2" path="res://entities/grid_entities/utility/trigger_spot.gd" id="29_fyjc2"]
+[ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
+[ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
+[ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -662,6 +666,7 @@ quantity = 4
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_7u74a")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-8, -8)
@@ -960,3 +965,9 @@ metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="PlayerModule" parent="." instance=ExtResource("41_p22wk")]
 position = Vector2(128, 160)
+
+[node name="AudioStreamSwitch" type="Node" parent="."]
+script = ExtResource("32_4ouhr")
+exploration_track_scene = ExtResource("33_6ge87")
+battle_track_scene = ExtResource("34_mmv8l")
+metadata/_custom_type_script = "uid://dtvydddq5cwbl"
