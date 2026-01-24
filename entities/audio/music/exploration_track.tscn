@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0mts7k084505"]
+
+[ext_resource type="AudioStream" uid="uid://dyo0c2fc3wiv6" path="res://assets/audio/music/exploration_overlay.ogg" id="1_lrjx3"]
+[ext_resource type="Script" uid="uid://cakgnaxm4kkow" path="res://utilities/nodes/audio/overlap_loop_audio_stream.gd" id="2_ckkeg"]
+
+[node name="ExplorationTrack" type="AudioStreamPlayer"]
+stream = ExtResource("1_lrjx3")
+volume_db = -2.0
+max_polyphony = 2
+bus = &"Music"
+parameters/looping = true
+script = ExtResource("2_ckkeg")
