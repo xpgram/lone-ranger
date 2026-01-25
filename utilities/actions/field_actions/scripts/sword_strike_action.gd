@@ -2,6 +2,9 @@ class_name SwordStrike_FieldAction
 extends FieldAction
 
 
+const _scene_cast_audio := preload('uid://gp5umbprfog6');
+
+
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var target_entities := Grid.get_entities(playbill.target_position);
   var any_attackable_entity: bool = target_entities.any(func (entity: GridEntity): return Component.has_component(entity, HealthComponent));
@@ -15,6 +18,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:
   ActionUtils.play_attack_animation(playbill.performer, playbill.orientation);
+  AudioBus.play_audio_scene(_scene_cast_audio);
 
   var target_health_components := ActionUtils \
     .get_entity_health_components(Grid.get_entities(playbill.target_position));

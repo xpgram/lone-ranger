@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://gp5umbprfog6"]
+
+[ext_resource type="AudioStream" uid="uid://brd31hfr2fek2" path="res://assets/audio/sounds/sword_swipe_01.wav" id="1_gxxrf"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_6vl3a"]
+
+[node name="SwordSwipe" type="AudioStreamPlayer"]
+stream = ExtResource("1_gxxrf")
+bus = &"SoundEffects"
+script = ExtResource("2_6vl3a")
+metadata/_custom_type_script = "uid://me30ja85krjn"
