@@ -2,6 +2,9 @@ class_name Compact_FieldAction
 extends FieldAction
 
 
+const _scene_cast_audio := preload('uid://dfnf8ej8gvnk6');
+
+
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var entities := Grid.get_entities(playbill.target_position);
   return entities \
@@ -10,6 +13,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:
   ActionUtils.play_cast_animation(playbill.performer, playbill.orientation);
+  AudioBus.play_audio_scene(_scene_cast_audio);
 
   var entities := Grid.get_entities(playbill.target_position);
   

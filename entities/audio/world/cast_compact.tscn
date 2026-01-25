@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfnf8ej8gvnk6"]
+
+[ext_resource type="AudioStream" uid="uid://wl8d0i3tt38f" path="res://assets/audio/sounds/spell_sound_01.wav" id="1_ofbs8"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_bcy1y"]
+
+[node name="CastCompact" type="AudioStreamPlayer"]
+stream = ExtResource("1_ofbs8")
+bus = &"SoundEffects"
+script = ExtResource("2_bcy1y")
