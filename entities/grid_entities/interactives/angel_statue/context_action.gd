@@ -1,6 +1,9 @@
 extends ContextAction
 
 
+const _scene_save_audio := preload('uid://b7nqq1bsbqwx5');
+
+
 @export var save_idol: GridEntity;
 
 
@@ -14,6 +17,8 @@ func can_interact(actor: GridEntity) -> bool:
 func perform_interaction_async(actor: GridEntity) -> void:
   if actor is not Player2D:
     return;
+
+  AudioBus.play_audio_scene(_scene_save_audio);
 
   # FIXME I need some way of making the screen shader more accessible.
   #  Uhh... I guess that's kinda what events are for? Hm.
