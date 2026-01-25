@@ -20,6 +20,9 @@ signal entity_moved();
 ## Whether this entity can be forcibly moved into another Grid position.
 @export var pushable := false;
 
+## Whether this entity is a flooring-type that other entities can stand on.
+@export var standable := false;
+
 # TODO observes_golem_time only makes sense to GridActorComponents, so should be located there?
 ## Whether this entity adheres to the more turn-based golem time instead of the ongoing
 ## action timer.
@@ -58,7 +61,10 @@ var grid_position: Vector2i:
     Grid.put(self, grid_position);
     entity_moved.emit();
 
-    if ActionUtils.place_is_pit(grid_position):
+    if (
+      ActionUtils.place_is_pit(grid_position)
+      and not ActionUtils.place_is_idleable(grid_position, self)
+    ):
       react_async(Stimulus.is_over_pit);
 
 
