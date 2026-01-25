@@ -14,6 +14,9 @@ class_name GridActorComponent
 extends BaseComponent
 
 
+## Whether this GridEntity is allowed to act via this component.
+var _enabled := true;
+
 ## Whether this GridEntity has acted this turn.
 var _exhausted := false;
 
@@ -31,6 +34,17 @@ func _get_configuration_warnings() -> PackedStringArray:
   return warnings;
 
 
+## Enables this actor component, permitting it to perform the GridEntity's behavior.
+func enable() -> void:
+  _enabled = true;
+
+
+## Disables this actor component, forcing it to refuse all GridEntity behavior requests.
+func disable() -> void:
+  _enabled = false;
+  exhaust();
+
+
 ## Returns the [GridEntity] this object is a component to.
 func get_entity() -> GridEntity:
   return get_component_owner();
@@ -38,6 +52,9 @@ func get_entity() -> GridEntity:
 
 ## Readies this entity to act this turn.
 func prepare_to_act() -> void:
+  if not _enabled:
+    return;
+
   _exhausted = false;
 
 
@@ -59,7 +76,8 @@ func can_act() -> bool:
   var grid_entity := get_entity();
 
   return (
-    not has_acted()
+    _enabled
+    and not has_acted()
     and not grid_entity.has_attribute('stun')
   );
 
