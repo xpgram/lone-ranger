@@ -58,7 +58,7 @@ func get_entities(place: Vector2) -> Array[GridEntity]:
 
   if _map.has(place_key):
     entities.assign(_map[place_key].entities);
-  
+
   return entities;
 
 

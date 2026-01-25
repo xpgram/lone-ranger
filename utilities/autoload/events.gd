@@ -18,3 +18,9 @@ signal round_passed();
 #  can be cut early.
 ## Emitted when a sound object is created.
 signal one_shot_sound_emitted(audio_scene: PackedScene);
+
+##
+signal enemy_appeared();
+
+##
+signal enemy_disappeared();

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://buak42ny2ymxl"]
+
+[ext_resource type="AudioStream" uid="uid://bnkgx8v8lu7tm" path="res://assets/audio/music/wacky_battle_overlay.ogg" id="1_k1mrk"]
+[ext_resource type="Script" uid="uid://cakgnaxm4kkow" path="res://utilities/nodes/audio/overlap_loop_audio_stream.gd" id="2_0ip2n"]
+
+[node name="BattleTrack" type="AudioStreamPlayer"]
+stream = ExtResource("1_k1mrk")
+volume_db = -2.0
+max_polyphony = 2
+bus = &"Music"
+parameters/looping = true
+script = ExtResource("2_0ip2n")

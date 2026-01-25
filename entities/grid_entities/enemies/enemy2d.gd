@@ -12,6 +12,10 @@ func _ready() -> void:
   _bind_health_listeners();
 
 
+func _exit_tree() -> void:
+  super._exit_tree();
+
+
 ## Binds signal listeners to signals.
 func _bind_health_listeners() -> void:
   var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
