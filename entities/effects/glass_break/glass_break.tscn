@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://da6wyd1fs28c2"]
+
+[ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="1_m48im"]
+[ext_resource type="Script" uid="uid://chm2vnf2syi0f" path="res://entities/effects/glass_break/glass_break.gd" id="2_m48im"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31clm"]
+atlas = ExtResource("1_m48im")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fgk3"]
+atlas = ExtResource("1_m48im")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yatdr"]
+atlas = ExtResource("1_m48im")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5ryq"]
+atlas = ExtResource("1_m48im")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mekoa"]
+atlas = ExtResource("1_m48im")
+region = Rect2(64, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7gxl"]
+atlas = ExtResource("1_m48im")
+region = Rect2(80, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3oq8t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31clm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fgk3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yatdr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5ryq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mekoa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7gxl")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="GlassBreak" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_3oq8t")
+autoplay = "default"
+script = ExtResource("2_m48im")
+metadata/_custom_type_script = "uid://bwaarisv8qymj"

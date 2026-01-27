@@ -13,7 +13,7 @@ func put(entity: GridEntity, place: Vector2) -> void:
 
   var place_key := _get_key(place);
 
-  # Ensure that entities are not double-placed in the given cell.
+  # Ensure that entities are not double-placed in the moved-to cell.
   remove(entity, place);
 
   _try_create_cell(place_key);
@@ -39,9 +39,17 @@ func remove(entity: GridEntity, place: Vector2) -> void:
   if not _map.has(place_key):
     return;
 
-  # Filter entity from the cell's list of entities.
   var cell := _map[place_key];
+
+  if entity not in cell.entities:
+    return;
+
+  # Filter entity from the cell's list of entities.
   cell.entities = cell.entities.filter(func (cell_entity): return cell_entity != entity);
+
+  # Run collisions.
+  for cell_entity in cell.entities:
+    cell_entity.react_async(Stimulus.entity_separation);
 
   _try_destroy_cell(place_key);
 

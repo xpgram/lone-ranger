@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://6imckxwaw70b"]
 
-[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_32vnh"]
+[ext_resource type="Script" uid="uid://bgmayshv87emn" path="res://entities/grid_entities/interactives/glass_tile/glass_tile.gd" id="1_32vnh"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_rpkio"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y3g3p"]

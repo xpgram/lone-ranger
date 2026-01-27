@@ -10,6 +10,10 @@ const bumped := &'bumped';
 ## [codeblock]func (entity: GridEntity) -> void; [/codeblock]
 const entity_collision := &'entity_collision';
 
+## When a [GridEntity] moves away from the same tile as another [GridEntity].
+## [codeblock]func (entity: GridEntity) -> void; [/codeblock]
+const entity_separation := &'entity_separation';
+
 ## When a [GridEntity] is positioned over a floor space. [br]
 ##
 ## This signal is specifically useful when a floor tile is created beneath an already
