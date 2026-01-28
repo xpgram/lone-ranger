@@ -241,6 +241,7 @@ func get_action_from_brace_interact_input() -> FieldActionSchedule:
   );
 
   var actions := [
+    _get_sword_action(),
     _get_hookshot_action(),
   ];
 
