@@ -36,5 +36,7 @@
 &"scene": "res://entities/grid_entities/interactives/raised_block/raised_block.tscn"
 }, {
 &"scene": "res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.tscn"
 }]
 }]
