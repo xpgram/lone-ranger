@@ -318,6 +318,15 @@ func set_animation_state(state_key: StringName) -> void:
   animation_state_switch.play(state_key, faced_direction);
 
 
+## Sets the animation state to a variant of the idle animation dependent on environment
+## context.
+func _trigger_idle_animation_state() -> void:
+  if ActionUtils.place_is_idleable(grid_position, self):
+    set_animation_state('idle');
+  else:
+    set_animation_state('flying');
+
+
 ## Sets the player avatar's handheld item type to [param item_type].
 func set_handheld_item(item_type: PlayerHandheldItem.HandheldItemType) -> void:
   $HandheldItem.set_item(item_type);
@@ -459,7 +468,7 @@ func _on_entity_moved() -> void:
   #
   #   The falling state is handled via Stimulus, maybe resting neatly on solid ground
   #   should also trigger a Stimulus.
-  set_animation_state('idle');
+  _trigger_idle_animation_state();
 
 
 func _facing_changed() -> void:
@@ -476,7 +485,7 @@ func _on_free_fall() -> void:
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be
 ## accessed from here.
 func _state_idle() -> void:
-  set_animation_state('idle');
+  _trigger_idle_animation_state();
 
 
 func _state_idle__exit() -> void:

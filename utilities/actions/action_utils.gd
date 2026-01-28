@@ -87,7 +87,7 @@ static func get_player_entity() -> Player2D:
 
 
 ## Returns true if the cell at [param place] has an entity that acts as flooring.
-static func place_has_standable(place: Vector2i) -> bool:
+static func place_has_standable_grid_entity(place: Vector2i) -> bool:
   var entities := Grid.get_entities(place);
   return entities.any(func (entity: GridEntity): return entity.standable);
 
@@ -104,7 +104,7 @@ static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
   return (
     (
       cell_is_floor(cell)
-      or place_has_standable(place)
+      or place_has_standable_grid_entity(place)
     )
     and not cell_has_collidables(cell, self_entity)
   );
