@@ -1109,7 +1109,7 @@ position = Vector2(736, 384)
 position = Vector2(112, 304)
 
 [node name="HeartPiecePickup2" parent="Interactives Container" instance=ExtResource("22_1sjut")]
-position = Vector2(-512, -192)
+position = Vector2(-512, -208)
 
 [node name="HeartPiecePickup3" parent="Interactives Container" instance=ExtResource("22_1sjut")]
 position = Vector2(-80, -368)
