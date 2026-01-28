@@ -47,7 +47,7 @@ anim_speed_max = 20.0
 
 [node name="MagicDrawPoint" type="Node2D"]
 script = ExtResource("1_v0hlf")
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+metadata/_custom_type_script = "uid://cyk1qn1cjdhk2"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_0mqgx")

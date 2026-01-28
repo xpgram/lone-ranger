@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=51 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="Script" uid="uid://diglkc70n8ywq" path="res://stages/00_test.gd" id="1_7u74a"]
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
@@ -691,6 +691,12 @@ action = ExtResource("11_mhctp")
 quantity = 4
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="Resource" id="Resource_ofvvy"]
+script = ExtResource("9_7oan8")
+action = ExtResource("11_mhctp")
+quantity = 3
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_7u74a")
 
@@ -1119,6 +1125,13 @@ position = Vector2(-336, 0)
 
 [node name="MagicDrawPoint" parent="Interactives Container" instance=ExtResource("26_gcv67")]
 position = Vector2(32, -64)
+magic_item = SubResource("Resource_ofvvy")
+trigger_amount = 2
+
+[node name="MagicDrawPoint2" parent="Interactives Container" instance=ExtResource("26_gcv67")]
+position = Vector2(160, -16)
+magic_item = SubResource("Resource_ofvvy")
+trigger_amount = 2
 
 [node name="Enemy Container" type="Node2D" parent="."]
 

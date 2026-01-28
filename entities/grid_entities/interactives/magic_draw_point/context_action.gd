@@ -11,7 +11,7 @@ func can_interact(actor: GridEntity) -> bool:
   return (actor.faced_position == _draw_point.grid_position);
 
 
-func _perform_interaction_async(actor: GridEntity) -> void:
+func perform_interaction_async(actor: GridEntity) -> void:
   if (
       not _draw_point.is_drawable()
       or actor is not Player2D
@@ -25,9 +25,10 @@ func _perform_interaction_async(actor: GridEntity) -> void:
 
 ## Add the draw point's magic contents to the [param player]'s inventory.
 func _give_magic_to_player(player: Player2D) -> void:
-  var magic_item := _draw_point.magic_item;
-
+  var magic_item := _draw_point.magic_item.duplicate();
   player.inventory.add_item(magic_item);
 
   # TODO If such a message is logged, it should probably be logged by the inventory itself.
   print("%s obtained %s %s..." % [player.name, magic_item.quantity, magic_item.action.action_name]);
+
+  _draw_point.deactivate();
