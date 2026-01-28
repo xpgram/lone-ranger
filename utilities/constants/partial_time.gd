@@ -11,7 +11,7 @@ class_name PartialTime
 
 ## The default number of real-time seconds for a player turn to elapse.
 ## Note that other values, FULL, HALF, etc., are real-time fractions of this number.
-const TURN_ELAPSE_LENGTH := 15.0;
+const TURN_ELAPSE_LENGTH := 10.0;
 
 const FULL      := TURN_ELAPSE_LENGTH * 1.0;
 const MOST      := TURN_ELAPSE_LENGTH * 0.75;
