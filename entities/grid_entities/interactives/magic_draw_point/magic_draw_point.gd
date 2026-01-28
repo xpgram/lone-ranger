@@ -6,8 +6,15 @@ extends Interactive2D
 ## should be a spell.)
 @export var magic_item: PlayerInventoryItem;
 
-## How many uses of magic the player must have less than for this draw point to appear.
-@export var trigger_amount := 3;
+## How many uses of magic the player must have [b]less than or equal to[/b] for this draw
+## point to appear.
+@export var activation_amount := 2;
+
+## How many uses of magic the player must have [b]more than[/b] for this draw point to
+## disappear. [br]
+##
+## If negative, this will be treated as equal to [member activation_amount].
+@export var deactivation_amount := -1;
 
 ## Whether the draw point may be drawn from.
 var _is_drawable := true;
@@ -27,9 +34,12 @@ func _on_player_inventory_item_updated(field_action: FieldAction, new_quantity: 
   if field_action.action_uid != magic_item.action.action_uid:
     return;
 
-  if new_quantity <= trigger_amount:
+  var to_activate := activation_amount;
+  var to_deactivate := deactivation_amount if deactivation_amount >= 0 else activation_amount;
+
+  if new_quantity <= to_activate:
     activate();
-  else:
+  elif new_quantity > to_deactivate:
     deactivate();
 
 

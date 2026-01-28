@@ -1126,12 +1126,11 @@ position = Vector2(-336, 0)
 [node name="MagicDrawPoint" parent="Interactives Container" instance=ExtResource("26_gcv67")]
 position = Vector2(32, -64)
 magic_item = SubResource("Resource_ofvvy")
-trigger_amount = 2
 
 [node name="MagicDrawPoint2" parent="Interactives Container" instance=ExtResource("26_gcv67")]
 position = Vector2(160, -16)
 magic_item = SubResource("Resource_ofvvy")
-trigger_amount = 2
+activation_amount = 3
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
