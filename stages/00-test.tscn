@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=57 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="Script" uid="uid://diglkc70n8ywq" path="res://stages/00_test.gd" id="1_7u74a"]
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
@@ -25,6 +25,8 @@
 [ext_resource type="PackedScene" uid="uid://cwpfqmqnobovf" path="res://entities/grid_entities/enemies/snake/enemy_snake.tscn" id="22_7oan8"]
 [ext_resource type="PackedScene" uid="uid://cieqoiwkjqwtb" path="res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn" id="23_l5wv4"]
 [ext_resource type="PackedScene" uid="uid://6imckxwaw70b" path="res://entities/grid_entities/interactives/glass_tile/glass_tile.tscn" id="25_mmv8l"]
+[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="26_gcv67"]
+[ext_resource type="Texture2D" uid="uid://bjvy0k2ybhnsl" path="res://assets/00 - source/dingles_all.png" id="27_0mqgx"]
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
 [ext_resource type="Script" uid="uid://bjwpwtqramwd2" path="res://entities/grid_entities/utility/trigger_spot.gd" id="29_fyjc2"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
@@ -690,6 +692,48 @@ action = ExtResource("11_mhctp")
 quantity = 4
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0mqgx"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_ofvvy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.09953703, 1), 0.0, 0.0, 0, 0, Vector2(0.49768516, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_6camj"]
+curve = SubResource("Curve_ofvvy")
+
+[sub_resource type="Curve" id="Curve_hwv0m"]
+_limits = [-1.0, 1.0, 0.0, 8.0]
+_data = [Vector2(0, 0.0035243034), 0.0, 0.0, 0, 0, Vector2(1, 0.1524229), 0.0, 0.0, 0, 0, Vector2(2, -0.35154188), 0.0, 0.0, 0, 0, Vector2(3, 0.49603528), 0.0, 0.0, 0, 0, Vector2(3.9999998, -0.6493392), 0.0, 0.0, 0, 0, Vector2(5, 1), 0.0, 0.0, 0, 0, Vector2(6.0000005, -1), 0.0, 0.0, 0, 0, Vector2(7.0000005, 1), 0.0, 0.0, 0, 0, Vector2(8, -1), 0.0, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_lxj52"]
+curve_x = SubResource("Curve_hwv0m")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6camj"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 4, 0)
+emission_shape = 3
+emission_box_extents = Vector3(6, 2, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = -2.0
+initial_velocity_max = -2.0
+directional_velocity_min = 11.999984
+directional_velocity_max = 11.999984
+directional_velocity_curve = SubResource("CurveXYZTexture_lxj52")
+gravity = Vector3(0, -24, 0)
+linear_accel_min = 11.999997
+linear_accel_max = 11.999997
+alpha_curve = SubResource("CurveTexture_6camj")
+anim_speed_min = 0.25
+anim_speed_max = 1.0
+anim_offset_max = 1.0
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_7u74a")
 
@@ -1115,6 +1159,20 @@ position = Vector2(-336, 0)
 
 [node name="BoulderEntity66" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(-336, 0)
+
+[node name="MagicDrawPoint" type="Node2D" parent="Interactives Container"]
+position = Vector2(16, 0)
+script = ExtResource("26_gcv67")
+metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Interactives Container/MagicDrawPoint"]
+material = SubResource("CanvasItemMaterial_0mqgx")
+amount_ratio = 0.8
+texture = ExtResource("27_0mqgx")
+lifetime = 1.2
+speed_scale = 0.65
+fixed_fps = 32
+process_material = SubResource("ParticleProcessMaterial_6camj")
 
 [node name="Enemy Container" type="Node2D" parent="."]
 
