@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://b025q84ct55mo"]
 
-[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_6sfvm"]
+[ext_resource type="Script" uid="uid://cyk1qn1cjdhk2" path="res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.gd" id="1_v0hlf"]
 [ext_resource type="Texture2D" uid="uid://vxbbyaiao3gu" path="res://entities/grid_entities/interactives/magic_draw_point/images/mana_dingles.png" id="2_v0hlf"]
-[ext_resource type="Script" uid="uid://cqilrqw1pi3ai" path="res://utilities/actions/context_actions/context_action.gd" id="3_v0hlf"]
+[ext_resource type="Script" uid="uid://d30bcybt1e6fy" path="res://entities/grid_entities/interactives/magic_draw_point/context_action.gd" id="3_v0hlf"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0mqgx"]
 particles_animation = true
@@ -46,7 +46,7 @@ anim_speed_min = 20.0
 anim_speed_max = 20.0
 
 [node name="MagicDrawPoint" type="Node2D"]
-script = ExtResource("1_6sfvm")
+script = ExtResource("1_v0hlf")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
@@ -57,6 +57,7 @@ speed_scale = 0.75
 fixed_fps = 64
 process_material = SubResource("ParticleProcessMaterial_6camj")
 
-[node name="ContextAction" type="Node" parent="."]
+[node name="ContextAction" type="Node" parent="." node_paths=PackedStringArray("_draw_point")]
 script = ExtResource("3_v0hlf")
+_draw_point = NodePath("..")
 metadata/_custom_type_script = "uid://cqilrqw1pi3ai"
