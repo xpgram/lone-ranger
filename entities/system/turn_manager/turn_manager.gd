@@ -168,6 +168,11 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
 
     await Promise.all(actor_promises).finished;
 
+  # Make sure our list of actors is clean.
+  actor_components.assign(actor_components.filter(func (actor: GridActorComponent):
+    return not actor.is_queued_for_deletion();
+  ));
+
   for actor in actor_components:
     actor.get_entity().update_attributes();
 
