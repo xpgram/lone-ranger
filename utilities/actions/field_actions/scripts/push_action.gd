@@ -82,27 +82,35 @@ func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> voi
   var current_position := entities[0].grid_position;
   var push_to_position := current_position + direction;
   var tile_is_obstructed := ActionUtils.place_is_obstructed(push_to_position);
-  var entities_not_pushable := not _all_entities_pushable(entities);
 
-  if tile_is_obstructed or entities_not_pushable:
+  if tile_is_obstructed:
     Grid.notify_entities_async(current_position, Stimulus.bumped);
+    return;
 
-  else:
-    for entity in entities:
-      entity.grid_position = push_to_position;
+  var pushable_entities: Array[GridEntity];
+  pushable_entities.assign(entities.filter(_entity_is_pushable));
 
-      if entity is Enemy2D:
-        entity.apply_attribute('stun', stun_attribute_resource.duplicate());
+  var non_pushable_entities: Array[GridEntity];
+  non_pushable_entities.assign(entities.filter(func (entity: GridEntity):
+    return not _entity_is_pushable(entity)
+  ));
+
+  for entity in pushable_entities:
+    entity.grid_position = push_to_position;
+
+    if entity is Enemy2D:
+      entity.apply_attribute('stun', stun_attribute_resource.duplicate());
+
+  for entity in non_pushable_entities:
+    Grid.notify_entities_async(current_position, Stimulus.bumped);
 
 
 ## Returns true if all entities in [param entities] are pushable. If at least one entity
 ## is too heavy, or non-pushable by some other means, returns false.
-func _all_entities_pushable(entities: Array[GridEntity]) -> bool:
-  return entities.all(func (entity: GridEntity):
-    # TODO Entities need a weight value to measure _push_strength against.
-    var strength_matched := _push_strength > 0;
-    return entity.pushable and strength_matched;
-  );
+func _entity_is_pushable(entity: GridEntity) -> bool:
+  # TODO Entities need a weight value to measure _push_strength against.
+  var strength_matched := _push_strength > 0;
+  return entity.pushable and strength_matched;
 
 
 ## Creates a push cloud effect node as a sibling of [param entry_node] at

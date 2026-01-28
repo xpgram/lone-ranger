@@ -4,9 +4,8 @@
 
 [resource]
 script = ExtResource("1_ymuau")
-_push_length = 3
+_push_length = 2
 action_uid = &"shove"
 action_name = "Shove"
 action_description = "Move 3 targets in a line one tile over."
-action_time_cost = 15.0
 metadata/_custom_type_script = "uid://cr14jkqg2alan"
