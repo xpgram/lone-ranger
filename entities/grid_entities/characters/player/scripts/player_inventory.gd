@@ -37,6 +37,10 @@ signal items_updated(items: Array[PlayerInventoryItem]);
 func _ready() -> void:
   emit_full_inventory();
 
+  # TODO Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
+  #  I could devise a _post_ready() step by sending function calls to a global service. Hm.
+  _announce_magic_quantities();
+
 
 ## Broadcasts the entire inventory contents to any nodes who might be listening.
 ## Useful for resyncing after a node has made connections to the Inventory's signals.
@@ -45,6 +49,14 @@ func emit_full_inventory() -> void:
   abilities_updated.emit(_get_sorted_array(_abilities));
   magic_updated.emit(_get_sorted_array(_magic));
   items_updated.emit(_get_sorted_array(_items));
+
+
+## Broadcasts the magic inventory contents and quantities to any nodes who might be
+## listening. Useful for retriggering magic draw point states.
+func _announce_magic_quantities() -> void:
+  for item_key in _magic:
+    var item := _magic[item_key];
+    Events.player_inventory_item_updated.emit(item.action, item.quantity);
 
 
 ## Adds a FieldAction to the inventory.
@@ -64,7 +76,9 @@ func add_item(item: PlayerInventoryItem) -> void:
   else:
     dict[item.action.action_uid] = item;
 
-  _emit_update_signal(update_signal, dict);
+  var new_quantity := dict[item.action.action_uid].quantity;
+  Events.player_inventory_item_updated.emit(item.action, new_quantity);
+  _emit_inventory_list_updated_signal(update_signal, dict);
 
 
 ## Adds the equipment keyitem [param item] to the inventory.
@@ -123,7 +137,8 @@ func remove(action_uid: StringName) -> void:
   var update_signal := _get_update_signal(item.action.action_type);
 
   dict.erase(action_uid);
-  _emit_update_signal(update_signal, dict);
+  Events.player_inventory_item_updated.emit(item.action, 0);
+  _emit_inventory_list_updated_signal(update_signal, dict);
 
 
 ## Removes a quantity from the **FieldAction** held under `param action_uid`, if it exists.
@@ -142,7 +157,8 @@ func expend(action_uid: StringName, count: int = 1) -> void:
   if item.quantity <= 0:
     dict.erase(action_uid);
 
-  _emit_update_signal(update_signal, dict);
+  Events.player_inventory_item_updated.emit(item.action, item.quantity);
+  _emit_inventory_list_updated_signal(update_signal, dict);
 
 
 ## Returns the inventory dictionary associated with `param action_type`.
@@ -178,7 +194,7 @@ func _get_update_signal(action_type: Enums.FieldActionType) -> Signal:
 
 
 ## Emits `param update_signal` with a sorted inventory array derived from `param dict`.
-func _emit_update_signal(update_signal: Signal, dict: Dictionary[StringName, PlayerInventoryItem]) -> void:
+func _emit_inventory_list_updated_signal(update_signal: Signal, dict: Dictionary[StringName, PlayerInventoryItem]) -> void:
   update_signal.emit(_get_sorted_array(dict));
 
 

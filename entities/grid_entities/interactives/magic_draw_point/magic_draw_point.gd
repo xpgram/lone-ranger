@@ -17,19 +17,20 @@ var _is_drawable := true;
 
 
 func _ready() -> void:
-  # TODO Connect to player inventory signal
-  pass
+  Events.player_inventory_item_updated.connect(_on_player_inventory_item_updated);
 
 
 ## Handler for when the player inventory is updated. If [param field_action] matches the
 ## draw point's held magic, and the [param new_quantity] is less than the draw point's
 ## trigger amount, the draw point will be reactivated.
-func _on_player_inventory_changed(field_action: FieldAction, new_quantity: int) -> void:
-  if field_action.action_uid != magic_item.action_uid:
+func _on_player_inventory_item_updated(field_action: FieldAction, new_quantity: int) -> void:
+  if field_action.action_uid != magic_item.action.action_uid:
     return;
 
-  if new_quantity < magic_item.quantity:
+  if new_quantity <= trigger_amount:
     activate();
+  else:
+    deactivate();
 
 
 ## Shows the draw point's visuals and flags it as magic-extraction-ready.

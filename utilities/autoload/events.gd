@@ -19,6 +19,9 @@ signal round_passed();
 ## Emitted when a sound object is created.
 signal one_shot_sound_emitted(audio_scene: PackedScene);
 
+## Emitted when the player's held count of [param action] is adjusted to a new quantity.
+signal player_inventory_item_updated(action: FieldAction, new_quantity: int);
+
 ##
 signal enemy_appeared();
 
