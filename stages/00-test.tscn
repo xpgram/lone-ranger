@@ -946,6 +946,9 @@ _pickup_spawn = ExtResource("22_1sjut")
 [node name="AngelStatue" parent="Interactives Container" instance=ExtResource("23_l5wv4")]
 position = Vector2(128, -80)
 
+[node name="AngelStatue6" parent="Interactives Container" instance=ExtResource("23_l5wv4")]
+position = Vector2(560, 32)
+
 [node name="AngelStatue4" parent="Interactives Container" instance=ExtResource("23_l5wv4")]
 position = Vector2(-288, -32)
 
@@ -966,9 +969,6 @@ position = Vector2(336, -304)
 
 [node name="BoulderEntity74" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(352, -288)
-
-[node name="BoulderEntity75" parent="Interactives Container" instance=ExtResource("10_jadfo")]
-position = Vector2(496, 128)
 
 [node name="BoulderEntity7" parent="Interactives Container" instance=ExtResource("10_jadfo")]
 position = Vector2(0, -48)
