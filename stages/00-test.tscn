@@ -697,7 +697,7 @@ metadata/_custom_type_script = "uid://ue6jqko73xxa"
 [sub_resource type="Resource" id="Resource_snb1o"]
 script = ExtResource("9_7oan8")
 action = ExtResource("12_qes87")
-quantity = 3
+quantity = 2
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="Resource" id="Resource_6camj"]
@@ -1161,6 +1161,7 @@ deactivation_amount = 6
 [node name="MagicDrawPoint10" parent="Interactives Container" instance=ExtResource("26_gcv67")]
 position = Vector2(-432, 96)
 magic_item = SubResource("Resource_52iru")
+activation_amount = 1
 deactivation_amount = 6
 
 [node name="MagicDrawPoint7" parent="Interactives Container" instance=ExtResource("26_gcv67")]
