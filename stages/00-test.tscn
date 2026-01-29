@@ -1144,7 +1144,7 @@ activation_amount = 0
 deactivation_amount = 6
 
 [node name="MagicDrawPoint11" parent="Interactives Container" instance=ExtResource("26_gcv67")]
-position = Vector2(-160, -304)
+position = Vector2(-160, -288)
 magic_item = SubResource("Resource_ekj6j")
 activation_amount = 0
 
