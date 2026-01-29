@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bs1xerfojb1so"]
+
+[ext_resource type="AudioStream" uid="uid://dgurbicxoqu7y" path="res://assets/audio/sounds/select_error_01.wav" id="1_owbm4"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_yym57"]
+
+[node name="CursorSelectErrorSound" type="AudioStreamPlayer"]
+stream = ExtResource("1_owbm4")
+bus = &"SoundEffects"
+script = ExtResource("2_yym57")
+metadata/_custom_type_script = "uid://me30ja85krjn"

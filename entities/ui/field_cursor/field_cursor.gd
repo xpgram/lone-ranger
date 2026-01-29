@@ -6,6 +6,9 @@ class_name FieldCursor
 extends Node2D
 
 
+const _scene_selection_error_audio := preload('uid://bs1xerfojb1so');
+
+
 ## TODO Also emit a chosen orientation. Player2D should choose its own faced_position, I think.
 ## Emitted when player input confirms a Grid coordinate.
 signal grid_position_selected(grid_position: Vector2i);
@@ -18,6 +21,11 @@ signal ui_canceled();
 ## A [Node2D] representing the positional origin for the [FieldCursor]. If unset, the
 ## cursor will use the world origin.
 @export var _origin_object: Node2D;
+
+
+## The [FieldAction] whose target position is being selected for. This object is used to
+## determine things like the cursor's selection range or the size of the cursor itself.
+var _source_action := FieldActionList.null_action;
 
 
 ## Control node representing input focus.
@@ -65,7 +73,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 ## Opens the cursor UI subsystem in a default configuration.
-func open_from_start(_selection_map: Object = null) -> void:
+func open_from_start(field_action: FieldAction) -> void:
+  _source_action = field_action;
+
   # TODO Get selectables map
   # - a 2D list of positions allowed to select
   # - an orientation? probably just part of the type
@@ -127,3 +137,8 @@ func select_current_grid_position() -> void:
 func cancel_ui_operation() -> void:
   close();
   ui_canceled.emit();
+
+
+## When called, plays the error or selection-rejected animation/audio.
+func play_error() -> void:
+  AudioBus.play_audio_scene(_scene_selection_error_audio);

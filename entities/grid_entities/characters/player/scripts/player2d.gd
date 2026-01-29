@@ -414,7 +414,7 @@ func _on_command_menu_cancelled() -> void:
 func _on_command_menu_action_selected(action: FieldAction) -> void:
   _selected_command_menu_action = action;
   _command_menu.close();
-  _field_cursor.open_from_start();
+  _field_cursor.open_from_start(action);
 
 
 ## Event handler for [signal FieldCursor.ui_canceled]. [br]
@@ -427,15 +427,17 @@ func _on_field_cursor_canceled() -> void:
 ## Builds and emits a [FieldActionSchedule] for the chosen [FieldAction] and target
 ## coordinates. Also, yields input focus back to the player.
 func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
-  _field_cursor.close();
-  focus_node.grab_focus();
-
-  # TODO Command Menu action orientation is obtained from the FieldCursor.
   var orientation := ActionUtils.get_direction_to_target(grid_position, target_pos);
 
   var playbill := FieldActionPlaybill.new(self, target_pos, orientation);
   var schedule := FieldActionSchedule.new(_selected_command_menu_action, playbill);
-  action_declared.emit(schedule, true);
+
+  if _selected_command_menu_action.can_perform(playbill):
+    _field_cursor.close();
+    focus_node.grab_focus();
+    action_declared.emit(schedule, true);
+  else:
+    _field_cursor.play_error();
 
 
 ## Closes the player's UI subsystems and forces input focus back into the primary
