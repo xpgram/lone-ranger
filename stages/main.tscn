@@ -1,18 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://blym4at4ldbp"]
+[gd_scene load_steps=5 format=3 uid="uid://blym4at4ldbp"]
 
+[ext_resource type="Shader" uid="uid://tseqehulptbq" path="res://stages/camera_subpixel_realignment.gdshader" id="1_43f5m"]
 [ext_resource type="PackedScene" uid="uid://5elbiihgljqp" path="res://stages/00-test.tscn" id="1_72s8x"]
+[ext_resource type="Script" uid="uid://cw6lddr1evr6v" path="res://stages/sub_viewport_container.gd" id="2_7iyax"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7iyax"]
+shader = ExtResource("1_43f5m")
+shader_parameter/subpixel_vector = Vector2(0, 0)
 
 [node name="Main" type="Node2D"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_7iyax")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+script = ExtResource("2_7iyax")
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
 handle_input_locally = false

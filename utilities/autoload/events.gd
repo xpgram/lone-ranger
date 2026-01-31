@@ -27,3 +27,6 @@ signal enemy_appeared();
 
 ##
 signal enemy_disappeared();
+
+##
+signal camera_moved(position: Vector2);

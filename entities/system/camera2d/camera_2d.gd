@@ -35,6 +35,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
   _follow_subject(delta);
 
+  Events.camera_moved.emit(position);
+
 
 func _follow_subject(delta: float) -> void:
   if not subject:
