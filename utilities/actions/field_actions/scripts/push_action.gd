@@ -68,9 +68,9 @@ func _try_push_cell(place: Vector2i, direction: Vector2i, push_power: int) -> bo
     not ActionUtils.place_is_wall(place)
     and collidable_entities.all(_entity_is_pushable)
   );
-  var next_push_successful: bool;
+  var next_push_successful := true;
 
-  if cell_is_pushable:
+  if cell_is_pushable and ActionUtils.place_is_obstructed(next_place):
     next_push_successful = _try_push_cell(next_place, direction, push_power - 1);
 
   if not cell_is_pushable or not next_push_successful:
