@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Push_FieldAction" load_steps=2 format=3 uid="uid://72omta0cvh7l"]
+
+[ext_resource type="Script" uid="uid://cr14jkqg2alan" path="res://utilities/actions/field_actions/scripts/push_action.gd" id="1_axnoj"]
+
+[resource]
+script = ExtResource("1_axnoj")
+_can_secret_knock = false
+action_uid = &"magic_push"
+action_name = "Move"
+action_type = 1
+action_description = "Moves one distant object one tile over."
+action_hint = "Holding this makes me feel dizzy.
+When I move, I feel like I lose track of where my limbs are."
+metadata/_custom_type_script = "uid://cr14jkqg2alan"
