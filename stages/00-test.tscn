@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=4 uid="uid://5elbiihgljqp"]
+[gd_scene load_steps=58 format=4 uid="uid://5elbiihgljqp"]
 
 [ext_resource type="Script" uid="uid://diglkc70n8ywq" path="res://stages/00_test.gd" id="1_7u74a"]
 [ext_resource type="PackedScene" uid="uid://jgwb14jy1uxn" path="res://entities/grid_objects/ground/stairs/floor_stairs.tscn" id="1_lxj52"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://cieqoiwkjqwtb" path="res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn" id="23_l5wv4"]
 [ext_resource type="PackedScene" uid="uid://6imckxwaw70b" path="res://entities/grid_entities/interactives/glass_tile/glass_tile.tscn" id="25_mmv8l"]
 [ext_resource type="PackedScene" uid="uid://b025q84ct55mo" path="res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.tscn" id="26_gcv67"]
+[ext_resource type="Resource" uid="uid://72omta0cvh7l" path="res://utilities/actions/field_actions/resources/magic_push_action.tres" id="27_0mqgx"]
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
 [ext_resource type="Script" uid="uid://bjwpwtqramwd2" path="res://entities/grid_entities/utility/trigger_spot.gd" id="29_fyjc2"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
@@ -700,6 +701,12 @@ action = ExtResource("12_qes87")
 quantity = 2
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="Resource" id="Resource_ryqio"]
+script = ExtResource("9_7oan8")
+action = ExtResource("27_0mqgx")
+quantity = 3
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
 [sub_resource type="Resource" id="Resource_6camj"]
 script = ExtResource("9_7oan8")
 action = ExtResource("12_0lxvj")
@@ -1167,6 +1174,11 @@ deactivation_amount = 6
 [node name="MagicDrawPoint7" parent="Interactives Container" instance=ExtResource("26_gcv67")]
 position = Vector2(-192, 16)
 magic_item = SubResource("Resource_snb1o")
+deactivation_amount = 8
+
+[node name="MagicDrawPoint13" parent="Interactives Container" instance=ExtResource("26_gcv67")]
+position = Vector2(-80, 112)
+magic_item = SubResource("Resource_ryqio")
 deactivation_amount = 8
 
 [node name="MagicDrawPoint2" parent="Interactives Container" instance=ExtResource("26_gcv67")]
