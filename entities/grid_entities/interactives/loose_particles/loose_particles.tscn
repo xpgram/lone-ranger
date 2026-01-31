@@ -1,7 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://cqx4i6o5f7y0t"]
+[gd_scene load_steps=13 format=3 uid="uid://cqx4i6o5f7y0t"]
 
 [ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_pvh1i"]
+[ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="2_5yirl"]
 [ext_resource type="Texture2D" uid="uid://bjvy0k2ybhnsl" path="res://assets/00 - source/dingles_all.png" id="2_6nxbn"]
+
+[sub_resource type="Resource" id="Resource_fe760"]
+script = ExtResource("2_5yirl")
+attribute_key = &"compactible_to_floor"
+self_remedying = false
+metadata/_custom_type_script = "uid://dn1ef7gb6cvg3"
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2ba2c"]
 particles_animation = true
@@ -50,6 +57,9 @@ anim_offset_curve = SubResource("CurveTexture_0lxvj")
 
 [node name="LooseParticles" type="Node2D"]
 script = ExtResource("1_pvh1i")
+_attributes = Dictionary[StringName, ExtResource("2_5yirl")]({
+&"compactible_to_floor": SubResource("Resource_fe760")
+})
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
