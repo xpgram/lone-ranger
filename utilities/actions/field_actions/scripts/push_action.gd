@@ -14,6 +14,9 @@ const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 ## A measure of how heavy the objects pushed may be.
 @export var _push_strength := 1;
 
+## Whether this action is capable of performing a [Stimulus.secret_knock] effect.
+@export var _can_secret_knock := true;
+
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var facing_target: bool = (
@@ -35,6 +38,9 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
     Events.one_shot_sound_emitted.emit(scene_scrape_audio);
   else:
     Events.one_shot_sound_emitted.emit(scene_bump_audio);
+
+    if _can_secret_knock:
+      Grid.notify_entities_async(playbill.target_position, Stimulus.secret_knock);
 
   if actor is Player2D:
     # TODO Use actor.play_one_shot_animation('push', true) to interrupt the player's idle

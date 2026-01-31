@@ -22,3 +22,7 @@ const is_over_ground := &'is_over_ground';
 
 ## When a [GridEntity] is positioned over a floorless space.
 const is_over_pit := &'is_over_pit';
+
+## When a [GridEntity] is bumped directly, and not through other objects. This effect is
+## typically used for bump effects that may trigger secrets or unlock secret passages.
+const secret_knock := &'secret_knock';
