@@ -30,7 +30,7 @@ Grid="*res://utilities/autoload/grid.gd"
 [display]
 
 window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_height=1280
 mouse_cursor/tooltip_position_offset=Vector2(256, -16)
 
 [editor_plugins]
