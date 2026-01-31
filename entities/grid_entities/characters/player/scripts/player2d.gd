@@ -139,6 +139,9 @@ func _assemble_machine_states() -> void:
     PlayerState.new([
       _state_death,
     ]),
+    PlayerState.new([
+      _state_sleep,
+    ]),
   ]);
 
   _state_machine.switch_to(_state_idle);
@@ -257,6 +260,7 @@ func get_action_from_brace_interact_input() -> FieldActionSchedule:
 func get_air_steps_remaining() -> int:
   return _air_steps_remaining;
 
+
 ## Resets to full the [Player2D]'s air steps.
 func reset_air_steps_remaining() -> void:
   _air_steps_remaining = (
@@ -273,6 +277,12 @@ func reset_air_steps_remaining() -> void:
 ## of this QTE.
 func start_coyote_fall() -> void:
   _state_machine.switch_to(_state_coyote_fall);
+
+
+## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
+## player is sent back to their last checkpoint and the world's state is reset. [br]
+func trigger_rest_and_reset_state() -> void:
+  _state_machine.switch_to(_state_sleep);
 
 
 ## Indicates the [Player2D] is preoccupied with something that prevents it from
@@ -321,6 +331,7 @@ func set_animation_state(state_key: StringName) -> void:
 ## Sets the animation state to a variant of the idle animation dependent on environment
 ## context.
 func _trigger_idle_animation_state() -> void:
+  # TODO Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
   if ActionUtils.place_is_idleable(grid_position, self):
     set_animation_state('idle');
   else:
@@ -636,6 +647,55 @@ func _state_death() -> void:
   await fade_tween.finished;
 
   _state_machine.switch_to(_state_idle);
+
+  _settle_affairs();
+
+
+## The sleep state handles sleep animations and resets some player systems before
+## triggering a 'wake up' at the last checkpoint. [br]
+##
+## This state transition is similar to [method _state_death], but uses different
+## animations.
+func _state_sleep() -> void:
+  _unsettle_affairs();
+
+  # TODO The reset logic here can be factored out. Only the player animation is different.
+  #region Death Reset copy
+  _interrupt_ui_subsystems();
+  # set_animation_state('injured');
+  # $Audio/PlayerHurt.play();
+
+  var fade_out_time := 1.5;
+  var fade_in_time := 1.0;
+  var fade_transition := Tween.TRANS_SINE;
+
+  # Fade out.
+  await get_tree().create_timer(0.5).timeout;
+  var fade_tween := get_tree().create_tween();
+  fade_tween.set_trans(fade_transition);
+  fade_tween.set_ease(Tween.EASE_IN);
+  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
+  await fade_tween.finished;
+
+  # Reset player state.
+  set_animation_state('idle');
+  grid_position = _starting_position;
+  faced_direction = Vector2i.DOWN;
+
+  # TODO This seems like it should be a property of checkpoints, and not necessarily put here?
+  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
+  health_component.set_hp_to_full();
+
+  # Fade in.
+  await get_tree().create_timer(3.0).timeout;
+  fade_tween = get_tree().create_tween();
+  fade_tween.set_trans(fade_transition);
+  fade_tween.set_ease(Tween.EASE_OUT);
+  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_in_time);
+  await fade_tween.finished;
+
+  _state_machine.switch_to(_state_idle);
+  #endregion Death Reset copy
 
   _settle_affairs();
 
