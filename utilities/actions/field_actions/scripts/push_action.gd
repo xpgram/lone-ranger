@@ -14,6 +14,9 @@ const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 ## A measure of how heavy the objects pushed may be.
 @export var _push_strength := 1;
 
+## Whether this action is capable of performing a [Stimulus.secret_knock] effect.
+@export var _can_secret_knock := true;
+
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var facing_target: bool = (
@@ -28,20 +31,16 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
   var actor := playbill.performer;
   actor.faced_direction = playbill.orientation;
 
-  var cells_to_push_reversed := _get_cells_to_push(playbill.target_position, playbill.orientation);
-  cells_to_push_reversed.reverse();
-
-  for cell in cells_to_push_reversed:
-    _try_push_entities(cell.entities, playbill.orientation);
-
-  # TODO Maybe _try_push_entities() should just return a boolean?
-  var entities_were_pushed := not ActionUtils.place_is_obstructed(playbill.target_position);
+  var entities_were_pushed := _try_push_cell(playbill.target_position, playbill.orientation, _push_length);
 
   if entities_were_pushed:
     _create_push_cloud(actor, playbill.target_position, playbill.orientation);
     Events.one_shot_sound_emitted.emit(scene_scrape_audio);
   else:
     Events.one_shot_sound_emitted.emit(scene_bump_audio);
+
+    if _can_secret_knock:
+      Grid.notify_entities_async(playbill.target_position, Stimulus.secret_knock);
 
   if actor is Player2D:
     # TODO Use actor.play_one_shot_animation('push', true) to interrupt the player's idle
@@ -52,57 +51,39 @@ func perform_async(playbill: FieldActionPlaybill,) -> bool:
   return true;
 
 
-## Returns a list of [Grid.Cell] that may be affected by the push, starting at position
-## [param from] and extending in [param direction]. The list is at most size
-## [member _push_length], but may be less if the line of pushed objects contains a gap.
-func _get_cells_to_push(from: Vector2i, direction: Vector2i) -> Array[Grid.Cell]:
-  var grid_cells := [] as Array[Grid.Cell];
-  var cursor := from;
+## A recursive function that attempts to push entities on the Grid at [param place] along
+## the [param direction] vector. If the entities are not all pushable, or if the target
+## position is not occupiable, the entities will be [Stimulus.bumped] instead.
+##
+## When calling this function for the first time, [param push_power] is equivalent to how
+## many sequential objects are pushable at once.
+func _try_push_cell(place: Vector2i, direction: Vector2i, push_power: int) -> bool:
+  if push_power < 1:
+    return false;
 
-  for i in range(_push_length):
-    var cell := Grid.get_cell(cursor);
-    var cell_is_empty := cell.entities.size() == 0;
+  var next_place := place + direction;
 
-    if cell_is_empty:
-      break;
+  var collidable_entities := ActionUtils.get_collidable_entities_at(place);
+  var cell_is_pushable = (
+    not ActionUtils.place_is_wall(place)
+    and collidable_entities.all(_entity_is_pushable)
+  );
+  var next_push_successful := true;
 
-    grid_cells.append(cell);
-    cursor += direction;
+  if cell_is_pushable and ActionUtils.place_is_obstructed(next_place):
+    next_push_successful = _try_push_cell(next_place, direction, push_power - 1);
 
-  return grid_cells;
+  if not cell_is_pushable or not next_push_successful:
+    Grid.notify_entities_async(place, Stimulus.bumped);
+    return false;
 
-
-## Attempts to push the given [param entities] along the [param direction] vector. If the
-## given [param entities] are not all pushable, or if the target position is not
-## occupiable, the [param entities] will be 'bumped' instead.
-func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> void:
-  if entities.size() == 0:
-    return;
-
-  var current_position := entities[0].grid_position;
-  var push_to_position := current_position + direction;
-  var tile_is_obstructed := ActionUtils.place_is_obstructed(push_to_position);
-
-  if tile_is_obstructed:
-    Grid.notify_entities_async(current_position, Stimulus.bumped);
-    return;
-
-  var pushable_entities: Array[GridEntity];
-  pushable_entities.assign(entities.filter(_entity_is_pushable));
-
-  var non_pushable_entities: Array[GridEntity];
-  non_pushable_entities.assign(entities.filter(func (entity: GridEntity):
-    return not _entity_is_pushable(entity)
-  ));
-
-  for entity in pushable_entities:
-    entity.grid_position = push_to_position;
+  for entity in collidable_entities:
+    entity.grid_position = next_place;
 
     if entity is Enemy2D:
       entity.apply_attribute('stun', stun_attribute_resource.duplicate());
 
-  for entity in non_pushable_entities:
-    Grid.notify_entities_async(current_position, Stimulus.bumped);
+  return true;
 
 
 ## Returns true if all entities in [param entities] are pushable. If at least one entity
