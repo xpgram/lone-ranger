@@ -101,7 +101,7 @@ func _try_push_entities(entities: Array[GridEntity], direction: Vector2i) -> voi
     if entity is Enemy2D:
       entity.apply_attribute('stun', stun_attribute_resource.duplicate());
 
-  for entity in non_pushable_entities:
+  if non_pushable_entities.size() > 0:
     Grid.notify_entities_async(current_position, Stimulus.bumped);
 
 
