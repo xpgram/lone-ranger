@@ -1,8 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene load_steps=17 format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
+[ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
+[ext_resource type="Resource" uid="uid://d3abxrfst60nr" path="res://utilities/actions/field_actions/resources/rest_action.tres" id="5_p4sl8"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
@@ -12,6 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/screen_space_gradient.gdshader" id="19_5jpfb"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
+
+[sub_resource type="Resource" id="Resource_l0w8i"]
+script = ExtResource("4_sg284")
+action = ExtResource("5_p4sl8")
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
@@ -34,6 +41,9 @@ pushable = true
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource("3_08fk3")
+_abilities = Dictionary[StringName, ExtResource("4_sg284")]({
+&"sleep": SubResource("Resource_l0w8i")
+})
 
 [node name="FocusableControl" type="Control" parent="."]
 unique_name_in_owner = true

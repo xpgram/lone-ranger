@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Rest_FieldAction" load_steps=4 format=3 uid="uid://d3abxrfst60nr"]
+
+[ext_resource type="Script" uid="uid://bvwgvjh4c4pld" path="res://utilities/actions/field_actions/scripts/rest_action.gd" id="1_x0nox"]
+[ext_resource type="Texture2D" uid="uid://c2osmodhe2l35" path="res://assets/00 - source/icons_small_sheet.png" id="2_pw6lv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8k2y"]
+atlas = ExtResource("2_pw6lv")
+region = Rect2(56, 0, 8, 8)
+
+[resource]
+script = ExtResource("1_x0nox")
+action_uid = &"sleep"
+action_name = "Sleep"
+action_description = "Puts target to sleep."
+action_hint = "Feels like it's groping around my head..."
+action_time_cost = 0.0
+small_icon = SubResource("AtlasTexture_y8k2y")
+metadata/_custom_type_script = "uid://bvwgvjh4c4pld"
