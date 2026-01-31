@@ -917,7 +917,7 @@ position = Vector2(496, 112)
 position = Vector2(-336, -32)
 
 [node name="StatuePlatformEntity7" parent="Interactives Container" instance=ExtResource("18_mhctp")]
-position = Vector2(-144, 32)
+position = Vector2(-160, 32)
 
 [node name="StatuePlatformEntity4" parent="Interactives Container" instance=ExtResource("18_mhctp")]
 position = Vector2(-400, -96)
