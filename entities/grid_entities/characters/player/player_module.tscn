@@ -62,7 +62,6 @@ _origin_object = NodePath("../Player2D")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
 ignore_rotation = false
-zoom = Vector2(3, 3)
 script = ExtResource("10_yid0f")
 subject = NodePath("../Player2D")
 close_follow_lerp_speed = 12

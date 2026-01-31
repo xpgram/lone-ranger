@@ -16,6 +16,7 @@ instance_dock/preview_resolution=Vector2i(64, 64)
 [application]
 
 config/name="Lone Ranger"
+run/main_scene="uid://blym4at4ldbp"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -28,8 +29,8 @@ Grid="*res://utilities/autoload/grid.gd"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=480
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 mouse_cursor/tooltip_position_offset=Vector2(256, -16)
 
 [editor_plugins]
