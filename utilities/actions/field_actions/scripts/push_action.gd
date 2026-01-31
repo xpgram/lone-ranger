@@ -19,12 +19,21 @@ const stun_attribute_resource := preload('uid://jnysha6rnoxl');
 
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
-  var facing_target: bool = (
-    playbill.performer.grid_position + playbill.performer.faced_direction == playbill.target_position
-  );
-  var tile_obstructed: bool = ActionUtils.place_is_obstructed(playbill.target_position);
+  var actor := playbill.performer;
+  var target_pos := playbill.target_position;
+  var target_distance_vector := target_pos - actor.grid_position;
 
-  return facing_target and tile_obstructed;
+  var target_is_obstructed: bool = ActionUtils.place_is_obstructed(playbill.target_position);
+  var target_is_not_self: bool = (actor.grid_position != target_pos);
+  var actor_is_inline: bool = (target_distance_vector.x == 0 or target_distance_vector.y == 0);
+  var actor_is_facing_target: bool = (actor.faced_direction == ActionUtils.get_direction_to_target(actor.grid_position, target_pos));
+
+  return (
+    target_is_obstructed
+    and target_is_not_self
+    and actor_is_inline
+    and actor_is_facing_target
+  );
 
 
 func perform_async(playbill: FieldActionPlaybill,) -> bool:
