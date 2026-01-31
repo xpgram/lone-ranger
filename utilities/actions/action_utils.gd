@@ -25,6 +25,22 @@ static func cell_is_wall(cell: Grid.Cell) -> bool:
   return cell.tile_data.geometry_type == CellTerrainData.GeometryType.Wall;
 
 
+## Returns a list of [GridEntity] objects that are collidable or obstructing at
+## [param place] on the Grid. If provided, [param self_entity] will be excluded from the
+## returned list.
+static func get_collidable_entities_at(place: Vector2i, self_entity: GridEntity = null) -> Array[GridEntity]:
+  var cell = Grid.get_cell(place);
+  return get_collidable_entities_from_cell(cell, self_entity);
+
+
+## Returns a list of [GridEntity] objects that are collidable or obstructing from the
+## given [param cell]. If provided, [param self_entity] will be excluded from the returned
+## list.
+static func get_collidable_entities_from_cell(cell: Grid.Cell, self_entity: GridEntity = null) -> Array[GridEntity]:
+  return cell.entities \
+    .filter(func (entity: GridEntity): return entity != self_entity and entity.solid);
+
+
 ## Returns an array of [Vector2i] coordinates on the Grid in the shape of a line extending
 ## from [param from] in direction [param direction]. Does not include [param from] in the
 ## result.
