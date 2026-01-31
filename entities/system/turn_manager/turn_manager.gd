@@ -92,6 +92,7 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
   @warning_ignore('redundant_await')
   var action_succeeded := await player_action.perform_async(player_schedule.playbill);
 
+  # FIXME GDScript bug
   # I cannot begin to explain this, but the second conditional does not work if this first
   # one isn't erroneously skipped by the interpreter.
   if not action_succeeded:
@@ -100,6 +101,8 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
     return false;
 
   # FIXME Inventory should not expend an unexpendable action. This request possibly shouldn't even go here.
+  if player_action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
+    pass
   if player_action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
     player.inventory.expend(player_action.action_uid);
 
