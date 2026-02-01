@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SwordStrike_FieldAction" load_steps=2 format=3 uid="uid://cpg5b65k3mqjt"]
+[gd_resource type="Resource" script_class="SwordStrike_FieldAction" format=3 uid="uid://cpg5b65k3mqjt"]
 
 [ext_resource type="Script" uid="uid://2vr65ijpbgi4" path="res://utilities/actions/field_actions/scripts/sword_strike_action.gd" id="1_jbqay"]
 

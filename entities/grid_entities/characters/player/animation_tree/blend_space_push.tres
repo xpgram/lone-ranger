@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeBlendSpace2D" load_steps=5 format=3 uid="uid://cf8fexy1b8d2p"]
+[gd_resource type="AnimationNodeBlendSpace2D" format=3 uid="uid://cf8fexy1b8d2p"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_crt5d"]
 animation = &"push_left"

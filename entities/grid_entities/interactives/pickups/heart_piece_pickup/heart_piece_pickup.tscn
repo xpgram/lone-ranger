@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://og6pitcncbhr"]
+[gd_scene format=3 uid="uid://og6pitcncbhr"]
 
 [ext_resource type="Script" uid="uid://dnbd50aclwvjm" path="res://entities/grid_entities/interactives/pickups/heart_piece_pickup/heart_piece_pickup.gd" id="1_kir3p"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_mfxvk"]
@@ -46,15 +46,13 @@ _data = {
 &"bobble": SubResource("Animation_vw4a0")
 }
 
-[node name="HeartPiecePickup" type="Node2D"]
+[node name="HeartPiecePickup" type="Node2D" unique_id=1561367840]
 script = ExtResource("1_kir3p")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154724053]
 texture = SubResource("AtlasTexture_l5wv4")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_jx0xd")
-}
-autoplay = "bobble"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=110162033]
+libraries/ = SubResource("AnimationLibrary_jx0xd")
+autoplay = &"bobble"

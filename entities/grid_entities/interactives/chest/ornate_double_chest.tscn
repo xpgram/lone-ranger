@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpegrk0wmjb2x"]
+[gd_scene format=3 uid="uid://cpegrk0wmjb2x"]
 
 [ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://entities/grid_entities/interactives/chest/chest.gd" id="1_08832"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_iuses"]
@@ -32,24 +32,24 @@ animations = [{
 "speed": 2.0
 }]
 
-[node name="OrnateDoubleChest" type="Node2D"]
+[node name="OrnateDoubleChest" type="Node2D" unique_id=443421226]
 script = ExtResource("1_08832")
 solid = true
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GridExpander" type="Node2D" parent="." node_paths=PackedStringArray("grid_entity")]
+[node name="GridExpander" type="Node2D" parent="." unique_id=1398048285 node_paths=PackedStringArray("grid_entity")]
 position = Vector2(16, 0)
 script = ExtResource("4_iuses")
 grid_entity = NodePath("..")
 metadata/_custom_type_script = "uid://dui54g6w5fw46"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1483855975]
 unique_name_in_owner = true
 position = Vector2(8, 0)
 sprite_frames = SubResource("SpriteFrames_5bdfo")
 animation = &"closed"
 
-[node name="ContextAction" type="Node" parent="." node_paths=PackedStringArray("chest")]
+[node name="ContextAction" type="Node" parent="." unique_id=1829049069 node_paths=PackedStringArray("chest")]
 script = ExtResource("3_lkcyo")
 chest = NodePath("..")
 metadata/_custom_type_script = "uid://cqilrqw1pi3ai"

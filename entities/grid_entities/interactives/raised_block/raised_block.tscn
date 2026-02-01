@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c6rlkogh1433o"]
+[gd_scene format=3 uid="uid://c6rlkogh1433o"]
 
 [ext_resource type="Script" uid="uid://6o2q1po4ybjk" path="res://entities/grid_entities/interactives/raised_block/raised_block.gd" id="1_f7fts"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_l7v4b"]
@@ -39,12 +39,12 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="RaisedBlock" type="Node2D"]
+[node name="RaisedBlock" type="Node2D" unique_id=1297079094]
 script = ExtResource("1_f7fts")
 solid = true
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=281258930]
 sprite_frames = SubResource("SpriteFrames_pagcw")
 animation = &"raise"
 autoplay = "raise"

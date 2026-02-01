@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dcydrh78pwl4"]
+[gd_scene format=3 uid="uid://dcydrh78pwl4"]
 
 [ext_resource type="Script" uid="uid://qahld4djrvxi" path="res://entities/ui/field_cursor/field_cursor.gd" id="1_k062e"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="1_xa4pa"]
@@ -167,11 +167,11 @@ _data = {
 &"idle": SubResource("Animation_qdihw")
 }
 
-[node name="FieldCursor" type="Node2D"]
+[node name="FieldCursor" type="Node2D" unique_id=1146315465]
 script = ExtResource("1_k062e")
 metadata/_custom_type_script = "uid://qahld4djrvxi"
 
-[node name="FocusableControl" type="Control" parent="."]
+[node name="FocusableControl" type="Control" parent="." unique_id=449870104]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
@@ -180,40 +180,38 @@ offset_bottom = 40.0
 script = ExtResource("1_xa4pa")
 metadata/_custom_type_script = "uid://dx2don6d2tt38"
 
-[node name="Pivot_TopLeft" type="Node2D" parent="."]
+[node name="Pivot_TopLeft" type="Node2D" parent="." unique_id=1223445419]
 position = Vector2(-7, -7)
 
-[node name="AnimatedSprite2D_TL" type="AnimatedSprite2D" parent="Pivot_TopLeft"]
+[node name="AnimatedSprite2D_TL" type="AnimatedSprite2D" parent="Pivot_TopLeft" unique_id=1643058775]
 position = Vector2(-9, -9)
 sprite_frames = SubResource("SpriteFrames_rsgl5")
 autoplay = "default"
 
-[node name="Pivot_TopRight" type="Node2D" parent="."]
+[node name="Pivot_TopRight" type="Node2D" parent="." unique_id=1346818743]
 position = Vector2(7, -7)
 
-[node name="AnimatedSprite2D_TR" type="AnimatedSprite2D" parent="Pivot_TopRight"]
+[node name="AnimatedSprite2D_TR" type="AnimatedSprite2D" parent="Pivot_TopRight" unique_id=812142491]
 position = Vector2(9, -9)
 sprite_frames = SubResource("SpriteFrames_r3rma")
 autoplay = "default"
 
-[node name="Pivot_BottomLeft" type="Node2D" parent="."]
+[node name="Pivot_BottomLeft" type="Node2D" parent="." unique_id=1658426780]
 position = Vector2(7, 7)
 
-[node name="AnimatedSprite2D_BL" type="AnimatedSprite2D" parent="Pivot_BottomLeft"]
+[node name="AnimatedSprite2D_BL" type="AnimatedSprite2D" parent="Pivot_BottomLeft" unique_id=1119858711]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_rsgl5")
 autoplay = "default"
 
-[node name="Pivot_BottomRight" type="Node2D" parent="."]
+[node name="Pivot_BottomRight" type="Node2D" parent="." unique_id=1484922402]
 position = Vector2(-7, 7)
 
-[node name="AnimatedSprite2D_BR" type="AnimatedSprite2D" parent="Pivot_BottomRight"]
+[node name="AnimatedSprite2D_BR" type="AnimatedSprite2D" parent="Pivot_BottomRight" unique_id=132070683]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_r3rma")
 autoplay = "default"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3verx")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1477002169]
+libraries/ = SubResource("AnimationLibrary_3verx")
+autoplay = &"idle"

@@ -1,25 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://kfekvnl8dv3f"]
+[gd_scene format=3 uid="uid://kfekvnl8dv3f"]
 
 [ext_resource type="Script" uid="uid://dx7w235qhr4bd" path="res://entities/system/debug/inaction_timer_clock/inaction_timer_clock.gd" id="1_86ch0"]
 [ext_resource type="Texture2D" uid="uid://cyvf3gup4doan" path="res://entities/system/debug/inaction_timer_clock/images/icon-hourglass.png" id="2_dmhuw"]
 [ext_resource type="Texture2D" uid="uid://ca28hwukefv75" path="res://entities/system/debug/inaction_timer_clock/images/icon-puzzle.png" id="3_1cl6v"]
 
-[node name="InactionTimerClock" type="Control"]
+[node name="InactionTimerClock" type="Control" unique_id=1093857003]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
 offset_bottom = 16.0
 
-[node name="ClockDrawer" type="Node2D" parent="."]
+[node name="ClockDrawer" type="Node2D" parent="." unique_id=1893733959]
 position = Vector2(8, 8)
 script = ExtResource("1_86ch0")
 
-[node name="HourglassIcon" type="Sprite2D" parent="."]
+[node name="HourglassIcon" type="Sprite2D" parent="." unique_id=1922912196]
 position = Vector2(8, 8)
 scale = Vector2(0.333, 0.333)
 texture = ExtResource("2_dmhuw")
 
-[node name="PuzzleIcon" type="Sprite2D" parent="."]
+[node name="PuzzleIcon" type="Sprite2D" parent="." unique_id=596639726]
 position = Vector2(24, 8)
 scale = Vector2(0.333, 0.333)
 texture = ExtResource("3_1cl6v")

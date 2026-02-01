@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6q8l2p63we84"]
+[gd_scene format=3 uid="uid://c6q8l2p63we84"]
 
 [ext_resource type="Script" uid="uid://1ydx23pefh2f" path="res://entities/system/turn_manager/turn_manager.gd" id="1_r78bh"]
 [ext_resource type="Script" uid="uid://d2h5yls5jkd5x" path="res://entities/system/turn_manager/half_time_combat_timer.gd" id="2_rico0"]
 
-[node name="TurnManager" type="Node" node_paths=PackedStringArray("_inaction_timer")]
+[node name="TurnManager" type="Node" unique_id=1210136728 node_paths=PackedStringArray("_inaction_timer")]
 script = ExtResource("1_r78bh")
 _inaction_timer = NodePath("InactionTimer")
 
-[node name="InactionTimer" type="Node" parent="."]
+[node name="InactionTimer" type="Node" parent="." unique_id=904929858]
 script = ExtResource("2_rico0")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bo66fm465v8jl"]
+[gd_scene format=3 uid="uid://bo66fm465v8jl"]
 
 [ext_resource type="Script" uid="uid://d0u0fw6aneseo" path="res://entities/grid_entities/interactives/diggable_spot/diggable_spot.gd" id="1_5tk7a"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_trbf8"]
@@ -75,11 +75,11 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="DiggableSpot" type="Node2D"]
+[node name="DiggableSpot" type="Node2D" unique_id=1620664533]
 script = ExtResource("1_5tk7a")
 metadata/_custom_type_script = "uid://d0u0fw6aneseo"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=868222145]
 sprite_frames = SubResource("SpriteFrames_gcv67")
 autoplay = "default"
 frame_progress = 0.606432

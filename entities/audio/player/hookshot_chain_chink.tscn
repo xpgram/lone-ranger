@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhafiaxut071o"]
+[gd_scene format=3 uid="uid://dhafiaxut071o"]
 
 [ext_resource type="AudioStream" uid="uid://by4felqc3ljhc" path="res://assets/audio/sounds/hookshot_chink_02.wav" id="1_i7tvm"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="1_qk40l"]
 
-[node name="HookshotChainExtend" type="AudioStreamPlayer"]
+[node name="HookshotChainExtend" type="AudioStreamPlayer" unique_id=1388830043]
 stream = ExtResource("1_i7tvm")
 bus = &"SoundEffects"
 script = ExtResource("1_qk40l")

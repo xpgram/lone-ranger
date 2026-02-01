@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7nqq1bsbqwx5"]
+[gd_scene format=3 uid="uid://b7nqq1bsbqwx5"]
 
 [ext_resource type="AudioStream" uid="uid://dfectkwifeegy" path="res://assets/audio/sounds/save_01.wav" id="1_54x2p"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_3y5xk"]
 
-[node name="SaveAndRefresh" type="AudioStreamPlayer"]
+[node name="SaveAndRefresh" type="AudioStreamPlayer" unique_id=474221232]
 stream = ExtResource("1_54x2p")
 bus = &"SoundEffects"
 script = ExtResource("2_3y5xk")

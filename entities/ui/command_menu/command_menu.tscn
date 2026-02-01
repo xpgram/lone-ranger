@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://du02pajmhvinl"]
+[gd_scene format=3 uid="uid://du02pajmhvinl"]
 
 [ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://entities/ui/command_menu/command_menu.gd" id="1_ipv67"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://assets/textures_unused/system/command-menu.png" id="2_jcfl5"]
@@ -78,7 +78,7 @@ _data = {
 &"wiggle": SubResource("Animation_u44ev")
 }
 
-[node name="CommandMenu" type="Control" node_paths=PackedStringArray("_main_list", "_options_list", "sound_menu_select", "sound_menu_confirm", "sound_menu_cancel", "sound_menu_open", "sound_menu_close")]
+[node name="CommandMenu" type="Control" unique_id=270125561 node_paths=PackedStringArray("_main_list", "_options_list", "sound_menu_select", "sound_menu_confirm", "sound_menu_cancel", "sound_menu_open", "sound_menu_close")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +94,7 @@ sound_menu_cancel = NodePath("Audio/MenuCancel")
 sound_menu_open = NodePath("Audio/MenuOpen")
 sound_menu_close = NodePath("Audio/MenuClose")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1056042224]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -114,7 +114,7 @@ patch_margin_bottom = 8
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="MainList" type="ItemList" parent="NinePatchRect"]
+[node name="MainList" type="ItemList" parent="NinePatchRect" unique_id=92996048]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -138,7 +138,7 @@ item_2/icon = ExtResource("5_1rpdr")
 script = ExtResource("6_u6tlb")
 remember_cursor_position = true
 
-[node name="OptionsList" type="ItemList" parent="NinePatchRect"]
+[node name="OptionsList" type="ItemList" parent="NinePatchRect" unique_id=1070290635]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -156,7 +156,7 @@ allow_search = false
 script = ExtResource("6_u6tlb")
 remember_cursor_position = true
 
-[node name="Label" type="Label" parent="NinePatchRect/OptionsList"]
+[node name="Label" type="Label" parent="NinePatchRect/OptionsList" unique_id=1195975880]
 visible = false
 layout_mode = 0
 offset_left = 46.0
@@ -167,44 +167,42 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "2"
 horizontal_alignment = 2
 
-[node name="MenuCursorBox" type="Control" parent="NinePatchRect"]
+[node name="MenuCursorBox" type="Control" parent="NinePatchRect" unique_id=712358017]
 layout_mode = 1
 anchors_preset = 0
 offset_right = 4.0
 offset_bottom = 1.0
 
-[node name="MenuCursor" type="Node2D" parent="NinePatchRect/MenuCursorBox"]
+[node name="MenuCursor" type="Node2D" parent="NinePatchRect/MenuCursorBox" unique_id=234527068]
 unique_name_in_owner = true
 position = Vector2(-2, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="NinePatchRect/MenuCursorBox/MenuCursor"]
+[node name="Sprite2D" type="Sprite2D" parent="NinePatchRect/MenuCursorBox/MenuCursor" unique_id=1396889380]
 texture = ExtResource("7_kdjjn")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="NinePatchRect/MenuCursorBox/MenuCursor"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NinePatchRect/MenuCursorBox/MenuCursor" unique_id=63520471]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_u2uj7")
-}
-autoplay = "wiggle"
+libraries/ = SubResource("AnimationLibrary_u2uj7")
+autoplay = &"wiggle"
 
-[node name="Audio" type="Node" parent="."]
+[node name="Audio" type="Node" parent="." unique_id=541323167]
 
-[node name="MenuSelect" type="AudioStreamPlayer" parent="Audio"]
+[node name="MenuSelect" type="AudioStreamPlayer" parent="Audio" unique_id=219381956]
 stream = ExtResource("8_y4i8d")
 bus = &"SoundEffects"
 
-[node name="MenuConfirm" type="AudioStreamPlayer" parent="Audio"]
+[node name="MenuConfirm" type="AudioStreamPlayer" parent="Audio" unique_id=1049996959]
 stream = ExtResource("9_1rpdr")
 bus = &"SoundEffects"
 
-[node name="MenuCancel" type="AudioStreamPlayer" parent="Audio"]
+[node name="MenuCancel" type="AudioStreamPlayer" parent="Audio" unique_id=1969999433]
 stream = ExtResource("10_u6tlb")
 bus = &"SoundEffects"
 
-[node name="MenuOpen" type="AudioStreamPlayer" parent="Audio"]
+[node name="MenuOpen" type="AudioStreamPlayer" parent="Audio" unique_id=1008398545]
 stream = ExtResource("11_u6tlb")
 bus = &"SoundEffects"
 
-[node name="MenuClose" type="AudioStreamPlayer" parent="Audio"]
+[node name="MenuClose" type="AudioStreamPlayer" parent="Audio" unique_id=1176198391]
 stream = ExtResource("12_kdjjn")
 bus = &"SoundEffects"

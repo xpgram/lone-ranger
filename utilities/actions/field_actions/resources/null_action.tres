@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Null_FieldAction" load_steps=2 format=3 uid="uid://dkf6dygsavtxn"]
+[gd_resource type="Resource" script_class="Null_FieldAction" format=3 uid="uid://dkf6dygsavtxn"]
 
 [ext_resource type="Script" uid="uid://dappginc3mggn" path="res://utilities/actions/field_actions/scripts/null_action.gd" id="1_om4dg"]
 

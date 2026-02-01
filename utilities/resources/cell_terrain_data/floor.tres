@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CellTerrainData" load_steps=2 format=3 uid="uid://b0fn783j6lwuc"]
+[gd_resource type="Resource" script_class="CellTerrainData" format=3 uid="uid://b0fn783j6lwuc"]
 
 [ext_resource type="Script" uid="uid://bic0r1crdbtwt" path="res://utilities/resources/cell_terrain_data/cell_terrain_data.gd" id="1_k62r1"]
 

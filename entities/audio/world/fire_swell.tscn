@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://x6flo6meb5s1"]
+[gd_scene format=3 uid="uid://x6flo6meb5s1"]
 
 [ext_resource type="AudioStream" uid="uid://ce5qtskihkvhl" path="res://assets/audio/sounds/fire_01.wav" id="1_0p123"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_2t3m2"]
 
-[node name="FireSwell" type="AudioStreamPlayer"]
+[node name="FireSwell" type="AudioStreamPlayer" unique_id=1964725936]
 stream = ExtResource("1_0p123")
 bus = &"SoundEffects"
 script = ExtResource("2_2t3m2")

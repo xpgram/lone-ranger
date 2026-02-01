@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=7 format=3 uid="uid://bc8gjja5mur6t"]
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://bc8gjja5mur6t"]
 
 [ext_resource type="AnimationNodeBlendSpace2D" uid="uid://bsnv7o5058inu" path="res://entities/grid_entities/characters/player/animation_tree/blend_space_idle.tres" id="1_f1akb"]
 [ext_resource type="AnimationNodeBlendSpace2D" uid="uid://dqilk47q3kr10" path="res://entities/grid_entities/characters/player/animation_tree/blend_space_item_use.tres" id="2_823sp"]

@@ -17,7 +17,7 @@ instance_dock/preview_resolution=Vector2i(64, 64)
 
 config/name="Lone Ranger"
 run/main_scene="uid://blym4at4ldbp"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
