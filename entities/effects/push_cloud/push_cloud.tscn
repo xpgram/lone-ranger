@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://hua0n75be2w3"]
+[gd_scene format=3 uid="uid://hua0n75be2w3"]
 
 [ext_resource type="Script" uid="uid://cvybgumkayqnw" path="res://entities/effects/push_cloud/push_cloud.gd" id="8_1axcv"]
 [ext_resource type="Texture2D" uid="uid://bj4uhue67auyb" path="res://assets/00 - source/effects_sheet.png" id="8_vccv6"]
@@ -114,7 +114,7 @@ animations = [{
 "speed": 14.0
 }]
 
-[node name="PushCloud" type="AnimatedSprite2D"]
+[node name="PushCloud" type="AnimatedSprite2D" unique_id=1799834954]
 sprite_frames = SubResource("SpriteFrames_focbn")
 animation = &"push_up"
 autoplay = "push_right"

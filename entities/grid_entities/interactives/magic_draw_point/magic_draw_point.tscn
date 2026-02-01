@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b025q84ct55mo"]
+[gd_scene format=3 uid="uid://b025q84ct55mo"]
 
 [ext_resource type="Script" uid="uid://cyk1qn1cjdhk2" path="res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.gd" id="1_v0hlf"]
 [ext_resource type="Texture2D" uid="uid://vxbbyaiao3gu" path="res://entities/grid_entities/interactives/magic_draw_point/images/mana_dingles.png" id="2_v0hlf"]
@@ -22,8 +22,18 @@ _limits = [-1.0, 1.0, 0.0, 8.0]
 _data = [Vector2(0, 0.0035243034), 0.0, 0.0, 0, 0, Vector2(1, 0.1524229), 0.0, 0.0, 0, 0, Vector2(2, -0.35154188), 0.0, 0.0, 0, 0, Vector2(3, 0.49603528), 0.0, 0.0, 0, 0, Vector2(3.9999998, -0.6493392), 0.0, 0.0, 0, 0, Vector2(5, 1), 0.0, 0.0, 0, 0, Vector2(6.0000005, -1), 0.0, 0.0, 0, 0, Vector2(7.0000005, 1), 0.0, 0.0, 0, 0, Vector2(8, -1), 0.0, 0.0, 0, 0]
 point_count = 9
 
+[sub_resource type="Curve" id="Curve_v0hlf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_2dhk1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_lxj52"]
 curve_x = SubResource("Curve_hwv0m")
+curve_y = SubResource("Curve_v0hlf")
+curve_z = SubResource("Curve_2dhk1")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6camj"]
 lifetime_randomness = 0.1
@@ -45,11 +55,11 @@ alpha_curve = SubResource("CurveTexture_6camj")
 anim_speed_min = 20.0
 anim_speed_max = 20.0
 
-[node name="MagicDrawPoint" type="Node2D"]
+[node name="MagicDrawPoint" type="Node2D" unique_id=908897292]
 script = ExtResource("1_v0hlf")
 metadata/_custom_type_script = "uid://cyk1qn1cjdhk2"
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=750045673]
 material = SubResource("CanvasItemMaterial_0mqgx")
 texture = ExtResource("2_v0hlf")
 lifetime = 1.2
@@ -57,7 +67,7 @@ speed_scale = 0.75
 fixed_fps = 64
 process_material = SubResource("ParticleProcessMaterial_6camj")
 
-[node name="ContextAction" type="Node" parent="." node_paths=PackedStringArray("_draw_point")]
+[node name="ContextAction" type="Node" parent="." unique_id=186350257 node_paths=PackedStringArray("_draw_point")]
 script = ExtResource("3_v0hlf")
 _draw_point = NodePath("..")
 metadata/_custom_type_script = "uid://cqilrqw1pi3ai"

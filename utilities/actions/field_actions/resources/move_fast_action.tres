@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Move_FieldAction" load_steps=2 format=3 uid="uid://xqdq20a70cev"]
+[gd_resource type="Resource" script_class="Move_FieldAction" format=3 uid="uid://xqdq20a70cev"]
 
 [ext_resource type="Script" uid="uid://b1we8bvlckfot" path="res://utilities/actions/field_actions/scripts/move_action.gd" id="1_v6i07"]
 

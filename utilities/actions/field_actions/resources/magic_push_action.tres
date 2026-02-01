@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Push_FieldAction" load_steps=4 format=3 uid="uid://72omta0cvh7l"]
+[gd_resource type="Resource" script_class="Push_FieldAction" format=3 uid="uid://72omta0cvh7l"]
 
 [ext_resource type="Script" uid="uid://cr14jkqg2alan" path="res://utilities/actions/field_actions/scripts/push_action.gd" id="1_axnoj"]
 [ext_resource type="Texture2D" uid="uid://c2osmodhe2l35" path="res://assets/00 - source/icons_small_sheet.png" id="2_xhfsb"]

@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bla85a6ciahek"]
+[gd_scene format=3 uid="uid://bla85a6ciahek"]
 
 [ext_resource type="Texture2D" uid="uid://bi257xfxmooyj" path="res://assets/00 - source/items_sheet.png" id="1_7iu7f"]
 
-[node name="Chain" type="Sprite2D"]
+[node name="Chain" type="Sprite2D" unique_id=1285575169]
 texture = ExtResource("1_7iu7f")
 region_enabled = true
 region_rect = Rect2(16, 16, 16, 16)

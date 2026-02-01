@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cokxrxu6mgxob"]
+[gd_scene format=3 uid="uid://cokxrxu6mgxob"]
 
 [ext_resource type="Script" uid="uid://83jrylvkrkma" path="res://entities/grid_entities/enemies/enemy2d.gd" id="1_ar4kq"]
 [ext_resource type="Texture2D" uid="uid://b4v8nlcnvuu5y" path="res://assets/00 - source/enemies_sheet.png" id="2_52rys"]
@@ -61,7 +61,7 @@ animations = [{
 "speed": 2.0
 }]
 
-[node name="EnemyDiamond" type="Node2D"]
+[node name="EnemyDiamond" type="Node2D" unique_id=911851807]
 script = ExtResource("1_ar4kq")
 solid = true
 pushable = true
@@ -70,20 +70,20 @@ metadata/_custom_type_script = "uid://83jrylvkrkma"
 metadata/GridActorComponent = NodePath("ComponentCombiner/GridActorComponent")
 metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2100546152]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_ijwdy")
 animation = &"active"
 autoplay = "inactive"
 
-[node name="ComponentCombiner" type="Node" parent="."]
+[node name="ComponentCombiner" type="Node" parent="." unique_id=873506921]
 script = ExtResource("3_nptom")
 metadata/_custom_type_script = "uid://bquah6tnohw5e"
 
-[node name="HealthComponent" type="Node" parent="ComponentCombiner"]
+[node name="HealthComponent" type="Node" parent="ComponentCombiner" unique_id=1232079611]
 script = ExtResource("4_mtp5w")
 metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
 
-[node name="GridActorComponent" type="Node" parent="ComponentCombiner"]
+[node name="GridActorComponent" type="Node" parent="ComponentCombiner" unique_id=1536018760]
 script = ExtResource("5_ar4kq")
 metadata/_custom_type_script = "uid://bkh4aef0dxaiy"

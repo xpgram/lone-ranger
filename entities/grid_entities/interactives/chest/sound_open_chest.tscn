@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfuot400wgl4m"]
+[gd_scene format=3 uid="uid://dfuot400wgl4m"]
 
 [ext_resource type="AudioStream" uid="uid://0c335pi0wxxg" path="res://assets/audio/sounds/open_chest_01.wav" id="1_5mhh0"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="1_f3w60"]
 
-[node name="SoundOpenChest" type="AudioStreamPlayer"]
+[node name="SoundOpenChest" type="AudioStreamPlayer" unique_id=813394989]
 stream = ExtResource("1_5mhh0")
 bus = &"SoundEffects"
 script = ExtResource("1_f3w60")

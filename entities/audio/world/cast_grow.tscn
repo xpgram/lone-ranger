@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dje6ncwpv7kxg"]
+[gd_scene format=3 uid="uid://dje6ncwpv7kxg"]
 
 [ext_resource type="AudioStream" uid="uid://wl8d0i3tt38f" path="res://assets/audio/sounds/spell_sound_01.wav" id="1_6kvr5"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_tc8mu"]
 
-[node name="CastGrow" type="AudioStreamPlayer"]
+[node name="CastGrow" type="AudioStreamPlayer" unique_id=249999669]
 stream = ExtResource("1_6kvr5")
 bus = &"SoundEffects"
 script = ExtResource("2_tc8mu")

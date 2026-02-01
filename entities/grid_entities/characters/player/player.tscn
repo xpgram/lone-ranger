@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://xjvdjvcg5sjk"]
+[gd_scene format=3 uid="uid://xjvdjvcg5sjk"]
 
 [ext_resource type="Script" uid="uid://5bo1qoxebq1d" path="res://entities/grid_entities/characters/player/scripts/player2d.gd" id="1_reh0w"]
 [ext_resource type="Texture2D" uid="uid://lv8q188gep4i" path="res://entities/grid_entities/characters/player/images/handheld/gray-scepter-right.png" id="2_0vnf7"]
@@ -1432,12 +1432,12 @@ left = &"push_left"
 right = &"push_right"
 metadata/_custom_type_script = "uid://cpjdc1h6kotna"
 
-[node name="Player2D" type="Node2D"]
+[node name="Player2D" type="Node2D" unique_id=956655144]
 script = ExtResource("1_reh0w")
 solid = true
 metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 
-[node name="HandheldItem" type="Node2D" parent="." node_paths=PackedStringArray("_item_nodes", "handheld_sprite")]
+[node name="HandheldItem" type="Node2D" parent="." unique_id=1331127062 node_paths=PackedStringArray("_item_nodes", "handheld_sprite")]
 visible = false
 script = ExtResource("2_y15db")
 item_textures = Dictionary[int, Texture2D]({
@@ -1449,18 +1449,18 @@ _item_nodes = {
 }
 handheld_sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="HandheldItem"]
+[node name="Sprite2D" type="Sprite2D" parent="HandheldItem" unique_id=1319790053]
 position = Vector2(15, 0)
 texture = ExtResource("2_0vnf7")
 
-[node name="Hookshot" parent="HandheldItem" instance=ExtResource("5_e6hj0")]
+[node name="Hookshot" parent="HandheldItem" unique_id=1820015213 instance=ExtResource("5_e6hj0")]
 visible = false
 position = Vector2(15, 0)
 
-[node name="BacksideItem" type="Node2D" parent="."]
+[node name="BacksideItem" type="Node2D" parent="." unique_id=1040088507]
 visible = false
 
-[node name="RightSide" type="AnimatedSprite2D" parent="BacksideItem"]
+[node name="RightSide" type="AnimatedSprite2D" parent="BacksideItem" unique_id=368890905]
 visible = false
 position = Vector2(8, 0)
 sprite_frames = SubResource("SpriteFrames_dejhr")
@@ -1468,7 +1468,7 @@ animation = &"wings"
 autoplay = "wings"
 frame_progress = 0.56634563
 
-[node name="LeftSide" type="AnimatedSprite2D" parent="BacksideItem"]
+[node name="LeftSide" type="AnimatedSprite2D" parent="BacksideItem" unique_id=1701442724]
 visible = false
 position = Vector2(-8, 0)
 sprite_frames = SubResource("SpriteFrames_dejhr")
@@ -1477,18 +1477,16 @@ autoplay = "wings"
 frame_progress = 0.56634563
 flip_h = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1599092330]
 sprite_frames = SubResource("SpriteFrames_uay6n")
 animation = &"idle_down"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1670236328]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_sk725")
-}
-autoplay = "idle_down"
+libraries/ = SubResource("AnimationLibrary_sk725")
+autoplay = &"idle_down"
 
-[node name="AnimationStateSwitch" type="Node" parent="." node_paths=PackedStringArray("animation_player")]
+[node name="AnimationStateSwitch" type="Node" parent="." unique_id=1035932493 node_paths=PackedStringArray("animation_player")]
 unique_name_in_owner = true
 script = ExtResource("18_15kbc")
 animation_player = NodePath("../AnimationPlayer")
@@ -1502,17 +1500,17 @@ states = Dictionary[String, ExtResource("19_5ce6h")]({
 "push": SubResource("Resource_pmh1o")
 })
 
-[node name="ComponentCombiner" type="Node" parent="."]
+[node name="ComponentCombiner" type="Node" parent="." unique_id=1606199449]
 script = ExtResource("21_y15db")
 metadata/_custom_type_script = "uid://bquah6tnohw5e"
 
-[node name="HealthComponent" type="Node" parent="ComponentCombiner"]
+[node name="HealthComponent" type="Node" parent="ComponentCombiner" unique_id=926322854]
 script = ExtResource("19_ee7qb")
 maximum = 4
 value = 4
 metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
 
-[node name="Audio" type="Node" parent="."]
+[node name="Audio" type="Node" parent="." unique_id=918585968]
 
-[node name="PlayerHurt" type="AudioStreamPlayer" parent="Audio"]
+[node name="PlayerHurt" type="AudioStreamPlayer" parent="Audio" unique_id=177321424]
 stream = ExtResource("24_6ncg4")

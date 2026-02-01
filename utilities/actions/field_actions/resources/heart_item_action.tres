@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="HeartItem_FieldAction" load_steps=4 format=3 uid="uid://c7tnmstfkbpqw"]
+[gd_resource type="Resource" script_class="HeartItem_FieldAction" format=3 uid="uid://c7tnmstfkbpqw"]
 
 [ext_resource type="Script" uid="uid://c2gxgdyqwbu1o" path="res://utilities/actions/field_actions/scripts/heart_item_action.gd" id="1_mbemj"]
 [ext_resource type="Texture2D" uid="uid://c2osmodhe2l35" path="res://assets/00 - source/icons_small_sheet.png" id="2_tg1mf"]

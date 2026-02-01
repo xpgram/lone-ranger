@@ -13,10 +13,6 @@ config_version=5
 instance_dock/scene_data_file="res://InstanceDockSceneData.txt"
 instance_dock/preview_resolution=Vector2i(64, 64)
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
 
 config/name="Lone Ranger"

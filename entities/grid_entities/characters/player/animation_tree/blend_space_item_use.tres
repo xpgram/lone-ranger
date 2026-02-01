@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeBlendSpace2D" load_steps=5 format=3 uid="uid://dqilk47q3kr10"]
+[gd_resource type="AnimationNodeBlendSpace2D" format=3 uid="uid://dqilk47q3kr10"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_crt5d"]
 animation = &"item_use_left"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://v76t6hfbja7y"]
+[gd_scene format=3 uid="uid://v76t6hfbja7y"]
 
 [ext_resource type="Script" uid="uid://83jrylvkrkma" path="res://entities/grid_entities/enemies/enemy2d.gd" id="1_xi4rg"]
 [ext_resource type="Texture2D" uid="uid://b4v8nlcnvuu5y" path="res://assets/00 - source/enemies_sheet.png" id="2_vxskh"]
@@ -47,7 +47,7 @@ animations = [{
 "speed": 2.0
 }]
 
-[node name="EnemyMaggot" type="Node2D"]
+[node name="EnemyMaggot" type="Node2D" unique_id=1548697187]
 script = ExtResource("1_xi4rg")
 solid = true
 pushable = true
@@ -55,20 +55,20 @@ metadata/_custom_type_script = "uid://83jrylvkrkma"
 metadata/GridActorComponent = NodePath("ComponentCombiner/GridActorComponent")
 metadata/HealthComponent = NodePath("ComponentCombiner/HealthComponent")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2062685280]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_ijwdy")
 animation = &"face_down"
 autoplay = "face_down"
 
-[node name="ComponentCombiner" type="Node" parent="."]
+[node name="ComponentCombiner" type="Node" parent="." unique_id=1043327298]
 script = ExtResource("3_uiq7y")
 metadata/_custom_type_script = "uid://bquah6tnohw5e"
 
-[node name="HealthComponent" type="Node" parent="ComponentCombiner"]
+[node name="HealthComponent" type="Node" parent="ComponentCombiner" unique_id=126542149]
 script = ExtResource("4_wfh3j")
 metadata/_custom_type_script = "uid://dxwyf0pnu6nbg"
 
-[node name="GridActorComponent" type="Node" parent="ComponentCombiner"]
+[node name="GridActorComponent" type="Node" parent="ComponentCombiner" unique_id=335189495]
 script = ExtResource("5_xi4rg")
 metadata/_custom_type_script = "uid://bkh4aef0dxaiy"

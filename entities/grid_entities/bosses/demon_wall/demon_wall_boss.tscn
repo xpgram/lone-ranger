@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://w8c7503qyp61"]
+[gd_scene format=3 uid="uid://w8c7503qyp61"]
 
 [ext_resource type="Script" uid="uid://beh3cjmt3s81q" path="res://entities/grid_entities/bosses/demon_wall/grid_actor_component.gd" id="2_fmksn"]
 [ext_resource type="Script" uid="uid://d2ia5xo41ut6y" path="res://entities/grid_entities/bosses/demon_wall/wall_spot.gd" id="3_2xxmn"]
@@ -10,12 +10,12 @@
 atlas = ExtResource("5_8276p")
 region = Rect2(240, 0, 16, 32)
 
-[node name="DemonWallBoss" type="Node2D"]
+[node name="DemonWallBoss" type="Node2D" unique_id=1639987017]
 script = ExtResource("3_8276p")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 metadata/GridActorComponent = NodePath("GridActorComponent")
 
-[node name="GridActorComponent" type="Node" parent="." node_paths=PackedStringArray("hurt_trigger_container", "wall_spot_container", "spikes_container", "turn_timer")]
+[node name="GridActorComponent" type="Node" parent="." unique_id=106929466 node_paths=PackedStringArray("hurt_trigger_container", "wall_spot_container", "spikes_container", "turn_timer")]
 script = ExtResource("2_fmksn")
 hurt_trigger_container = NodePath("../HurtTriggers")
 wall_spot_container = NodePath("../WallSpots")
@@ -23,106 +23,106 @@ spikes_container = NodePath("../SpikeSprites")
 turn_timer = NodePath("../TurnTimer")
 metadata/_custom_type_script = "uid://bkh4aef0dxaiy"
 
-[node name="TurnTimer" type="Timer" parent="."]
+[node name="TurnTimer" type="Timer" parent="." unique_id=168289967]
 wait_time = 2.5
 
-[node name="HurtTriggers" type="Node2D" parent="."]
+[node name="HurtTriggers" type="Node2D" parent="." unique_id=2088949634]
 
-[node name="HurtSpot" type="Node2D" parent="HurtTriggers"]
+[node name="HurtSpot" type="Node2D" parent="HurtTriggers" unique_id=771551410]
 position = Vector2(16, 0)
 script = ExtResource("3_fmksn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="HurtSpot2" type="Node2D" parent="HurtTriggers"]
+[node name="HurtSpot2" type="Node2D" parent="HurtTriggers" unique_id=83712331]
 position = Vector2(16, 16)
 script = ExtResource("3_fmksn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="HurtSpot3" type="Node2D" parent="HurtTriggers"]
+[node name="HurtSpot3" type="Node2D" parent="HurtTriggers" unique_id=1532415435]
 position = Vector2(16, 32)
 script = ExtResource("3_fmksn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="HurtSpot4" type="Node2D" parent="HurtTriggers"]
+[node name="HurtSpot4" type="Node2D" parent="HurtTriggers" unique_id=2095523607]
 position = Vector2(16, 48)
 script = ExtResource("3_fmksn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpots" type="Node2D" parent="."]
+[node name="WallSpots" type="Node2D" parent="." unique_id=691353205]
 
-[node name="WallSpotF" type="Node2D" parent="WallSpots"]
+[node name="WallSpotF" type="Node2D" parent="WallSpots" unique_id=740881499]
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpotF2" type="Node2D" parent="WallSpots"]
+[node name="WallSpotF2" type="Node2D" parent="WallSpots" unique_id=153409947]
 position = Vector2(0, 16)
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpotF3" type="Node2D" parent="WallSpots"]
+[node name="WallSpotF3" type="Node2D" parent="WallSpots" unique_id=1315741642]
 position = Vector2(0, 32)
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpotF4" type="Node2D" parent="WallSpots"]
+[node name="WallSpotF4" type="Node2D" parent="WallSpots" unique_id=449149085]
 position = Vector2(0, 48)
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpotB" type="Node2D" parent="WallSpots"]
+[node name="WallSpotB" type="Node2D" parent="WallSpots" unique_id=135257995]
 position = Vector2(-16, 0)
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpotB2" type="Node2D" parent="WallSpots"]
+[node name="WallSpotB2" type="Node2D" parent="WallSpots" unique_id=1085030815]
 position = Vector2(-16, 16)
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpotB3" type="Node2D" parent="WallSpots"]
+[node name="WallSpotB3" type="Node2D" parent="WallSpots" unique_id=756952932]
 position = Vector2(-16, 32)
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="WallSpotB4" type="Node2D" parent="WallSpots"]
+[node name="WallSpotB4" type="Node2D" parent="WallSpots" unique_id=2147276312]
 position = Vector2(-16, 48)
 script = ExtResource("3_2xxmn")
 terrain_type = 0
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="FloorSpot" type="Node2D" parent="WallSpots"]
+[node name="FloorSpot" type="Node2D" parent="WallSpots" unique_id=934872492]
 position = Vector2(-32, 0)
 script = ExtResource("3_2xxmn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="FloorSpot2" type="Node2D" parent="WallSpots"]
+[node name="FloorSpot2" type="Node2D" parent="WallSpots" unique_id=2024864456]
 position = Vector2(-32, 16)
 script = ExtResource("3_2xxmn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="FloorSpot3" type="Node2D" parent="WallSpots"]
+[node name="FloorSpot3" type="Node2D" parent="WallSpots" unique_id=2047520275]
 position = Vector2(-32, 32)
 script = ExtResource("3_2xxmn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="FloorSpot4" type="Node2D" parent="WallSpots"]
+[node name="FloorSpot4" type="Node2D" parent="WallSpots" unique_id=469085907]
 position = Vector2(-32, 48)
 script = ExtResource("3_2xxmn")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="SpikeSprites" type="Node2D" parent="."]
+[node name="SpikeSprites" type="Node2D" parent="." unique_id=100343691]
 
-[node name="SpikesSprite" type="Sprite2D" parent="SpikeSprites"]
+[node name="SpikesSprite" type="Sprite2D" parent="SpikeSprites" unique_id=867283021]
 position = Vector2(1, 8)
 texture = SubResource("AtlasTexture_kislp")
 
-[node name="SpikesSprite2" type="Sprite2D" parent="SpikeSprites"]
+[node name="SpikesSprite2" type="Sprite2D" parent="SpikeSprites" unique_id=1863222431]
 position = Vector2(1, 40)
 texture = SubResource("AtlasTexture_kislp")

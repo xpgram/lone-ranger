@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3dfb7ml0p2ln"]
+[gd_scene format=3 uid="uid://c3dfb7ml0p2ln"]
 
 [ext_resource type="Texture2D" uid="uid://bj4uhue67auyb" path="res://assets/00 - source/effects_sheet.png" id="1_5836s"]
 [ext_resource type="Script" uid="uid://0rn6fw26bcgo" path="res://entities/effects/object_fall/falling_object_generic.gd" id="2_5836s"]
@@ -46,7 +46,7 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="FallingObjectGeneric" type="AnimatedSprite2D"]
+[node name="FallingObjectGeneric" type="AnimatedSprite2D" unique_id=1437290830]
 sprite_frames = SubResource("SpriteFrames_focbn")
 animation = &"fall"
 autoplay = "fall"

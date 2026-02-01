@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://blym4at4ldbp"]
+[gd_scene format=3 uid="uid://blym4at4ldbp"]
 
 [ext_resource type="PackedScene" uid="uid://5elbiihgljqp" path="res://stages/00-test.tscn" id="1_72s8x"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=511087797]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1623571357]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer" unique_id=768149795]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,7 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer" unique_id=760992087]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(1920, 1280)
@@ -22,4 +22,4 @@ size_2d_override = Vector2i(960, 640)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="Game" parent="CanvasLayer/SubViewportContainer/SubViewport" instance=ExtResource("1_72s8x")]
+[node name="Game" parent="CanvasLayer/SubViewportContainer/SubViewport" unique_id=1493899647 instance=ExtResource("1_72s8x")]

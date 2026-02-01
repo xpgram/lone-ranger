@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Push_FieldAction" load_steps=2 format=3 uid="uid://dp3a2pno7lxyr"]
+[gd_resource type="Resource" script_class="Push_FieldAction" format=3 uid="uid://dp3a2pno7lxyr"]
 
 [ext_resource type="Script" uid="uid://cr14jkqg2alan" path="res://utilities/actions/field_actions/scripts/push_action.gd" id="1_ymuau"]
 

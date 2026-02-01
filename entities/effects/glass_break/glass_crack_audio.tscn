@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgpaem3pcvr4u"]
+[gd_scene format=3 uid="uid://cgpaem3pcvr4u"]
 
 [ext_resource type="AudioStream" uid="uid://bk4ykhdgogs2x" path="res://assets/audio/sounds/glass_crack_01.wav" id="1_5efch"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_jxycq"]
 
-[node name="GlassCrackAudio" type="AudioStreamPlayer"]
+[node name="GlassCrackAudio" type="AudioStreamPlayer" unique_id=836785360]
 stream = ExtResource("1_5efch")
 script = ExtResource("2_jxycq")
 metadata/_custom_type_script = "uid://me30ja85krjn"

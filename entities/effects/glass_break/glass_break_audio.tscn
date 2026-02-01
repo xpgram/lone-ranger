@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsrqiqwsnihg6"]
+[gd_scene format=3 uid="uid://bsrqiqwsnihg6"]
 
 [ext_resource type="AudioStream" uid="uid://btp5bjm1y0cpf" path="res://assets/audio/sounds/glass_break_01.wav" id="1_68t1p"]
 [ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="1_n26ej"]
 
-[node name="GlassBreakAudio" type="AudioStreamPlayer"]
+[node name="GlassBreakAudio" type="AudioStreamPlayer" unique_id=1422349685]
 stream = ExtResource("1_68t1p")
 script = ExtResource("1_n26ej")
 metadata/_custom_type_script = "uid://me30ja85krjn"

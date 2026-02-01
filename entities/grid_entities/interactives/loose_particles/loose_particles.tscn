@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cqx4i6o5f7y0t"]
+[gd_scene format=3 uid="uid://cqx4i6o5f7y0t"]
 
 [ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="1_pvh1i"]
 [ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="2_5yirl"]
@@ -55,14 +55,14 @@ anim_speed_curve = SubResource("CurveTexture_7oan8")
 anim_offset_max = 1.0
 anim_offset_curve = SubResource("CurveTexture_0lxvj")
 
-[node name="LooseParticles" type="Node2D"]
+[node name="LooseParticles" type="Node2D" unique_id=251462041]
 script = ExtResource("1_pvh1i")
 _attributes = Dictionary[StringName, ExtResource("2_5yirl")]({
 &"compactible_to_floor": SubResource("Resource_fe760")
 })
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1484543874]
 material = SubResource("CanvasItemMaterial_2ba2c")
 amount = 10
 amount_ratio = 0.8
