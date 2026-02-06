@@ -2,6 +2,15 @@ class_name TriggerSpot_2
 extends GridEntity
 
 
+# TODO Swap the class names for TriggerSpot and TriggerSpot_2.
+# TODO Implement into DemonWall boss, replacing the previous triggerspot.
+# TODO Can we limit the overhead from being a GridEntity? TriggerSpots don't need "solid" or "pushable".
+# TODO Implement NotifyEntity, a pair to Stimulus
+#   I'm... not going to refactor Stimulus yet. I still need function signatures in the doc strings.
+#   NotifyEntity.bumped(entities)         [Triggers a Stimulus reaction.]
+#   NotifyEntity.secret_knocked(entities) [Collects and 'taps' a BumpComponent.]
+
+
 ## Emitted when a [GridEntity] collides with this one.
 signal entered(entity: GridEntity);
 
