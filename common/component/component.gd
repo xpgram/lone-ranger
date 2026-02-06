@@ -66,7 +66,7 @@ static func get_all(nodes: Array, component_type: Variant) -> Array[BaseComponen
 ##
 ## [param component_type] should be an object instance or a class reference to any type
 ## that extends [BaseComponent].
-static func remove_component(node: Node, component_type: Variant) -> void:
+static func remove(node: Node, component_type: Variant) -> void:
   if not node:
     return;
 

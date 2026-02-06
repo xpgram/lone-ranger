@@ -98,7 +98,7 @@ func _register_self(node: Node) -> void:
 func _deregister_self(node: Node) -> void:
   _try_disconnect_proxy_listener(node);
   var registration_target := _get_registration_target(node);
-  Component.remove_component(registration_target, self);
+  Component.remove(registration_target, self);
 
 
 ## If [param node] is a component proxy type object, connects to signals emitted by the
