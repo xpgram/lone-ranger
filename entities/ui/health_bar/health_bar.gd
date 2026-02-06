@@ -21,7 +21,7 @@ func _ready() -> void:
   if not player2d:
     return;
 
-  _health_component = Component.get_component(player2d, HealthComponent) as HealthComponent;
+  _health_component = Component.getc(player2d, HealthComponent) as HealthComponent;
 
   _set_maximum_hearts(_health_component.maximum);
   _on_health_changed(_health_component.value);

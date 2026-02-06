@@ -32,7 +32,7 @@ static func set_component(node: Node, component: BaseComponent) -> void:
 ##
 ## [param component_type] should be an object instance or a class reference to any type
 ## that extends [BaseComponent].
-static func get_component(node: Node, component_type: Variant) -> BaseComponent:
+static func getc(node: Node, component_type: Variant) -> BaseComponent:
   if not node:
     push_error("Cannot get a component from a null value.");
     return null;
@@ -56,7 +56,7 @@ static func get_all(nodes: Array, component_type: Variant) -> Array[BaseComponen
         or not has_component(node, component_type)
     ):
       continue;
-    components.append(get_component(node, component_type));
+    components.append(getc(node, component_type));
 
   return components;
 

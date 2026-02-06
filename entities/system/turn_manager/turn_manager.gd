@@ -153,7 +153,7 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
             or (include_golems and entity.observes_golem_time)
           )
         ))
-      .map(func (entity: GridEntity): return Component.get_component(entity, GridActorComponent))
+      .map(func (entity: GridEntity): return Component.getc(entity, GridActorComponent))
   );
 
   if actor_components.size() == 0:

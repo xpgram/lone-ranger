@@ -378,9 +378,9 @@ func _connect_to_ui_subsystems() -> void:
   _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
 
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.value_changed.connect(_on_health_changed);
-  health_component.empty.connect(_on_health_empty);
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.value_changed.connect(_on_health_changed);
+  health.empty.connect(_on_health_empty);
 
 
 ## Returns the [FieldAction] variant the [Player2D] will use for movement.
@@ -603,8 +603,8 @@ func _state_fall() -> void:
   show();
 
   # FIXME Put this damn thing in an @onready already.
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.value -= 1;
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.value -= 1;
 
   _settle_affairs();
 
@@ -635,8 +635,8 @@ func _state_death() -> void:
   grid_position = _starting_position;
   faced_direction = Vector2i.DOWN;
 
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.set_hp_to_full();
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.set_hp_to_full();
 
   # Fade in.
   await get_tree().create_timer(3.0).timeout;
@@ -683,8 +683,8 @@ func _state_sleep() -> void:
   faced_direction = Vector2i.DOWN;
 
   # TODO This seems like it should be a property of checkpoints, and not necessarily put here?
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.set_hp_to_full();
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.set_hp_to_full();
 
   # Fade in.
   await get_tree().create_timer(3.0).timeout;

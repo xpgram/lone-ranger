@@ -20,5 +20,5 @@ func _on_collision(_entity: GridEntity) -> void:
 
   # FIXME This doesn't even check it has this property.
   #  I should probably do this with an on_trigger() component. That would be generic enough.
-  var actor_component := Component.get_component(activateable_entity, GridActorComponent) as GridActorComponent;
+  var actor_component := Component.getc(activateable_entity, GridActorComponent) as GridActorComponent;
   actor_component.activated = true;

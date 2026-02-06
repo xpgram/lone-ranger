@@ -10,7 +10,7 @@
 ##
 ## [codeblock]
 ## if Component.has_component(node, BaseComponent):
-##     var component := Component.get_component(node, BaseComponent) as BaseComponent;
+##     var component := Component.getc(node, BaseComponent) as BaseComponent;
 ## [/codeblock]
 @tool
 @abstract class_name BaseComponent
