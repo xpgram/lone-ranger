@@ -7,7 +7,8 @@ const _scene_cast_audio := preload('uid://gp5umbprfog6');
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var target_entities := Grid.get_entities(playbill.target_position);
-  var any_attackable_entity: bool = target_entities.any(func (entity: GridEntity): return Component.has_component(entity, HealthComponent));
+  var any_attackable_entity: bool = target_entities \
+    .any(func (entity: GridEntity): return Component.has(entity, HealthComponent));
 
   var is_facing_target: bool = (
     playbill.performer.grid_position + playbill.performer.faced_direction == playbill.target_position

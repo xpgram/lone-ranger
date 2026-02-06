@@ -147,7 +147,7 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
       # TODO I may want to just extract this filter to an indent-zero function.
       .filter(func (entity: GridEntity):
         return (
-          Component.has_component(entity, GridActorComponent)
+          Component.has(entity, GridActorComponent)
           and (
             (include_non_golems and not entity.observes_golem_time)
             or (include_golems and entity.observes_golem_time)

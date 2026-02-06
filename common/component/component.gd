@@ -7,7 +7,7 @@ class_name Component
 ##
 ## [param component_type] should be an object instance or a class reference to any type
 ## that extends [BaseComponent].
-static func has_component(node: Node, component_type: Variant) -> bool:
+static func has(node: Node, component_type: Variant) -> bool:
   if not node:
     return false;
 
@@ -53,10 +53,10 @@ static func get_all(nodes: Array, component_type: Variant) -> Array[BaseComponen
   for node in nodes:
     if (
         node is not Node
-        or not has_component(node, component_type)
+        or not Component.has(node, component_type)
     ):
       continue;
-    components.append(getc(node, component_type));
+    components.append(Component.getc(node, component_type));
 
   return components;
 
