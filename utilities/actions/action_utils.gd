@@ -68,17 +68,10 @@ static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
   return Vector2.from_angle(angle).round();
 
 
-## Returns a list of all [param component_type] that exist among [param entities].
-static func get_entity_components(entities: Array[GridEntity], component_type: Variant) -> Array:
-  return entities \
-    .filter(func (entity: GridEntity): return Component.has_component(entity, component_type)) \
-    .map(func (entity: GridEntity): return Component.get_component(entity, component_type));
-
-
 ## Returns a list of all [HealthComponent] that exist among [param entities].
 static func get_entity_health_components(entities) -> Array[HealthComponent]:
   var components: Array[HealthComponent];
-  components.assign(get_entity_components(entities, HealthComponent));
+  components.assign(Component.get_all(entities, HealthComponent));
   return components;
 
 

@@ -41,6 +41,26 @@ static func get_component(node: Node, component_type: Variant) -> BaseComponent:
   return node.get_node(node_path);
 
 
+## Returns a filtered list of all [param component_type] objects held by [param nodes].
+## Note that this means the returned list of components may be empty even when
+## [param nodes] is not. [br]
+##
+## [param component_type] should be an object instance or a class reference to any type
+## that extends [BaseComponent].
+static func get_all(nodes: Array, component_type: Variant) -> Array[BaseComponent]:
+  var components: Array[BaseComponent];
+
+  for node in nodes:
+    if (
+        node is not Node
+        or not has_component(node, component_type)
+    ):
+      continue;
+    components.append(get_component(node, component_type));
+
+  return components;
+
+
 ## Removes the [param component_type] registered to [param node], or if no component
 ## exists, does nothing. [br]
 ##
