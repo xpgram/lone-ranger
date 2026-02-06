@@ -68,13 +68,6 @@ static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
   return Vector2.from_angle(angle).round();
 
 
-## Returns a list of all [HealthComponent] that exist among [param entities].
-static func get_entity_health_components(entities) -> Array[HealthComponent]:
-  var components: Array[HealthComponent];
-  components.assign(Component.get_all(entities, HealthComponent));
-  return components;
-
-
 ## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
 ## to [param target_pos]. If no path could be found, the returned array will be empty.
 static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:

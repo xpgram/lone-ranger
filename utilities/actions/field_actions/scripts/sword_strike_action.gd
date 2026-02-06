@@ -20,10 +20,10 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   ActionUtils.play_attack_animation(playbill.performer, playbill.orientation);
   AudioBus.play_audio_scene(_scene_cast_audio);
 
-  var target_health_components := ActionUtils \
-    .get_entity_health_components(Grid.get_entities(playbill.target_position));
+  var target_entities := Grid.get_entities(playbill.target_position);
+  var target_health_components := Component.get_all(target_entities, HealthComponent);
 
-  for health in target_health_components:
+  for health: HealthComponent in target_health_components:
     health.value -= 1;
 
   return true;
