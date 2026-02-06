@@ -88,7 +88,7 @@ func _get_registration_target(node: Node) -> Node:
 func _register_self(node: Node) -> void:
   _try_connect_proxy_listener(node);
   var registration_target := _get_registration_target(node);
-  Component.set_component(registration_target, self);
+  Component.setc(registration_target, self);
   component_owner_changed.emit();
 
 

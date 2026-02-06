@@ -18,7 +18,7 @@ static func has_component(node: Node, component_type: Variant) -> bool:
 ## as the metadata key. [br]
 ##
 ## [param component] should be an object instance of any type that extends [BaseComponent].
-static func set_component(node: Node, component: BaseComponent) -> void:
+static func setc(node: Node, component: BaseComponent) -> void:
   if not node:
     return;
 
