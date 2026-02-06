@@ -11,6 +11,6 @@ func _bind_stimulus_callbacks() -> void:
   });
 
 
-func _on_collide() -> void:
+func _on_collide(_entity: GridEntity) -> void:
   # TODO entity: GridEntity is passed in as an argument.
   pass

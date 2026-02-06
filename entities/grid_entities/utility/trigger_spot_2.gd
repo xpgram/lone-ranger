@@ -17,21 +17,9 @@ func _bind_stimulus_callbacks() -> void:
   });
 
 
-func _on_collision() -> void:
-  var player := ActionUtils.get_player_entity();
-
-  if not player.grid_position == grid_position:
-    return;
-
-  # FIXME Missing the entity argument.
-  entered.emit(player);
+func _on_collision(entity: GridEntity) -> void:
+  entered.emit(entity);
 
 
-func _on_separation() -> void:
-  var player := ActionUtils.get_player_entity();
-
-  if player.grid_position == grid_position:
-    return;
-
-  # FIXME Missing the entity argument.
-  exited.emit(player);
+func _on_separation(entity: GridEntity) -> void:
+  exited.emit(entity);

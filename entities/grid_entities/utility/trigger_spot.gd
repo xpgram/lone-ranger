@@ -12,7 +12,7 @@ func _bind_stimulus_callbacks() -> void:
   });
 
 
-func _on_collision() -> void:
+func _on_collision(_entity: GridEntity) -> void:
   var player := ActionUtils.get_player_entity();
 
   if not player.grid_position == grid_position:

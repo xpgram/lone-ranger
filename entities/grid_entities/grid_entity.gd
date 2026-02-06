@@ -118,8 +118,8 @@ func update_attributes() -> void:
 
 ## Notifies the [GridEntity] that [param stimulus_name] has occurred and executes its
 ## associated behavior, if any is defined.
-func react_async(stimulus_name: StringName) -> void:
-  await _stimulus_event_map.call_event_async(stimulus_name);
+func react_async(stimulus_name: StringName, arguments := []) -> void:
+  await _stimulus_event_map.call_event_async(stimulus_name, arguments);
 
 
 ## Returns the Grid distance between this entity and [param other]. [br]
@@ -201,12 +201,12 @@ class InternalEventMap extends RefCounted:
 
 
   ## If [param event_name] exists in the event map, calls its associated function.
-  func call_event(event_name: StringName) -> void:
-    call_event_async(event_name);
+  func call_event(event_name: StringName, arguments := []) -> void:
+    call_event_async(event_name, arguments);
 
 
   ## If [param event_name] exists in the event map, calls and awaits its associated
   ## function.
-  func call_event_async(event_name: StringName) -> void:
+  func call_event_async(event_name: StringName, arguments := []) -> void:
     if _events.has(event_name):
-      await _events.get(event_name).call();
+      await _events.get(event_name).callv(arguments);

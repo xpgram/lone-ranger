@@ -25,8 +25,8 @@ func put(entity: GridEntity, place: Vector2) -> void:
   # Run collisions.
   for collided_entity in collided_entities:
     # TODO Add function signature: Who was collided with?
-    entity.react_async(Stimulus.entity_collision);
-    collided_entity.react_async(Stimulus.entity_collision);
+    entity.react_async(Stimulus.entity_collision, [collided_entity]);
+    collided_entity.react_async(Stimulus.entity_collision, [entity]);
 
 
 ## Removes an entity from the grid at position 'place'.
@@ -49,7 +49,7 @@ func remove(entity: GridEntity, place: Vector2) -> void:
 
   # Run collisions.
   for cell_entity in cell.entities:
-    cell_entity.react_async(Stimulus.entity_separation);
+    cell_entity.react_async(Stimulus.entity_separation, [entity]);
 
   _try_destroy_cell(place_key);
 

@@ -14,14 +14,17 @@ func _bind_stimulus_callbacks() -> void:
   });
 
 
-func _on_entity_collision() -> void:
-  # TODO if entity.solid:
+func _on_entity_collision(entity: GridEntity) -> void:
+  if not entity.solid:
+    return;
   AudioBus.play_audio_scene(_scene_glass_crack_audio);
 
 
-func _on_entity_separated() -> void:
-  # TODO if leaving_entity.solid:
-  if not ActionUtils.place_is_obstructed(grid_position):
+func _on_entity_separated(entity: GridEntity) -> void:
+  if (
+      entity.solid
+      and not ActionUtils.place_is_obstructed(grid_position)
+  ):
     _break_glass();
 
 
