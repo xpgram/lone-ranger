@@ -28,6 +28,9 @@ extends GridEntity
 #   NotifyEntity.secret_knocked(entities) [Collects and 'taps' a BumpComponent.]
 
 
+var DEFAULT_EDITOR_BOX_COLOR := Color.from_rgba8(255, 255, 0, 128);
+
+
 ## Emitted when a [GridEntity] collides with this one.
 signal entered(entity: GridEntity);
 
@@ -40,6 +43,16 @@ signal exited(entity: GridEntity);
 @export var _trigger_box_rect := Rect2i(0, 0, 1, 1):
   set(value):
     _trigger_box_rect = value;
+
+    if Engine.is_editor_hint():
+      queue_redraw();
+
+
+# FIXME The Editor doesn't seem to interpret this as a default value. It's not resettable.
+## The color of the trigger box area when drawn in the Editor.
+@export var _trigger_box_color := DEFAULT_EDITOR_BOX_COLOR:
+  set(value):
+    _trigger_box_color = value;
 
     if Engine.is_editor_hint():
       queue_redraw();
@@ -109,7 +122,11 @@ func _remove_trigger_box_from_grid() -> void:
 func _get_trigger_box_coordinates() -> Array[Vector2i]:
   var coords := [] as Array[Vector2i];
 
-  # TODO Calculate 'em.
+  var box_position := _trigger_box_rect.position + grid_position;
+
+  for x in range(_trigger_box_rect.size.x):
+    for y in range(_trigger_box_rect.size.y):
+      coords.append(box_position + Vector2i(x, y));
 
   return coords;
 
@@ -122,8 +139,13 @@ func _draw_trigger_box_rect() -> void:
   var half_grid_size := Vector2(Constants.GRID_SIZE, Constants.GRID_SIZE) / 2.0;
   var border := Vector2.ONE;
 
-  var box_position := (Vector2(_trigger_box_rect.position) * Constants.GRID_SIZE) - half_grid_size + (2 * border);
-  var box_size := (Vector2(_trigger_box_rect.size) * Constants.GRID_SIZE) - (3 * border);
+  var box_position := (Vector2(_trigger_box_rect.position) * Constants.GRID_SIZE);
+  box_position -= half_grid_size;
+  box_position += 2 * border;
+
+  var box_size := Vector2(_trigger_box_rect.size) * Constants.GRID_SIZE;
+  box_size = box_size.max(Vector2.ZERO);
+  box_size = box_size - (3 * border);
 
   var display_rect := Rect2(
     box_position.x,
@@ -132,4 +154,6 @@ func _draw_trigger_box_rect() -> void:
     box_size.y,
   );
 
-  draw_rect(display_rect, Color.from_rgba8(255, 255, 0, 128));
+  var display_color := _trigger_box_color if _trigger_box_color else DEFAULT_EDITOR_BOX_COLOR;
+
+  draw_rect(display_rect, display_color);
