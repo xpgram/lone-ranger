@@ -3,7 +3,6 @@ class_name TriggerBox
 extends GridEntity
 
 
-# TODO Swap the class names for TriggerSpot and TriggerSpot_2.
 # TODO How will areas be handled? Do I really need a separate entity for each one?
 #   If I'm not going to use an Area2D, then Grid will just have to notify 'something'.
 #   'Something' can be a TriggerSpot, I guess, but if it didn't need 'solid' or 'pushable'
@@ -14,14 +13,19 @@ extends GridEntity
 #   o @export rect
 #   o @tool draw rect boundaries
 #   - drag hangles?
-#   - Rect boundaries are turned into rect coordinates, iterated over
-#   - All grid positions affected, trigger spot adds itself to.
+#   o Rect boundaries are turned into rect coordinates, iterated over
+#   o All grid positions affected, trigger spot adds itself to.
 #   o _tree_exit() -> removes references from all grid positions.
 #   - Also, make sure inside->inside doesn't trigger a second entered() emission.
 #     - How? Does it keep a list of references for who's in?
 #     - Grid and GridEntity call remove() before put(), so how?
 # TODO Implement into DemonWall boss, replacing the previous triggerspot.
 # TODO Can we limit the overhead from being a GridEntity? TriggerSpots don't need "solid" or "pushable".
+#   I wrote this somewhere:
+#   - GridEntity will extend GridEntityAbstract, which makes base stipulations about the interface.
+#     - GridEntity extends GridObject? GridObject being the thing Grid actually collates.
+#   - GridEntity adds things like .solid and .pushable.
+#   - TriggerBox extends GridEntityAbstract, and does not need to implement these things.
 # TODO Implement NotifyEntity, a pair to Stimulus
 #   I'm... not going to refactor Stimulus yet. I still need function signatures in the doc strings.
 #   NotifyEntity.bumped(entities)         [Triggers a Stimulus reaction.]
