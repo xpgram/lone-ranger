@@ -6,31 +6,31 @@ extends Node
 var _map: Dictionary[StringName, InternalCell];
 
 
-## Inserts an entity into the grid at position 'place'.
-func put(entity: GridEntity, place: Vector2) -> void:
+## Inserts an object into the grid at position 'place'.
+func put(object: GridObject, place: Vector2) -> void:
   if Engine.is_editor_hint():
     return;
 
   var place_key := _get_key(place);
 
-  # Ensure that entities are not double-placed in the moved-to cell.
-  remove(entity, place);
+  # Ensure that objects are not double-placed in the moved-to cell.
+  remove(object, place);
 
   _try_create_cell(place_key);
-  var collided_entities := get_entities(place);
+  var collided_objects := get_entities(place);
 
-  # Place entity in the desired cell.
-  _map[place_key].entities.append(entity);
+  # Place object in the desired cell.
+  _map[place_key].objects.append(object);
 
   # Run collisions.
-  for collided_entity in collided_entities:
+  for collided_object in collided_objects:
     # TODO Add function signature: Who was collided with?
-    entity.react_async(Stimulus.entity_collision, [collided_entity]);
-    collided_entity.react_async(Stimulus.entity_collision, [entity]);
+    object.react_async(Stimulus.entity_collision, [collided_object]);
+    collided_object.react_async(Stimulus.entity_collision, [object]);
 
 
-## Removes an entity from the grid at position 'place'.
-func remove(entity: GridEntity, place: Vector2) -> void:
+## Removes an object from the grid at position 'place'.
+func remove(object: GridObject, place: Vector2) -> void:
   if Engine.is_editor_hint():
     return;
 
@@ -41,15 +41,15 @@ func remove(entity: GridEntity, place: Vector2) -> void:
 
   var cell := _map[place_key];
 
-  if entity not in cell.entities:
+  if object not in cell.objects:
     return;
 
   # Filter entity from the cell's list of entities.
-  cell.entities = cell.entities.filter(func (cell_entity): return cell_entity != entity);
+  cell.objects = cell.objects.filter(func (cell_entity): return cell_entity != object);
 
   # Run collisions.
-  for cell_entity in cell.entities:
-    cell_entity.react_async(Stimulus.entity_separation, [entity]);
+  for cell_entity in cell.objects:
+    cell_entity.react_async(Stimulus.entity_separation, [object]);
 
   _try_destroy_cell(place_key);
 
@@ -60,12 +60,12 @@ func clear_map() -> void:
 
 
 ## Returns the array of entities at a Cell.
-func get_entities(place: Vector2) -> Array[GridEntity]:
-  var entities := [] as Array[GridEntity];
+func get_entities(place: Vector2) -> Array[GridObject]:
+  var entities := [] as Array[GridObject];
   var place_key := _get_key(place);
 
   if _map.has(place_key):
-    entities.assign(_map[place_key].entities);
+    entities.assign(_map[place_key].objects);
 
   return entities;
 
@@ -81,7 +81,7 @@ func set_tile_type(place: Vector2i, terrain_type: int) -> void:
   BetterTerrain.update_terrain_area(tilemap, update_dimensions);
 
 
-## Invokes the [GridEntity] stimulus reaction system by notifying the entities at
+## Invokes the [GridObject] stimulus reaction system by notifying the entities at
 ## [param place] that [param stimulus_name] has occurred.
 func notify_entities_async(place: Vector2i, stimulus_name: StringName) -> void:
   var entities := get_entities(place);
@@ -154,7 +154,7 @@ func _try_create_cell(place_key: String) -> void:
 func _try_destroy_cell(place_key: String) -> void:
   if (
     _map.has(place_key)
-    and _map[place_key].entities.size() == 0
+    and _map[place_key].objects.size() == 0
   ):
     _map.erase(place_key);
 
@@ -165,10 +165,10 @@ func _try_destroy_cell(place_key: String) -> void:
 ##
 ## Use [class Cell] for the public API cell data.
 class InternalCell extends RefCounted:
-  var entities := [] as Array[GridEntity];
+  var objects := [] as Array[GridObject];
 
 
 ## A struct containing a list of grid entities and other important cell information.
 class Cell extends RefCounted:
   var tile_data: CellTerrainData;
-  var entities: Array[GridEntity];
+  var entities: Array[GridObject];
