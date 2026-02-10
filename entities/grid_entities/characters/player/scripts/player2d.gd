@@ -470,7 +470,9 @@ func _on_health_empty() -> void:
   _state_machine.switch_to(_state_death);
 
 
-func _on_grid_position_changed(to_pos: Vector2i, _from_pos: Vector2i) -> void:
+func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
+  super._on_grid_position_changed(to_pos, from_pos);
+
   if ActionUtils.place_is_idleable(to_pos, self):
     _last_safe_position = to_pos;
     reset_air_steps_remaining();
