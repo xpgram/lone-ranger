@@ -508,7 +508,7 @@ func _state_idle__exit() -> void:
 func _state_idle__input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
-  
+
   elif Input.is_action_pressed('brace'):
     if event.is_action_pressed('interact'):
       var action_schedule := get_action_from_brace_interact_input();
