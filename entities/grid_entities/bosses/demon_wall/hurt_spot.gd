@@ -4,7 +4,7 @@ extends GridEntity
 
 func _ready() -> void:
   super._ready();
-  entity_moved.connect(_on_entity_moved);
+  grid_position_changed.connect(_on_entity_moved);
 
 
 func _on_entity_moved() -> void:

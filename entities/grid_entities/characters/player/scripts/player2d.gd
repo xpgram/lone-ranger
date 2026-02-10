@@ -149,7 +149,7 @@ func _assemble_machine_states() -> void:
 
 ## Attaches callbacks to signals emitted by the extended script.
 func _bind_inherited_signals() -> void:
-  entity_moved.connect(_on_entity_moved);
+  pass
 
 
 ## Attaches callbacks to input monitor signals.
@@ -470,9 +470,9 @@ func _on_health_empty() -> void:
   _state_machine.switch_to(_state_death);
 
 
-func _on_entity_moved() -> void:
-  if ActionUtils.place_is_idleable(grid_position, self):
-    _last_safe_position = grid_position;
+func _on_grid_position_changed(to_pos: Vector2i, _from_pos: Vector2i) -> void:
+  if ActionUtils.place_is_idleable(to_pos, self):
+    _last_safe_position = to_pos;
     reset_air_steps_remaining();
 
   # FIXME Consider that this is a side-effect. Are we sure this won't interfere with
