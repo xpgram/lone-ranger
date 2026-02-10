@@ -6,7 +6,7 @@ class_name ActionUtils
 ## Returns true if [param cell] has any inhabiting entity that is collidable. If given,
 ## [param self_entity] will not count toward a cell's collidable objects.
 static func cell_has_collidables(cell: Grid.Cell, self_entity: GridEntity = null) -> bool:
-  return cell.entities \
+  return cell.objects \
     .any(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 
@@ -37,7 +37,7 @@ static func get_collidable_entities_at(place: Vector2i, self_entity: GridEntity 
 ## given [param cell]. If provided, [param self_entity] will be excluded from the returned
 ## list.
 static func get_collidable_entities_from_cell(cell: Grid.Cell, self_entity: GridEntity = null) -> Array[GridEntity]:
-  return cell.entities \
+  return cell.objects \
     .filter(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 

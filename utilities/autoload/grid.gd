@@ -44,12 +44,12 @@ func remove(object: GridObject, place: Vector2) -> void:
   if object not in cell.objects:
     return;
 
-  # Filter entity from the cell's list of entities.
-  cell.objects = cell.objects.filter(func (cell_entity): return cell_entity != object);
+  # Filter object-to-remove from the cell's list of objects.
+  cell.objects = cell.objects.filter(func (cell_object): return cell_object != object);
 
   # Run collisions.
-  for cell_entity in cell.objects:
-    cell_entity.react_async(Stimulus.entity_separation, [object]);
+  for cell_object in cell.objects:
+    cell_object.react_async(Stimulus.entity_separation, [object]);
 
   _try_destroy_cell(place_key);
 
@@ -67,7 +67,7 @@ func get_entities(place: Vector2) -> Array[GridEntity]:
   var objects := get_objects(place);
 
   var entities: Array[GridEntity];
-  entities.assign(objects.filter(func (entity): return entity is GridEntity));
+  entities.assign(objects.filter(func (object): return object is GridEntity));
 
   return entities;
 
@@ -94,9 +94,9 @@ func set_tile_type(place: Vector2i, terrain_type: int) -> void:
   BetterTerrain.update_terrain_area(tilemap, update_dimensions);
 
 
-## Invokes the [GridObject] stimulus reaction system by notifying the entities at
+## Invokes the [GridObject] stimulus reaction system by notifying the objects at
 ## [param place] that [param stimulus_name] has occurred.
-func notify_entities_async(place: Vector2i, stimulus_name: StringName) -> void:
+func notify_objects_async(place: Vector2i, stimulus_name: StringName) -> void:
   var objects := get_objects(place);
   var notify_promises: Array[Promise];
 
@@ -124,7 +124,7 @@ func get_tile_data(place: Vector2) -> CellTerrainData:
 func get_cell(place: Vector2) -> Cell:
   var cell := Cell.new();
   cell.tile_data = get_tile_data(place);
-  cell.entities = get_objects(place);
+  cell.objects = get_objects(place);
   return cell;
 
 
@@ -173,7 +173,7 @@ func _try_destroy_cell(place_key: String) -> void:
 
 
 ## @internal-only [br]
-## A struct containing a list of grid entities and other important cell information not
+## A struct containing a list of [GridObject]'s and other important cell information not
 ## described by the tilemap.
 ##
 ## Use [class Cell] for the public API cell data.
@@ -181,7 +181,7 @@ class InternalCell extends RefCounted:
   var objects := [] as Array[GridObject];
 
 
-## A struct containing a list of grid entities and other important cell information.
+## A struct containing a list of [GridObject]'s and other important cell information.
 class Cell extends RefCounted:
   var tile_data: CellTerrainData;
-  var entities: Array[GridObject];
+  var objects: Array[GridObject];

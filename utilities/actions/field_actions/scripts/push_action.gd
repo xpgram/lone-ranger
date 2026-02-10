@@ -89,7 +89,7 @@ func perform_as_ability_async(playbill: FieldActionPlaybill) -> bool:
   else:
     Events.one_shot_sound_emitted.emit(scene_bump_audio);
     if _can_secret_knock:
-      Grid.notify_entities_async(playbill.target_position, Stimulus.secret_knock);
+      Grid.notify_objects_async(playbill.target_position, Stimulus.secret_knock);
 
   if actor is Player2D:
     # TODO Use actor.play_one_shot_animation('push', true) to interrupt the player's idle
@@ -157,7 +157,7 @@ func _try_push_cell(place: Vector2i, direction: Vector2i, push_power: int) -> bo
     next_push_successful = _try_push_cell(next_place, direction, push_power - 1);
 
   if not cell_is_pushable or not next_push_successful:
-    Grid.notify_entities_async(place, Stimulus.bumped);
+    Grid.notify_objects_async(place, Stimulus.bumped);
     return false;
 
   for entity in collidable_entities:
