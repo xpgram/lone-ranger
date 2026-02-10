@@ -1,6 +1,6 @@
 @tool
 class_name TriggerBox
-extends GridEntity
+extends GridObject
 
 
 # TODO How will areas be handled? Do I really need a separate entity for each one?
@@ -22,14 +22,14 @@ extends GridEntity
 # TODO Implement into DemonWall boss, replacing the previous triggerspot.
 # TODO Can we limit the overhead from being a GridEntity? TriggerSpots don't need "solid" or "pushable".
 #   I wrote this somewhere:
-#   - GridEntity will extend GridEntityAbstract, which makes base stipulations about the interface.
-#     - GridEntity extends GridObject? GridObject being the thing Grid actually collates.
-#   - GridEntity adds things like .solid and .pushable.
-#   - TriggerBox extends GridEntityAbstract, and does not need to implement these things.
+#   o GridEntity will extend GridEntityAbstract, which makes base stipulations about the interface.
+#     o GridEntity extends GridObject? GridObject being the thing Grid actually collates.
+#   o GridEntity adds things like .solid and .pushable.
+#   o TriggerBox extends GridEntityAbstract, and does not need to implement these things.
 # TODO Implement NotifyEntity, a pair to Stimulus
 #   I'm... not going to refactor Stimulus yet. I still need function signatures in the doc strings.
-#   NotifyEntity.bumped(entities)         [Triggers a Stimulus reaction.]
-#   NotifyEntity.secret_knocked(entities) [Collects and 'taps' a BumpComponent.]
+#   - NotifyEntity.bumped(entities)         [Triggers a Stimulus reaction.]
+#   - NotifyEntity.secret_knocked(entities) [Collects and 'taps' a BumpComponent.]
 
 
 var DEFAULT_EDITOR_BOX_COLOR := Color.from_rgba8(255, 255, 0, 128);
