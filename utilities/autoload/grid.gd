@@ -17,7 +17,7 @@ func put(object: GridObject, place: Vector2) -> void:
   remove(object, place);
 
   _try_create_cell(place_key);
-  var collided_objects := get_entities(place);
+  var collided_objects := get_objects(place);
 
   # Place object in the desired cell.
   _map[place_key].objects.append(object);
@@ -59,15 +59,28 @@ func clear_map() -> void:
   _map.clear();
 
 
-## Returns the array of entities at a Cell.
-func get_entities(place: Vector2) -> Array[GridObject]:
-  var entities := [] as Array[GridObject];
+## Returns an array of [GridEntity] objects found at [param place] on the Grid. [br]
+##
+## [b]Note:[/b] This list may not contain all [GridObject]'s found at the same location.
+## For that, use [method get_objects] instead.
+func get_entities(place: Vector2) -> Array[GridEntity]:
+  var objects := get_objects(place);
+
+  var entities: Array[GridEntity];
+  entities.assign(objects.filter(func (entity): return entity is GridEntity));
+
+  return entities;
+
+
+## Returns an array of [GridObject] objects found at [param place] on the Grid.
+func get_objects(place: Vector2) -> Array[GridObject]:
+  var objects := [] as Array[GridObject];
   var place_key := _get_key(place);
 
   if _map.has(place_key):
-    entities.assign(_map[place_key].objects);
+    objects.assign(_map[place_key].objects);
 
-  return entities;
+  return objects;
 
 
 ## Sets the [param terrain_type] of a tile at [param place] in the world [TileMapLayer]. [br]
@@ -84,12 +97,12 @@ func set_tile_type(place: Vector2i, terrain_type: int) -> void:
 ## Invokes the [GridObject] stimulus reaction system by notifying the entities at
 ## [param place] that [param stimulus_name] has occurred.
 func notify_entities_async(place: Vector2i, stimulus_name: StringName) -> void:
-  var entities := get_entities(place);
+  var objects := get_objects(place);
   var notify_promises: Array[Promise];
 
-  for entity in entities:
+  for object in objects:
     var promise := Promise.new(func ():
-      await entity.react_async(stimulus_name);
+      await object.react_async(stimulus_name);
     );
     notify_promises.append(promise);
 
@@ -111,7 +124,7 @@ func get_tile_data(place: Vector2) -> CellTerrainData:
 func get_cell(place: Vector2) -> Cell:
   var cell := Cell.new();
   cell.tile_data = get_tile_data(place);
-  cell.entities = get_entities(place);
+  cell.entities = get_objects(place);
   return cell;
 
 
