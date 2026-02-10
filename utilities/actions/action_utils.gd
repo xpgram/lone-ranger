@@ -6,7 +6,8 @@ class_name ActionUtils
 ## Returns true if [param cell] has any inhabiting entity that is collidable. If given,
 ## [param self_entity] will not count toward a cell's collidable objects.
 static func cell_has_collidables(cell: Grid.Cell, self_entity: GridEntity = null) -> bool:
-  return cell.objects \
+  var entities := get_entities_from_cell(cell);
+  return entities \
     .any(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 
@@ -37,7 +38,8 @@ static func get_collidable_entities_at(place: Vector2i, self_entity: GridEntity 
 ## given [param cell]. If provided, [param self_entity] will be excluded from the returned
 ## list.
 static func get_collidable_entities_from_cell(cell: Grid.Cell, self_entity: GridEntity = null) -> Array[GridEntity]:
-  return cell.objects \
+  var entities := get_entities_from_cell(cell);
+  return entities \
     .filter(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 
@@ -66,6 +68,13 @@ static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
   var angle := Vector2.RIGHT.angle_to(difference_vector);
   angle = round(angle / Math.HALF_PI) * Math.HALF_PI;
   return Vector2.from_angle(angle).round();
+
+
+## Returns a list of [GridEntity] objects held by [param cell].
+static func get_entities_from_cell(cell: Grid.Cell) -> Array[GridEntity]:
+  var entities: Array[GridEntity];
+  entities.assign(cell.objects.filter(func (object): return object is GridEntity));
+  return entities;
 
 
 ## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
