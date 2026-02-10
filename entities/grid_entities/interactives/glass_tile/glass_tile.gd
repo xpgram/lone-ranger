@@ -9,8 +9,8 @@ func _bind_stimulus_callbacks() -> void:
   super._bind_stimulus_callbacks();
 
   _stimulus_event_map.add_events({
-    Stimulus.entity_collision: _on_entity_collision,
-    Stimulus.entity_separation: _on_entity_separated,
+    Stimulus.object_collision: _on_entity_collision,
+    Stimulus.object_separation: _on_entity_separated,
   });
 
 
