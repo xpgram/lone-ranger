@@ -25,6 +25,6 @@ func _ready() -> void:
 
 
 func _update_grid_position() -> void:
-  Grid.remove(grid_entity, _grid_position);
+  var old_position := _grid_position;
   _grid_position = Grid.get_grid_coords(global_position);
-  Grid.put(grid_entity, _grid_position);
+  Grid.put(grid_entity, _grid_position, old_position);
