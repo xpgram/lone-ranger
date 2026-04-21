@@ -61,8 +61,7 @@ func distance_to(other: Variant) -> int:
 
 ## Moves this object's presence on the [Grid] to its new [member grid_position].
 func _update_grid_location(to: Vector2i, from: Vector2i) -> void:
-  Grid.remove(self, from);
-  Grid.put(self, to);
+  Grid.put(self, to, from);
 
 
 ## Binds methods to event signals in the [GridObject] stimulus reaction system. [br]
