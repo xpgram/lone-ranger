@@ -3,35 +3,6 @@ class_name TriggerBox
 extends GridObject
 
 
-# TODO How will areas be handled? Do I really need a separate entity for each one?
-#   If I'm not going to use an Area2D, then Grid will just have to notify 'something'.
-#   'Something' can be a TriggerSpot, I guess, but if it didn't need 'solid' or 'pushable'
-#   properties, that would be nice.
-#   Or maybe... what if we allowed one GridEntity TriggerSpot to inhabit multiple places?
-#   Hm...
-#
-#   o @export rect
-#   o @tool draw rect boundaries
-#   - drag hangles?
-#   o Rect boundaries are turned into rect coordinates, iterated over
-#   o All grid positions affected, trigger spot adds itself to.
-#   o _tree_exit() -> removes references from all grid positions.
-#   - Also, make sure inside->inside doesn't trigger a second entered() emission.
-#     - How? Does it keep a list of references for who's in?
-#     - Grid and GridEntity call remove() before put(), so how?
-# TODO Implement into DemonWall boss, replacing the previous triggerspot.
-# TODO Can we limit the overhead from being a GridEntity? TriggerSpots don't need "solid" or "pushable".
-#   I wrote this somewhere:
-#   o GridEntity will extend GridEntityAbstract, which makes base stipulations about the interface.
-#     o GridEntity extends GridObject? GridObject being the thing Grid actually collates.
-#   o GridEntity adds things like .solid and .pushable.
-#   o TriggerBox extends GridEntityAbstract, and does not need to implement these things.
-# TODO Implement NotifyEntity, a pair to Stimulus
-#   I'm... not going to refactor Stimulus yet. I still need function signatures in the doc strings.
-#   - NotifyEntity.bumped(entities)         [Triggers a Stimulus reaction.]
-#   - NotifyEntity.secret_knocked(entities) [Collects and 'taps' a BumpComponent.]
-
-
 var DEFAULT_EDITOR_BOX_COLOR := Color.from_rgba8(255, 255, 0, 128);
 
 
@@ -62,6 +33,10 @@ signal exited(entity: GridEntity);
       queue_redraw();
 
 
+## A list of [GridObject]'s currently being collided with.
+var _known_entities: Dictionary[int, GridObject];
+
+
 func _ready() -> void:
   super._ready();
   _put_trigger_box_into_grid();
@@ -84,12 +59,31 @@ func _bind_stimulus_callbacks() -> void:
   });
 
 
+## Handler for [Stimulus] object collision events. [br]
+##
+## Emits [signal entered] only if [param entity] is colliding with this trigger box for
+## the first time.
 func _on_collision(entity: GridEntity) -> void:
-  entered.emit(entity);
+  var entity_key := entity.get_instance_id();
+
+  if not _known_entities.has(entity_key):
+    _known_entities.set(entity_key, entity);
+    entered.emit(entity);
 
 
+## Handler for [Stimulus] collision separation events. [br]
+##
+## Emits [signal exited] only if [param entity] has departed from all trigger box
+## occupied Grid cells.
 func _on_separation(entity: GridEntity) -> void:
-  exited.emit(entity);
+  if Grid.has_object(self, entity.grid_position):
+    return;
+
+  var entity_key := entity.get_instance_id();
+
+  if _known_entities.has(entity_key):
+    _known_entities.erase(entity_key);
+    exited.emit(entity);
 
 
 ## Puts 'self' into all affected trigger coordinates on the Grid. This allows the same
@@ -98,11 +92,11 @@ func _put_trigger_box_into_grid() -> void:
   if Engine.is_editor_hint():
     return;
 
-  # FIXME GridEntity automatically handles put/remove when changing grid_position, but that
-  #   isn't really necessary here, is it?
-  #   Hahhh, I wish GDScript had interfaces...
-  #   I think GridEntity should extend GridInterface, and so should other types, like whatever
-  #   this trigger spot needs.
+  # FIXME This Grid.remove() is only necessary because GridObject automatically handles
+  #   Grid placement when fiddling with its grid_position property.
+  #   If there were an overridable method such as `GridObject.get_occupied_positions()`,
+  #   then this object could simply define its shape and return it as a list of Vector2s.
+
   # Remove self from the original grid position.
   Grid.remove(self, grid_position);
 
