@@ -16,16 +16,9 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   Events.one_shot_sound_emitted.emit(_burn_audio_scene);
 
   var entities := Grid.get_entities(playbill.target_position);
+  var health_components := Component.get_all(entities, HealthComponent);
 
-  var health_components: Array[HealthComponent];
-  health_components.assign(
-    # TODO This is an annoying process. Can we simplify this filter/map pattern in Component.gd?
-    entities
-      .filter(func (entity: GridEntity): return Component.has_component(entity, HealthComponent))
-      .map(func (entity: GridEntity): return Component.get_component(entity, HealthComponent))
-  );
-
-  for health_component in health_components:
-    health_component.value -= 1;
+  for health: HealthComponent in health_components:
+    health.value -= 1;
 
   return true;

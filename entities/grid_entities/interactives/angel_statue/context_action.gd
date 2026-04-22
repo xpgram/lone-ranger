@@ -29,8 +29,8 @@ func perform_interaction_async(actor: GridEntity) -> void:
   whiteout_tween.tween_method(actor._shader_rect.set_silhoette_white_threshhold, 0.4, 1.0, whiteout_phase_time);
   whiteout_tween.play();
 
-  var health_component := Component.get_component(actor, HealthComponent) as HealthComponent;
-  health_component.set_hp_to_full();
+  var health := Component.getc(actor, HealthComponent) as HealthComponent;
+  health.set_hp_to_full();
 
   # FIXME scuffed private variable access :p
   actor._starting_position = save_idol.grid_position + Vector2i.DOWN;

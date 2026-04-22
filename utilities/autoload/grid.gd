@@ -6,52 +6,58 @@ extends Node
 var _map: Dictionary[StringName, InternalCell];
 
 
-## Inserts an entity into the grid at position 'place'.
-func put(entity: GridEntity, place: Vector2) -> void:
+## Inserts [param object] into the Grid at position [param place]. If given, will also
+## remove [param object] from [param from]. [br]
+##
+## [b]Warning:[/b] [param from] is a convenience for moving single-cell objects around,
+## this method will not stop you from adding multiple object references to different
+## places on the Grid. [br]
+##
+## This method will send collision [Stimulus] to objects at [param place] and [param from]
+## if [param object] was successfully added or removed from those locations. The
+## separation [Stimulus] at [param from] occurs before collisions at [param place] do.
+func put(object: GridObject, place: Vector2, from: Vector2 = Vector2.INF) -> void:
   if Engine.is_editor_hint():
     return;
 
-  var place_key := _get_key(place);
+  var to_place_key := _get_key(place);
+  var from_place_key := _get_key(from);
 
-  # Ensure that entities are not double-placed in the moved-to cell.
-  remove(entity, place);
+  var object_removed := false;
+  var object_added := false;
 
-  _try_create_cell(place_key);
-  var collided_entities := get_entities(place);
+  # We must finish moving the object on the map before running collision checks so that
+  # the object has a referenceable position on the board during collision callbacks.
+  if from != Vector2.INF:
+    object_removed = _remove_from_map(object, from_place_key);
+  object_added = _add_to_map(object, to_place_key);
 
-  # Place entity in the desired cell.
-  _map[place_key].entities.append(entity);
+  if to_place_key == from_place_key:
+    # Only signal the 'added' collision if the object really was added.
+    if object_added and not object_removed:
+      _notify_collision(object, place);
+  else:
+    if object_removed:
+      _notify_separation(object, from);
+    if object_added:
+      _notify_collision(object, place);
 
-  # Run collisions.
-  for collided_entity in collided_entities:
-    # TODO Add function signature: Who was collided with?
-    entity.react_async(Stimulus.entity_collision);
-    collided_entity.react_async(Stimulus.entity_collision);
 
-
-## Removes an entity from the grid at position 'place'.
-func remove(entity: GridEntity, place: Vector2) -> void:
+## Removes [param object] from the Grid at position [param place]. [br]
+##
+## If you are calling [method remove] before [method put], you should instead call
+## [code]Grid.put(object, to, from)[/code] to [b]avoid double-emitting collision
+## events.[/b] [br]
+##
+## This method will send collision [Stimulus] to objects at [param place] if
+## [param object] was successfully removed.
+func remove(object: GridObject, place: Vector2) -> void:
   if Engine.is_editor_hint():
     return;
 
-  var place_key := _get_key(place);
-
-  if not _map.has(place_key):
-    return;
-
-  var cell := _map[place_key];
-
-  if entity not in cell.entities:
-    return;
-
-  # Filter entity from the cell's list of entities.
-  cell.entities = cell.entities.filter(func (cell_entity): return cell_entity != entity);
-
-  # Run collisions.
-  for cell_entity in cell.entities:
-    cell_entity.react_async(Stimulus.entity_separation);
-
-  _try_destroy_cell(place_key);
+  var object_removed := _remove_from_map(object, _get_key(place));
+  if object_removed:
+    _notify_separation(object, place);
 
 
 ## Removes all data from all known Cells.
@@ -59,15 +65,39 @@ func clear_map() -> void:
   _map.clear();
 
 
-## Returns the array of entities at a Cell.
+## Returns an array of [GridEntity] objects found at [param place] on the Grid. [br]
+##
+## [b]Note:[/b] This list may not contain all [GridObject]'s found at the same location.
+## For that, use [method get_objects] instead.
 func get_entities(place: Vector2) -> Array[GridEntity]:
-  var entities := [] as Array[GridEntity];
+  var objects := get_objects(place);
+
+  var entities: Array[GridEntity];
+  entities.assign(objects.filter(func (object): return object is GridEntity));
+
+  return entities;
+
+
+## Returns an array of [GridObject] objects found at [param place] on the Grid.
+func get_objects(place: Vector2) -> Array[GridObject]:
+  var objects := [] as Array[GridObject];
   var place_key := _get_key(place);
 
   if _map.has(place_key):
-    entities.assign(_map[place_key].entities);
+    objects.assign(_map[place_key].objects);
 
-  return entities;
+  return objects;
+
+
+## Returns true if [param object] is located at [param place] on the Grid.
+func has_object(object: GridObject, place: Vector2) -> bool:
+  var place_key := _get_key(place);
+
+  if not _map.has(place_key):
+    return false;
+
+  var cell := _map[place_key];
+  return cell.objects.has(object);
 
 
 ## Sets the [param terrain_type] of a tile at [param place] in the world [TileMapLayer]. [br]
@@ -81,15 +111,15 @@ func set_tile_type(place: Vector2i, terrain_type: int) -> void:
   BetterTerrain.update_terrain_area(tilemap, update_dimensions);
 
 
-## Invokes the [GridEntity] stimulus reaction system by notifying the entities at
+## Invokes the [GridObject] stimulus reaction system by notifying the objects at
 ## [param place] that [param stimulus_name] has occurred.
-func notify_entities_async(place: Vector2i, stimulus_name: StringName) -> void:
-  var entities := get_entities(place);
+func notify_objects_async(place: Vector2i, stimulus_name: StringName) -> void:
+  var objects := get_objects(place);
   var notify_promises: Array[Promise];
 
-  for entity in entities:
+  for object in objects:
     var promise := Promise.new(func ():
-      await entity.react_async(stimulus_name);
+      await object.react_async(stimulus_name);
     );
     notify_promises.append(promise);
 
@@ -111,7 +141,7 @@ func get_tile_data(place: Vector2) -> CellTerrainData:
 func get_cell(place: Vector2) -> Cell:
   var cell := Cell.new();
   cell.tile_data = get_tile_data(place);
-  cell.entities = get_entities(place);
+  cell.objects = get_objects(place);
   return cell;
 
 
@@ -144,6 +174,68 @@ func _get_tilemap() -> GridTileMapLayer:
   return tile_layers[0];
 
 
+## Tries to add [param object] to the Grid at [param place_key] and returns true if the
+## operation was successful. [br]
+##
+## If [param object] already exists at the location given, this will count as a failure to
+## add and this method will return false.
+func _add_to_map(object: GridObject, place_key: String) -> bool:
+  if Engine.is_editor_hint():
+    return false;
+
+  _try_create_cell(place_key);
+  var cell := _map[place_key];
+  var object_was_added := false;
+
+  if not cell.objects.has(object):
+    cell.objects.append(object);
+    object_was_added = true;
+
+  return object_was_added;
+
+
+## Tries to remove [param object] from the Grid at [param place_key] and returns true if
+## the operation was successful.
+func _remove_from_map(object: GridObject, place_key: String) -> bool:
+  if (
+      Engine.is_editor_hint()
+      or not _map.has(place_key)
+  ):
+    return false;
+
+  var cell := _map[place_key];
+  var original_list_size := cell.objects.size();
+
+  cell.objects = cell.objects.filter(func (cell_object): return cell_object != object);
+  _try_destroy_cell(place_key);
+
+  return cell.objects.size() != original_list_size;
+
+
+## Emits collision [Stimulus] to all objects at [param place] that [param object] is
+## colliding with them.
+func _notify_collision(object: GridObject, place: Vector2) -> void:
+  var collided_objects := get_objects(place);
+
+  for collided_object in collided_objects:
+    if collided_object == object:
+      continue;
+    object.react_async(Stimulus.object_collision, [collided_object]);
+    collided_object.react_async(Stimulus.object_collision, [object]);
+
+
+## Emits collision [Stimulus] to all objects at [param place] that [param object] is
+## ending a collision with them.
+func _notify_separation(object: GridObject, place: Vector2) -> void:
+  var detached_objects := get_objects(place);
+
+  for detached_object in detached_objects:
+    if detached_object == object:
+      continue;
+    object.react_async(Stimulus.object_separation, [detached_object]);
+    detached_object.react_async(Stimulus.object_separation, [object]);
+
+
 ## If a grid position does not have an [InternalCell], creates one.
 func _try_create_cell(place_key: String) -> void:
   if not _map.has(place_key):
@@ -154,21 +246,21 @@ func _try_create_cell(place_key: String) -> void:
 func _try_destroy_cell(place_key: String) -> void:
   if (
     _map.has(place_key)
-    and _map[place_key].entities.size() == 0
+    and _map[place_key].objects.size() == 0
   ):
     _map.erase(place_key);
 
 
 ## @internal-only [br]
-## A struct containing a list of grid entities and other important cell information not
+## A struct containing a list of [GridObject]'s and other important cell information not
 ## described by the tilemap.
 ##
 ## Use [class Cell] for the public API cell data.
 class InternalCell extends RefCounted:
-  var entities := [] as Array[GridEntity];
+  var objects := [] as Array[GridObject];
 
 
-## A struct containing a list of grid entities and other important cell information.
+## A struct containing a list of [GridObject]'s and other important cell information.
 class Cell extends RefCounted:
   var tile_data: CellTerrainData;
-  var entities: Array[GridEntity];
+  var objects: Array[GridObject];

@@ -58,8 +58,8 @@ func _attack_async() -> void:
   # IMPLEMENT Animations of any kind.
   # FIXME Shouldn't this accept an entity parameter and not grab the global player?
   var player := ActionUtils.get_player_entity();
-  var health_component := Component.get_component(player, HealthComponent) as HealthComponent;
-  health_component.value -= 1;
+  var health := Component.getc(player, HealthComponent) as HealthComponent;
+  health.value -= 1;
 
 
 # FIXME Oh my god. This function is not connected to anything. I can't believe I never noticed.

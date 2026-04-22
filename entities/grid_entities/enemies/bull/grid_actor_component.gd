@@ -100,8 +100,8 @@ func _perform_move_async(playbill: FieldActionPlaybill) -> void:
 
 func _attack_async() -> void:
   var player := ActionUtils.get_player_entity();
-  var health_component := Component.get_component(player, HealthComponent) as HealthComponent;
-  health_component.value -= 1;
+  var health := Component.getc(player, HealthComponent) as HealthComponent;
+  health.value -= 1;
 
 
 func _facing_changed() -> void:

@@ -9,19 +9,22 @@ func _bind_stimulus_callbacks() -> void:
   super._bind_stimulus_callbacks();
 
   _stimulus_event_map.add_events({
-    Stimulus.entity_collision: _on_entity_collision,
-    Stimulus.entity_separation: _on_entity_separated,
+    Stimulus.object_collision: _on_entity_collision,
+    Stimulus.object_separation: _on_entity_separated,
   });
 
 
-func _on_entity_collision() -> void:
-  # TODO if entity.solid:
+func _on_entity_collision(entity: GridEntity) -> void:
+  if not entity.solid:
+    return;
   AudioBus.play_audio_scene(_scene_glass_crack_audio);
 
 
-func _on_entity_separated() -> void:
-  # TODO if leaving_entity.solid:
-  if not ActionUtils.place_is_obstructed(grid_position):
+func _on_entity_separated(entity: GridEntity) -> void:
+  if (
+      entity.solid
+      and not ActionUtils.place_is_obstructed(grid_position)
+  ):
     _break_glass();
 
 

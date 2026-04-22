@@ -49,8 +49,8 @@ func _give_items_to_actor(actor: Player2D) -> void:
     # 2 HP is 1 heart container, but half containers are not allowed. Also, base is 2 containers.
     var num_heart_containers := int(total_heart_pieces / 2) * 2 + 4;
 
-    var health_component := Component.get_component(actor, HealthComponent) as HealthComponent;
-    health_component.maximum = num_heart_containers;
+    var health := Component.getc(actor, HealthComponent) as HealthComponent;
+    health.maximum = num_heart_containers;
 
     print('%s obtained %s heart pieces!' % [actor.name, chest.heart_pieces]);
 

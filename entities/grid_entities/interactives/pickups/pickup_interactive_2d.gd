@@ -7,10 +7,10 @@ extends Interactive2D
 func _bind_stimulus_callbacks() -> void:
   super._bind_stimulus_callbacks();
   _stimulus_event_map.add_events({
-    Stimulus.entity_collision: _on_collide,
+    Stimulus.object_collision: _on_collide,
   });
 
 
-func _on_collide() -> void:
+func _on_collide(_entity: GridEntity) -> void:
   # TODO entity: GridEntity is passed in as an argument.
   pass
