@@ -14,7 +14,7 @@ func activate() -> void:
   Grid.set_tile_type(grid_position, terrain_type);
 
 
-func _on_entity_moved() -> void:
+func _on_entity_moved(_to: Vector2i, _from: Vector2i) -> void:
   Grid.set_tile_type(grid_position, terrain_type);
 
 
