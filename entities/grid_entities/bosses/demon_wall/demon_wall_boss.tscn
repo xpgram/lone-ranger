@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://w8c7503qyp61"]
 
+[ext_resource type="Script" uid="uid://dyn6rv8nbk7lx" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.gd" id="1_8276p"]
 [ext_resource type="Script" uid="uid://beh3cjmt3s81q" path="res://entities/grid_entities/bosses/demon_wall/grid_actor_component.gd" id="2_fmksn"]
 [ext_resource type="Script" uid="uid://d2ia5xo41ut6y" path="res://entities/grid_entities/bosses/demon_wall/wall_spot.gd" id="3_2xxmn"]
-[ext_resource type="Script" uid="uid://ci7sxoat2gqia" path="res://entities/grid_entities/grid_entity.gd" id="3_8276p"]
 [ext_resource type="Script" uid="uid://dfyjjwderoorv" path="res://entities/grid_entities/bosses/demon_wall/hurt_spot.gd" id="3_fmksn"]
 [ext_resource type="Texture2D" uid="uid://b4v8nlcnvuu5y" path="res://assets/00 - source/enemies_sheet.png" id="5_8276p"]
 
@@ -11,7 +11,7 @@ atlas = ExtResource("5_8276p")
 region = Rect2(240, 0, 16, 32)
 
 [node name="DemonWallBoss" type="Node2D" unique_id=1639987017]
-script = ExtResource("3_8276p")
+script = ExtResource("1_8276p")
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 metadata/GridActorComponent = NodePath("GridActorComponent")
 
