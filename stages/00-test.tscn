@@ -1291,17 +1291,10 @@ metadata/_custom_type_script = "uid://cs2jx75045p66"
 [node name="NPC Container" type="Node2D" parent="." unique_id=12298682]
 
 [node name="PlayerModule" parent="." unique_id=439747867 instance=ExtResource("41_p22wk")]
-position = Vector2(128, 304)
+position = Vector2(128, 160)
 
 [node name="AudioStreamSwitch" type="Node" parent="." unique_id=713162866]
 script = ExtResource("32_4ouhr")
 exploration_track_scene = ExtResource("33_6ge87")
 battle_track_scene = ExtResource("34_mmv8l")
 metadata/_custom_type_script = "uid://dtvydddq5cwbl"
-
-[node name="TriggerSpot_2" type="Node2D" parent="." unique_id=909781821]
-position = Vector2(144, 128)
-script = ExtResource("38_ofvvy")
-_trigger_box_rect = Rect2i(-2, 0, 3, 1)
-_trigger_box_color = Color(1, 1, 0, 0.5019608)
-metadata/_custom_type_script = "uid://cs2jx75045p66"
