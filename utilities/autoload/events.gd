@@ -22,6 +22,9 @@ signal one_shot_sound_emitted(audio_scene: PackedScene);
 ## Emitted when the player's held count of [param action] is adjusted to a new quantity.
 signal player_inventory_item_updated(action: FieldAction, new_quantity: int);
 
+## Emitted by entities when shouting messages to a player's event UI.
+signal game_event_message_announced(message: String);
+
 ##
 signal enemy_appeared();
 

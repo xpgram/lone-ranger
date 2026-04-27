@@ -22,4 +22,5 @@ func _add_heart_piece_to_player(player: Player2D) -> void:
   var health := Component.getc(player, HealthComponent) as HealthComponent;
   health.maximum = num_heart_containers;
 
-  print('%s obtained %s heart pieces!' % [player.name, 1]);
+  var event_message := 'Got 1 heart piece!';
+  Events.game_event_message_announced.emit(event_message);

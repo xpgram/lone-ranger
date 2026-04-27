@@ -110,6 +110,14 @@ _inventory = NodePath("../../../Inventory")
 
 [node name="MessageQueue" parent="Camera2D/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
 layout_mode = 1
+anchors_preset = 9
+anchor_top = 0.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 65.0
+offset_right = 90.0
+offset_bottom = -55.0
+grow_vertical = 2
 
 [node name="DebugUI" parent="Camera2D/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
