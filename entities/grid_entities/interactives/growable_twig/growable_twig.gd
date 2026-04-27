@@ -80,6 +80,8 @@ func _draw_editor_path_dots() -> void:
 
 ## Updates debug-draw settings when the editor's selected nodes are changed.
 func _on_editor_selection_changed() -> void:
-  var selected_nodes: Array[Node] = _editor_selection_interface.get_selected_nodes();
+  if not _editor_selection_interface:
+    return;
 
+  var selected_nodes: Array[Node] = _editor_selection_interface.get_selected_nodes();
   _show_editor_path_dots = (self in selected_nodes);
