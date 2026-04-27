@@ -29,6 +29,7 @@ func _give_magic_to_player(player: Player2D) -> void:
   player.inventory.add_item(magic_item);
 
   # TODO If such a message is logged, it should probably be logged by the inventory itself.
-  print("%s obtained %s %s..." % [player.name, magic_item.quantity, magic_item.action.action_name]);
+  var event_message := 'Got %s %s mana' % [magic_item.quantity, magic_item.action.action_name];
+  Events.game_event_message_announced.emit(event_message);
 
   _draw_point.deactivate();

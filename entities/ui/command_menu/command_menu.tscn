@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhviy6038d8bi" path="res://entities/ui/command_menu/command_menu.gd" id="1_ipv67"]
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://assets/textures_unused/system/command-menu.png" id="2_jcfl5"]
+[ext_resource type="Theme" uid="uid://di0dru5ym242e" path="res://utilities/resources/text_themes/default_text.tres" id="2_kdjjn"]
 [ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://assets/textures_unused/system/icons/icon-skill.png" id="3_8tcxm"]
 [ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://assets/textures_unused/system/icons/icon-magic.png" id="4_y4i8d"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="5_1rpdr"]
@@ -12,34 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://u8j3en85hu5n" path="res://assets/audio/sounds/cmd_menu_cancel_01.wav" id="10_u6tlb"]
 [ext_resource type="AudioStream" uid="uid://bokxickp3w8gg" path="res://assets/audio/sounds/cmd_menu_open_01.wav" id="11_u6tlb"]
 [ext_resource type="AudioStream" uid="uid://c4v0m3vm0d6c2" path="res://assets/audio/sounds/cmd_menu_close_01.wav" id="12_kdjjn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2uj7"]
-content_margin_left = 5.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 4.0
-
-[sub_resource type="SystemFont" id="SystemFont_iefdx"]
-font_names = PackedStringArray("Monospace")
-font_weight = 700
-hinting = 2
-subpixel_positioning = 0
-
-[sub_resource type="Theme" id="Theme_xdkey"]
-default_font = SubResource("SystemFont_iefdx")
-default_font_size = 8
-ItemList/colors/font_color = Color(0, 0, 0, 1)
-ItemList/colors/font_hovered_color = Color(0, 0, 0, 1)
-ItemList/colors/font_hovered_selected_color = Color(0, 0, 0, 1)
-ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
-ItemList/colors/guide_color = Color(0, 0, 0, 0)
-ItemList/constants/icon_margin = 2
-ItemList/constants/line_separation = 0
-ItemList/constants/v_separation = 0
-ItemList/styles/focus = SubResource("StyleBoxEmpty_k7uxw")
-ItemList/styles/panel = SubResource("StyleBoxEmpty_u2uj7")
 
 [sub_resource type="Animation" id="Animation_k7uxw"]
 length = 0.001
@@ -105,7 +78,7 @@ offset_left = -64.0
 offset_top = -64.0
 grow_horizontal = 0
 grow_vertical = 0
-theme = SubResource("Theme_xdkey")
+theme = ExtResource("2_kdjjn")
 texture = ExtResource("2_jcfl5")
 patch_margin_left = 4
 patch_margin_top = 8
@@ -162,7 +135,7 @@ layout_mode = 0
 offset_left = 46.0
 offset_right = 56.0
 offset_bottom = 10.0
-theme = SubResource("Theme_xdkey")
+theme = ExtResource("2_kdjjn")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "2"
 horizontal_alignment = 2

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cq4boqtraxqe0"]
+
+[ext_resource type="Theme" uid="uid://di0dru5ym242e" path="res://utilities/resources/text_themes/default_text.tres" id="1_kvh1j"]
+[ext_resource type="Script" uid="uid://bhnio3nk0e680" path="res://entities/ui/message_queue/message_queue.gd" id="1_vhpfm"]
+
+[node name="MessageQueue" type="Control" unique_id=778559934 node_paths=PackedStringArray("_event_message_label")]
+layout_mode = 3
+anchor_top = 0.8
+anchor_bottom = 0.8
+offset_top = -96.0
+offset_right = 88.0
+grow_vertical = 0
+script = ExtResource("1_vhpfm")
+_event_message_label = NodePath("EventMessage")
+
+[node name="EventMessage" type="Label" parent="." unique_id=130230182]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_right = 48.0
+theme = ExtResource("1_kvh1j")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "Got 3 Fire"

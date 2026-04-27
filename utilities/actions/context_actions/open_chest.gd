@@ -30,13 +30,16 @@ func _give_items_to_actor(actor: Player2D) -> void:
     actor.inventory.add_item(item);
 
     # TODO If such a message is logged, it should probably be logged by the inventory itself.
-    print('%s obtained %s %s...' % [actor.name, item.quantity, item.action.action_name]);
+    var item_plural := 'items' if item.quantity > 1 else 'item';
+    var event_message := 'Got %s %s %s' % [item.quantity, item.action.action_name, item_plural];
+    Events.game_event_message_announced.emit(event_message);
 
   for equipment in chest.equipment_contents:
     actor.inventory.add_equipment(equipment);
 
     # TODO If such a message is logged, it should probably be logged by the inventory itself.
-    print('%s obtained %s...' % [actor.name, equipment]);
+    var event_message := 'Got %s artefact' % [equipment.capitalize()];
+    Events.game_event_message_announced.emit(event_message);
 
   # FIXME This is scuffed as hell, and should not be here.
   if chest.heart_pieces > 0:
@@ -52,7 +55,9 @@ func _give_items_to_actor(actor: Player2D) -> void:
     var health := Component.getc(actor, HealthComponent) as HealthComponent;
     health.maximum = num_heart_containers;
 
-    print('%s obtained %s heart pieces!' % [actor.name, chest.heart_pieces]);
+    var piece_plural := 'pieces' if chest.heart_pieces > 1 else 'piece';
+    var event_message := 'Got %s heart %s!' % [chest.heart_pieces, piece_plural];
+    Events.game_event_message_announced.emit(event_message);
 
 
 ## Plays a scripted animation using [param actor].
