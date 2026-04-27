@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
+[ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
@@ -106,6 +107,9 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 0
 _inventory = NodePath("../../../Inventory")
+
+[node name="MessageQueue" parent="Camera2D/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
+layout_mode = 1
 
 [node name="DebugUI" parent="Camera2D/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cq4boqtraxqe0"]
+
+[ext_resource type="Theme" uid="uid://di0dru5ym242e" path="res://utilities/resources/text_themes/default_text.tres" id="1_kvh1j"]
+
+[node name="MessageQueue" type="Control" unique_id=778559934]
+layout_mode = 3
+anchor_top = 0.8
+anchor_bottom = 0.8
+offset_top = -96.0
+offset_right = 88.0
+grow_vertical = 0
+
+[node name="EventMessage" type="Label" parent="." unique_id=130230182]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_right = 48.0
+theme = ExtResource("1_kvh1j")
+text = "Got 3 Fire"
