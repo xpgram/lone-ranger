@@ -12,7 +12,9 @@ extends GridEntity
     queue_redraw();
 
 
-var _editor_selection_interface: EditorSelection;
+## A reference to the Engine's EditorInterface singleton. [br]
+## Note: This can't be statically typed because it breaks exported builds.
+var _editor_selection_interface;
 
 ## Whether to draw Grid-position dots showing which positions this [GrowableTwigEntity]
 ## affects when activated.
@@ -23,6 +25,8 @@ var _show_editor_path_dots := false:
 
 
 func _ready() -> void:
+  super._ready();
+
   if not Engine.is_editor_hint():
     return;
 
@@ -53,7 +57,7 @@ func activate_growth_async() -> void:
 
 ## Gets editor interface references and connects to editor signals.
 func _connect_to_editor() -> void:
-  _editor_selection_interface = EditorInterface.get_selection();
+  _editor_selection_interface = Engine.get_singleton('EditorInterface').get_selection();
   _editor_selection_interface.selection_changed.connect(_on_editor_selection_changed);
 
 
@@ -76,6 +80,8 @@ func _draw_editor_path_dots() -> void:
 
 ## Updates debug-draw settings when the editor's selected nodes are changed.
 func _on_editor_selection_changed() -> void:
-  var selected_nodes := _editor_selection_interface.get_selected_nodes();
+  if not _editor_selection_interface:
+    return;
 
+  var selected_nodes: Array[Node] = _editor_selection_interface.get_selected_nodes();
   _show_editor_path_dots = (self in selected_nodes);
