@@ -23,6 +23,8 @@ var _show_editor_path_dots := false:
 
 
 func _ready() -> void:
+  super._ready();
+
   if not Engine.is_editor_hint():
     return;
 
