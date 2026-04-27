@@ -19,8 +19,12 @@ var _grid_position: Vector2i;
 
 func _ready() -> void:
   _grid_position = Grid.get_grid_coords(global_position);
-  grid_entity.grid_position_changed.connect(_update_grid_position);
+  grid_entity.grid_position_changed.connect(_on_grid_entity_position_changed);
 
+  _update_grid_position();
+
+
+func _on_grid_entity_position_changed(_to: Vector2i, _from: Vector2i) -> void:
   _update_grid_position();
 
 

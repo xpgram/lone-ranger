@@ -7,7 +7,7 @@ func _ready() -> void:
   grid_position_changed.connect(_on_entity_moved);
 
 
-func _on_entity_moved() -> void:
+func _on_entity_moved(_to: Vector2i, _from: Vector2i) -> void:
   var entities := Grid.get_entities(grid_position);
 
   # for entity in entities:
