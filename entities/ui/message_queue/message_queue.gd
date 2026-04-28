@@ -1,6 +1,11 @@
 extends Control
 
 
+## How long it takes for a still-active message to tween into place when its position or
+## other details need to be reconfigured.
+@export var _message_tween_time := 0.4;
+
+
 @export_group('Node Connections')
 
 ## A reference to the [MessageQueueText] scene to be instantiated for all new messages.
@@ -9,6 +14,9 @@ extends Control
 
 ## The list of messages currently displayed.
 var _queue: Array[MessageQueueText];
+
+## The list of tweens currently issued to reposition or configure messages.
+var _active_tweens: Array[Tween];
 
 
 func _ready() -> void:
@@ -56,7 +64,22 @@ func _get_message_y_displacement(index: int) -> int:
 ## Reconfigures the y-axis displacement of all active [MessageQueueText]s in the message
 ## queue.
 func _reconfigure_message_positions() -> void:
+  _stop_all_message_tweens();
+
   for index in range(_queue.size()):
     var message := _queue[index];
-    message.position.y = size.y + _get_message_y_displacement(index);
-    # TODO Tween instead.
+    var new_y_position := size.y + _get_message_y_displacement(index);
+
+    var y_tween := get_tree().create_tween();
+    y_tween.set_trans(Tween.TRANS_QUAD);
+    y_tween.tween_property(message, 'position:y', new_y_position, _message_tween_time);
+
+    _active_tweens.append(y_tween);
+
+
+## Kills all message tweens in the [member _active_tweens] queue and clears it for reuse.
+func _stop_all_message_tweens() -> void:
+  for tween in _active_tweens:
+    tween.kill();
+
+  _active_tweens.clear();
