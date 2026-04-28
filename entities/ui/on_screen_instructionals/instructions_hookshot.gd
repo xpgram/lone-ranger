@@ -20,5 +20,5 @@ func _process(_delta: float) -> void:
   _instructions_shown = true;
 
   var alpha_tween := get_tree().create_tween();
-  alpha_tween.tween_property(self, 'modulate:a', 0.0, 1.5);
+  alpha_tween.tween_property(self, 'modulate:a', 0.0, 1.0);
   alpha_tween.tween_property(self, 'modulate:a', 1.0, 1.5);
