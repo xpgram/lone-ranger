@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bsvg3r3elpj1n" path="res://utilities/resources/cell_terrain_data/pit.tres" id="3_2ba2c"]
 [ext_resource type="Script" uid="uid://bct4iykxd8atg" path="res://utilities/nodes/grid_tile_map_layer.gd" id="3_mud7x"]
 [ext_resource type="Resource" uid="uid://b0fn783j6lwuc" path="res://utilities/resources/cell_terrain_data/floor.tres" id="4_eadj3"]
+[ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="8_r4137"]
 [ext_resource type="PackedScene" uid="uid://ds7ihux3pahep" path="res://entities/grid_entities/interactives/chest/special_chest.tscn" id="8_ycanp"]
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="9_7oan8"]
 [ext_resource type="Resource" uid="uid://c7tnmstfkbpqw" path="res://utilities/actions/field_actions/resources/heart_item_action.tres" id="10_7oan8"]
@@ -636,6 +637,14 @@ metadata/_better_terrain = {
 &"version": "0.2"
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_snb1o"]
+atlas = ExtResource("8_r4137")
+region = Rect2(208, 48, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4137"]
+atlas = ExtResource("8_r4137")
+region = Rect2(208, 64, 16, 16)
+
 [sub_resource type="LabelSettings" id="LabelSettings_hwv0m"]
 line_spacing = 1.0
 font_size = 6
@@ -761,6 +770,16 @@ tile_map_data = PackedByteArray("AAAIAAEAAQAFAAEAAAAHAAEAAQAFAAEAAAAHAAAAAQAFAAE
 tile_set = SubResource("TileSet_jjdoh")
 script = ExtResource("3_mud7x")
 default_cell_terrain_data = ExtResource("3_2ba2c")
+
+[node name="MapDetails" type="Node2D" parent="." unique_id=1313501856]
+
+[node name="DragTrail1" type="Sprite2D" parent="MapDetails" unique_id=244910913]
+position = Vector2(496, 88)
+texture = SubResource("AtlasTexture_snb1o")
+
+[node name="DragTrail2" type="Sprite2D" parent="MapDetails" unique_id=98453761]
+position = Vector2(-256, -96)
+texture = SubResource("AtlasTexture_r4137")
 
 [node name="TurnManager" parent="." unique_id=1977583383 instance=ExtResource("35_u8t85")]
 
@@ -948,6 +967,9 @@ position = Vector2(-272, -80)
 
 [node name="BoulderEntity55" parent="Interactives Container" unique_id=1887066487 instance=ExtResource("10_jadfo")]
 position = Vector2(-256, -96)
+
+[node name="BoulderEntity75" parent="Interactives Container" unique_id=2051502298 instance=ExtResource("10_jadfo")]
+position = Vector2(-240, -80)
 
 [node name="BoulderEntity63" parent="Interactives Container" unique_id=1004471591 instance=ExtResource("10_jadfo")]
 position = Vector2(-240, -176)
