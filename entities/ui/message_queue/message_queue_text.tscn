@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://37gcrrhanyw0"]
+
+[ext_resource type="Theme" uid="uid://di0dru5ym242e" path="res://utilities/resources/text_themes/default_text.tres" id="1_fejk0"]
+[ext_resource type="Script" uid="uid://dmxhl6mvvk3bl" path="res://entities/ui/message_queue/message_queue_text.gd" id="2_os0cm"]
+
+[node name="MessageQueueText" type="Label" unique_id=267620289]
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_right = 48.0
+theme = ExtResource("1_fejk0")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "Got 3 Fire"
+script = ExtResource("2_os0cm")
