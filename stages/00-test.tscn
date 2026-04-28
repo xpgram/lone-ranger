@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
+[ext_resource type="Theme" uid="uid://di0dru5ym242e" path="res://utilities/resources/text_themes/default_text.tres" id="38_6camj"]
 [ext_resource type="Script" uid="uid://cs2jx75045p66" path="res://entities/grid_entities/utility/trigger_box.gd" id="38_ofvvy"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://entities/grid_entities/enemies/mouth/enemy_mouth.tscn" id="40_nbivo"]
 [ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://entities/grid_entities/characters/player/player_module.tscn" id="41_p22wk"]
@@ -731,6 +732,23 @@ action = ExtResource("12_qes87")
 quantity = 2
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="LabelSettings" id="LabelSettings_hwv0m"]
+line_spacing = 1.0
+font_size = 6
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lxj52"]
+line_spacing = 0.0
+font_size = 6
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ofvvy"]
+font_size = 6
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Game" type="Node2D" unique_id=355498460]
 script = ExtResource("1_7u74a")
 
@@ -1298,3 +1316,43 @@ script = ExtResource("32_4ouhr")
 exploration_track_scene = ExtResource("33_6ge87")
 battle_track_scene = ExtResource("34_mmv8l")
 metadata/_custom_type_script = "uid://dtvydddq5cwbl"
+
+[node name="ControlsInformational" type="Control" parent="." unique_id=490514241]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ArrowKeys" type="Label" parent="ControlsInformational" unique_id=1559575316]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 153.0
+offset_right = 118.0
+offset_bottom = 176.0
+theme = ExtResource("38_6camj")
+text = "Arrow Keys:
+   Move"
+label_settings = SubResource("LabelSettings_hwv0m")
+
+[node name="Buttons" type="Label" parent="ControlsInformational" unique_id=1042203171]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 151.0
+offset_right = 213.0
+offset_bottom = 178.0
+theme = ExtResource("38_6camj")
+text = "Z : Interact
+X : Cancel
+C : Menu"
+label_settings = SubResource("LabelSettings_lxj52")
+
+[node name="Hookshot" type="Label" parent="ControlsInformational" unique_id=311177214]
+layout_mode = 0
+offset_left = -219.0
+offset_top = 144.0
+offset_right = -132.0
+offset_bottom = 171.0
+theme = ExtResource("38_6camj")
+text = "Shift + Z : Hookshot
+Shift + Arrow Key : Spin"
+label_settings = SubResource("LabelSettings_ofvvy")
