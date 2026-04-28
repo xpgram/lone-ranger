@@ -195,8 +195,10 @@ func _add_normal_item(item: Variant) -> void:
 func _add_field_action_item(item: PlayerInventoryItem) -> void:
   add_item(item.action.action_name, item.action.small_icon);
 
-  # TODO Demo code that should be cleaned up.
+  # FIXME Demo code that should be cleaned up.
   if item.action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
+    # FIXME I now know from experience: using $NodeName arbitrarily like this is hard to
+    #   track, which means it's hard to maintain. I do want an explicit node export.
     var label = $Label.duplicate();
     label.text = str(item.quantity);
     label.position.y = 10 * (item_count - 1) + 8;
