@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://c7tnmstfkbpqw" path="res://utilities/actions/field_actions/resources/heart_item_action.tres" id="10_7oan8"]
 [ext_resource type="PackedScene" uid="uid://oysxdqutfm51" path="res://entities/grid_entities/interactives/boulder/boulder.tscn" id="10_jadfo"]
 [ext_resource type="Resource" uid="uid://dx6yyw024ctch" path="res://utilities/actions/field_actions/resources/grow_action.tres" id="10_mhctp"]
+[ext_resource type="Script" uid="uid://bm00o0ixe00bq" path="res://entities/ui/on_screen_instructionals/instructions_basic.gd" id="11_lxj52"]
 [ext_resource type="Resource" uid="uid://cswtlyl54v4ck" path="res://utilities/actions/field_actions/resources/raise_action.tres" id="11_mhctp"]
 [ext_resource type="Resource" uid="uid://m4rko02thteq" path="res://utilities/actions/field_actions/resources/burn_action.tres" id="12_0lxvj"]
 [ext_resource type="Resource" uid="uid://bnxi3iwan6g35" path="res://utilities/actions/field_actions/resources/compact_action.tres" id="12_qes87"]
@@ -769,7 +770,13 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ArrowKeys" type="Label" parent="ControlsInformational" unique_id=1559575316]
+[node name="TriggerBox" type="Node2D" parent="ControlsInformational" unique_id=1012205942]
+position = Vector2(128, 160)
+script = ExtResource("38_ofvvy")
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://cs2jx75045p66"
+
+[node name="ArrowKeys" type="Label" parent="ControlsInformational" unique_id=1559575316 node_paths=PackedStringArray("_trigger_box")]
 layout_mode = 0
 offset_left = 60.0
 offset_top = 153.0
@@ -779,8 +786,10 @@ theme = ExtResource("38_6camj")
 text = "Arrow Keys:
    Move"
 label_settings = SubResource("LabelSettings_hwv0m")
+script = ExtResource("11_lxj52")
+_trigger_box = NodePath("../TriggerBox")
 
-[node name="Buttons" type="Label" parent="ControlsInformational" unique_id=1042203171]
+[node name="Buttons" type="Label" parent="ControlsInformational" unique_id=1042203171 node_paths=PackedStringArray("_trigger_box")]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 151.0
@@ -791,6 +800,8 @@ text = "Z : Interact
 X : Cancel
 C : Menu"
 label_settings = SubResource("LabelSettings_lxj52")
+script = ExtResource("11_lxj52")
+_trigger_box = NodePath("../TriggerBox")
 
 [node name="Hookshot" type="Label" parent="ControlsInformational" unique_id=311177214]
 layout_mode = 0
