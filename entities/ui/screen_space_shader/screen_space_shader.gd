@@ -31,6 +31,15 @@ func _ready() -> void:
   _saved_gradient_end = material.get_shader_parameter('gradient_end') as Color;
 
 
+func _process(_delta: float) -> void:
+  var camera := get_parent() as Camera2D;
+  var mantissa := camera.global_position - Vector2(Vector2i(camera.global_position));
+  # material.set_shader_parameter('pixelizer_subpixel_offset', mantissa);
+
+  var rotation := camera.rotation;
+  # material.set_shader_parameter('pixelizer_rotation', rotation);
+
+
 func set_color_gradient_start(start_color: Color) -> void:
   _saved_gradient_start = start_color;
   _set_shader_param_gradient_start(_saved_gradient_start);
