@@ -6,6 +6,7 @@ uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_ne
 uniform bool pixelize = true;
 uniform vec2 pixelizer_subpixel_offset = vec2(0.0);
 uniform float pixelizer_rotation = 0.0;
+uniform vec2 pixelizer_resolution = vec2(240, 160);
 
 // How "faded-in" the screen is. At 0.0, the screen is completely black, and at 1.0, it is
 // fully rendered.
@@ -32,21 +33,51 @@ uniform bool invert_colors = false;
 const float FLOAT_ERROR_MARGIN = 0.005;
 
 
-vec2 rotate(vec2 uv, vec2 pivot, float angle) {
-  angle += (PI / 2.0);
+mat2 get_rotation_matrix(float angle){
+  float rad = radians(angle);
+  float cos_r = cos(rad);
+  float sin_r = sin(rad);
+  
+  vec2 part1 = vec2(cos_r ,-sin_r);
+  vec2 part2 = vec2(sin_r , cos_r);
 
-  mat2 rotation = mat2(
-    vec2(sin(angle), -cos(angle)),
-    vec2(cos(angle), sin(angle))
+  return mat2(
+    part1,
+    part2
   );
-  uv -= pivot;
-  uv *= rotation;
-  uv += pivot;
-  return uv;
 }
 
 
-vec2 get_pixelated_uv(vec2 uv, vec2 resolution) {
+vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
+  if (!pixelize) {
+    return uv;
+  }
+  
+  // This method was found, lightly adapted, and all it does is rotate to 'normal',
+  // truncate, and rotate back. I suspected this method wouldn't work, and it... doesn't.
+  // It's interesting, though.
+  //
+  // In any case, the grid lines do not rotate about the center like the camera does, and
+  // they're a little imprecise. Worse, they're still screen aligned? Like, it's imperfect,
+  // but the pixels kind of rotate in-place, which means diagonal lines on rotated
+  // geometry still have jaggies. They shouldn't have those at all.
+  //
+  // Upon a little study, the jaggies being a necessary flaw is sorta half true. With the
+  // camera at 6° and this shader at 4.2°, the diagonals are mostly lined up, and look...
+  // well, better, anyway. This method is still really imprecise and messy. As I said,
+  // it's interesting, though.
+  
+  vec2 texel = vec2(1.0) / vec2(resolution.y);
+  vec2 centered_uv = uv + (vec2(0.5) / resolution); // This centers it on the pixel.
+  centered_uv = centered_uv + vec2(0.5);            // This centers it about the screen.
+
+  mat2 rot_cw = get_rotation_matrix(-angle);
+  mat2 roc_ccw = get_rotation_matrix(angle);
+  vec2 texelated_uv = rot_cw * ceil((roc_ccw * centered_uv) / texel) * texel;
+  return texelated_uv - vec2(0.5); // Uncenter it about the screen.
+}
+
+vec2 get_pixelated_uv__old_mine(vec2 uv, vec2 resolution) {
   if (!pixelize) {
     return uv;
   }
@@ -86,19 +117,8 @@ vec2 get_pixelated_uv(vec2 uv, vec2 resolution) {
   // The problem I'm trying to solve, and this does sound irritating, is that I have a
   // grid established in the game already, just by how things are laid out, and my
   // pixelation method needs to match the lines that already exist.
-  
-  vec2 grid_uv = uv;
-  
-  // Apply pixelation.
-  grid_uv = round(uv * resolution) / resolution;
-  grid_uv += vec2(0.5, 0.5) / resolution;
-  grid_uv -= pixelizer_subpixel_offset / resolution;
 
-  // Rotate the pixel grid.
-  float rot_rad = pixelizer_rotation / 180.0 * PI;
-  grid_uv = rotate(grid_uv, vec2(0.5), -rot_rad);
-
-  return grid_uv;
+  return uv;
 }
 
 
@@ -161,7 +181,7 @@ vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
 
 
 void fragment() {
-  vec2 grid_uv = get_pixelated_uv(SCREEN_UV, vec2(240, 160));
+  vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixelizer_resolution, -pixelizer_rotation);
   
   // Load screen-texture color for this fragment.
   COLOR = textureLod(screen_texture, grid_uv, 0.0);
