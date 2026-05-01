@@ -3,12 +3,18 @@ shader_type canvas_item;
 // This uniform auto-captures the screen texture.
 uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
 
-uniform bool pixelize = true;
-uniform bool reduced_pixelate = false;
-uniform bool just_y = false;
-uniform vec2 pixelizer_subpixel_offset = vec2(0.0);
-uniform float pixelizer_rotation = 0.0;
-uniform vec2 pixelizer_resolution = vec2(240, 160);
+// Whether to force pixel accuracy of the rendered image.
+uniform bool pixelate = true;
+
+// The resolution of the pixelation grid. This should match the intended resolution of the
+// rendered image with no rotation applied.
+uniform vec2 pixelate_resolution = vec2(240, 160);
+
+// The angle in degrees of the pixelation grid.
+uniform float pixelate_rotation_deg = 0.0;
+
+// The translation offset of the pixelation grid.
+uniform vec2 pixelate_offset = vec2(0.0);
 
 // How "faded-in" the screen is. At 0.0, the screen is completely black, and at 1.0, it is
 // fully rendered.
@@ -36,50 +42,41 @@ const float FLOAT_ERROR_MARGIN = 0.005;
 
 
 mat2 get_rotation_matrix(float angle){
-  float rad = radians(angle);
-  float cos_r = cos(rad);
-  float sin_r = sin(rad);
+  float rad_angle = radians(angle);
+  float cos_r = cos(rad_angle);
+  float sin_r = sin(rad_angle);
   
-  vec2 part1 = vec2(cos_r ,-sin_r);
-  vec2 part2 = vec2(sin_r , cos_r);
-
   return mat2(
-    part1,
-    part2
+    vec2(cos_r ,-sin_r),
+    vec2(sin_r , cos_r)
   );
 }
 
 
 vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
-  if (!pixelize) {
+  if (!pixelate) {
     return uv;
   }
   
-  // FIXME A lower resolution setting for testing purposes.
-  if (reduced_pixelate) {
-    resolution = vec2(60.0, 40.0);
-    // Question: Why does resolution need to be two different numbers?
-    // If my rotated pixels are not squares, is this why?
-    // My pixels need a standard deviation, not to know the actual screen resolution.
-  }
-  
-  if (just_y) {
-    resolution = vec2(resolution.y);
-  }
-
   mat2 rot_cw = get_rotation_matrix(-angle);
-  mat2 rot_ccw = get_rotation_matrix(angle);
-
-  // Strategy: Rotate the UV into an imaginary pixel grid, get its pixel group, move the
-  // sample point to the middle of that group, and rotate this final sample point back to
-  // the texture's original frame of reference.
-  vec2 rotated_sample_point = (floor(rot_ccw * uv * resolution) + vec2(0.5)) / resolution;
-  vec2 sample_point = rot_cw * rotated_sample_point;
+  mat2 rot_ccw = transpose(rot_cw);
   
-  // Make sure our samples are constrained to the texture's sample space.
-  sample_point = clamp(sample_point, vec2(0.0), vec2(1.0));
-
-  return sample_point;
+  // Algorithm:
+  // Project the normalized UV into the resolution space.
+  vec2 resolution_coords = uv * resolution;
+  // Rotate the resolution coordinates into our rotated grid space's frame of reference.
+  vec2 rotated_coords = rot_ccw * resolution_coords;
+  // Quantize our coordinates, taking the center as our sample point.
+  vec2 rotated_sample_coords = floor(rotated_coords) + vec2(0.5);
+  // Unrotate our coordinates back into the screen's frame of reference.
+  vec2 sample_coords = rot_cw * rotated_sample_coords;
+  // Project our resolution coordinates back into a normalized UV.
+  vec2 sample_uv = sample_coords / resolution;
+  
+  // Make sure our sample UVs are constrained to the texture space.
+  sample_uv = clamp(sample_uv, vec2(0.0), vec2(1.0));
+  
+  return sample_uv;
 }
 
 
@@ -142,7 +139,8 @@ vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
 
 
 void fragment() {
-  vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixelizer_resolution, -pixelizer_rotation);
+  // TODO Why is this rotation negative?
+  vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixelate_resolution, -pixelate_rotation_deg);
   
   // Load screen-texture color for this fragment.
   COLOR = textureLod(screen_texture, grid_uv, 0.0);

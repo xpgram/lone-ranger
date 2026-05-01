@@ -23,12 +23,10 @@ metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
-shader_parameter/pixelize = true
-shader_parameter/reduced_pixelate = false
-shader_parameter/just_y = false
-shader_parameter/pixelizer_subpixel_offset = Vector2(0, 0)
-shader_parameter/pixelizer_rotation = 45.0
-shader_parameter/pixelizer_resolution = Vector2(240, 160)
+shader_parameter/pixelate = true
+shader_parameter/pixelate_resolution = Vector2(240, 160)
+shader_parameter/pixelate_rotation_deg = 0.0
+shader_parameter/pixelate_offset = Vector2(0, 0)
 shader_parameter/fade_in_progress = 1.0
 shader_parameter/silhoette_threshhold = 0.0
 shader_parameter/silhoette_white_threshhold = 1.0
