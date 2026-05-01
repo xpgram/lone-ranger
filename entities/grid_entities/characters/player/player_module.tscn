@@ -23,7 +23,7 @@ metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
-shader_parameter/pixelate = true
+shader_parameter/pixelate = false
 shader_parameter/pixelate_resolution = Vector2(240, 160)
 shader_parameter/pixelate_rotation_deg = 0.0
 shader_parameter/pixelate_offset = Vector2(0, 0)
