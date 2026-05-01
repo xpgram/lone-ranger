@@ -36,8 +36,7 @@ func _process(_delta: float) -> void:
   var mantissa := camera.global_position - Vector2(Vector2i(camera.global_position));
   # material.set_shader_parameter('pixelizer_subpixel_offset', mantissa);
 
-  var cam_rotation := camera.rotation;
-  # material.set_shader_parameter('pixelizer_rotation', cam_rotation);
+  material.set_shader_parameter('pixelate_rotation_deg', camera.rotation_degrees);
 
 
 func set_color_gradient_start(start_color: Color) -> void:
