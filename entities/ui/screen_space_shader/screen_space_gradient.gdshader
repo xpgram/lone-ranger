@@ -14,6 +14,7 @@ uniform vec2 pixelate_resolution = vec2(240, 160);
 uniform float pixelate_rotation_deg = 0.0;
 
 // The translation offset of the pixelation grid.
+// IMPLEMENT Not yet implemented. This is supposed to smooth out subpixel movement.
 uniform vec2 pixelate_offset = vec2(0.0);
 
 // How "faded-in" the screen is. At 0.0, the screen is completely black, and at 1.0, it is
