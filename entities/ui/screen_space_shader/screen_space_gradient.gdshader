@@ -139,6 +139,7 @@ vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
 
 
 void fragment() {
+  // TODO SCREEN_UV and UV appear to have no differences, so should I just go with UV?
   // TODO Why is this rotation negative?
   vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixelate_resolution, -pixelate_rotation_deg);
   
