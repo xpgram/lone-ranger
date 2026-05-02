@@ -643,7 +643,7 @@ region = Rect2(208, 48, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r4137"]
 atlas = ExtResource("8_r4137")
-region = Rect2(208, 64, 16, 16)
+region = Rect2(208, 48, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_hwv0m"]
 line_spacing = 1.0
@@ -825,9 +825,9 @@ _trigger_box = NodePath("../TriggerBox")
 [node name="Hookshot" type="Label" parent="ControlsInformational" unique_id=311177214]
 layout_mode = 0
 offset_left = -219.0
-offset_top = 144.0
+offset_top = 132.0
 offset_right = -132.0
-offset_bottom = 171.0
+offset_bottom = 159.0
 theme = ExtResource("38_6camj")
 text = "Shift + Z : Hookshot
 Shift + Arrow Key : Spin"
