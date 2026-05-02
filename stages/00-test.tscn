@@ -29,7 +29,6 @@
 [ext_resource type="PackedScene" uid="uid://6imckxwaw70b" path="res://entities/grid_entities/interactives/glass_tile/glass_tile.tscn" id="25_mmv8l"]
 [ext_resource type="PackedScene" uid="uid://b025q84ct55mo" path="res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.tscn" id="26_gcv67"]
 [ext_resource type="Resource" uid="uid://72omta0cvh7l" path="res://utilities/actions/field_actions/resources/magic_push_action.tres" id="27_0mqgx"]
-[ext_resource type="Script" uid="uid://bgmayshv87emn" path="res://entities/grid_entities/interactives/glass_tile/glass_tile.gd" id="28_6camj"]
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
@@ -1301,59 +1300,32 @@ position = Vector2(-80, -64)
 [node name="BoulderEntity80" parent="Interactives Container" unique_id=564268907 instance=ExtResource("10_jadfo")]
 position = Vector2(-352, -128)
 
-[node name="GlassTile4" type="Node2D" parent="Interactives Container" unique_id=1216978493 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile4" parent="Interactives Container" unique_id=1216978493 instance=ExtResource("25_mmv8l")]
 position = Vector2(-304, 128)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile5" type="Node2D" parent="Interactives Container" unique_id=1576006134 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile5" parent="Interactives Container" unique_id=1576006134 instance=ExtResource("25_mmv8l")]
 position = Vector2(-288, 128)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile6" type="Node2D" parent="Interactives Container" unique_id=1241631925 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile6" parent="Interactives Container" unique_id=1241631925 instance=ExtResource("25_mmv8l")]
 position = Vector2(-272, 128)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile7" type="Node2D" parent="Interactives Container" unique_id=198762468 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile7" parent="Interactives Container" unique_id=198762468 instance=ExtResource("25_mmv8l")]
 position = Vector2(-256, 128)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile8" type="Node2D" parent="Interactives Container" unique_id=134344627 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile8" parent="Interactives Container" unique_id=134344627 instance=ExtResource("25_mmv8l")]
 position = Vector2(-240, 128)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile9" type="Node2D" parent="Interactives Container" unique_id=79004658 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile9" parent="Interactives Container" unique_id=79004658 instance=ExtResource("25_mmv8l")]
 position = Vector2(-224, 128)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile10" type="Node2D" parent="Interactives Container" unique_id=592539760 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile10" parent="Interactives Container" unique_id=592539760 instance=ExtResource("25_mmv8l")]
 position = Vector2(-208, 128)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile12" type="Node2D" parent="Interactives Container" unique_id=732080210 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile12" parent="Interactives Container" unique_id=732080210 instance=ExtResource("25_mmv8l")]
 position = Vector2(-208, 112)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
-[node name="GlassTile13" type="Node2D" parent="Interactives Container" unique_id=1414079713 instance=ExtResource("25_mmv8l")]
+[node name="GlassTile13" parent="Interactives Container" unique_id=1414079713 instance=ExtResource("25_mmv8l")]
 position = Vector2(-208, 96)
-script = ExtResource("28_6camj")
-standable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="GlassTile14" parent="Interactives Container" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
 position = Vector2(-304, 112)
