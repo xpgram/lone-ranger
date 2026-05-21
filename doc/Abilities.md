@@ -190,6 +190,11 @@ Players collect Burn. They may try using it on the first golem enemies. Those ar
 - On any empty tile (besides you), creates a checkpoint you can respawn to. Max 1.
 - Makes objects persistent? But persistent through what...
 
+### Summon / Construct
+
+- Ciconia has metal-armed freaks summoning missiles and gatling guns and such. It just looks cool.
+- So, what if the LoneRanger could summon "magical" sci-fi turrets and such? I have no idea how this would work, but "summoning" a big gun sounds cool af.
+
 ## Items
 
 ### Vial
