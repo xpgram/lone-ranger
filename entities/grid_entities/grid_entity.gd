@@ -53,6 +53,7 @@ func _ready() -> void:
     return;
 
   super._ready();
+  _set_respawn_values();
   _bind_grid_object_signals();
   _bind_global_event_signals();
 
@@ -88,6 +89,11 @@ func update_attributes() -> void:
 
     if attribute.is_nullified():
       _attributes.erase(attribute_key);
+
+
+## Capture entity's starting values to be reset to during board reset events.
+func _set_respawn_values() -> void:
+  spawn_grid_position = grid_position;
 
 
 ## Binds methods to [GridObject] signals.
