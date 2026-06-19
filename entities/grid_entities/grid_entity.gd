@@ -44,21 +44,12 @@ var faced_position: Vector2i:
     return grid_position + faced_direction;
 
 
-## The Grid coordinate position this entity starts in when spawning.
-var spawn_grid_position := Vector2i.ZERO;
-
-## The object facing direction this entity starts with when spawning.
-var spawn_faced_direction := Vector2i.DOWN;
-
-
 func _ready() -> void:
   if Engine.is_editor_hint():
     return;
 
   super._ready();
-  _set_respawn_values();
   _bind_grid_object_signals();
-  _bind_global_event_signals();
 
 
 # [FIXME] This attribute system is hard to use via the editor: loading a .tres requires
@@ -96,20 +87,9 @@ func update_attributes() -> void:
       _attributes.erase(attribute_key);
 
 
-## Capture entity's starting values to be reset to during board reset events.
-func _set_respawn_values() -> void:
-  spawn_grid_position = grid_position;
-  spawn_faced_direction = faced_direction;
-
-
 ## Binds methods to [GridObject] signals.
 func _bind_grid_object_signals() -> void:
   grid_position_changed.connect(_on_grid_position_changed);
-
-
-## Bind methods to global [Event] signals.
-func _bind_global_event_signals() -> void:
-  Events.board_reset_declared.connect(_on_board_reset_declared);
 
 
 func _bind_stimulus_callbacks() -> void:
@@ -126,16 +106,6 @@ func _on_grid_position_changed(to: Vector2i, _from: Vector2i) -> void:
       and not ActionUtils.place_is_idleable(to, self)
   ):
     react_async(Stimulus.is_over_pit);
-
-
-## Resets this entity's state to spawn conditions in response to a board
-## reset signal. [br]
-##
-## By default, this only resets positional properties, including the entity's
-## [member grid_position] and its [member faced_direction].
-func _on_board_reset_declared() -> void:
-  grid_position = spawn_grid_position;
-  faced_direction = spawn_faced_direction;
 
 
 ## Overridable function called whenever this GridEntity's facing direction is changed.

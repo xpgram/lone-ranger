@@ -11,17 +11,3 @@ func get_bool(key: String) -> bool:
 
 func set_bool(key: String, value: bool) -> void:
   _bool_dictionary.set(key, value);
-
-
-
-@export var shove_bridge_puzzle_solved := false;
-
-@export var shove_exit_puzzle_solved := false;
-
-@export var west_save_idol_used := false;
-
-@export var west_save_idol_north_puzzle_solved := false;
-
-@export var west_save_idol_west_puzzle_solved := false;
-
-@export var hookshot_obtained := false;

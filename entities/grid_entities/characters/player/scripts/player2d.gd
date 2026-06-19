@@ -117,12 +117,6 @@ func _on_move_input(input_vector: Vector2i) -> void:
   state.move_input(input_vector);
 
 
-## @override [br]
-## The Player object does not reset properties during a board reset.
-func _on_board_reset_declared() -> void:
-  pass
-
-
 ## Builds the Player2D state machine out of its state-related functions.
 func _assemble_machine_states() -> void:
   _state_machine.add_states([
