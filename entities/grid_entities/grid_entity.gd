@@ -45,7 +45,10 @@ var faced_position: Vector2i:
 
 
 ## The Grid coordinate position this entity starts in when spawning.
-var spawn_grid_position := grid_position;
+var spawn_grid_position := Vector2i.ZERO;
+
+## The object facing direction this entity starts with when spawning.
+var spawn_faced_direction := Vector2i.DOWN;
 
 
 func _ready() -> void:
@@ -96,6 +99,7 @@ func update_attributes() -> void:
 ## Capture entity's starting values to be reset to during board reset events.
 func _set_respawn_values() -> void:
   spawn_grid_position = grid_position;
+  spawn_faced_direction = faced_direction;
 
 
 ## Binds methods to [GridObject] signals.
