@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bgmayshv87emn" path="res://entities/grid_entities/interactives/glass_tile/glass_tile.gd" id="1_32vnh"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_rpkio"]
+[ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="2_y3g3p"]
+[ext_resource type="Resource" uid="uid://b5llv7jn0oamk" path="res://entities/grid_entities/attributes/floating_attribute.tres" id="3_ambi3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y3g3p"]
 atlas = ExtResource("2_rpkio")
@@ -10,6 +12,9 @@ region = Rect2(0, 48, 16, 16)
 [node name="GlassTile" type="Node2D" unique_id=1216978493]
 script = ExtResource("1_32vnh")
 standable = true
+_attributes = Dictionary[StringName, ExtResource("2_y3g3p")]({
+&"floating": ExtResource("3_ambi3")
+})
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1289246418]

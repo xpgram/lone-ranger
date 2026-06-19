@@ -144,6 +144,9 @@ func _facing_changed() -> void:
 ## By default, this function waits a small amount of time and then queues self for
 ## deletion.
 func _on_free_fall() -> void:
+  if has_attribute('floating'):
+    return;
+
   await get_tree().create_timer(0.5).timeout;
 
   var fall_effect := _scene_object_fall.instantiate();

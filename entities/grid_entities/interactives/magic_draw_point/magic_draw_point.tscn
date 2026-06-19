@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://b025q84ct55mo"]
 
 [ext_resource type="Script" uid="uid://cyk1qn1cjdhk2" path="res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.gd" id="1_v0hlf"]
+[ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="2_7nyc6"]
 [ext_resource type="Texture2D" uid="uid://vxbbyaiao3gu" path="res://entities/grid_entities/interactives/magic_draw_point/images/mana_dingles.png" id="2_v0hlf"]
+[ext_resource type="Resource" uid="uid://b5llv7jn0oamk" path="res://entities/grid_entities/attributes/floating_attribute.tres" id="3_pvddd"]
 [ext_resource type="Script" uid="uid://d30bcybt1e6fy" path="res://entities/grid_entities/interactives/magic_draw_point/context_action.gd" id="3_v0hlf"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0mqgx"]
@@ -56,6 +58,9 @@ anim_offset_max = 1.0
 
 [node name="MagicDrawPoint" type="Node2D" unique_id=908897292]
 script = ExtResource("1_v0hlf")
+_attributes = Dictionary[StringName, ExtResource("2_7nyc6")]({
+&"floating": ExtResource("3_pvddd")
+})
 metadata/_custom_type_script = "uid://cyk1qn1cjdhk2"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=750045673]
