@@ -15,17 +15,22 @@ func _bind_stimulus_callbacks() -> void:
 
 
 func _on_entity_collision(entity: GridEntity) -> void:
-  if not entity.solid:
+  if not visible or not entity.solid:
     return;
   AudioBus.play_audio_scene(_scene_glass_crack_audio);
 
 
 func _on_entity_separated(entity: GridEntity) -> void:
   if (
-      entity.solid
+      visible
+      and entity.solid
       and not ActionUtils.place_is_obstructed(grid_position)
   ):
     _break_glass();
+
+
+func _on_board_reset_declared() -> void:
+  _activate();
 
 
 func _break_glass() -> void:
@@ -34,4 +39,14 @@ func _break_glass() -> void:
 
   glass_break.global_position = Grid.get_world_coords(grid_position);
 
-  queue_free();
+  _deactivate();
+
+
+func _activate() -> void:
+  visible = true;
+  standable = true;
+
+
+func _deactivate() -> void:
+  visible = false;
+  standable = false;
