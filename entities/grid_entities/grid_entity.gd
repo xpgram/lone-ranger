@@ -52,6 +52,8 @@ func _ready() -> void:
   _bind_grid_object_signals();
 
 
+# [FIXME] This attribute system is hard to use via the editor: loading a .tres requires
+#   the developer also manually write-in the same attribute key to the dictionary.
 ## Returns true if `param attribute_name` is among the _attributes applied to this entity.
 func has_attribute(attribute_name: StringName) -> bool:
   return _attributes.has(attribute_name);
@@ -118,6 +120,9 @@ func _facing_changed() -> void:
 ## By default, this function waits a small amount of time and then queues self for
 ## deletion.
 func _on_free_fall() -> void:
+  if has_attribute('floating'):
+    return;
+
   await get_tree().create_timer(0.5).timeout;
 
   var fall_effect := _scene_object_fall.instantiate();

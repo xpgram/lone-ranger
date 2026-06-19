@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GridEntityAttribute" format=3 uid="uid://b5llv7jn0oamk"]
+
+[ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="1_8ycde"]
+
+[resource]
+script = ExtResource("1_8ycde")
+attribute_key = &"floating"
+self_remedying = false
+metadata/_custom_type_script = "uid://dn1ef7gb6cvg3"

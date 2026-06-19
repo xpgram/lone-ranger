@@ -18,11 +18,11 @@ animations = [{
 "speed": 2.0
 }]
 
-[node name="BoulderEntity" type="Node2D" unique_id=2051502298]
+[node name="BoulderEntity" type="Node2D" unique_id=1130051096]
 script = ExtResource("1_ge1so")
 solid = true
 pushable = true
-metadata/_custom_type_script = "uid://ci7sxoat2gqia"
+metadata/_custom_type_script = "uid://f8wof0bqh7u6"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1504852370]
 unique_name_in_owner = true
