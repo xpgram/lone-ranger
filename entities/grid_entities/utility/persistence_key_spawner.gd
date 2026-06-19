@@ -84,15 +84,10 @@ func _pack_scene_and_unload(node: Node) -> PackedScene:
   if not node:
     return null;
 
-  var node_path := node.get_path();
-  remove_child(node);
+  # Reset commonly tweaked properties for scene container nodes.
+  node.visible = true;
 
-  var scene := PackedScene.new();
-  var result := scene.pack(node);
-
-  assert(result == OK,
-    "Error code %s given while packing the given scene: %s" % [result, node_path]);
-
+  var scene := ScenePacker.pack(node);
   node.queue_free();
   return scene;
 
