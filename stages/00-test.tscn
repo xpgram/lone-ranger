@@ -1066,7 +1066,6 @@ position = Vector2(32, 16)
 script = ExtResource("28_snb1o")
 _persistence_key = "shove_bridge_puzzle_solved"
 _matched_entities = [NodePath("../StatuePlatformEntity")]
-_match_player_entity = null
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 
 [node name="StatuePlatformEntity" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1679984845 instance=ExtResource("18_mhctp")]
@@ -1086,7 +1085,6 @@ position = Vector2(-128, 32)
 script = ExtResource("28_snb1o")
 _persistence_key = "shove_exit_puzzle_solved"
 _matched_entities = [NodePath("../BoulderEntity")]
-_match_player_entity = null
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 
 [node name="BoulderEntity" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1371042490 instance=ExtResource("10_jadfo")]
@@ -1220,7 +1218,7 @@ visible = false
 position = Vector2(-16, 32)
 
 [node name="BoulderEntity67" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/TrueContainer" unique_id=1974046727 instance=ExtResource("10_jadfo")]
-position = Vector2(-16, 32)
+position = Vector2(0, 32)
 
 [node name="Spawner_WestSaveWestPuzzleStage2" type="Node2D" parent="Interactives Container" unique_id=1819709241 node_paths=PackedStringArray("_false_container")]
 position = Vector2(-352, -16)
@@ -1291,6 +1289,9 @@ _match_player_entity = true
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
 
+[node name="GlassTile3" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
+position = Vector2(-128, 48)
+
 [node name="GlassTile4" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1216978493 instance=ExtResource("25_mmv8l")]
 position = Vector2(-128, 64)
 
@@ -1317,9 +1318,6 @@ position = Vector2(-32, 48)
 
 [node name="GlassTile13" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1414079713 instance=ExtResource("25_mmv8l")]
 position = Vector2(-32, 32)
-
-[node name="GlassTile14" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
-position = Vector2(-128, 48)
 
 [node name="BoulderEntity71" parent="Interactives Container" unique_id=135309042 instance=ExtResource("10_jadfo")]
 position = Vector2(-272, 80)
