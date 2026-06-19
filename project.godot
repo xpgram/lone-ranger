@@ -26,6 +26,7 @@ BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 Events="*res://utilities/autoload/events.gd"
 AudioBus="*res://utilities/autoload/audio_bus.gd"
 Grid="*res://utilities/autoload/grid.gd"
+PersistenceKey="*uid://ym0ujtik52ob"
 
 [display]
 
