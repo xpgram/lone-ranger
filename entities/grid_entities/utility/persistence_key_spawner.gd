@@ -53,16 +53,18 @@ func _ready() -> void:
     _respawn_objects();
     _bind_global_events();
 
+  queue_redraw();
+
 
 func _draw() -> void:
-  if Engine.is_editor_hint():
+  if not Engine.is_editor_hint():
     return;
 
   draw_circle(
-    position,
-    0.5,
-    Color.GREEN,
-    true,
+    Vector2.ZERO,
+    3.0,
+    Color(0, 0.75, 0, 1),
+    true
   );
 
 
