@@ -58,7 +58,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nvrg4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"wings",
 "speed": 32.0
 }]
@@ -72,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_hnwa4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_down",
 "speed": 2.0
 }, {
@@ -83,7 +83,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_kr0tl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_side",
 "speed": 2.0
 }, {
@@ -94,7 +94,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_bari4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_up",
 "speed": 2.0
 }, {
@@ -102,7 +102,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_gu5dh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"injured",
 "speed": 2.0
 }, {
@@ -110,7 +110,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_15kbc")
 }],
-"loop": false,
+"loop": 0,
 "name": &"item_get!",
 "speed": 2.0
 }, {
@@ -121,7 +121,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_tfape")
 }],
-"loop": false,
+"loop": 0,
 "name": &"push_down",
 "speed": 2.0
 }, {
@@ -132,7 +132,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("14_7i16l")
 }],
-"loop": false,
+"loop": 0,
 "name": &"push_side",
 "speed": 2.0
 }, {
@@ -143,7 +143,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("16_ash3l")
 }],
-"loop": false,
+"loop": 0,
 "name": &"push_up",
 "speed": 2.0
 }]

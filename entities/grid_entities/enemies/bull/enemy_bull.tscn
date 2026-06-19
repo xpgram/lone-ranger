@@ -47,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_om4n1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"charge_down",
 "speed": 2.0
 }, {
@@ -58,7 +58,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7xuvi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"charge_right",
 "speed": 2.0
 }, {
@@ -69,7 +69,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oj77g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"charge_up",
 "speed": 2.0
 }, {
@@ -80,7 +80,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1yeh5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 2.0
 }]
