@@ -135,7 +135,7 @@ func _on_grid_position_changed(to: Vector2i, _from: Vector2i) -> void:
 ## [member grid_position] and its [member faced_direction].
 func _on_board_reset_declared() -> void:
   grid_position = spawn_grid_position;
-  faced_direction = Vector2i.DOWN;
+  faced_direction = spawn_faced_direction;
 
 
 ## Overridable function called whenever this GridEntity's facing direction is changed.
