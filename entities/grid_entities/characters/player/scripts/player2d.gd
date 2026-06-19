@@ -638,6 +638,11 @@ func _state_death() -> void:
   fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
   await fade_tween.finished;
 
+  # Declare reset for the entire game board.
+  # [FIXME] This behavior is shared by angle statues (save idols) and the Sleep action.
+  #   Can I trigger it implicitly?
+  Events.board_reset_declared.emit();
+
   # Reset player state.
   set_animation_state('idle');
   grid_position = _starting_position;
@@ -684,6 +689,10 @@ func _state_sleep() -> void:
   fade_tween.set_ease(Tween.EASE_IN);
   fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
   await fade_tween.finished;
+
+  # Declare reset for the entire game board.
+  # [FIXME] This behavior is shared by angle statues (save idols) and the Death state.
+  Events.board_reset_declared.emit();
 
   # Reset player state.
   set_animation_state('idle');

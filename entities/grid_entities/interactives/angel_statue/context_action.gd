@@ -25,6 +25,7 @@ func perform_interaction_async(actor: GridEntity) -> void:
   var whiteout_phase_time := 0.333;
   var whiteout_tween := get_tree().create_tween();
   whiteout_tween.tween_method(actor._shader_rect.set_silhoette_white_threshhold, 1.0, 0.4, whiteout_phase_time);
+  whiteout_tween.tween_callback(Events.board_reset_declared.emit);
   whiteout_tween.tween_interval(whiteout_phase_time);
   whiteout_tween.tween_method(actor._shader_rect.set_silhoette_white_threshhold, 0.4, 1.0, whiteout_phase_time);
   whiteout_tween.play();
