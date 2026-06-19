@@ -131,7 +131,6 @@ func _spawn_active_scene() -> void:
     return;
 
   _active_container = source_scene.instantiate();
-  _active_container.name = "ActiveScene";
   add_child(_active_container);
 
 
