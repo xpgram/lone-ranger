@@ -2,6 +2,9 @@ class_name FollowCamera2D
 extends Camera2D
 
 
+signal camera_moved(new_position: Vector2, translation: Vector2);
+
+
 const PAGE_SIZE_WIDTH := Constants.GRID_SIZE * 15;
 const PAGE_SIZE_HEIGHT := Constants.GRID_SIZE * 9;
 
@@ -12,6 +15,7 @@ const HALF_PAGE_SIZE_WIDTH := PAGE_SIZE_WIDTH * 0.5 - Constants.GRID_SIZE * 0.5;
 const HALF_PAGE_SIZE_HEIGHT := PAGE_SIZE_HEIGHT * 0.5 - Constants.GRID_SIZE * 0.5;
 
 enum FollowType {
+  None,
   Instant,
   Close,
   Paged,
@@ -26,6 +30,8 @@ enum FollowType {
 
 var _subpixel_position := Vector2();
 
+var _previous_position := position;
+var translation_vector := Vector2.ZERO;
 
 func _ready() -> void:
   var new_position := subject.position;
@@ -62,5 +68,13 @@ func _follow_subject(delta: float) -> void:
       _subpixel_position = _subpixel_position.move_toward(new_position, delta * paged_follow_speed);
 
   # Set to subpixel position or snap to destination.
-  var distance := position.distance_to(new_position)
-  position = new_position if distance < 0.5 else _subpixel_position;
+  if follow_type != FollowType.None:
+    var distance := position.distance_to(new_position)
+    position = new_position if distance < 0.5 else _subpixel_position;
+
+  # Update movement metrics
+  translation_vector = position - _previous_position;
+  _previous_position = position;
+
+  # Emit new camera status
+  camera_moved.emit(position, translation_vector);

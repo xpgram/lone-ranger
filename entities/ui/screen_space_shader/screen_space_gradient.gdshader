@@ -16,6 +16,7 @@ uniform float pixelate_rotation_deg = 0.0;
 // The translation offset of the pixelation grid.
 // IMPLEMENT Not yet implemented. This is supposed to smooth out subpixel movement.
 uniform vec2 pixelate_offset = vec2(0.0);
+uniform vec2 pixelate_movement = vec2(0.0);
 
 // How "faded-in" the screen is. At 0.0, the screen is completely black, and at 1.0, it is
 // fully rendered.
@@ -62,13 +63,24 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   mat2 rot_cw = get_rotation_matrix(-angle);
   mat2 rot_ccw = transpose(rot_cw);
   
+  // Get mantissa to offset the grid by subpixel amounts.
+  vec2 mantissa = pixelate_offset;
+  mantissa = fract(mantissa);
+  if (pixelate_movement.x < 0.0) {
+    mantissa.x = 1.0 + mantissa.x;
+  }
+  if (pixelate_movement.y < 0.0) {
+    mantissa.y = 1.0 + mantissa.y;
+  }
+  //mantissa *= sign(pixelate_movement);
+  
   // Algorithm:
   // Project the normalized UV into the resolution space.
   vec2 resolution_coords = uv * resolution;
   // Rotate the resolution coordinates into our rotated grid space's frame of reference.
   vec2 rotated_coords = rot_ccw * resolution_coords;
   // Quantize our coordinates, taking the center as our sample point.
-  vec2 rotated_sample_coords = floor(rotated_coords) + vec2(0.5);
+  vec2 rotated_sample_coords = floor(rotated_coords + mantissa) + vec2(FLOAT_ERROR_MARGIN); // + vec2(0.5);
   // Unrotate our coordinates back into the screen's frame of reference.
   vec2 sample_coords = rot_cw * rotated_sample_coords;
   // Project our resolution coordinates back into a normalized UV.
