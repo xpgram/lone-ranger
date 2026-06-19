@@ -1204,6 +1204,7 @@ position = Vector2(16, 0)
 
 [node name="GlassTile3" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=175362163 instance=ExtResource("25_mmv8l")]
 position = Vector2(16, 32)
+_pre_cracked = true
 
 [node name="BoulderEntity51" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1185691776 instance=ExtResource("10_jadfo")]
 position = Vector2(0, 32)

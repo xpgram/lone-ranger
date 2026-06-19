@@ -5,6 +5,10 @@ const _scene_glass_crack_audio := preload('uid://cgpaem3pcvr4u');
 const _scene_glass_break_effect := preload('uid://da6wyd1fs28c2');
 
 
+## Whether the glass spawns in cracked. Skips the SFX when loading in.
+@export var _pre_cracked := false;
+
+
 func _bind_stimulus_callbacks() -> void:
   super._bind_stimulus_callbacks();
 
@@ -15,7 +19,7 @@ func _bind_stimulus_callbacks() -> void:
 
 
 func _on_entity_collision(entity: GridEntity) -> void:
-  if not entity.solid:
+  if not entity.solid or _pre_cracked:
     return;
   AudioBus.play_audio_scene(_scene_glass_crack_audio);
 
