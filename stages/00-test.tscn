@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cqx4i6o5f7y0t" path="res://entities/grid_entities/interactives/loose_particles/loose_particles.tscn" id="14_2ba2c"]
 [ext_resource type="PackedScene" uid="uid://cokxrxu6mgxob" path="res://entities/grid_entities/enemies/diamond/enemy_diamond.tscn" id="17_mhctp"]
 [ext_resource type="PackedScene" uid="uid://dowqydii3t2w0" path="res://entities/grid_entities/interactives/statue_platform/statue_platform_entity.tscn" id="18_mhctp"]
+[ext_resource type="Script" uid="uid://4gxxctr2fcu0" path="res://entities/grid_entities/utility/persistence_key_spawner.gd" id="18_r4137"]
 [ext_resource type="PackedScene" uid="uid://dtux3ehasyvly" path="res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn" id="19_0lxvj"]
 [ext_resource type="PackedScene" uid="uid://bby6nr1v10a5c" path="res://entities/grid_entities/enemies/bull/enemy_bull.tscn" id="20_3oxmp"]
 [ext_resource type="PackedScene" uid="uid://v76t6hfbja7y" path="res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn" id="21_0lxvj"]
@@ -30,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://b025q84ct55mo" path="res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.tscn" id="26_gcv67"]
 [ext_resource type="Resource" uid="uid://72omta0cvh7l" path="res://utilities/actions/field_actions/resources/magic_push_action.tres" id="27_0mqgx"]
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
+[ext_resource type="Script" uid="uid://dj3d0k5yxrtac" path="res://entities/grid_entities/utility/persistence_key_trigger_box.gd" id="28_snb1o"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
@@ -661,28 +663,6 @@ font_size = 6
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Resource" id="Resource_6ge87"]
-script = ExtResource("9_7oan8")
-action = ExtResource("10_7oan8")
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
-
-[sub_resource type="Resource" id="Resource_l5wv4"]
-script = ExtResource("9_7oan8")
-action = ExtResource("10_7oan8")
-quantity = 2
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
-
-[sub_resource type="Resource" id="Resource_dar42"]
-script = ExtResource("9_7oan8")
-action = ExtResource("10_7oan8")
-quantity = 2
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
-
-[sub_resource type="Resource" id="Resource_0mqgx"]
-script = ExtResource("9_7oan8")
-action = ExtResource("10_7oan8")
-metadata/_custom_type_script = "uid://ue6jqko73xxa"
-
 [sub_resource type="Resource" id="Resource_hwv0m"]
 script = ExtResource("9_7oan8")
 action = ExtResource("11_mhctp")
@@ -760,6 +740,28 @@ action = ExtResource("12_qes87")
 quantity = 2
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="Resource" id="Resource_6ge87"]
+script = ExtResource("9_7oan8")
+action = ExtResource("10_7oan8")
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
+[sub_resource type="Resource" id="Resource_l5wv4"]
+script = ExtResource("9_7oan8")
+action = ExtResource("10_7oan8")
+quantity = 2
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
+[sub_resource type="Resource" id="Resource_dar42"]
+script = ExtResource("9_7oan8")
+action = ExtResource("10_7oan8")
+quantity = 2
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
+[sub_resource type="Resource" id="Resource_0mqgx"]
+script = ExtResource("9_7oan8")
+action = ExtResource("10_7oan8")
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
+
 [node name="Game" type="Node2D" unique_id=355498460]
 script = ExtResource("1_7u74a")
 
@@ -835,6 +837,99 @@ script = ExtResource("40_hwv0m")
 
 [node name="Interactives Container" type="Node2D" parent="." unique_id=90847706]
 
+[node name="MagicDrawPoints" type="Node2D" parent="Interactives Container" unique_id=378791782]
+
+[node name="MagicDrawPoint" parent="Interactives Container/MagicDrawPoints" unique_id=259249769 instance=ExtResource("26_gcv67")]
+position = Vector2(288, -176)
+magic_item = SubResource("Resource_hwv0m")
+activation_amount = 0
+
+[node name="MagicDrawPoint6" parent="Interactives Container/MagicDrawPoints" unique_id=933713799 instance=ExtResource("26_gcv67")]
+position = Vector2(-80, -64)
+magic_item = SubResource("Resource_gcv67")
+activation_amount = 1
+deactivation_amount = 6
+
+[node name="MagicDrawPoint8" parent="Interactives Container/MagicDrawPoints" unique_id=1007614963 instance=ExtResource("26_gcv67")]
+position = Vector2(-752, 96)
+magic_item = SubResource("Resource_xa6am")
+activation_amount = 0
+deactivation_amount = 6
+
+[node name="MagicDrawPoint11" parent="Interactives Container/MagicDrawPoints" unique_id=2009873097 instance=ExtResource("26_gcv67")]
+position = Vector2(-160, -288)
+magic_item = SubResource("Resource_ekj6j")
+activation_amount = 0
+
+[node name="MagicDrawPoint12" parent="Interactives Container/MagicDrawPoints" unique_id=1860200125 instance=ExtResource("26_gcv67")]
+position = Vector2(-352, -304)
+magic_item = SubResource("Resource_qavmn")
+activation_amount = 0
+
+[node name="MagicDrawPoint9" parent="Interactives Container/MagicDrawPoints" unique_id=1959627291 instance=ExtResource("26_gcv67")]
+position = Vector2(-608, 48)
+magic_item = SubResource("Resource_n8iye")
+deactivation_amount = 6
+
+[node name="MagicDrawPoint10" parent="Interactives Container/MagicDrawPoints" unique_id=1427163341 instance=ExtResource("26_gcv67")]
+position = Vector2(-432, 96)
+magic_item = SubResource("Resource_52iru")
+activation_amount = 1
+deactivation_amount = 6
+
+[node name="MagicDrawPoint7" parent="Interactives Container/MagicDrawPoints" unique_id=662363180 instance=ExtResource("26_gcv67")]
+position = Vector2(-192, 16)
+magic_item = SubResource("Resource_snb1o")
+deactivation_amount = 8
+
+[node name="MagicDrawPoint13" parent="Interactives Container/MagicDrawPoints" unique_id=158929839 instance=ExtResource("26_gcv67")]
+position = Vector2(-80, 112)
+magic_item = SubResource("Resource_ryqio")
+deactivation_amount = 8
+
+[node name="MagicDrawPoint2" parent="Interactives Container/MagicDrawPoints" unique_id=683543355 instance=ExtResource("26_gcv67")]
+position = Vector2(608, -240)
+magic_item = SubResource("Resource_6camj")
+activation_amount = 0
+deactivation_amount = 6
+
+[node name="MagicDrawPoint3" parent="Interactives Container/MagicDrawPoints" unique_id=1163910189 instance=ExtResource("26_gcv67")]
+position = Vector2(688, -160)
+magic_item = SubResource("Resource_ofvvy")
+activation_amount = 1
+deactivation_amount = 6
+
+[node name="MagicDrawPoint5" parent="Interactives Container/MagicDrawPoints" unique_id=232738982 instance=ExtResource("26_gcv67")]
+position = Vector2(-352, -128)
+magic_item = SubResource("Resource_r4137")
+deactivation_amount = 6
+
+[node name="MagicDrawPoint4" parent="Interactives Container/MagicDrawPoints" unique_id=951428931 instance=ExtResource("26_gcv67")]
+position = Vector2(576, -112)
+magic_item = SubResource("Resource_lxj52")
+activation_amount = 0
+deactivation_amount = 8
+
+[node name="LooseParticles" type="Node2D" parent="Interactives Container" unique_id=1292384568]
+
+[node name="LooseParticles" parent="Interactives Container/LooseParticles" unique_id=1234615916 instance=ExtResource("14_2ba2c")]
+position = Vector2(384, -240)
+
+[node name="LooseParticles2" parent="Interactives Container/LooseParticles" unique_id=116547719 instance=ExtResource("14_2ba2c")]
+position = Vector2(-32, 16)
+
+[node name="LooseParticles3" parent="Interactives Container/LooseParticles" unique_id=43451998 instance=ExtResource("14_2ba2c")]
+position = Vector2(-32, 48)
+
+[node name="LooseParticles4" parent="Interactives Container/LooseParticles" unique_id=1586430659 instance=ExtResource("14_2ba2c")]
+position = Vector2(-544, 80)
+
+[node name="LooseParticles6" parent="Interactives Container/LooseParticles" unique_id=1687307035 instance=ExtResource("14_2ba2c")]
+position = Vector2(-544, 112)
+
+[node name="LooseParticles5" parent="Interactives Container/LooseParticles" unique_id=1116115113 instance=ExtResource("14_2ba2c")]
+position = Vector2(128, 240)
+
 [node name="Chest2" parent="Interactives Container" unique_id=1427558143 instance=ExtResource("36_pqjox")]
 position = Vector2(-304, -224)
 contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_6ge87")])
@@ -895,83 +990,336 @@ equipment_contents = Array[StringName]([&"wings"])
 position = Vector2(-560, -96)
 equipment_contents = Array[StringName]([&"sword"])
 
-[node name="BoulderEntity" parent="Interactives Container" unique_id=1371042490 instance=ExtResource("10_jadfo")]
-position = Vector2(384, 48)
+[node name="BoardRespawner" type="Node2D" parent="Interactives Container" unique_id=978362828 node_paths=PackedStringArray("_false_container")]
+script = ExtResource("18_r4137")
+_persistence_key = "none"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="BoulderEntity78" parent="Interactives Container" unique_id=1312966178 instance=ExtResource("10_jadfo")]
-position = Vector2(288, 48)
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/BoardRespawner" unique_id=553684941]
 
-[node name="BoulderEntity2" parent="Interactives Container" unique_id=38670167 instance=ExtResource("10_jadfo")]
-position = Vector2(400, 64)
+[node name="BoulderEntity6" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=734811352 instance=ExtResource("10_jadfo")]
+position = Vector2(16, -48)
 
-[node name="BoulderEntity3" parent="Interactives Container" unique_id=1859858413 instance=ExtResource("10_jadfo")]
-position = Vector2(416, 48)
+[node name="BoulderEntity7" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1752518642 instance=ExtResource("10_jadfo")]
+position = Vector2(0, -48)
 
-[node name="BoulderEntity4" parent="Interactives Container" unique_id=884832794 instance=ExtResource("10_jadfo")]
-position = Vector2(416, 32)
+[node name="BoulderEntity79" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=876429238 instance=ExtResource("10_jadfo")]
+position = Vector2(-80, -64)
 
-[node name="BoulderEntity5" parent="Interactives Container" unique_id=1959115695 instance=ExtResource("10_jadfo")]
-position = Vector2(400, 16)
-
-[node name="BoulderEntity48" parent="Interactives Container" unique_id=1138456692 instance=ExtResource("10_jadfo")]
-position = Vector2(-336, 16)
-
-[node name="BoulderEntity49" parent="Interactives Container" unique_id=7459891 instance=ExtResource("10_jadfo")]
-position = Vector2(-336, 32)
-
-[node name="BoulderEntity51" parent="Interactives Container" unique_id=1185691776 instance=ExtResource("10_jadfo")]
-position = Vector2(-352, 0)
-
-[node name="BoulderEntity64" parent="Interactives Container" unique_id=1305744534 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity64" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1305744534 instance=ExtResource("10_jadfo")]
 position = Vector2(-16, -176)
 
-[node name="BoulderEntity73" parent="Interactives Container" unique_id=1339853815 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity73" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1339853815 instance=ExtResource("10_jadfo")]
 position = Vector2(-64, -224)
 
-[node name="BoulderEntity56" parent="Interactives Container" unique_id=2033464979 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity50" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1139347413 instance=ExtResource("10_jadfo")]
+position = Vector2(336, -304)
+
+[node name="BoulderEntity74" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=839263875 instance=ExtResource("10_jadfo")]
+position = Vector2(352, -288)
+
+[node name="BoulderEntity80" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=564268907 instance=ExtResource("10_jadfo")]
+position = Vector2(-352, -128)
+
+[node name="BoulderEntity56" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=2033464979 instance=ExtResource("10_jadfo")]
 position = Vector2(-560, -64)
 
-[node name="BoulderEntity57" parent="Interactives Container" unique_id=709834078 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity57" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=709834078 instance=ExtResource("10_jadfo")]
 position = Vector2(-576, 48)
 
-[node name="BoulderEntity67" parent="Interactives Container" unique_id=1796222344 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity67" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1796222344 instance=ExtResource("10_jadfo")]
 position = Vector2(-592, 0)
 
-[node name="BoulderEntity68" parent="Interactives Container" unique_id=584781739 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity68" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=584781739 instance=ExtResource("10_jadfo")]
 position = Vector2(-592, 96)
 
-[node name="BoulderEntity58" parent="Interactives Container" unique_id=875324869 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity58" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=875324869 instance=ExtResource("10_jadfo")]
 position = Vector2(-448, 0)
 
-[node name="BoulderEntity59" parent="Interactives Container" unique_id=150726567 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity59" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=150726567 instance=ExtResource("10_jadfo")]
 position = Vector2(-416, 48)
 
-[node name="BoulderEntity60" parent="Interactives Container" unique_id=170865635 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity60" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=170865635 instance=ExtResource("10_jadfo")]
 position = Vector2(-400, 48)
 
-[node name="BoulderEntity61" parent="Interactives Container" unique_id=783856398 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity61" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=783856398 instance=ExtResource("10_jadfo")]
 position = Vector2(-592, 48)
 
-[node name="BoulderEntity62" parent="Interactives Container" unique_id=1826244722 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity62" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1826244722 instance=ExtResource("10_jadfo")]
 position = Vector2(-464, -112)
 
-[node name="BoulderEntity52" parent="Interactives Container" unique_id=1176024233 instance=ExtResource("10_jadfo")]
-position = Vector2(-256, -64)
-
-[node name="BoulderEntity53" parent="Interactives Container" unique_id=1230783044 instance=ExtResource("10_jadfo")]
-position = Vector2(-240, -64)
-
-[node name="BoulderEntity54" parent="Interactives Container" unique_id=1632202375 instance=ExtResource("10_jadfo")]
-position = Vector2(-272, -80)
-
-[node name="BoulderEntity55" parent="Interactives Container" unique_id=1887066487 instance=ExtResource("10_jadfo")]
-position = Vector2(-256, -96)
-
-[node name="BoulderEntity75" parent="Interactives Container" unique_id=2051502298 instance=ExtResource("10_jadfo")]
-position = Vector2(-240, -80)
-
-[node name="BoulderEntity63" parent="Interactives Container" unique_id=1004471591 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity63" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1004471591 instance=ExtResource("10_jadfo")]
 position = Vector2(-240, -176)
+
+[node name="Spawner_ShoveBridgePuzzle" type="Node2D" parent="Interactives Container" unique_id=1958610913 node_paths=PackedStringArray("_false_container")]
+position = Vector2(464, 16)
+script = ExtResource("18_r4137")
+_persistence_key = "shove_bridge_puzzle_solved"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_ShoveBridgePuzzle" unique_id=1695275531]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1675729944 node_paths=PackedStringArray("_matched_entities")]
+position = Vector2(32, 16)
+script = ExtResource("28_snb1o")
+_persistence_key = "shove_bridge_puzzle_solved"
+_matched_entities = [NodePath("../StatuePlatformEntity")]
+_match_player_entity = null
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+
+[node name="StatuePlatformEntity" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1679984845 instance=ExtResource("18_mhctp")]
+position = Vector2(32, 96)
+
+[node name="Spawner_ShoveExitPuzzle" type="Node2D" parent="Interactives Container" unique_id=216648388 node_paths=PackedStringArray("_false_container", "_true_container")]
+position = Vector2(432, 16)
+script = ExtResource("18_r4137")
+_persistence_key = "shove_exit_puzzle_solved"
+_false_container = NodePath("FalseScene")
+_true_container = NodePath("TrueScene")
+
+[node name="FalseScene" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle" unique_id=339364980]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=532844618 node_paths=PackedStringArray("_matched_entities")]
+position = Vector2(-128, 32)
+script = ExtResource("28_snb1o")
+_persistence_key = "shove_exit_puzzle_solved"
+_matched_entities = [NodePath("../BoulderEntity")]
+_match_player_entity = null
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+
+[node name="BoulderEntity" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1371042490 instance=ExtResource("10_jadfo")]
+position = Vector2(-48, 32)
+
+[node name="BoulderEntity78" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1312966178 instance=ExtResource("10_jadfo")]
+position = Vector2(-144, 32)
+
+[node name="BoulderEntity2" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=38670167 instance=ExtResource("10_jadfo")]
+position = Vector2(-32, 48)
+
+[node name="BoulderEntity3" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1859858413 instance=ExtResource("10_jadfo")]
+position = Vector2(-16, 32)
+
+[node name="BoulderEntity4" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=884832794 instance=ExtResource("10_jadfo")]
+position = Vector2(-16, 16)
+
+[node name="BoulderEntity5" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1959115695 instance=ExtResource("10_jadfo")]
+position = Vector2(-32, 0)
+
+[node name="TrueScene" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle" unique_id=1257387668]
+visible = false
+
+[node name="BoulderEntity6" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=2051502298 instance=ExtResource("10_jadfo")]
+position = Vector2(-128, 32)
+
+[node name="BoulderEntity79" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=292938375 instance=ExtResource("10_jadfo")]
+position = Vector2(-144, 32)
+
+[node name="BoulderEntity7" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=1214325311 instance=ExtResource("10_jadfo")]
+position = Vector2(-32, 48)
+
+[node name="BoulderEntity8" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=1109977709 instance=ExtResource("10_jadfo")]
+position = Vector2(-112, 32)
+
+[node name="BoulderEntity9" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=9154801 instance=ExtResource("10_jadfo")]
+position = Vector2(-16, 16)
+
+[node name="BoulderEntity10" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=1183510417 instance=ExtResource("10_jadfo")]
+position = Vector2(-32, 0)
+
+[node name="Spawner_WestSaveUsed" type="Node2D" parent="Interactives Container" unique_id=1247411898 node_paths=PackedStringArray("_false_container")]
+position = Vector2(-288, -48)
+script = ExtResource("18_r4137")
+_persistence_key = "west_save_used"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1379610959]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=1517408776]
+position = Vector2(0, 32)
+script = ExtResource("28_snb1o")
+_persistence_key = "west_save_used"
+_match_player_entity = true
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+
+[node name="GlassTile2" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=785045072 instance=ExtResource("25_mmv8l")]
+position = Vector2(48, 32)
+
+[node name="Spawner_WestSaveNorthPuzzle" type="Node2D" parent="Interactives Container" unique_id=118395334 node_paths=PackedStringArray("_false_container")]
+position = Vector2(-288, -80)
+script = ExtResource("18_r4137")
+_persistence_key = "west_save_north_puzzle_solved"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveNorthPuzzle" unique_id=1749525139]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1777531799 node_paths=PackedStringArray("_matched_entities")]
+position = Vector2(16, -32)
+script = ExtResource("28_snb1o")
+_persistence_key = "west_save_north_puzzle_solved"
+_matched_entities = [NodePath("../StatuePlatformEntity3")]
+_trigger_box_rect = Rect2i(0, 0, 3, 1)
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+
+[node name="BoulderEntity52" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1176024233 instance=ExtResource("10_jadfo")]
+position = Vector2(32, 16)
+
+[node name="BoulderEntity53" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1230783044 instance=ExtResource("10_jadfo")]
+position = Vector2(48, 16)
+
+[node name="BoulderEntity54" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1632202375 instance=ExtResource("10_jadfo")]
+position = Vector2(16, 0)
+
+[node name="BoulderEntity55" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1887066487 instance=ExtResource("10_jadfo")]
+position = Vector2(32, -16)
+
+[node name="BoulderEntity75" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=747225491 instance=ExtResource("10_jadfo")]
+position = Vector2(48, 0)
+
+[node name="StatuePlatformEntity3" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1391276653 instance=ExtResource("18_mhctp")]
+position = Vector2(32, 0)
+
+[node name="Spawner_WestSaveWestPuzzleStage1" type="Node2D" parent="Interactives Container" unique_id=385580288 node_paths=PackedStringArray("_false_container", "_true_container")]
+position = Vector2(-352, -32)
+script = ExtResource("18_r4137")
+_persistence_key = "west_save_west_puzzle_stage_1_solved"
+_false_container = NodePath("FalseContainer")
+_true_container = NodePath("TrueContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1" unique_id=594986040]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1589036559 node_paths=PackedStringArray("_matched_entities")]
+position = Vector2(16, 32)
+script = ExtResource("28_snb1o")
+_persistence_key = "west_save_west_puzzle_stage_1_solved"
+_matched_entities = [NodePath("../StatuePlatformEntity2")]
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+
+[node name="StatuePlatformEntity2" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1586754406 instance=ExtResource("18_mhctp")]
+position = Vector2(16, 0)
+
+[node name="GlassTile3" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=175362163 instance=ExtResource("25_mmv8l")]
+position = Vector2(16, 32)
+
+[node name="BoulderEntity51" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1185691776 instance=ExtResource("10_jadfo")]
+position = Vector2(0, 32)
+
+[node name="BoulderEntity66" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1502952251 instance=ExtResource("10_jadfo")]
+position = Vector2(16, 32)
+
+[node name="TrueContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1" unique_id=247252787]
+visible = false
+
+[node name="BoulderEntity52" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/TrueContainer" unique_id=1540124733 instance=ExtResource("10_jadfo")]
+position = Vector2(-16, 32)
+
+[node name="BoulderEntity67" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/TrueContainer" unique_id=1974046727 instance=ExtResource("10_jadfo")]
+position = Vector2(-16, 32)
+
+[node name="Spawner_WestSaveWestPuzzleStage2" type="Node2D" parent="Interactives Container" unique_id=1819709241 node_paths=PackedStringArray("_false_container")]
+position = Vector2(-352, -16)
+script = ExtResource("18_r4137")
+_persistence_key = "west_save_west_puzzle_stage_2_solved"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2" unique_id=413445398]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2/FalseContainer" unique_id=1230150847 node_paths=PackedStringArray("_matched_entities")]
+position = Vector2(16, 112)
+script = ExtResource("28_snb1o")
+_persistence_key = "west_save_west_puzzle_stage_2_solved"
+_matched_entities = [NodePath("../BoulderEntity48")]
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+
+[node name="BoulderEntity48" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2/FalseContainer" unique_id=1138456692 instance=ExtResource("10_jadfo")]
+position = Vector2(16, 32)
+
+[node name="BoulderEntity49" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2/FalseContainer" unique_id=7459891 instance=ExtResource("10_jadfo")]
+position = Vector2(16, 48)
+
+[node name="Spawner_NorthSavePuzzle" type="Node2D" parent="Interactives Container" unique_id=755329562 node_paths=PackedStringArray("_false_container")]
+position = Vector2(-208, -304)
+script = ExtResource("18_r4137")
+_persistence_key = "north_save_puzzle_solved"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle" unique_id=411617021]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=570259697 node_paths=PackedStringArray("_matched_entities")]
+position = Vector2(-48, 16)
+script = ExtResource("28_snb1o")
+_persistence_key = "north_save_puzzle_solved"
+_matched_entities = [NodePath("../StatuePlatformEntity5")]
+_trigger_box_rect = Rect2i(0, 0, 1, 2)
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+
+[node name="PersistenceKeyTriggerBox2" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=293989299 node_paths=PackedStringArray("_matched_entities")]
+position = Vector2(-32, 48)
+script = ExtResource("28_snb1o")
+_persistence_key = "north_save_puzzle_solved"
+_matched_entities = [NodePath("../StatuePlatformEntity5")]
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+
+[node name="StatuePlatformEntity5" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=1046909404 instance=ExtResource("18_mhctp")]
+position = Vector2(16, 16)
+
+[node name="Spawner_HookshotObtained" type="Node2D" parent="Interactives Container" unique_id=559912282 node_paths=PackedStringArray("_false_container")]
+position = Vector2(-176, 64)
+script = ExtResource("18_r4137")
+_persistence_key = "hookshot_obtained"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained" unique_id=1345047135]
+
+[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1014307744]
+position = Vector2(0, 32)
+script = ExtResource("28_snb1o")
+_persistence_key = "hookshot_obtained"
+_match_player_entity = true
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+
+[node name="GlassTile4" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1216978493 instance=ExtResource("25_mmv8l")]
+position = Vector2(-128, 64)
+
+[node name="GlassTile5" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1576006134 instance=ExtResource("25_mmv8l")]
+position = Vector2(-112, 64)
+
+[node name="GlassTile6" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1241631925 instance=ExtResource("25_mmv8l")]
+position = Vector2(-96, 64)
+
+[node name="GlassTile7" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=198762468 instance=ExtResource("25_mmv8l")]
+position = Vector2(-80, 64)
+
+[node name="GlassTile8" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=134344627 instance=ExtResource("25_mmv8l")]
+position = Vector2(-64, 64)
+
+[node name="GlassTile9" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=79004658 instance=ExtResource("25_mmv8l")]
+position = Vector2(-48, 64)
+
+[node name="GlassTile10" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=592539760 instance=ExtResource("25_mmv8l")]
+position = Vector2(-32, 64)
+
+[node name="GlassTile12" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=732080210 instance=ExtResource("25_mmv8l")]
+position = Vector2(-32, 48)
+
+[node name="GlassTile13" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1414079713 instance=ExtResource("25_mmv8l")]
+position = Vector2(-32, 32)
+
+[node name="GlassTile14" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
+position = Vector2(-128, 48)
 
 [node name="BoulderEntity71" parent="Interactives Container" unique_id=135309042 instance=ExtResource("10_jadfo")]
 position = Vector2(-272, 80)
@@ -985,41 +1333,11 @@ pushable = false
 position = Vector2(-192, -304)
 pushable = false
 
-[node name="LooseParticles" parent="Interactives Container" unique_id=1234615916 instance=ExtResource("14_2ba2c")]
-position = Vector2(384, -240)
-
-[node name="LooseParticles2" parent="Interactives Container" unique_id=116547719 instance=ExtResource("14_2ba2c")]
-position = Vector2(-32, 16)
-
-[node name="LooseParticles3" parent="Interactives Container" unique_id=43451998 instance=ExtResource("14_2ba2c")]
-position = Vector2(-32, 48)
-
-[node name="LooseParticles4" parent="Interactives Container" unique_id=1586430659 instance=ExtResource("14_2ba2c")]
-position = Vector2(-544, 80)
-
-[node name="LooseParticles6" parent="Interactives Container" unique_id=1687307035 instance=ExtResource("14_2ba2c")]
-position = Vector2(-544, 112)
-
-[node name="LooseParticles5" parent="Interactives Container" unique_id=1116115113 instance=ExtResource("14_2ba2c")]
-position = Vector2(128, 240)
-
-[node name="StatuePlatformEntity" parent="Interactives Container" unique_id=1679984845 instance=ExtResource("18_mhctp")]
-position = Vector2(496, 112)
-
-[node name="StatuePlatformEntity2" parent="Interactives Container" unique_id=1586754406 instance=ExtResource("18_mhctp")]
-position = Vector2(-336, -32)
-
 [node name="StatuePlatformEntity7" parent="Interactives Container" unique_id=412672747 instance=ExtResource("18_mhctp")]
 position = Vector2(-160, 32)
 
 [node name="StatuePlatformEntity4" parent="Interactives Container" unique_id=456651796 instance=ExtResource("18_mhctp")]
 position = Vector2(-400, -96)
-
-[node name="StatuePlatformEntity3" parent="Interactives Container" unique_id=1391276653 instance=ExtResource("18_mhctp")]
-position = Vector2(-256, -80)
-
-[node name="StatuePlatformEntity5" parent="Interactives Container" unique_id=1046909404 instance=ExtResource("18_mhctp")]
-position = Vector2(-192, -288)
 
 [node name="GrowableTwig" parent="Interactives Container" unique_id=232660030 instance=ExtResource("19_0lxvj")]
 position = Vector2(48, -64)
@@ -1032,12 +1350,6 @@ _platform_points = Array[Vector2i]([Vector2i(0, -1), Vector2i(0, -2), Vector2i(-
 [node name="GrowableTwig2" parent="Interactives Container" unique_id=292453622 instance=ExtResource("19_0lxvj")]
 position = Vector2(640, 32)
 _platform_points = Array[Vector2i]([Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4), Vector2i(-1, 4), Vector2i(-1, 5), Vector2i(-2, 5)])
-
-[node name="EnemyDiamond" parent="Interactives Container" unique_id=1624186022 instance=ExtResource("17_mhctp")]
-position = Vector2(656, -16)
-
-[node name="EnemyDiamond2" parent="Interactives Container" unique_id=1269545093 instance=ExtResource("17_mhctp")]
-position = Vector2(688, -144)
 
 [node name="DiggableSpot" parent="Interactives Container" unique_id=542264633 instance=ExtResource("21_x57cp")]
 position = Vector2(256, 0)
@@ -1061,149 +1373,140 @@ position = Vector2(640, -256)
 [node name="AngelStatue3" parent="Interactives Container" unique_id=1586415577 instance=ExtResource("23_l5wv4")]
 position = Vector2(128, 256)
 
-[node name="BoulderEntity6" parent="Interactives Container" unique_id=734811352 instance=ExtResource("10_jadfo")]
-position = Vector2(16, -48)
+[node name="BossBoulders" type="Node2D" parent="Interactives Container" unique_id=2045354790]
+position = Vector2(320, 336)
 
-[node name="BoulderEntity50" parent="Interactives Container" unique_id=1139347413 instance=ExtResource("10_jadfo")]
-position = Vector2(336, -304)
+[node name="BoulderEntity8" parent="Interactives Container/BossBoulders" unique_id=98333401 instance=ExtResource("10_jadfo")]
+position = Vector2(32, 0)
 
-[node name="BoulderEntity74" parent="Interactives Container" unique_id=839263875 instance=ExtResource("10_jadfo")]
-position = Vector2(352, -288)
+[node name="BoulderEntity9" parent="Interactives Container/BossBoulders" unique_id=341979565 instance=ExtResource("10_jadfo")]
+position = Vector2(16, 48)
 
-[node name="BoulderEntity7" parent="Interactives Container" unique_id=1752518642 instance=ExtResource("10_jadfo")]
-position = Vector2(0, -48)
+[node name="BoulderEntity10" parent="Interactives Container/BossBoulders" unique_id=1539104271 instance=ExtResource("10_jadfo")]
+position = Vector2(16, 0)
 
-[node name="BoulderEntity8" parent="Interactives Container" unique_id=98333401 instance=ExtResource("10_jadfo")]
-position = Vector2(352, 336)
+[node name="BoulderEntity11" parent="Interactives Container/BossBoulders" unique_id=766483404 instance=ExtResource("10_jadfo")]
+position = Vector2(32, 48)
 
-[node name="BoulderEntity9" parent="Interactives Container" unique_id=341979565 instance=ExtResource("10_jadfo")]
-position = Vector2(336, 384)
+[node name="BoulderEntity12" parent="Interactives Container/BossBoulders" unique_id=779518404 instance=ExtResource("10_jadfo")]
+position = Vector2(32, 16)
 
-[node name="BoulderEntity10" parent="Interactives Container" unique_id=1539104271 instance=ExtResource("10_jadfo")]
-position = Vector2(336, 336)
+[node name="BoulderEntity13" parent="Interactives Container/BossBoulders" unique_id=600797455 instance=ExtResource("10_jadfo")]
+position = Vector2(16, 32)
 
-[node name="BoulderEntity11" parent="Interactives Container" unique_id=766483404 instance=ExtResource("10_jadfo")]
-position = Vector2(352, 384)
+[node name="BoulderEntity14" parent="Interactives Container/BossBoulders" unique_id=978524160 instance=ExtResource("10_jadfo")]
+position = Vector2(80, 0)
 
-[node name="BoulderEntity12" parent="Interactives Container" unique_id=779518404 instance=ExtResource("10_jadfo")]
-position = Vector2(352, 352)
+[node name="BoulderEntity15" parent="Interactives Container/BossBoulders" unique_id=892941678 instance=ExtResource("10_jadfo")]
+position = Vector2(96, 0)
 
-[node name="BoulderEntity13" parent="Interactives Container" unique_id=600797455 instance=ExtResource("10_jadfo")]
-position = Vector2(336, 368)
+[node name="BoulderEntity16" parent="Interactives Container/BossBoulders" unique_id=1175234092 instance=ExtResource("10_jadfo")]
+position = Vector2(96, 16)
 
-[node name="BoulderEntity14" parent="Interactives Container" unique_id=978524160 instance=ExtResource("10_jadfo")]
-position = Vector2(400, 336)
+[node name="BoulderEntity17" parent="Interactives Container/BossBoulders" unique_id=915473367 instance=ExtResource("10_jadfo")]
+position = Vector2(112, 16)
 
-[node name="BoulderEntity15" parent="Interactives Container" unique_id=892941678 instance=ExtResource("10_jadfo")]
-position = Vector2(416, 336)
+[node name="BoulderEntity18" parent="Interactives Container/BossBoulders" unique_id=1093463832 instance=ExtResource("10_jadfo")]
+position = Vector2(96, 32)
 
-[node name="BoulderEntity16" parent="Interactives Container" unique_id=1175234092 instance=ExtResource("10_jadfo")]
-position = Vector2(416, 352)
+[node name="BoulderEntity19" parent="Interactives Container/BossBoulders" unique_id=311863426 instance=ExtResource("10_jadfo")]
+position = Vector2(80, 48)
 
-[node name="BoulderEntity17" parent="Interactives Container" unique_id=915473367 instance=ExtResource("10_jadfo")]
-position = Vector2(432, 352)
+[node name="BoulderEntity20" parent="Interactives Container/BossBoulders" unique_id=1929000562 instance=ExtResource("10_jadfo")]
+position = Vector2(64, 48)
 
-[node name="BoulderEntity18" parent="Interactives Container" unique_id=1093463832 instance=ExtResource("10_jadfo")]
-position = Vector2(416, 368)
+[node name="BoulderEntity21" parent="Interactives Container/BossBoulders" unique_id=138919015 instance=ExtResource("10_jadfo")]
+position = Vector2(128, 32)
 
-[node name="BoulderEntity19" parent="Interactives Container" unique_id=311863426 instance=ExtResource("10_jadfo")]
-position = Vector2(400, 384)
+[node name="BoulderEntity76" parent="Interactives Container/BossBoulders" unique_id=539577766 instance=ExtResource("10_jadfo")]
+position = Vector2(144, 32)
 
-[node name="BoulderEntity20" parent="Interactives Container" unique_id=1929000562 instance=ExtResource("10_jadfo")]
-position = Vector2(384, 384)
+[node name="BoulderEntity22" parent="Interactives Container/BossBoulders" unique_id=1857528055 instance=ExtResource("10_jadfo")]
+position = Vector2(176, 48)
 
-[node name="BoulderEntity21" parent="Interactives Container" unique_id=138919015 instance=ExtResource("10_jadfo")]
-position = Vector2(448, 368)
+[node name="BoulderEntity23" parent="Interactives Container/BossBoulders" unique_id=76851131 instance=ExtResource("10_jadfo")]
+position = Vector2(192, 48)
 
-[node name="BoulderEntity76" parent="Interactives Container" unique_id=539577766 instance=ExtResource("10_jadfo")]
-position = Vector2(464, 368)
+[node name="BoulderEntity24" parent="Interactives Container/BossBoulders" unique_id=1037479426 instance=ExtResource("10_jadfo")]
+position = Vector2(192, 32)
 
-[node name="BoulderEntity22" parent="Interactives Container" unique_id=1857528055 instance=ExtResource("10_jadfo")]
-position = Vector2(496, 384)
+[node name="BoulderEntity25" parent="Interactives Container/BossBoulders" unique_id=1354770309 instance=ExtResource("10_jadfo")]
+position = Vector2(176, 32)
 
-[node name="BoulderEntity23" parent="Interactives Container" unique_id=76851131 instance=ExtResource("10_jadfo")]
-position = Vector2(512, 384)
+[node name="BoulderEntity26" parent="Interactives Container/BossBoulders" unique_id=898179164 instance=ExtResource("10_jadfo")]
+position = Vector2(176, 0)
 
-[node name="BoulderEntity24" parent="Interactives Container" unique_id=1037479426 instance=ExtResource("10_jadfo")]
-position = Vector2(512, 368)
+[node name="BoulderEntity27" parent="Interactives Container/BossBoulders" unique_id=760577845 instance=ExtResource("10_jadfo")]
+position = Vector2(208, 16)
 
-[node name="BoulderEntity25" parent="Interactives Container" unique_id=1354770309 instance=ExtResource("10_jadfo")]
-position = Vector2(496, 368)
+[node name="BoulderEntity28" parent="Interactives Container/BossBoulders" unique_id=288818809 instance=ExtResource("10_jadfo")]
+position = Vector2(240, 16)
 
-[node name="BoulderEntity26" parent="Interactives Container" unique_id=898179164 instance=ExtResource("10_jadfo")]
-position = Vector2(496, 336)
+[node name="BoulderEntity29" parent="Interactives Container/BossBoulders" unique_id=1690695693 instance=ExtResource("10_jadfo")]
+position = Vector2(224, 32)
 
-[node name="BoulderEntity27" parent="Interactives Container" unique_id=760577845 instance=ExtResource("10_jadfo")]
-position = Vector2(528, 352)
+[node name="BoulderEntity30" parent="Interactives Container/BossBoulders" unique_id=127398994 instance=ExtResource("10_jadfo")]
+position = Vector2(256, 32)
 
-[node name="BoulderEntity28" parent="Interactives Container" unique_id=288818809 instance=ExtResource("10_jadfo")]
-position = Vector2(560, 352)
+[node name="BoulderEntity31" parent="Interactives Container/BossBoulders" unique_id=827818662 instance=ExtResource("10_jadfo")]
+position = Vector2(208, 48)
 
-[node name="BoulderEntity29" parent="Interactives Container" unique_id=1690695693 instance=ExtResource("10_jadfo")]
-position = Vector2(544, 368)
+[node name="BoulderEntity32" parent="Interactives Container/BossBoulders" unique_id=623608330 instance=ExtResource("10_jadfo")]
+position = Vector2(224, 48)
 
-[node name="BoulderEntity30" parent="Interactives Container" unique_id=127398994 instance=ExtResource("10_jadfo")]
-position = Vector2(576, 368)
+[node name="BoulderEntity33" parent="Interactives Container/BossBoulders" unique_id=984640662 instance=ExtResource("10_jadfo")]
+position = Vector2(240, 0)
 
-[node name="BoulderEntity31" parent="Interactives Container" unique_id=827818662 instance=ExtResource("10_jadfo")]
-position = Vector2(528, 384)
+[node name="BoulderEntity34" parent="Interactives Container/BossBoulders" unique_id=503015750 instance=ExtResource("10_jadfo")]
+position = Vector2(256, 0)
 
-[node name="BoulderEntity32" parent="Interactives Container" unique_id=623608330 instance=ExtResource("10_jadfo")]
-position = Vector2(544, 384)
+[node name="BoulderEntity35" parent="Interactives Container/BossBoulders" unique_id=1996403822 instance=ExtResource("10_jadfo")]
+position = Vector2(272, 16)
 
-[node name="BoulderEntity33" parent="Interactives Container" unique_id=984640662 instance=ExtResource("10_jadfo")]
-position = Vector2(560, 336)
+[node name="BoulderEntity36" parent="Interactives Container/BossBoulders" unique_id=1669424712 instance=ExtResource("10_jadfo")]
+position = Vector2(256, 48)
 
-[node name="BoulderEntity34" parent="Interactives Container" unique_id=503015750 instance=ExtResource("10_jadfo")]
-position = Vector2(576, 336)
+[node name="BoulderEntity37" parent="Interactives Container/BossBoulders" unique_id=2090972829 instance=ExtResource("10_jadfo")]
+position = Vector2(320, 32)
 
-[node name="BoulderEntity35" parent="Interactives Container" unique_id=1996403822 instance=ExtResource("10_jadfo")]
-position = Vector2(592, 352)
+[node name="BoulderEntity38" parent="Interactives Container/BossBoulders" unique_id=2080558806 instance=ExtResource("10_jadfo")]
+position = Vector2(336, 32)
 
-[node name="BoulderEntity36" parent="Interactives Container" unique_id=1669424712 instance=ExtResource("10_jadfo")]
-position = Vector2(576, 384)
+[node name="BoulderEntity39" parent="Interactives Container/BossBoulders" unique_id=1547953302 instance=ExtResource("10_jadfo")]
+position = Vector2(336, 16)
 
-[node name="BoulderEntity37" parent="Interactives Container" unique_id=2090972829 instance=ExtResource("10_jadfo")]
-position = Vector2(640, 368)
+[node name="BoulderEntity40" parent="Interactives Container/BossBoulders" unique_id=459456489 instance=ExtResource("10_jadfo")]
+position = Vector2(352, 16)
 
-[node name="BoulderEntity38" parent="Interactives Container" unique_id=2080558806 instance=ExtResource("10_jadfo")]
-position = Vector2(656, 368)
+[node name="BoulderEntity77" parent="Interactives Container/BossBoulders" unique_id=551850536 instance=ExtResource("10_jadfo")]
+position = Vector2(368, 16)
 
-[node name="BoulderEntity39" parent="Interactives Container" unique_id=1547953302 instance=ExtResource("10_jadfo")]
-position = Vector2(656, 352)
+[node name="BoulderEntity41" parent="Interactives Container/BossBoulders" unique_id=844969151 instance=ExtResource("10_jadfo")]
+position = Vector2(352, 0)
 
-[node name="BoulderEntity40" parent="Interactives Container" unique_id=459456489 instance=ExtResource("10_jadfo")]
-position = Vector2(672, 352)
+[node name="BoulderEntity42" parent="Interactives Container/BossBoulders" unique_id=1292415479 instance=ExtResource("10_jadfo")]
+position = Vector2(368, 0)
 
-[node name="BoulderEntity77" parent="Interactives Container" unique_id=551850536 instance=ExtResource("10_jadfo")]
-position = Vector2(688, 352)
+[node name="BoulderEntity43" parent="Interactives Container/BossBoulders" unique_id=319002824 instance=ExtResource("10_jadfo")]
+position = Vector2(368, 32)
 
-[node name="BoulderEntity41" parent="Interactives Container" unique_id=844969151 instance=ExtResource("10_jadfo")]
-position = Vector2(672, 336)
+[node name="BoulderEntity44" parent="Interactives Container/BossBoulders" unique_id=565479666 instance=ExtResource("10_jadfo")]
+position = Vector2(384, 32)
 
-[node name="BoulderEntity42" parent="Interactives Container" unique_id=1292415479 instance=ExtResource("10_jadfo")]
-position = Vector2(688, 336)
+[node name="BoulderEntity45" parent="Interactives Container/BossBoulders" unique_id=1181097961 instance=ExtResource("10_jadfo")]
+position = Vector2(352, 48)
 
-[node name="BoulderEntity43" parent="Interactives Container" unique_id=319002824 instance=ExtResource("10_jadfo")]
-position = Vector2(688, 368)
+[node name="BoulderEntity46" parent="Interactives Container/BossBoulders" unique_id=1483348623 instance=ExtResource("10_jadfo")]
+position = Vector2(384, 48)
 
-[node name="BoulderEntity44" parent="Interactives Container" unique_id=565479666 instance=ExtResource("10_jadfo")]
-position = Vector2(704, 368)
+[node name="BoulderEntity69" parent="Interactives Container/BossBoulders" unique_id=1393489024 instance=ExtResource("10_jadfo")]
+position = Vector2(448, 32)
 
-[node name="BoulderEntity45" parent="Interactives Container" unique_id=1181097961 instance=ExtResource("10_jadfo")]
-position = Vector2(672, 384)
+[node name="BoulderEntity70" parent="Interactives Container/BossBoulders" unique_id=1232120109 instance=ExtResource("10_jadfo")]
+position = Vector2(464, 48)
 
-[node name="BoulderEntity46" parent="Interactives Container" unique_id=1483348623 instance=ExtResource("10_jadfo")]
-position = Vector2(704, 384)
-
-[node name="BoulderEntity69" parent="Interactives Container" unique_id=1393489024 instance=ExtResource("10_jadfo")]
-position = Vector2(768, 368)
-
-[node name="BoulderEntity70" parent="Interactives Container" unique_id=1232120109 instance=ExtResource("10_jadfo")]
-position = Vector2(784, 384)
-
-[node name="BoulderEntity47" parent="Interactives Container" unique_id=588945400 instance=ExtResource("10_jadfo")]
-position = Vector2(736, 384)
+[node name="BoulderEntity47" parent="Interactives Container/BossBoulders" unique_id=588945400 instance=ExtResource("10_jadfo")]
+position = Vector2(416, 48)
 
 [node name="HeartPiecePickup" parent="Interactives Container" unique_id=373335349 instance=ExtResource("22_1sjut")]
 position = Vector2(112, 304)
@@ -1214,185 +1517,83 @@ position = Vector2(-512, -208)
 [node name="HeartPiecePickup3" parent="Interactives Container" unique_id=1443787865 instance=ExtResource("22_1sjut")]
 position = Vector2(-80, -368)
 
-[node name="GlassTile2" parent="Interactives Container" unique_id=785045072 instance=ExtResource("25_mmv8l")]
-position = Vector2(-240, -16)
-
-[node name="GlassTile3" parent="Interactives Container" unique_id=175362163 instance=ExtResource("25_mmv8l")]
-position = Vector2(-336, 0)
-
-[node name="BoulderEntity66" parent="Interactives Container" unique_id=1502952251 instance=ExtResource("10_jadfo")]
-position = Vector2(-336, 0)
-
-[node name="MagicDrawPoint" parent="Interactives Container" unique_id=259249769 instance=ExtResource("26_gcv67")]
-position = Vector2(288, -176)
-magic_item = SubResource("Resource_hwv0m")
-activation_amount = 0
-
-[node name="MagicDrawPoint6" parent="Interactives Container" unique_id=933713799 instance=ExtResource("26_gcv67")]
-position = Vector2(-80, -64)
-magic_item = SubResource("Resource_gcv67")
-activation_amount = 1
-deactivation_amount = 6
-
-[node name="MagicDrawPoint8" parent="Interactives Container" unique_id=1007614963 instance=ExtResource("26_gcv67")]
-position = Vector2(-752, 96)
-magic_item = SubResource("Resource_xa6am")
-activation_amount = 0
-deactivation_amount = 6
-
-[node name="MagicDrawPoint11" parent="Interactives Container" unique_id=2009873097 instance=ExtResource("26_gcv67")]
-position = Vector2(-160, -288)
-magic_item = SubResource("Resource_ekj6j")
-activation_amount = 0
-
-[node name="MagicDrawPoint12" parent="Interactives Container" unique_id=1860200125 instance=ExtResource("26_gcv67")]
-position = Vector2(-352, -304)
-magic_item = SubResource("Resource_qavmn")
-activation_amount = 0
-
-[node name="MagicDrawPoint9" parent="Interactives Container" unique_id=1959627291 instance=ExtResource("26_gcv67")]
-position = Vector2(-608, 48)
-magic_item = SubResource("Resource_n8iye")
-deactivation_amount = 6
-
-[node name="MagicDrawPoint10" parent="Interactives Container" unique_id=1427163341 instance=ExtResource("26_gcv67")]
-position = Vector2(-432, 96)
-magic_item = SubResource("Resource_52iru")
-activation_amount = 1
-deactivation_amount = 6
-
-[node name="MagicDrawPoint7" parent="Interactives Container" unique_id=662363180 instance=ExtResource("26_gcv67")]
-position = Vector2(-192, 16)
-magic_item = SubResource("Resource_snb1o")
-deactivation_amount = 8
-
-[node name="MagicDrawPoint13" parent="Interactives Container" unique_id=158929839 instance=ExtResource("26_gcv67")]
-position = Vector2(-80, 112)
-magic_item = SubResource("Resource_ryqio")
-deactivation_amount = 8
-
-[node name="MagicDrawPoint2" parent="Interactives Container" unique_id=683543355 instance=ExtResource("26_gcv67")]
-position = Vector2(608, -240)
-magic_item = SubResource("Resource_6camj")
-activation_amount = 0
-deactivation_amount = 6
-
-[node name="MagicDrawPoint3" parent="Interactives Container" unique_id=1163910189 instance=ExtResource("26_gcv67")]
-position = Vector2(688, -160)
-magic_item = SubResource("Resource_ofvvy")
-activation_amount = 1
-deactivation_amount = 6
-
-[node name="MagicDrawPoint5" parent="Interactives Container" unique_id=232738982 instance=ExtResource("26_gcv67")]
-position = Vector2(-352, -128)
-magic_item = SubResource("Resource_r4137")
-deactivation_amount = 6
-
-[node name="MagicDrawPoint4" parent="Interactives Container" unique_id=951428931 instance=ExtResource("26_gcv67")]
-position = Vector2(576, -112)
-magic_item = SubResource("Resource_lxj52")
-activation_amount = 0
-deactivation_amount = 8
-
-[node name="BoulderEntity79" parent="Interactives Container" unique_id=876429238 instance=ExtResource("10_jadfo")]
-position = Vector2(-80, -64)
-
-[node name="BoulderEntity80" parent="Interactives Container" unique_id=564268907 instance=ExtResource("10_jadfo")]
-position = Vector2(-352, -128)
-
-[node name="GlassTile4" parent="Interactives Container" unique_id=1216978493 instance=ExtResource("25_mmv8l")]
-position = Vector2(-304, 128)
-
-[node name="GlassTile5" parent="Interactives Container" unique_id=1576006134 instance=ExtResource("25_mmv8l")]
-position = Vector2(-288, 128)
-
-[node name="GlassTile6" parent="Interactives Container" unique_id=1241631925 instance=ExtResource("25_mmv8l")]
-position = Vector2(-272, 128)
-
-[node name="GlassTile7" parent="Interactives Container" unique_id=198762468 instance=ExtResource("25_mmv8l")]
-position = Vector2(-256, 128)
-
-[node name="GlassTile8" parent="Interactives Container" unique_id=134344627 instance=ExtResource("25_mmv8l")]
-position = Vector2(-240, 128)
-
-[node name="GlassTile9" parent="Interactives Container" unique_id=79004658 instance=ExtResource("25_mmv8l")]
-position = Vector2(-224, 128)
-
-[node name="GlassTile10" parent="Interactives Container" unique_id=592539760 instance=ExtResource("25_mmv8l")]
-position = Vector2(-208, 128)
-
-[node name="GlassTile12" parent="Interactives Container" unique_id=732080210 instance=ExtResource("25_mmv8l")]
-position = Vector2(-208, 112)
-
-[node name="GlassTile13" parent="Interactives Container" unique_id=1414079713 instance=ExtResource("25_mmv8l")]
-position = Vector2(-208, 96)
-
-[node name="GlassTile14" parent="Interactives Container" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
-position = Vector2(-304, 112)
-
 [node name="Enemy Container" type="Node2D" parent="." unique_id=253658292]
 
-[node name="EnemyMouth" parent="Enemy Container" unique_id=2063089673 instance=ExtResource("40_nbivo")]
+[node name="BoardRespawner" type="Node2D" parent="Enemy Container" unique_id=841907397 node_paths=PackedStringArray("_false_container")]
+script = ExtResource("18_r4137")
+_persistence_key = "none"
+_false_container = NodePath("FalseContainer")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="FalseContainer" type="Node2D" parent="Enemy Container/BoardRespawner" unique_id=103423134]
+
+[node name="EnemyDiamond" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1624186022 instance=ExtResource("17_mhctp")]
+position = Vector2(656, -16)
+
+[node name="EnemyDiamond2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1269545093 instance=ExtResource("17_mhctp")]
+position = Vector2(688, -144)
+
+[node name="EnemyMouth" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=2063089673 instance=ExtResource("40_nbivo")]
 position = Vector2(352, -48)
 
-[node name="EnemyMouth3" parent="Enemy Container" unique_id=830813877 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth3" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=830813877 instance=ExtResource("40_nbivo")]
 position = Vector2(-240, -272)
 
-[node name="EnemyMouth7" parent="Enemy Container" unique_id=1542706135 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth7" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1542706135 instance=ExtResource("40_nbivo")]
 position = Vector2(-304, -240)
 
-[node name="EnemyMouth8" parent="Enemy Container" unique_id=1996655757 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth8" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1996655757 instance=ExtResource("40_nbivo")]
 position = Vector2(-192, -272)
 
-[node name="EnemyMouth2" parent="Enemy Container" unique_id=662792721 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=662792721 instance=ExtResource("40_nbivo")]
 position = Vector2(304, -224)
 
-[node name="EnemyBull" parent="Enemy Container" unique_id=315521398 instance=ExtResource("20_3oxmp")]
+[node name="EnemyBull" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=315521398 instance=ExtResource("20_3oxmp")]
 position = Vector2(352, -144)
 
-[node name="EnemyBull2" parent="Enemy Container" unique_id=1083440297 instance=ExtResource("20_3oxmp")]
+[node name="EnemyBull2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1083440297 instance=ExtResource("20_3oxmp")]
 position = Vector2(-240, -32)
 
-[node name="EnemySnake" parent="Enemy Container" unique_id=1527492042 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1527492042 instance=ExtResource("22_7oan8")]
 position = Vector2(448, -336)
 
-[node name="EnemySnake2" parent="Enemy Container" unique_id=1559381823 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1559381823 instance=ExtResource("22_7oan8")]
 position = Vector2(-656, 96)
 
-[node name="EnemySnake3" parent="Enemy Container" unique_id=494150888 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake3" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=494150888 instance=ExtResource("22_7oan8")]
 position = Vector2(-672, 0)
 
-[node name="EnemySnake5" parent="Enemy Container" unique_id=862418547 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake5" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=862418547 instance=ExtResource("22_7oan8")]
 position = Vector2(-528, 144)
 
-[node name="EnemySnake4" parent="Enemy Container" unique_id=1705956067 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake4" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1705956067 instance=ExtResource("22_7oan8")]
 position = Vector2(-320, -304)
 
-[node name="EnemyMaggot2" parent="Enemy Container" unique_id=1507008406 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1507008406 instance=ExtResource("21_0lxvj")]
 position = Vector2(512, -256)
 
-[node name="EnemyMaggot8" parent="Enemy Container" unique_id=1264771360 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot8" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1264771360 instance=ExtResource("21_0lxvj")]
 position = Vector2(-240, -208)
 
-[node name="EnemyMaggot7" parent="Enemy Container" unique_id=92230362 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot7" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=92230362 instance=ExtResource("21_0lxvj")]
 position = Vector2(-80, -240)
 
-[node name="EnemyMaggot3" parent="Enemy Container" unique_id=140054358 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot3" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=140054358 instance=ExtResource("21_0lxvj")]
 position = Vector2(-112, -80)
 
-[node name="EnemyMaggot4" parent="Enemy Container" unique_id=1876760045 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot4" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1876760045 instance=ExtResource("21_0lxvj")]
 position = Vector2(-144, -64)
 
-[node name="EnemyMaggot5" parent="Enemy Container" unique_id=10049832 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot5" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=10049832 instance=ExtResource("21_0lxvj")]
 position = Vector2(-416, -96)
 
-[node name="EnemyMaggot10" parent="Enemy Container" unique_id=1284297691 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot10" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1284297691 instance=ExtResource("21_0lxvj")]
 position = Vector2(-432, -96)
 
-[node name="EnemyMaggot6" parent="Enemy Container" unique_id=138187296 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot6" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=138187296 instance=ExtResource("21_0lxvj")]
 position = Vector2(-448, -96)
 
-[node name="EnemyMaggot9" parent="Enemy Container" unique_id=513312333 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot9" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=513312333 instance=ExtResource("21_0lxvj")]
 position = Vector2(-464, -96)
 
 [node name="DemonWallBossContainer" type="Node2D" parent="Enemy Container" unique_id=425882208]
