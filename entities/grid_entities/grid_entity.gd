@@ -58,6 +58,8 @@ func _ready() -> void:
   _bind_global_event_signals();
 
 
+# [FIXME] This attribute system is hard to use via the editor: loading a .tres requires
+#   the developer also manually write-in the same attribute key to the dictionary.
 ## Returns true if `param attribute_name` is among the _attributes applied to this entity.
 func has_attribute(attribute_name: StringName) -> bool:
   return _attributes.has(attribute_name);
