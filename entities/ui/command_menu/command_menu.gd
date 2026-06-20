@@ -189,6 +189,11 @@ func _update_main_list_options() -> void:
   # Tell MainList which options are hidden (by their submenu content > 0)
   #   I'm not sure how to hide them, yet. It may have to be with some complicated adding/removing.
   #   Also... once a menu is shown once, do I really want to hide it again, even if it's empty? I should think on that.
+  #
+  # From the future: selectively adding categories isn't hard, actually. What is hard(er)
+  #   is defining the resource that describes what their names and icons are.
+  #   Presently, they're defined in the editor, and this means they can be lost at runtime
+  #   if I don't save them somewhere.
   pass
 
 
