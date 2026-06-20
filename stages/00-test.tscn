@@ -1321,14 +1321,17 @@ position = Vector2(-32, 48)
 position = Vector2(-32, 32)
 
 [node name="BoulderEntity71" parent="Interactives Container" unique_id=135309042 instance=ExtResource("10_jadfo")]
+modulate = Color(1, 1, 1, 0.42352942)
 position = Vector2(-272, 80)
 pushable = false
 
 [node name="BoulderEntity72" parent="Interactives Container" unique_id=1236030869 instance=ExtResource("10_jadfo")]
+modulate = Color(1, 1, 1, 0.42352942)
 position = Vector2(-240, 16)
 pushable = false
 
 [node name="BoulderEntity65" parent="Interactives Container" unique_id=399654239 instance=ExtResource("10_jadfo")]
+modulate = Color(1, 1, 1, 0.42352942)
 position = Vector2(-192, -304)
 pushable = false
 
