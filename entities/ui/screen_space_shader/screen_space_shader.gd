@@ -82,24 +82,22 @@ func pulse_color(screen_pulse_color: Color, screen_pulse_gradient_end := NULL_CO
 
 
 func set_fade_in(value: float) -> void:
+  # [FIXME] This formula, ceil(5v-1) / 4, there's some inconsistency in how it's applied.
+  #   I don't get it, but the shader doesn't like it for the white_silhoette values.
+  #   But it's important for making fade-in look nice.
   # This should limit the value to increments of 0.25.
-  value = round(value * 4) / 4.0;
+  value = ceil(value * 5 - 1) / 4.0;
 
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('fade_in_progress', value);
 
 
 func set_silhoette_threshhold(value: float) -> void:
-  # This should limit the value to increments of 0.25.
-  value = round(value * 4) / 4.0;
-
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('silhoette_threshhold', value);
 
 
 func set_silhoette_white_threshhold(value: float) -> void:
-  value = round(value * 4) / 4.0;
-
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('silhoette_white_threshhold', value);
 
