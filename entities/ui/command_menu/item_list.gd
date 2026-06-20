@@ -244,9 +244,12 @@ func _move_page_cursor(direction: int) -> void:
   cursor_moved.emit();
 
 
-## Emits the item_chosen signal with the data of the list-item that was activated.
+## If the current selected index is avlid, emits [signal item_chosen] with the data of the
+## list-item that was activated.
 func _emit_item_chosen() -> void:
   var item_index := get_content_selection_index();
+  if item_index >= _menu_content.size():
+    return;
   item_chosen.emit(_menu_content[item_index]);
 
 
