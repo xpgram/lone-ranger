@@ -132,7 +132,7 @@ vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
   vec3 gradient_color = mix(gradient_start, gradient_end, uv.y);
 
   // This gradient color trick is only applied to grayscale colors.
-  float grayness = abs(2.0*color.a - color.g - color.b);
+  float grayness = (2.0*color.r - color.g - color.b);
   if (grayness > FLOAT_ERROR_MARGIN) {
     return color;
   }
