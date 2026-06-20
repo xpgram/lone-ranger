@@ -46,7 +46,7 @@ mat2 get_rotation_matrix(float angle){
   float rad_angle = radians(angle);
   float cos_r = cos(rad_angle);
   float sin_r = sin(rad_angle);
-  
+
   return mat2(
     vec2(cos_r ,-sin_r),
     vec2(sin_r , cos_r)
@@ -58,10 +58,10 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   if (!pixelate) {
     return uv;
   }
-  
+
   mat2 rot_cw = get_rotation_matrix(-angle);
   mat2 rot_ccw = transpose(rot_cw);
-  
+
   // Algorithm:
   // Project the normalized UV into the resolution space.
   vec2 resolution_coords = uv * resolution;
@@ -73,55 +73,69 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   vec2 sample_coords = rot_cw * rotated_sample_coords;
   // Project our resolution coordinates back into a normalized UV.
   vec2 sample_uv = sample_coords / resolution;
-  
+
   // Make sure our sample UVs are constrained to the texture space.
   sample_uv = clamp(sample_uv, vec2(0.0), vec2(1.0));
-  
+
   return sample_uv;
 }
 
 
+float quantize_color_channel(float color) {
+  float new_color = ceil(color * 5.0 - 1.0) / 4.0;
+  if (new_color < 0.5) {
+    new_color = 0.0;
+  }
+  return new_color;
+}
+
+
+vec4 quantize_colors(vec4 color) {
+  return vec4(
+    quantize_color_channel(color.r),
+    quantize_color_channel(color.g),
+    quantize_color_channel(color.b),
+    color.a
+  );
+}
+
+
 vec4 apply_fade_in(vec4 color, float progress) {
-  // FIXME This function should kick the current color down to the next one in the palette.
-  //  But that's not what it does. round() and floor() down there only work via math quirks.
-
-  // Shift the brightness value down proportional to [param progress].
-  float white_level = (color.r + FLOAT_ERROR_MARGIN) * progress;
-
-  // Snap the brightness value to one of these values: 0.0, 0.5, 0.75, 1.0.
-  if (white_level >= 0.5) {
-    white_level = round(white_level * 4.0) / 4.0;
-  }
-  else {
-    white_level = floor(white_level * 2.0) / 2.0;
-  }
-
-  // Apply the brightness value.
-  color.rgb = vec3(white_level);
-
+  color.rgb *= progress;
   return color;
 }
 
 
+float apply_white_black_thresshold(float n, float black_threshhold, float white_threshhold) {
+  if (n <= black_threshhold) {
+    n = 0.0;
+  }
+  if (n >= white_threshhold) {
+    n = 1.0;
+  }
+  return n;
+}
+
+
 vec4 apply_silhoette(vec4 color, float threshhold, float white_threshhold) {
-  // Nudge the thresshold to account for floating-point rounding errors.
-  threshhold += FLOAT_ERROR_MARGIN;
-  white_threshhold -= FLOAT_ERROR_MARGIN;
-
-  if (color.r <= threshhold) {
-    color.rgb = vec3(0.0);
-  }
-  if (color.r >= white_threshhold) {
-    color.rgb = vec3(1.0);
-  }
-
-  return color;
+  return vec4(
+    apply_white_black_thresshold(color.r, threshhold, white_threshhold),
+    apply_white_black_thresshold(color.g, threshhold, white_threshhold),
+    apply_white_black_thresshold(color.b, threshhold, white_threshhold),
+    color.a
+  );
 }
 
 
 vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
   // Define a gradient and get the color for this fragment.
   vec3 gradient_color = mix(gradient_start, gradient_end, uv.y);
+
+  // This gradient color trick is only applied to grayscale colors.
+  float grayness = (2.0*color.r - color.g - color.b);
+  if (grayness > FLOAT_ERROR_MARGIN) {
+    return color;
+  }
 
   if (color.a > 0.0) {
     vec3 black = vec3(0.0);
@@ -143,11 +157,12 @@ void fragment() {
   // TODO SCREEN_UV and UV appear to have no differences, so should I just go with UV?
   // TODO Why is this rotation negative?
   vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixelate_resolution, -pixelate_rotation_deg);
-  
+
   // Load screen-texture color for this fragment.
   COLOR = textureLod(screen_texture, grid_uv, 0.0);
 
   COLOR = apply_silhoette(COLOR, silhoette_threshhold, silhoette_white_threshhold);
   COLOR = apply_fade_in(COLOR, fade_in_progress);
+  COLOR = quantize_colors(COLOR);
   COLOR = apply_gradient_to_blacks(COLOR, UV);
 }
