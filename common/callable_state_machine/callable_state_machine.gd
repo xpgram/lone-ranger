@@ -10,7 +10,7 @@
 ##  # (See CallableState's documentation for more info.)
 ##  state_machine.add_states(
 ##      CallableState.new([state_idle]),
-##      CallableState.new([state_walking, state_walking_process, state_walking_exit]),
+##      CallableState.new([state_walking, state_walking__process, state_walking__exit]),
 ##  );
 ##
 ##  # Switch to your initial state using the same enter function it was added with.
