@@ -54,7 +54,7 @@ func add_state(state: CallableState) -> void:
   var machine_key: Variant = state.get_machine_key();
 
   assert(not _states_map.has(machine_key),
-    "");
+    "The machine already has an entry for key '%s'." % machine_key);
 
   _states_map.set(machine_key, state);
 
