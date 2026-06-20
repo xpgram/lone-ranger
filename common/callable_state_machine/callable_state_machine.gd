@@ -3,31 +3,31 @@
 ## Usage: [br]
 ##
 ## [codeblock]
-## var state_machine := CallableStateMachine.new('DemoMachine');
+##  var state_machine := CallableStateMachine.new('DemoMachine');
 ##
-## # Add states to your state machine using a loose list of simple functions.
-## # CallableState will determine which functions are for what automatically.
-## # (See CallableState's documentation for more info.)
-## state_machine.add_states(
-##     CallableState.new([state_idle]),
-##     CallableState.new([state_walking, state_walking_process, state_walking_exit]),
-## );
+##  # Add states to your state machine using a loose list of simple functions.
+##  # CallableState will determine which functions are for what automatically.
+##  # (See CallableState's documentation for more info.)
+##  state_machine.add_states(
+##      CallableState.new([state_idle]),
+##      CallableState.new([state_walking, state_walking_process, state_walking_exit]),
+##  );
 ##
-## # Switch to your initial state using the same enter function it was added with.
-## state_machine.switch_to(state_idle);
+##  # Switch to your initial state using the same enter function it was added with.
+##  state_machine.switch_to(state_idle);
 ##
-## # Or switch states with a key you've set yourself.
-## state_machine.add_state(CallableState.new([state_idle], 'idle'));
-## state_machine.switch_to('idle');
+##  # Or switch states with a key you've set yourself.
+##  state_machine.add_state(CallableState.new([state_idle], 'idle'));
+##  state_machine.switch_to('idle');
 ##
-## # Remember to process your state machine:
-## func _process(delta: float) -> void:
-##     state_machine.get_state().process(delta);
+##  # Remember to process your state machine:
+##  func _process(delta: float) -> void:
+##      state_machine.get_state().process(delta);
 ##
-## # Don't worry if the current state has no defined behavior for a particular machine
-## # call; missing behavior is stepped-over automatically.
-## func _unhandled_input(event: InputEvent) -> void:
-##     state_machine.get_state().input(event);
+##  # Don't worry if the current state has no defined behavior for a particular machine
+##  # call; missing behavior is stepped-over automatically.
+##  func _unhandled_input(event: InputEvent) -> void:
+##      state_machine.get_state().input(event);
 ## [/codeblock]
 ## @version 0.1.0
 class_name CallableStateMachine
