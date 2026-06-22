@@ -6,7 +6,7 @@ extends GridActorComponent
 # TODO Also, the 'active' animation isn't used at all yet.
 
 
-@export var vision_range := 8;
+@export var vision_range := 6;
 
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
 
