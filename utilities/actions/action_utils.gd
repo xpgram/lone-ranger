@@ -99,7 +99,7 @@ static func get_path_to_target(
 
   # Skip all work if target_pos is not a reachable position.
   if not place_is_path_viable.call(target_pos):
-    return [];
+    return [] as Array[Vector2i];
 
   var checked_grid_positions := [] as Array[Vector2i];
 
@@ -111,13 +111,13 @@ static func get_path_to_target(
       or checked_grid_positions.has(cursor)
     ):
       return QueueSearch.none();
-    
+
     var new_path := path_to_target.duplicate();
     new_path.append(cursor);
 
     if cursor == target_pos:
       return QueueSearch.result(new_path);
-    
+
     return QueueSearch.additions([
       cursor + Vector2i.UP,
       cursor + Vector2i.DOWN,
@@ -126,15 +126,15 @@ static func get_path_to_target(
     ], new_path);
   );
 
-  var path: Array[Vector2i] = QueueSearch.search(
+  var path = QueueSearch.search(
     QueueSearch.Mode.BreadthFirst,
     actor.grid_position,
-    [],
+    [] as Array[Vector2i],
     search_predicate,
   );
 
   if not path:
-    path = [];
+    path = [] as Array[Vector2i];
 
   # Remove the actor's current position.
   path.pop_front();
