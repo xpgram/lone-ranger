@@ -6,7 +6,7 @@ extends GridActorComponent
 # TODO Also, the 'active' animation isn't used at all yet.
 
 
-@export var vision_range := 10;
+@export var vision_range := 8;
 
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
 
@@ -20,23 +20,39 @@ func act_async() -> void:
   var self_entity := get_entity();
   var player := ActionUtils.get_player_entity();
 
-  if not ActionUtils.target_pos_within_line_range(self_entity, player.grid_position, vision_range):
+  if not ActionUtils.target_pos_within_range(self_entity, player.grid_position, vision_range):
+    _power_diamond_down();
     exhaust();
     return;
 
-  var direction := ActionUtils.get_direction_to_target(self_entity.grid_position, player.grid_position);
-  var inter_distance := self_entity.distance_to(player) - 1;
-  var coords_line := ActionUtils.get_coordinate_line(self_entity.grid_position, direction, inter_distance);
-  var is_adjacent := (coords_line.size() == 0);
-  var can_see_player: bool = coords_line.all(func (pos: Vector2i): return ActionUtils.place_is_transparent(pos));
+  var path := ActionUtils.get_path_to_target(
+    self_entity,
+    player.grid_position,
+    vision_range,
+    func (place: Vector2i):
+      return (
+        ActionUtils.place_is_idleable(place, self_entity)
+        or place == player.grid_position
+      );
+  );
 
-  if not can_see_player:
+  print(self_entity.name, path);
+
+  if path.size() == 0 and self_entity.grid_position != player.grid_position:
+    _power_diamond_down();
+    exhaust();
     return;
+
+  _power_diamond_up();
+
+  var move_direction := path[0] - self_entity.grid_position;
+  var inter_distance := self_entity.distance_to(player) - 1;
+  var is_adjacent := (inter_distance == 0);
 
   var playbill := FieldActionPlaybill.new(
     self_entity,
-    self_entity.grid_position + direction,
-    direction,
+    self_entity.grid_position + move_direction,
+    move_direction,
   );
 
   if is_adjacent:
@@ -78,3 +94,13 @@ func _facing_changed() -> void:
       animated_sprite.scale.x = -1;
     Vector2.RIGHT:
       animated_sprite.scale.x = 1;
+
+
+func _power_diamond_up() -> void:
+  if animated_sprite.animation != 'active':
+    animated_sprite.play('active');
+
+
+func _power_diamond_down() -> void:
+  if animated_sprite.animation != 'inactive':
+    animated_sprite.play('inactive');
