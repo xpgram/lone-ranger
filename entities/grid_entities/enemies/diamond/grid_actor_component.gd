@@ -36,8 +36,6 @@ func act_async() -> void:
       );
   );
 
-  print(self_entity.name, path);
-
   if path.size() == 0 and self_entity.grid_position != player.grid_position:
     _power_diamond_down();
     exhaust();
