@@ -77,16 +77,69 @@ static func get_entities_from_cell(cell: Grid.Cell) -> Array[GridEntity]:
   return entities;
 
 
-## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
-## to [param target_pos]. If no path could be found, the returned array will be empty.
-static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:
-  # IMPLEMENT Use QueueSearch to build a path toward a breadth-found target.
-  # TODO Or use Godot's built-in AStar2D class.
-  #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
-  #  conversion.
+## Returns an array of [Vector2i] grid positions that describe a travelable path from the
+## [param actor]'s current position to the [param target_pos] (not inclusive of the
+## actor's current position). [br]
+##
+## If no path could be found, including if the target position is uninhabitable, the
+## returned array will be empty. [br]
+##
+## [param place_is_path_viable] Returns a boolean regarding whether a grid position may be
+## included as part of the returned path. Has the signature:
+## [codeblock] func (place: Vector2i) -> bool [/codeblock]
+static func get_path_to_target(
+    actor: GridEntity,
+    target_pos: Vector2i,
+    within_distance: int,
+    place_is_path_viable: Callable,
+) -> Array[Vector2i]:
+  # [TODO] Can/should this use Godot's built-in AStar2D class?
+  #   AStar is generic enough to handle my custom Grid class, it just needs a bit
+  #   map-to-map conversion.
 
-  print('make the warnings stop: ', actor, target_pos);
-  return [];
+  # Skip all work if target_pos is not a reachable position.
+  if not place_is_path_viable.call(target_pos):
+    return [];
+
+  var checked_grid_positions := [] as Array[Vector2i];
+
+  # The predicate for a QueueSearch that builds a path to the target position.
+  var search_predicate := (func (cursor: Vector2i, path_to_target: Array[Vector2i]):
+    if (
+      path_to_target.size() > within_distance
+      or not place_is_path_viable.call(cursor)
+      or checked_grid_positions.has(cursor)
+    ):
+      return QueueSearch.none();
+    
+    var new_path := path_to_target.duplicate();
+    new_path.append(cursor);
+
+    if cursor == target_pos:
+      return QueueSearch.result(new_path);
+    
+    return QueueSearch.additions([
+      cursor + Vector2i.UP,
+      cursor + Vector2i.DOWN,
+      cursor + Vector2i.LEFT,
+      cursor + Vector2i.RIGHT,
+    ], new_path);
+  );
+
+  var path: Array[Vector2i] = QueueSearch.search(
+    QueueSearch.Mode.BreadthFirst,
+    actor.grid_position,
+    [],
+    search_predicate,
+  );
+
+  if not path:
+    path = [];
+
+  # Remove the actor's current position.
+  path.pop_front();
+
+  return path;
 
 
 ## @nullable [br]
