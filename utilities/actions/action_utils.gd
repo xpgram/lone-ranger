@@ -101,16 +101,18 @@ static func get_path_to_target(
   if not place_is_path_viable.call(target_pos):
     return [] as Array[Vector2i];
 
-  var checked_grid_positions := [] as Array[Vector2i];
+  var checked_grid_positions := {} as Dictionary[Vector2i, bool];
 
   # The predicate for a QueueSearch that builds a path to the target position.
   var search_predicate := (func (cursor: Vector2i, path_to_target: Array[Vector2i]):
     if (
       path_to_target.size() > within_distance
       or not place_is_path_viable.call(cursor)
-      or checked_grid_positions.has(cursor)
+      or checked_grid_positions.get(cursor) == true
     ):
       return QueueSearch.none();
+
+    checked_grid_positions.set(cursor, true);
 
     var new_path := path_to_target.duplicate();
     new_path.append(cursor);
