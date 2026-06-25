@@ -8,21 +8,13 @@ func _ready() -> void:
 
 
 func _on_entity_moved(_to: Vector2i, _from: Vector2i) -> void:
-  var entities := Grid.get_entities(grid_position);
+  pass
+  # var entities := Grid.get_entities(grid_position);
 
   # for entity in entities:
   #   if entity is Player2D:
-  #     _attack_async();
+  #     _attack_async(entity);
 
 
 func _on_free_fall() -> void:
   pass;
-
-
-## Performs an attack against the global [Player2D] entity.
-func _attack_async() -> void:
-  # [IMPLEMENT] Animations of any kind.
-  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
-  var player := ActionUtils.get_player_entity();
-  var health := Component.getc(player, HealthComponent) as HealthComponent;
-  health.value -= 1;

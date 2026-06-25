@@ -52,8 +52,10 @@ func act_async() -> void:
 
   _break_boulders();
 
+  var player := ActionUtils.get_player_entity();
+
   if _is_player_in_hurt_spot():
-    _attack_async();
+    _attack_async(player);
     return;
 
   _advance_tiles_forward();
@@ -80,13 +82,14 @@ func _on_turn_timer_timeout() -> void:
   turn_timer.wait_time = next_wait_time;
 
 
-## Performs an attack against the global [Player2D] entity.
-func _attack_async() -> void:
+## Performs an attack against [param entity].
+func _attack_async(entity: GridEntity) -> void:
   # [IMPLEMENT] Animations of any kind.
-  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
-  var player := ActionUtils.get_player_entity();
-  var health := Component.getc(player, HealthComponent) as HealthComponent;
-  health.value -= 1;
+
+  var health := Component.getc(entity, HealthComponent) as HealthComponent;
+
+  if health:
+    health.value -= 1;
 
 
 ##

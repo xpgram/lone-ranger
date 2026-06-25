@@ -2,10 +2,6 @@
 extends GridActorComponent
 
 
-# [TODO] This is a copy of the Mouth script. I need pathfinding to make diamond work.
-# [TODO] Also, the 'active' animation isn't used at all yet.
-
-
 @export var vision_range := 6;
 
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
@@ -60,7 +56,7 @@ func act_async() -> void:
 
   if is_adjacent:
     @warning_ignore('redundant_await')
-    await _attack_async();
+    await _attack_async(player);
   elif _can_move(playbill):
     @warning_ignore('redundant_await')
     await FieldActionList.move.perform_async(playbill);
@@ -78,13 +74,14 @@ func _can_move(playbill: FieldActionPlaybill) -> bool:
   return is_idleable and can_perform;
 
 
-## Performs an attack against the global [Player2D] entity.
-func _attack_async() -> void:
+## Performs an attack against [param entity].
+func _attack_async(entity: GridEntity) -> void:
   # [IMPLEMENT] Animations of any kind.
-  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
-  var player := ActionUtils.get_player_entity();
-  var health := Component.getc(player, HealthComponent) as HealthComponent;
-  health.value -= 1;
+
+  var health := Component.getc(entity, HealthComponent) as HealthComponent;
+
+  if health:
+    health.value -= 1;
 
 
 func _facing_changed() -> void:

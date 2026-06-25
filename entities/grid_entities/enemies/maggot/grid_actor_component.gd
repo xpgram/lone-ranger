@@ -39,7 +39,7 @@ func act_async() -> void:
 
   if is_adjacent:
     @warning_ignore('redundant_await')
-    await _attack_async();
+    await _attack_async(player);
 
   elif _can_move(playbill):
     await _perform_move_async(playbill);
@@ -70,13 +70,14 @@ func _perform_move_async(playbill: FieldActionPlaybill) -> void:
   await FieldActionList.move.perform_async(playbill);
 
 
-## Performs an attack against the global [Player2D] entity.
-func _attack_async() -> void:
+## Performs an attack against [param entity].
+func _attack_async(entity: GridEntity) -> void:
   # [IMPLEMENT] Animations of any kind.
-  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
-  var player := ActionUtils.get_player_entity();
-  var health := Component.getc(player, HealthComponent) as HealthComponent;
-  health.value -= 1;
+
+  var health := Component.getc(entity, HealthComponent) as HealthComponent;
+
+  if health:
+    health.value -= 1;
 
 
 func _facing_changed() -> void:

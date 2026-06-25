@@ -37,7 +37,7 @@ func _charge_forward_in_faced_direction_async() -> void:
 
   if is_player_adjacent:
     @warning_ignore('redundant_await')
-    await _attack_async();
+    await _attack_async(player);
     _is_charging = false;
 
   elif _can_move(playbill):
@@ -78,7 +78,7 @@ func _idle_until_player_seen_async() -> void:
 
   elif is_adjacent:
     @warning_ignore('redundant_await')
-    await _attack_async();
+    await _attack_async(player);
 
   exhaust();
 
@@ -98,10 +98,14 @@ func _perform_move_async(playbill: FieldActionPlaybill) -> void:
   await FieldActionList.move.perform_async(playbill);
 
 
-func _attack_async() -> void:
-  var player := ActionUtils.get_player_entity();
-  var health := Component.getc(player, HealthComponent) as HealthComponent;
-  health.value -= 1;
+## Performs an attack against [param entity].
+func _attack_async(entity: GridEntity) -> void:
+  # [IMPLEMENT] Animations of any kind.
+
+  var health := Component.getc(entity, HealthComponent) as HealthComponent;
+
+  if health:
+    health.value -= 1;
 
 
 func _facing_changed() -> void:
