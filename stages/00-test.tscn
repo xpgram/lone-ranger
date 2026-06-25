@@ -1515,7 +1515,7 @@ position = Vector2(416, 48)
 position = Vector2(112, 80)
 script = ExtResource("34_xa6am")
 _trigger_box_rect = Rect2i(0, 0, 3, 1)
-_trigger_box_color = Color(1, 1, 0, 1)
+_trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://cs2jx75045p66"
 
 [node name="HeartPiecePickup" parent="Interactives Container" unique_id=373335349 instance=ExtResource("22_1sjut")]
