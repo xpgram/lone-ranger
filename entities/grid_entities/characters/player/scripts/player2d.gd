@@ -32,6 +32,9 @@ var current_animation_state: StringName = 'idle';
 ## A blackboard variable to retain a reference to the player's chosen command menu action.
 var _selected_command_menu_action: FieldAction;
 
+## The grid position that the player last inhabited.
+var _last_position: Vector2i;
+
 ## A grid position that is safe to teleport the player to when they get stuck or lost
 ## (such as after falling into a pit).
 var _last_safe_position: Vector2i;
@@ -254,6 +257,16 @@ func get_action_from_brace_interact_input() -> FieldActionSchedule:
       break;
 
   return FieldActionSchedule.new(chosen_action, playbill);
+
+
+## Returns the last grid position the player inhabited.
+func get_last_position() -> Vector2i:
+  return _last_position;
+
+
+## Returns the last player-inhabited grid position that was safe to stand on.
+func get_last_safe_position() -> Vector2i:
+  return _last_safe_position;
 
 
 ## Returns the number of steps the player can take over pits before falling.
@@ -490,6 +503,8 @@ func _on_health_empty() -> void:
 
 func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
   super._on_grid_position_changed(to_pos, from_pos);
+
+  _last_position = from_pos;
 
   if ActionUtils.place_is_idleable(to_pos, self):
     _last_safe_position = to_pos;
