@@ -142,9 +142,9 @@ func set_silhoette_white_threshhold(value: float) -> void:
   material.set_shader_parameter('silhoette_white_threshhold', value);
 
 
-# FIXME Remove these debug controls.
+# [FIXME] Remove these debug controls.
 func _unhandled_input(_event: InputEvent) -> void:
-  # FIXME These are being called like 16,000 times a second now. Wtf?
+  # [FIXME] These are being called like 16,000 times a second now. Wtf?
   #   I've determined that was my PS5 controller somehow. Was it doing that before?
   #   That's really weird.
 

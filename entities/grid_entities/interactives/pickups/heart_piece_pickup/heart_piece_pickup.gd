@@ -10,7 +10,7 @@ func _on_collide(entity: GridEntity) -> void:
 
 
 func _add_heart_piece_to_player(player: Player2D) -> void:
-  # FIXME This is scuffed as hell, and should not be here. (borrowed from open_chest.gd)
+  # [FIXME] This is scuffed as hell, and should not be here. (borrowed from open_chest.gd)
   player.inventory.add_equipment('heart_piece');
 
   var total_heart_pieces: float = player.inventory._equipment \

@@ -130,7 +130,7 @@ func get_page_count() -> int:
 ## The page index is for the menu's currently displayed items. Use
 ## [method get_content_selection_index] if you want the index for all displayable items.
 func get_page_selection_index() -> int:
-  # TODO Would it make sense to treat _memory.cursor_index as more authoritative?
+  # [TODO] Would it make sense to treat _memory.cursor_index as more authoritative?
   var selected_items := get_selected_items();
   return 0 if selected_items.size() == 0 else selected_items[0];
 
@@ -165,7 +165,7 @@ func _change_to_page(page_number: int) -> void:
 
   clear();
 
-  # TODO Demo code that ought to be rewritten.
+  # [TODO] Demo code that ought to be rewritten.
   # Clear all Label children.
   for child in get_children():
     if child.name != 'Label':
@@ -195,9 +195,9 @@ func _add_normal_item(item: Variant) -> void:
 func _add_field_action_item(item: PlayerInventoryItem) -> void:
   add_item(item.action.action_name, item.action.small_icon);
 
-  # FIXME Demo code that should be cleaned up.
+  # [FIXME] Demo code that should be cleaned up.
   if item.action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
-    # FIXME I now know from experience: using $NodeName arbitrarily like this is hard to
+    # [FIXME] I now know from experience: using $NodeName arbitrarily like this is hard to
     #   track, which means it's hard to maintain. I do want an explicit node export.
     var label = $Label.duplicate();
     label.text = str(item.quantity);

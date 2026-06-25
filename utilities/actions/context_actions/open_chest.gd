@@ -29,7 +29,7 @@ func _give_items_to_actor(actor: Player2D) -> void:
   for item in chest.contents:
     actor.inventory.add_item(item);
 
-    # TODO If such a message is logged, it should probably be logged by the inventory itself.
+    # [TODO] If such a message is logged, it should probably be logged by the inventory itself.
     var item_plural := 'items' if item.quantity > 1 else 'item';
     var event_message := 'Got %s %s %s' % [item.quantity, item.action.action_name, item_plural];
     Events.game_event_message_announced.emit(event_message);
@@ -37,11 +37,11 @@ func _give_items_to_actor(actor: Player2D) -> void:
   for equipment in chest.equipment_contents:
     actor.inventory.add_equipment(equipment);
 
-    # TODO If such a message is logged, it should probably be logged by the inventory itself.
+    # [TODO] If such a message is logged, it should probably be logged by the inventory itself.
     var event_message := 'Got %s artefact' % [equipment.capitalize()];
     Events.game_event_message_announced.emit(event_message);
 
-  # FIXME This is scuffed as hell, and should not be here.
+  # [FIXME] This is scuffed as hell, and should not be here.
   if chest.heart_pieces > 0:
     for i in range(chest.heart_pieces):
       actor.inventory.add_equipment('heart_piece');
@@ -66,4 +66,4 @@ func _play_animation_async(actor: Player2D) -> void:
   await get_tree().create_timer(1.0).timeout;
   actor.set_animation_state('idle');
 
-  # TODO This should trigger a dialogue box, shouldn't it?
+  # [TODO] This should trigger a dialogue box, shouldn't it?

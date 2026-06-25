@@ -9,7 +9,7 @@ extends Node2D
 const _scene_selection_error_audio := preload('uid://bs1xerfojb1so');
 
 
-## TODO Also emit a chosen orientation. Player2D should choose its own faced_position, I think.
+## [TODO] Also emit a chosen orientation. Player2D should choose its own faced_position, I think.
 ## Emitted when player input confirms a Grid coordinate.
 signal grid_position_selected(grid_position: Vector2i);
 
@@ -76,7 +76,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func open_from_start(field_action: FieldAction) -> void:
   _source_action = field_action;
 
-  # TODO Get selectables map
+  # [TODO] Get selectables map
   # - a 2D list of positions allowed to select
   # - an orientation? probably just part of the type
   # - a default cursor position (nullable)

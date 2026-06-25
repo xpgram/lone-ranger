@@ -16,7 +16,8 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   ActionUtils.play_cast_animation(playbill.performer, playbill.orientation);
 
   var raised_block := _raised_block_scene.instantiate();
-  # FIXME This adds the block to the PlayerModule instead of the entities node.
+
+  # [FIXME] This adds the block to the PlayerModule instead of the entities node.
   playbill.performer.add_sibling(raised_block);
   playbill.performer.get_parent().move_child(raised_block, 0);
 

@@ -7,7 +7,7 @@ extends GridObject
 const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 
 
-# TODO As I add more conditions here, I should consider extracting them to a Resource.
+# [TODO] As I add more conditions here, I should consider extracting them to a Resource.
 #   Having to go through every monster and object I've ever created just to check
 #   'pushable' is irritating.
 
@@ -20,12 +20,12 @@ const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 ## Whether this entity is a flooring-type that other entities can stand on.
 @export var standable := false;
 
-# TODO observes_golem_time only makes sense to GridActorComponents, so should be located there?
+# [TODO] observes_golem_time only makes sense to GridActorComponents, so should be located there?
 ## Whether this entity adheres to the more turn-based golem time instead of the ongoing
 ## action timer.
 @export var observes_golem_time := false;
 
-# TODO This attribute-tag system should be a component node, actually.
+# [TODO] This attribute-tag system should be a component node, actually.
 ## A dictionary of applied effects and qualities.
 @export var _attributes: Dictionary[StringName, GridEntityAttribute];
 

@@ -37,7 +37,7 @@ signal items_updated(items: Array[PlayerInventoryItem]);
 func _ready() -> void:
   emit_full_inventory();
 
-  # TODO Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
+  # [TODO] Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
   #  I could devise a _post_ready() step by sending function calls to a global service. Hm.
   _announce_magic_quantities();
 
@@ -45,7 +45,7 @@ func _ready() -> void:
 ## Broadcasts the entire inventory contents to any nodes who might be listening.
 ## Useful for resyncing after a node has made connections to the Inventory's signals.
 func emit_full_inventory() -> void:
-  # TODO Emit equipment?
+  # [TODO] Emit equipment?
   abilities_updated.emit(_get_sorted_array(_abilities));
   magic_updated.emit(_get_sorted_array(_magic));
   items_updated.emit(_get_sorted_array(_items));

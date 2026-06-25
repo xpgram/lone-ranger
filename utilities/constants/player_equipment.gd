@@ -3,7 +3,7 @@
 class_name PlayerEquipment
 
 
-# TODO At some point, the equipment inventory will be revamped. Uh... I guess this script
+# [TODO] At some point, the equipment inventory will be revamped. Uh... I guess this script
 #  could still exist, though. It would yield Resources like FieldActionList does.
 
 

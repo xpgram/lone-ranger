@@ -21,8 +21,8 @@ func _on_free_fall() -> void:
 
 ## Performs an attack against the global [Player2D] entity.
 func _attack_async() -> void:
-  # IMPLEMENT Animations of any kind.
-  # FIXME Shouldn't this accept an entity parameter and not grab the global player?
+  # [IMPLEMENT] Animations of any kind.
+  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
   var player := ActionUtils.get_player_entity();
   var health := Component.getc(player, HealthComponent) as HealthComponent;
   health.value -= 1;

@@ -23,7 +23,7 @@ signal exited(entity: GridEntity);
       queue_redraw();
 
 
-# FIXME The Editor doesn't seem to interpret this as a default value. It's not resettable.
+# [FIXME] The Editor doesn't seem to interpret this as a default value. It's not resettable.
 ## The color of the trigger box area when drawn in the Editor.
 @export var _trigger_box_color := DEFAULT_EDITOR_BOX_COLOR:
   set(value):
@@ -92,7 +92,7 @@ func _put_trigger_box_into_grid() -> void:
   if Engine.is_editor_hint():
     return;
 
-  # FIXME This Grid.remove() is only necessary because GridObject automatically handles
+  # [FIXME] This Grid.remove() is only necessary because GridObject automatically handles
   #   Grid placement when fiddling with its grid_position property.
   #   If there were an overridable method such as `GridObject.get_occupied_positions()`,
   #   then this object could simply define its shape and return it as a list of Vector2s.

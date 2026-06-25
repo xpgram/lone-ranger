@@ -2,8 +2,8 @@
 class_name ChestEntity
 extends Interactive2D
 
-# TODO These content fields should probably be consolidated.
-# TODO equipment and heart_pieces in particular are not rigorous.
+# [TODO] These content fields should probably be consolidated.
+# [TODO] equipment and heart_pieces in particular are not rigorous.
 
 ## The contents of this chest.
 @export var contents: Array[PlayerInventoryItem];

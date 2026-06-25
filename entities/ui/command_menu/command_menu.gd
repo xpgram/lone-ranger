@@ -24,7 +24,7 @@ enum Submenu {
 }
 
 
-# TODO These icons should possibly be exported values. All of these properties, actually.
+# [TODO] These icons should possibly be exported values. All of these properties, actually.
 const MAIN_LIST_OPTIONS = [
   {
     'name': 'Skills',
@@ -152,7 +152,7 @@ func _update_submenu_content(submenu_list: Array[PlayerInventoryItem], items: Ar
 
 ## Binds event listeners to main and submenu signals.
 func _connect_to_item_lists() -> void:
-  # TODO Refactor this to require less explanation?
+  # [TODO] Refactor this to require less explanation?
   # Main -> switch to Options
   _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
   _main_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
@@ -179,7 +179,7 @@ func _connect_to_item_lists() -> void:
 
 ## Configure child ItemList nodes.
 func _configure_item_lists() -> void:
-  # TODO Set main_list content should include only options that have submenu content.
+  # [TODO] Set main_list content should include only options that have submenu content.
   _main_list.set_content(MAIN_LIST_OPTIONS, 0);
   _options_list.resize_cursor_memory(Submenu.size());
 

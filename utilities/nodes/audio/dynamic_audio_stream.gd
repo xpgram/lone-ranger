@@ -42,7 +42,7 @@ func _ready() -> void:
 func _start_music_async() -> void:
   _battle_track.play();
 
-  # TODO I need to make sure step-on triggers work and that's how this should trigger, not via time.
+  # [TODO] I need to make sure step-on triggers work and that's how this should trigger, not via time.
   await get_tree().create_timer(20.0).timeout;
 
   _exploration_track.play();

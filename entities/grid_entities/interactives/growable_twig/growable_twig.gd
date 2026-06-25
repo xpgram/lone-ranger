@@ -4,7 +4,7 @@ class_name GrowableTwigEntity
 extends GridEntity
 
 
-# FIXME This 'path2d' and its tool-related draw stuff should probably be a... resource? How do we draw, then?
+# [FIXME] This 'path2d' and its tool-related draw stuff should probably be a... resource? How do we draw, then?
 ## A list of Grid-position affected by the [GrowableTwigEntity] when activated.
 @export var _platform_points: Array[Vector2i]:
   set(value):

@@ -12,7 +12,7 @@ class_name FieldAction
 extends Resource
 
 
-# TODO Refactor the Inventory
+# [TODO] Refactor the Inventory
 # [x] FieldActions are not concerned with LimitedUse at all.
 #     [x] LimitedUse is a separate resource used by Inventory:
 #         - Measures remaining uses.
@@ -66,7 +66,7 @@ extends Resource
 ## starts commenting on how scary it is or something.
 ##
 ## One big problem:
-## # TODO How do we trigger this flavor text?
+## # [TODO] How do we trigger this flavor text?
 ## #  I don't want to give the player a "press for more info" button; feels a bit tacky.
 ## #  It harms the mystique a bit. But if not, then only key items have an easy (and
 ## #  hidden) way of triggering these investigations: they're used, but unsuccessfully.
@@ -80,7 +80,7 @@ extends Resource
 @export_multiline var action_hint: String;
 
 
-# TODO While accurate, this should be a dropdown of enum names.
+# [TODO] While accurate, this should be a dropdown of enum names.
 ## The Partial Time cost for this action. In addition to animations that must be sat
 ## through, this number will be subtracted from the player's inaction timer when used.
 @export_range(0, 15, 3.75) var action_time_cost: float = PartialTime.FULL;
@@ -88,7 +88,7 @@ extends Resource
 
 @export_group('Icons')
 
-# TODO Support animated icons?
+# [TODO] Support animated icons?
 ## @nullable A texture to represent this action, such as when collecting it from a
 ## treasure chest.
 @export var large_icon: Texture2D;
@@ -100,7 +100,7 @@ extends Resource
 
 @export_group('Sort Order', 'command_menu_sort')
 
-# TODO Should this be a dropdown, actually?
+# [TODO] Should this be a dropdown, actually?
 ## The top-level sort order for this action in the command menu.
 @export var command_menu_sort_priority: int;
 
@@ -108,7 +108,7 @@ extends Resource
 @export var command_menu_sort_sub_priority: int;
 
 
-# TODO Add export group 'Targeting'
+# [TODO] Add export group 'Targeting'
 # Or maybe don't. This could be specially implemented in some inheritors of FieldAction.
 # - requires_targeting: bool = false    # Default AoE is 1 tile in front of you
 # - minimum_range: int = 1

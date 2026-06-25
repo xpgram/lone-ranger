@@ -2,7 +2,7 @@ class_name Interact_FieldAction
 extends FieldAction
 
 
-# TODO Implement variable action_time_costs.
+# [TODO] Implement variable action_time_costs.
 #   As far as I know, this is the only FieldAction that *needs* this functionality,
 #   though there are others that could benefit from it.
 #   The problem is that Dialogue shouldn't cost time, but opening a chest should cost a
@@ -41,7 +41,7 @@ func can_perform(playbill: FieldActionPlaybill) -> bool:
 
   return entities.any(func (entity: GridEntity):
     return (
-      # TODO What if I ever change the name of this node?
+      # [TODO] What if I ever change the name of this node?
       entity.has_node('ContextAction')
       and (entity.get_node('ContextAction')).can_interact(playbill.performer)
     );

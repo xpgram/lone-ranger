@@ -28,7 +28,7 @@ func _ready() -> void:
 
 var _is_near_player := false;
 func _process(_delta: float) -> void:
-  # FIXME Get this out of the process step.
+  # [FIXME] Get this out of the process step.
   var player := ActionUtils.get_player_entity();
   var boss_grid_position := get_entity().grid_position;
 
@@ -82,8 +82,8 @@ func _on_turn_timer_timeout() -> void:
 
 ## Performs an attack against the global [Player2D] entity.
 func _attack_async() -> void:
-  # IMPLEMENT Animations of any kind.
-  # FIXME Shouldn't this accept an entity parameter and not grab the global player?
+  # [IMPLEMENT] Animations of any kind.
+  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
   var player := ActionUtils.get_player_entity();
   var health := Component.getc(player, HealthComponent) as HealthComponent;
   health.value -= 1;

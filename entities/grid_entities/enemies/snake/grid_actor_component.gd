@@ -24,7 +24,7 @@ func _ready() -> void:
       self_entity.faced_direction = Vector2i.RIGHT;
 
 
-# TODO Reexamine this function implementation later: Is it fine? Do I hate it?
+# [TODO] Reexamine this function implementation later: Is it fine? Do I hate it?
 func act_async() -> void:
   var self_entity := get_entity();
   var player := ActionUtils.get_player_entity();
@@ -72,8 +72,8 @@ func _perform_move_async(playbill: FieldActionPlaybill) -> void:
 
 ## Performs an attack against the global [Player2D] entity.
 func _attack_async() -> void:
-  # IMPLEMENT Animations of any kind.
-  # FIXME Shouldn't this accept an entity parameter and not grab the global player?
+  # [IMPLEMENT] Animations of any kind.
+  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
   var player := ActionUtils.get_player_entity();
   var health := Component.getc(player, HealthComponent) as HealthComponent;
   health.value -= 1;

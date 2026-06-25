@@ -16,7 +16,7 @@ func _unhandled_input(_event: InputEvent) -> void:
   if not OS.is_debug_build():
     return;
 
-  # TODO Do input bindings matter? Should I want to enable DebugUI with a controller? (i.e., should I use param _event)
+  # [TODO] Do input bindings matter? Should I want to enable DebugUI with a controller? (i.e., should I use param _event)
   if Input.is_key_pressed(KEY_F1):
     _show_debug_panel = !_show_debug_panel;
     accept_event();

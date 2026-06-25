@@ -2,7 +2,7 @@
 class_name GridExpander
 extends Node2D
 
-# TODO This system for building double-chests and the like is barely thought out.
+# [TODO] This system for building double-chests and the like is barely thought out.
 #  For one, a FieldAction like Move does not account for extra-size GridEntities when
 #  checking collisions.
 #  I need a formula to turn a set of rectangles into a list of grid_positions, or a way to

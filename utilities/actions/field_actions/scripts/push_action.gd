@@ -92,7 +92,7 @@ func perform_as_ability_async(playbill: FieldActionPlaybill) -> bool:
       Grid.notify_objects_async(playbill.target_position, Stimulus.secret_knock);
 
   if actor is Player2D:
-    # TODO Use actor.play_one_shot_animation('push', true) to interrupt the player's idle
+    # [TODO] Use actor.play_one_shot_animation('push', true) to interrupt the player's idle
     #  animation with a player-input pause (true).
     actor.set_animation_state('push');
     await Engine.get_main_loop().create_timer(0.25).timeout;
@@ -172,7 +172,7 @@ func _try_push_cell(place: Vector2i, direction: Vector2i, push_power: int) -> bo
 ## Returns true if all entities in [param entities] are pushable. If at least one entity
 ## is too heavy, or non-pushable by some other means, returns false.
 func _entity_is_pushable(entity: GridEntity) -> bool:
-  # TODO Entities need a weight value to measure _push_strength against.
+  # [TODO] Entities need a weight value to measure _push_strength against.
   var strength_matched := _push_strength > 0;
   return entity.pushable and strength_matched;
 

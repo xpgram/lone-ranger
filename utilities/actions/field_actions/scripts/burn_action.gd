@@ -6,7 +6,7 @@ const _burn_audio_scene := preload('uid://x6flo6meb5s1');
 
 
 func can_perform(_playbill: FieldActionPlaybill) -> bool:
-  # TODO Does anything need to be checked here?
+  # [TODO] Does anything need to be checked here?
   #  Seems everything is covered by the inventory/field_cursor systems.
   return true;
 

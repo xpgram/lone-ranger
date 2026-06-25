@@ -11,7 +11,7 @@ func _ready() -> void:
   animated_sprite.play();
 
 
-# TODO Reexamine this function implementation later: Is it fine? Do I hate it?
+# [TODO] Reexamine this function implementation later: Is it fine? Do I hate it?
 func act_async() -> void:
   var self_entity := get_entity();
   var player := ActionUtils.get_player_entity();
@@ -38,12 +38,12 @@ func act_async() -> void:
   if not is_adjacent and FieldActionList.move.can_perform(playbill):
     @warning_ignore('redundant_await')
     await FieldActionList.move.perform_async(playbill);
-  # TODO FieldActionList.enemy_attack.can_perform(playbill):
+  # [TODO] FieldActionList.enemy_attack.can_perform(playbill):
   elif is_adjacent:
     @warning_ignore('redundant_await')
     await _attack_async();
 
-  # TODO This is a bandaid patch for _facing_changed() not being a thing on ActorComponents.
+  # [TODO] This is a bandaid patch for _facing_changed() not being a thing on ActorComponents.
   _facing_changed();
 
   exhaust();
@@ -55,14 +55,14 @@ func get_entity() -> Enemy2D:
 
 ## Performs an attack against the global [Player2D] entity.
 func _attack_async() -> void:
-  # IMPLEMENT Animations of any kind.
-  # FIXME Shouldn't this accept an entity parameter and not grab the global player?
+  # [IMPLEMENT] Animations of any kind.
+  # [FIXME] Shouldn't this accept an entity parameter and not grab the global player?
   var player := ActionUtils.get_player_entity();
   var health := Component.getc(player, HealthComponent) as HealthComponent;
   health.value -= 1;
 
 
-# FIXME Oh my god. This function is not connected to anything. I can't believe I never noticed.
+# [FIXME] Oh my god. This function is not connected to anything. I can't believe I never noticed.
 func _facing_changed() -> void:
   match get_entity().faced_direction:
     Vector2i.LEFT:

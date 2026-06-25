@@ -39,7 +39,7 @@ var _last_position: Vector2i;
 ## (such as after falling into a pit).
 var _last_safe_position: Vector2i;
 
-# TODO Question: Player2D is bound to have tons of little metric numbers like this, do I
+# [TODO] Question: Player2D is bound to have tons of little metric numbers like this, do I
 #   really want to list them all in this script right here? I could put this in a big
 #   numbers repository resource, I guess.
 ## How many steps the player can take over pits before falling.
@@ -79,7 +79,7 @@ var _coyote_fall_timer: Timer;
 ##
 @onready var _shader_rect: ScreenSpaceShader = %ScreenSpaceShaderRect
 
-# FIXME This should be their last reset point, probably something to do with the last seen
+# [FIXME] This should be their last reset point, probably something to do with the last seen
 #   angel statue when I finally implement those.
 ## Where the player spawned in.
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
@@ -282,7 +282,7 @@ func get_air_steps_remaining() -> int:
 ## Resets to full the [Player2D]'s air steps.
 func reset_air_steps_remaining() -> void:
   _air_steps_remaining = (
-    # FIXME Get these numbers from a constants file somewhere.
+    # [FIXME] Get these numbers from a constants file somewhere.
     1 if inventory.has_equipment(PlayerEquipment.wings)
     else 0
   );
@@ -372,7 +372,7 @@ func set_animation_state(state_key: StringName) -> void:
 ## Sets the animation state to a variant of the idle animation dependent on environment
 ## context.
 func _trigger_idle_animation_state() -> void:
-  # TODO Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
+  # [TODO] Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
   if ActionUtils.place_is_idleable(grid_position, self):
     set_animation_state('idle');
   else:
@@ -399,7 +399,7 @@ func retrigger_animation_state() -> void:
 
 ## Resets the animation state to the idle animation set.
 func _on_animation_finished(_from_animation: StringName = '') -> void:
-  # FIXME This function is not necessary anymore. 'injured' is a state now.
+  # [FIXME] This function is not necessary anymore. 'injured' is a state now.
   #  'item_get!' should also be a state.
   var non_resetting_states: Array[StringName] = [
     &'item_get!',
@@ -520,7 +520,7 @@ func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
     _last_safe_position = to_pos;
     reset_air_steps_remaining();
 
-  # FIXME Consider that this is a side-effect. Are we sure this won't interfere with
+  # [FIXME] Consider that this is a side-effect. Are we sure this won't interfere with
   #   FieldAction scripted animations? They set an animation, then move the actor, not
   #   realizing that movement also sets the animation?
   #
@@ -600,7 +600,7 @@ func _state_coyote_fall() -> void:
 
   set_animation_state('coyote_fall');
 
-  # TODO A utils method for one-shot, auto-freeing Timers would be nice.
+  # [TODO] A utils method for one-shot, auto-freeing Timers would be nice.
   #   The get_tree() method is nice for waits, but if such a timer ever needs to be
   #   cancelled, it has nothing to work with.
   _coyote_fall_timer = Timer.new();
@@ -637,7 +637,7 @@ func _state_fall() -> void:
 
   hide();
 
-  # TODO A utils for creating one-shot vfx like this would be nice.
+  # [TODO] A utils for creating one-shot vfx like this would be nice.
   var fall_effect := _scene_object_fall.instantiate() as OneShotEffect;
   fall_effect.position = position;
   add_sibling(fall_effect);
@@ -647,7 +647,7 @@ func _state_fall() -> void:
 
   show();
 
-  # FIXME Put this damn thing in an @onready already.
+  # [FIXME] Put this damn thing in an @onready already.
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.value -= 1;
 

@@ -15,7 +15,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   ActionUtils.play_cast_animation(playbill.performer, playbill.orientation);
   AudioBus.play_audio_scene(_scene_cast_audio);
 
-  # TODO This method should trigger a 'growth interact' on the object affected, and that
+  # [TODO] This method should trigger a 'growth interact' on the object affected, and that
   #   object should do as it will, so that we can offer different kinds of growth behavior
   #   beyond path creation.
 
