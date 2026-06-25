@@ -36,7 +36,7 @@ func _ready() -> void:
     _advance_time_async(player.get_wait_action());
   );
 
-  # TODO Clean this up: I just wanted to try some demo stuff.
+  # [TODO] Clean this up: I just wanted to try some demo stuff.
   player.action_declared.connect(func (action: FieldActionSchedule, _buffer: bool):
     _advance_time_async(action);
   );
@@ -59,7 +59,7 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
 
   # If an action wasn't carried out, i.e., it was cancelled, abandon conducting this turn.
   if not action_succeeded:
-    # FIXME Fix the damn early returns, ah?
+    # [FIXME] Fix the damn early returns, ah?
     _inaction_timer.loop_timers();
     _turn_in_progress_padlock.unlock();
     return;
@@ -78,6 +78,8 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
   _inaction_timer.loop_timers();
   _previous_round_data = current_round_data;
 
+  Events.round_passed.emit();
+
   _turn_in_progress_padlock.unlock();
 
 
@@ -90,6 +92,7 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
   @warning_ignore('redundant_await')
   var action_succeeded := await player_action.perform_async(player_schedule.playbill);
 
+  # [FIXME] GDScript bug
   # I cannot begin to explain this, but the second conditional does not work if this first
   # one isn't erroneously skipped by the interpreter.
   if not action_succeeded:
@@ -97,8 +100,10 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
   if not action_succeeded:
     return false;
 
-  # FIXME Inventory should not expend an unexpendable action. This request possibly shouldn't even go here.
-  if player_action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
+  # [FIXME] Inventory should not expend an unexpendable action. This request possibly shouldn't even go here.
+  if player_action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
+    pass
+  if player_action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
     player.inventory.expend(player_action.action_uid);
 
   player.update_attributes();
@@ -139,16 +144,16 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
   actor_components.assign(
     get_tree()
       .get_nodes_in_group(entity_group)
-      # TODO I may want to just extract this filter to an indent-zero function.
+      # [TODO] I may want to just extract this filter to an indent-zero function.
       .filter(func (entity: GridEntity):
         return (
-          Component.has_component(entity, GridActorComponent)
+          Component.has(entity, GridActorComponent)
           and (
             (include_non_golems and not entity.observes_golem_time)
             or (include_golems and entity.observes_golem_time)
           )
         ))
-      .map(func (entity: GridEntity): return Component.get_component(entity, GridActorComponent))
+      .map(func (entity: GridEntity): return Component.getc(entity, GridActorComponent))
   );
 
   if actor_components.size() == 0:
@@ -165,6 +170,11 @@ func _perform_group_entity_actions_async(entity_group: StringName) -> void:
       .map(func (actor: GridActorComponent): return actor.act_async);
 
     await Promise.all(actor_promises).finished;
+
+  # Make sure our list of actors is clean.
+  actor_components.assign(actor_components.filter(func (actor: GridActorComponent):
+    return not actor.is_queued_for_deletion();
+  ));
 
   for actor in actor_components:
     actor.get_entity().update_attributes();

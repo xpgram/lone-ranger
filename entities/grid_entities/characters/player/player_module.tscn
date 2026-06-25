@@ -1,106 +1,90 @@
-[gd_scene load_steps=20 format=3 uid="uid://eyhskerhpe2y"]
+[gd_scene format=3 uid="uid://eyhskerhpe2y"]
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
-[ext_resource type="Script" uid="uid://bfsd2w575yvoj" path="res://utilities/actions/field_actions/field_action.gd" id="4_08fk3"]
-[ext_resource type="Script" uid="uid://dl8g0bw3r66ba" path="res://utilities/actions/field_actions/scripts/print_log_action.gd" id="5_jru4w"]
-[ext_resource type="Texture2D" uid="uid://dygp4dweq7um5" path="res://assets/textures_unused/system/icons/icon-orbital.png" id="6_g13rh"]
+[ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
+[ext_resource type="Resource" uid="uid://d3abxrfst60nr" path="res://utilities/actions/field_actions/resources/rest_action.tres" id="5_p4sl8"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
+[ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
-[ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="15_lxu83"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/screen_space_gradient.gdshader" id="19_5jpfb"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
 
-[sub_resource type="Resource" id="Resource_3k65y"]
-script = ExtResource("5_jru4w")
-action_uid = &"orbital"
-action_name = "Orbital"
-action_description = "asvavdsave"
-action_hint = "aveaveav"
-action_time_cost = 15.0
-small_icon = ExtResource("6_g13rh")
-command_menu_sort_priority = 1
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
-
-[sub_resource type="Resource" id="Resource_si0qk"]
-script = ExtResource("5_jru4w")
-action_uid = &"heart"
-action_name = "Heart"
-action_type = 2
-action_description = "aveavfdsaf"
-action_hint = "avesvasef"
-small_icon = ExtResource("15_lxu83")
-limit_type = 1
-uses_remaining = 3
-metadata/_custom_type_script = "uid://dl8g0bw3r66ba"
+[sub_resource type="Resource" id="Resource_l0w8i"]
+script = ExtResource("4_sg284")
+action = ExtResource("5_p4sl8")
+metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("19_5jpfb")
+shader_parameter/pixelate = false
+shader_parameter/pixelate_resolution = Vector2(240, 160)
+shader_parameter/pixelate_rotation_deg = 0.0
+shader_parameter/pixelate_offset = Vector2(0, 0)
 shader_parameter/fade_in_progress = 1.0
 shader_parameter/silhoette_threshhold = 0.0
+shader_parameter/silhoette_white_threshhold = 1.0
 shader_parameter/gradient_start = Color(1, 1, 1, 1)
 shader_parameter/gradient_end = Color(1, 1, 1, 1)
 shader_parameter/invert_colors = false
 
-[node name="PlayerModule" type="Node2D"]
+[node name="PlayerModule" type="Node2D" unique_id=2050721029]
 script = ExtResource("1_g13rh")
 _entity = NodePath("Player2D")
 _camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://kreg7knmfr1j"
 
-[node name="Player2D" parent="." node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
+[node name="Player2D" parent="." unique_id=389025421 node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
 inventory = NodePath("../Inventory")
 pushable = true
 
-[node name="Inventory" type="Node2D" parent="."]
+[node name="Inventory" type="Node2D" parent="." unique_id=1352607858]
 script = ExtResource("3_08fk3")
-_abilities = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"orbital": SubResource("Resource_3k65y")
-})
-_items = Dictionary[StringName, ExtResource("4_08fk3")]({
-&"heart": SubResource("Resource_si0qk")
+_abilities = Dictionary[StringName, ExtResource("4_sg284")]({
+&"sleep": SubResource("Resource_l0w8i")
 })
 
-[node name="FocusableControl" type="Control" parent="."]
+[node name="FocusableControl" type="Control" parent="." unique_id=845502978]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("10_jru4w")
 metadata/_custom_type_script = "uid://dx2don6d2tt38"
 
-[node name="InputHelpers" type="Node" parent="."]
+[node name="InputHelpers" type="Node" parent="." unique_id=201555692]
 
-[node name="MoveInputRepeater" type="Node" parent="InputHelpers" node_paths=PackedStringArray("_focus_context")]
+[node name="MoveInputRepeater" type="Node" parent="InputHelpers" unique_id=1605801011 node_paths=PackedStringArray("_focus_context")]
 unique_name_in_owner = true
 script = ExtResource("13_3dwjy")
 _focus_context = NodePath("../../FocusableControl")
 reset_time_on_direction_change = false
-interval_time = 0.225
+interval_time = 0.15
+first_interval_time = 0.18
 up_axis = &"move_up"
 down_axis = &"move_down"
 left_axis = &"move_left"
 right_axis = &"move_right"
 metadata/_custom_type_script = "uid://bq7ia3l6n5kbw"
 
-[node name="FieldCursor" parent="." node_paths=PackedStringArray("_origin_object") instance=ExtResource("12_5jpfb")]
+[node name="FieldCursor" parent="." unique_id=1544867713 node_paths=PackedStringArray("_origin_object") instance=ExtResource("12_5jpfb")]
 unique_name_in_owner = true
 _origin_object = NodePath("../Player2D")
 
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("subject")]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1507849671 node_paths=PackedStringArray("subject")]
 ignore_rotation = false
-zoom = Vector2(3, 3)
+zoom = Vector2(4, 4)
 script = ExtResource("10_yid0f")
 subject = NodePath("../Player2D")
 close_follow_lerp_speed = 12
 metadata/_custom_type_script = "uid://bgl6q243ogu5r"
 
-[node name="UIContainer" type="Control" parent="Camera2D"]
+[node name="UIContainer" type="Control" parent="Camera2D" unique_id=447046588]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -120.0
@@ -108,7 +92,7 @@ offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
 
-[node name="HealthBar" parent="Camera2D/UIContainer" node_paths=PackedStringArray("player2d") instance=ExtResource("15_l0w8i")]
+[node name="HealthBar" parent="Camera2D/UIContainer" unique_id=1229683616 node_paths=PackedStringArray("player2d") instance=ExtResource("15_l0w8i")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -118,7 +102,7 @@ offset_bottom = 0.0
 grow_vertical = 0
 player2d = NodePath("../../../Player2D")
 
-[node name="CommandMenu" parent="Camera2D/UIContainer" node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
+[node name="CommandMenu" parent="Camera2D/UIContainer" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 11
@@ -129,15 +113,26 @@ offset_bottom = -8.0
 grow_horizontal = 0
 _inventory = NodePath("../../../Inventory")
 
-[node name="DebugUI" parent="Camera2D/UIContainer" instance=ExtResource("17_h7fwu")]
+[node name="MessageQueue" parent="Camera2D/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
+layout_mode = 1
+anchors_preset = 9
+anchor_top = 0.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 55.0
+offset_right = 90.0
+offset_bottom = -65.0
+grow_vertical = 2
+
+[node name="DebugUI" parent="Camera2D/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
 
-[node name="ScreenSpaceShaderRect" type="ColorRect" parent="Camera2D"]
+[node name="ScreenSpaceShaderRect" type="ColorRect" parent="Camera2D" unique_id=411488792]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_yibea")
-offset_left = -136.0
-offset_top = -88.0
-offset_right = 136.0
-offset_bottom = 88.0
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
 color = Color(1, 1, 1, 0.25)
 script = ExtResource("20_yibea")

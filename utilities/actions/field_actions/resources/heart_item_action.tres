@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="HeartItem_FieldAction" format=3 uid="uid://c7tnmstfkbpqw"]
+
+[ext_resource type="Script" uid="uid://c2gxgdyqwbu1o" path="res://utilities/actions/field_actions/scripts/heart_item_action.gd" id="1_mbemj"]
+[ext_resource type="Texture2D" uid="uid://c2osmodhe2l35" path="res://assets/00 - source/icons_small_sheet.png" id="2_tg1mf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkvmn"]
+atlas = ExtResource("2_tg1mf")
+region = Rect2(0, 16, 8, 8)
+
+[resource]
+script = ExtResource("1_mbemj")
+action_uid = &"heart_item"
+action_name = "Heart"
+action_type = 2
+action_description = "Replenishes a small amount of HP."
+action_hint = "It smells artificial."
+action_time_cost = 0.0
+small_icon = SubResource("AtlasTexture_gkvmn")
+metadata/_custom_type_script = "uid://c2gxgdyqwbu1o"

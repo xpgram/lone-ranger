@@ -1,5 +1,33 @@
 ## @static [br]
-## A utility class for managing the boilerplate of different search algorithms.
+##
+## A utility class for managing the boilerplate of different search algorithms. [br]
+##
+## Usage example:
+## [codeblock]
+##  var treasure_spot: Vector2 = QueueSearch.search(
+##    QueueSearch.Mode.BreadthFirst,
+##    Vector2.ZERO,
+##    0,
+##    func (position: Vector2, distance: int):
+##      # Guard prevents infinite recursion.
+##      if distance > 3 or already_checked(position):
+##        return QueueSearch.none();
+##      # Resolve with successful search.
+##      if has_treasure(position):
+##        return QueueSearch.result(position);
+##
+##      mark_checked(position);
+##
+##      # Prepare new additions to the search queue.
+##      var next_positions := [
+##        position + Vector2.UP,
+##        position + Vector2.DOWN,
+##        position + Vector2.LEFT,
+##        position + Vector2.RIGHT,
+##      ];
+##      return QueueSearch.additions(next_positions, distance + 1);
+##  );
+## [/codeblock]
 class_name QueueSearch
 
 
@@ -12,7 +40,7 @@ const TIME_TO_ERROR_MS := 500;
 
 
 ## Informs the order in which nodes in the search queue are selected.
-enum SearchMode {
+enum Mode {
   ## Another name for last-in-first-out: prioritizes nodes at the end of the stack.
   DepthFirst,
   ## Another name for first-in-first-out: prioritizes nodes at the beginning of the stack.
@@ -20,31 +48,86 @@ enum SearchMode {
 }
 
 
+## QueueSearch return method. [br]
+##
+## Use within a search callback function to return new values to append to the queue.
+## [param accumulator] may optionally be used to save a sum with each new value added to
+## the queue. [br]
+##
+## Example:
+## [codeblock]
+##  return QueueSearch.additions(next_positions, distance_traveled);
+## [/codeblock]
+static func additions(values: Array, accumulator: Variant = null) -> QueueAdditions:
+  return QueueAdditions.new(values, accumulator);
+
+
+## QueueSearch return method. [br]
+##
+## Use within a search callback function to return nothing without discontinuing the
+## search. (Alias for `QueueSearch.additions([])`). [br]
+##
+## Example:
+## [codeblock]
+##  return QueueSearch.none();
+## [/codeblock]
+static func none() -> QueueAdditions:
+  return QueueAdditions.new([]);
+
+
+## QueueSearch return method. [br]
+##
+## Use within a search callback function to return the final result of the search. [br]
+##
+## Example:
+## [codeblock]
+##  return QueueSearch.result(treasure_position);
+## [/codeblock]
+static func result(value: Variant) -> QueueResult:
+  return QueueResult.new(value);
+
+
+## QueueSearch return method. [br]
+##
+## Use within a search predicate to end the search with no result.
+## (Alias for `QueueSearch.result(null)`). [br]
+##
+## Example:
+## [codeblock]
+##  return QueueSearch.end();
+## [/codeblock]
+static func end() -> QueueResult:
+  return QueueResult.new(null);
+
+
 ## @nullable [br]
+##
 ## Begins a QueueSearch from the [param initial_value] and returns the result of that
-## search as determined by [param callbackfn]. [br]
+## search as determined by the [param predicate]. [br]
 ##
-## The values given to QueueSearch are wrapped into "search node" structs, that are then
-## provided to the [param callbackfn]. The [param callbackfn], via its function return,
-## determines from the current search node which new values should be added to the search
-## queue. You may think of this as a [b]recursive algorithm.[b] [br]
+## All returns from the predicate must be through a QueueSearch return method (see the
+## QueueSearch doc string for an example). [br]
 ##
-## If the search queue is emptied, the QueueSearch will resolve with a null value. [br]
+## If the search queue is emptied before resolving, the QueueSearch will resolve with a
+## null value. [br]
 ##
-## [param initial_value] The starting value to begin the search with.
+## [param search_mode] The method for selecting nodes from the search queue. [br]
 ##
-## [param search_mode] The method for selecting nodes from the search queue.
+## [param initial_value] The starting value to begin the search with. [br]
 ##
-## [param callbackfn] has the signature:
-## [codeblock] callable(cursor: NodeCursor) -> QueueAdditions | QueueResult [/codeblock]
+## [param initial_accumulator] The starting value for the cumulative. If you do not need
+## a cumulative to reduce with, simply pass `null`. [br]
 ##
-## [QueueSearch.QueueAdditions] should be returned if the result of this callbackfn is to
-## append new search nodes to the search queue. [br]
-##
-## [QueueSearch.QueueResult] should be returned when a solution to the search has been
-## found and this search may be resolved with the provided result. [br]
-static func search(initial_value: Variant, search_mode: SearchMode, callbackfn: Callable) -> Variant:
-  var search_queue: Array[NodeCursor] = [NodeCursor.new(initial_value, null)];
+## [param predicate] The evaluation function with which to conduct the search. This has
+## the signature:
+## [codeblock] func (value: Variant, accumulator: Variant) -> QueueSearchReturn [/codeblock]
+static func search(
+    search_mode: Mode,
+    initial_value: Variant,
+    initial_accumulator: Variant,
+    predicate: Callable,
+) -> Variant:
+  var search_queue: Array[NodeCursor] = [NodeCursor.new(initial_value, initial_accumulator)];
   var debug_timer = TimeEnforcer.new();
   var final_result: Variant = null;
 
@@ -57,75 +140,92 @@ static func search(initial_value: Variant, search_mode: SearchMode, callbackfn: 
 
     debug_timer.check_time();
 
-    var callback_return: CallbackReturn = callbackfn.call(search_cursor);
+    var callback_return: QueueSearchReturn = predicate.call(search_cursor.value, search_cursor.accumulator);
+
+    assert((
+      callback_return is QueueResult
+      or callback_return is QueueAdditions
+    ), "ERROR: QueueSearch predicate did not return with a QueueSearch return function (e.g. QueueSearch.additions()).");
 
     if callback_return is QueueResult:
       final_result = callback_return.result;
       break;
 
     else:
-      var additions := callback_return as QueueAdditions;
-      _append_additions_to_queue(search_queue, additions);
-      search_cursor = _pop_next_cursor(search_queue, search_mode);
+      var new_additions := callback_return as QueueAdditions;
+      _append_additions_to_queue(search_queue, new_additions);
+
+    search_cursor = _pop_next_cursor(search_queue, search_mode);
 
   return final_result;
 
 
-## Begins an async QueueSearch from the [param initial_value] and returns a [Promise] for
-## the result of that search as determined by [param callbackfn]. [br]
+## @nullable [br]
 ##
-## The values given to QueueSearch are wrapped into "search node" structs, that are then
-## provided to the [param callbackfn]. The [param callbackfn], via its function return,
-## determines from the current search node which new values should be added to the search
-## queue. You may think of this as a [b]recursive algorithm.[b] [br]
+## Begins an async QueueSearch from the [param initial_value] and returns the result of
+## that search as determined by the [param predicate]. [br]
 ##
-## If the search queue is emptied, the QueueSearch will resolve with a null value. [br]
+## All returns from the predicate must be through a QueueSearch return method (see the
+## QueueSearch doc string for an example). [br]
 ##
-## [param initial_value] The starting value to begin the search with.
+## If the search queue is emptied before resolving, the QueueSearch will resolve with a
+## null value. [br]
 ##
-## [param search_mode] The method for selecting nodes from the search queue.
+## [param search_mode] The method for selecting nodes from the search queue. [br]
 ##
-## [param callbackfn] has the signature:
-## [codeblock] callable(cursor: NodeCursor) -> QueueAdditions | QueueResult [/codeblock]
+## [param initial_value] The starting value to begin the search with. [br]
 ##
-## [QueueSearch.QueueAdditions] should be returned if the result of this callbackfn is to
-## append new search nodes to the search queue. [br]
+## [param initial_accumulator] The starting value for the cumulative. If you do not need
+## a cumulative to reduce with, simply pass `null`. [br]
 ##
-## [QueueSearch.QueueResult] should be returned when a solution to the search has been
-## found and this search may be resolved with the provided result. [br]
-static func get_search_promise(initial_value: Variant, search_mode: SearchMode, callbackfn: Callable) -> Promise:
-  return Promise.new(func (): return await search(initial_value, search_mode, callbackfn));
+## [param predicate] The evaluation function with which to conduct the search. This has
+## the signature:
+## [codeblock] func (value: Variant, accumulator: Variant) -> QueueSearchReturn [/codeblock]
+
+# static func async_search(
+#     initial_value: Variant,
+#     initial_accumulator: Variant,
+#     search_mode: Mode,
+#     predicate: Callable,
+# ) -> Variant:
+#   # [TODO] The predicate is not awaited using this method.
+#   #   Also, what does it mean to await the predicate? Is that behavior actually desired?
+#   #   I believe this method was to stand in for the original's batched search method,
+#   #   but without batching anything, it doesn't really translate.
+#   # [TODO] Is what I want solvable by wrapping the search call in a coroutine?
+#   #   I have to learn how coroutines actually work.
+#   return await search(search_mode, initial_value, initial_accumulator, predicate);
 
 
 ## @nullable [br]
 ## Removes and returns the next search node from [param search_queue]. Which node is
 ## selected depends on the [param search_mode]. [br]
 ##
-## [enum SearchMode.BreadthFirst] will retrieve the first node in the queue. [br]
-## [enum SearchMode.DepthFirst] will retrieve the last node in the queue. [br]
-static func _pop_next_cursor(search_queue: Array[NodeCursor], search_mode: SearchMode) -> NodeCursor:
+## [enum Mode.BreadthFirst] will retrieve the first node in the queue. [br]
+## [enum Mode.DepthFirst] will retrieve the last node in the queue. [br]
+static func _pop_next_cursor(search_queue: Array[NodeCursor], search_mode: Mode) -> NodeCursor:
   var cursor: NodeCursor = null;
 
   match search_mode:
-    SearchMode.BreadthFirst:
+    Mode.BreadthFirst:
       cursor = search_queue.pop_at(0);
-    SearchMode.DepthFirst:
+    Mode.DepthFirst:
       cursor = search_queue.pop_at(-1);
 
   return cursor;
 
 
 ## Modifies [param search_queue] to append [NodeCursor] objects built from [param additions].
-static func _append_additions_to_queue(search_queue: Array[NodeCursor], additions: QueueAdditions) -> void:
+static func _append_additions_to_queue(search_queue: Array[NodeCursor], new_additions: QueueAdditions) -> void:
   var new_cursors: Array[NodeCursor];
 
-  for value in additions.values:
-    new_cursors.append(NodeCursor.new(value, additions.accumulator));
-  
+  for value in new_additions.values:
+    new_cursors.append(NodeCursor.new(value, new_additions.accumulator));
+
   search_queue.append_array(new_cursors);
 
 
-## A struct provided by QueueSearch to the callbackfn. [br]
+## A struct used by QueueSearch to package the values in the queue. [br]
 ## Contains the current value in focus and the accumulated result of this node's search
 ## path.
 class NodeCursor extends RefCounted:
@@ -144,12 +244,12 @@ class NodeCursor extends RefCounted:
 ## Abstract class used to describe a Union-type between other classes.
 ## This allows functions to return extensions of this class, but not other types, like
 ## strings, ints, etc.
-@abstract class CallbackReturn extends RefCounted:
+@abstract class QueueSearchReturn extends RefCounted:
   pass
 
 
 ## When returned by a callbackfn, signals the addition of new nodes to the search queue.
-class QueueAdditions extends CallbackReturn:
+class QueueAdditions extends QueueSearchReturn:
   ## Search values to append to the search queue.
   var values: Array;
   ## The solution value from this call to callbackfn that should be bound with each value
@@ -167,7 +267,7 @@ class QueueAdditions extends CallbackReturn:
 
 
 ## When returned by a callbackfn, signals the end of the [QueueSearch] operation.
-class QueueResult extends CallbackReturn:
+class QueueResult extends QueueSearchReturn:
   ## The final result of the search.
   var result: Variant;
 
@@ -194,7 +294,7 @@ class TimeEnforcer extends RefCounted:
 
     if elapsed_time >= TIME_TO_ERROR_MS:
       assert(false, 'QueueSearch: search time has elapsed the error time limit (%s ms).' % TIME_TO_ERROR_MS);
-  
+
   ## Returns the current time as a comparable int.
   func _get_timestamp() -> int:
     return Time.get_ticks_msec();

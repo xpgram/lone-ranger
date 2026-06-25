@@ -3,7 +3,7 @@ class_name GridTileMapLayer
 extends TileMapLayer
 
 
-# TODO Refactor this to exist in the TileSet type.
+# [TODO] Refactor this to exist in the TileSet type.
 ## Returned by cell query methods if a cell either does not have terrain data or is itself
 ## empty.
 @export var default_cell_terrain_data: CellTerrainData = CellTerrainData.new();

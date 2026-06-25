@@ -11,7 +11,7 @@ func _ready() -> void:
   animated_sprite.play();
 
 
-# TODO Reexamine this function implementation later: Is it fine? Do I hate it?
+# [TODO] Reexamine this function implementation later: Is it fine? Do I hate it?
 func act_async() -> void:
   var self_entity := get_entity();
   var player := ActionUtils.get_player_entity();
@@ -32,16 +32,18 @@ func act_async() -> void:
   var playbill := FieldActionPlaybill.new(
     self_entity,
     self_entity.grid_position + direction,
-    direction
+    direction,
   );
 
   if not is_adjacent and FieldActionList.move.can_perform(playbill):
     @warning_ignore('redundant_await')
     await FieldActionList.move.perform_async(playbill);
-  # TODO FieldActionList.enemy_attack.can_perform(playbill):
   elif is_adjacent:
     @warning_ignore('redundant_await')
-    await _attack_async();
+    await _attack_async(player);
+
+  # [TODO] This is a bandaid patch for _facing_changed() not being a thing on ActorComponents.
+  _facing_changed();
 
   exhaust();
 
@@ -50,22 +52,19 @@ func get_entity() -> Enemy2D:
   return super.get_entity();
 
 
-## Performs an attack against the global [Player2D] entity.
-func _attack_async() -> void:
-  # IMPLEMENT Animations of any kind.
-  # FIXME Shouldn't this accept an entity parameter and not grab the global player?
-  var player := ActionUtils.get_player_entity();
-  var health_component := Component.get_component(player, HealthComponent) as HealthComponent;
-  health_component.value -= 1;
+## Performs an attack against [param entity].
+func _attack_async(entity: GridEntity) -> void:
+  # [IMPLEMENT] Animations of any kind.
+
+  var health := Component.getc(entity, HealthComponent) as HealthComponent;
+
+  if health:
+    health.value -= 1;
 
 
 func _facing_changed() -> void:
   match get_entity().faced_direction:
-    Vector2.UP:
-      animated_sprite.scale.x = -1;
-    Vector2.DOWN:
-      animated_sprite.scale.x = 1;
-    Vector2.LEFT:
-      animated_sprite.scale.x = -1;
-    Vector2.RIGHT:
-      animated_sprite.scale.x = 1;
+    Vector2i.LEFT:
+      animated_sprite.flip_h = true;
+    Vector2i.RIGHT:
+      animated_sprite.flip_h = false;

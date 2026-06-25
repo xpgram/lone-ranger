@@ -8,6 +8,9 @@ signal item_chosen(item: Variant);
 ## Emitted when the menu wishes to close or yield focus back to some other context.
 signal go_back();
 
+## Emitted whenever the cursor moves between items or pages.
+signal cursor_moved();
+
 
 ## Whether the cursor position is remembered the next time this menu is opened after
 ## closing it.
@@ -127,7 +130,7 @@ func get_page_count() -> int:
 ## The page index is for the menu's currently displayed items. Use
 ## [method get_content_selection_index] if you want the index for all displayable items.
 func get_page_selection_index() -> int:
-  # TODO Would it make sense to treat _memory.cursor_index as more authoritative?
+  # [TODO] Would it make sense to treat _memory.cursor_index as more authoritative?
   var selected_items := get_selected_items();
   return 0 if selected_items.size() == 0 else selected_items[0];
 
@@ -162,7 +165,7 @@ func _change_to_page(page_number: int) -> void:
 
   clear();
 
-  # TODO Demo code that ought to be rewritten.
+  # [TODO] Demo code that ought to be rewritten.
   # Clear all Label children.
   for child in get_children():
     if child.name != 'Label':
@@ -172,7 +175,7 @@ func _change_to_page(page_number: int) -> void:
   var page_content := _menu_content.slice(page_start_idx, page_start_idx + page_size);
 
   for item in page_content:
-    if item is FieldAction:
+    if item is PlayerInventoryItem:
       _add_field_action_item(item);
     else:
       _add_normal_item(item);
@@ -188,14 +191,16 @@ func _add_normal_item(item: Variant) -> void:
   add_item(item_name, item_icon);
 
 
-## Adds [param action] to the items list.
-func _add_field_action_item(action: FieldAction) -> void:
-  add_item(action.action_name, action.small_icon);
+## Adds [param item] to the items list.
+func _add_field_action_item(item: PlayerInventoryItem) -> void:
+  add_item(item.action.action_name, item.action.small_icon);
 
-  # TODO Demo code that should be cleaned up.
-  if action.limit_type in [Enums.LimitedUseType.Quantity, Enums.LimitedUseType.MagicDraw]:
+  # [FIXME] Demo code that should be cleaned up.
+  if item.action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
+    # [FIXME] I now know from experience: using $NodeName arbitrarily like this is hard to
+    #   track, which means it's hard to maintain. I do want an explicit node export.
     var label = $Label.duplicate();
-    label.text = str(action.uses_remaining);
+    label.text = str(item.quantity);
     label.position.y = 10 * (item_count - 1) + 8;
     label.visible = true;
     add_child(label);
@@ -204,6 +209,9 @@ func _add_field_action_item(action: FieldAction) -> void:
 ## Set the selection cursor position and emit associated triggers.
 func _self_select_item(index: int) -> void:
   _memory.cursor_index = clampi(index, 0, item_count - 1);
+
+  if _menu_content.size() == 0:
+    return;
 
   select(_memory.cursor_index);
   item_selected.emit(_memory.cursor_index);
@@ -216,6 +224,8 @@ func _on_draw_call() -> void:
 
 ## Moves the menu cursor graphic to the list-item at [param index].
 func _move_cursor_to_item(index: int) -> void:
+  if index >= _menu_content.size():
+    return;
   _menu_cursor_sprite.position.y = get_item_rect(index).get_center().y;
 
 
@@ -226,20 +236,30 @@ func _move_cursor(direction: int) -> void:
   _memory.cursor_index = wrapi(_memory.cursor_index, 0, item_count);
 
   _self_select_item(_memory.cursor_index);
+  cursor_moved.emit();
 
 
 ## Moves the page_cursor left or right, relative to its current position, then updates the
 ## display. The cursor, if moved beyond a range limit, will wrap around to the other side.
 func _move_page_cursor(direction: int) -> void:
+  var last_page_index := _memory.page_index;
+
   _memory.page_index += direction;
   _memory.page_index = wrapi(_memory.page_index, 0, get_page_count());
 
+  if last_page_index == _memory.page_index:
+    return;
+
   _change_to_page(_memory.page_index);
+  cursor_moved.emit();
 
 
-## Emits the item_chosen signal with the data of the list-item that was activated.
+## If the current selected index is avlid, emits [signal item_chosen] with the data of the
+## list-item that was activated.
 func _emit_item_chosen() -> void:
   var item_index := get_content_selection_index();
+  if item_index >= _menu_content.size():
+    return;
   item_chosen.emit(_menu_content[item_index]);
 
 

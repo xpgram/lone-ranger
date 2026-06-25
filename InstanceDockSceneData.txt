@@ -7,6 +7,14 @@
 "name": "Enemies",
 "scenes": [{
 &"scene": "res://entities/grid_entities/enemies/mouth/enemy_mouth.tscn"
+}, {
+&"scene": "res://entities/grid_entities/enemies/bull/enemy_bull.tscn"
+}, {
+&"scene": "res://entities/grid_entities/enemies/diamond/enemy_diamond.tscn"
+}, {
+&"scene": "res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn"
+}, {
+&"scene": "res://entities/grid_entities/enemies/snake/enemy_snake.tscn"
 }]
 }, {
 "name": "Objects",
@@ -20,5 +28,17 @@
 &"scene": "res://entities/grid_entities/interactives/chest/special_chest.tscn"
 }, {
 &"scene": "res://entities/grid_entities/interactives/chest/ornate_double_chest.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/diggable_spot/diggable_spot.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/raised_block/raised_block.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/angel_statue/angel_statue.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.tscn"
+}, {
+&"scene": "res://entities/grid_entities/interactives/glass_tile/glass_tile.tscn"
 }]
 }]

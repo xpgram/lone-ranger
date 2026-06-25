@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://jgwb14jy1uxn"]
+[gd_scene format=3 uid="uid://jgwb14jy1uxn"]
 
 [ext_resource type="Texture2D" uid="uid://dvf0nsrg67o7p" path="res://entities/grid_objects/ground/stairs/images/floor-stairs.png" id="1_k26fd"]
 
-[node name="FloorStairs" type="Node2D"]
+[node name="FloorStairs" type="Node2D" unique_id=301199502]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1676996760]
 texture = ExtResource("1_k26fd")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Wait_FieldAction" load_steps=2 format=3 uid="uid://cwwujnw5jfnb3"]
+[gd_resource type="Resource" script_class="Wait_FieldAction" format=3 uid="uid://cwwujnw5jfnb3"]
 
 [ext_resource type="Script" uid="uid://cy2y3e756hk3l" path="res://utilities/actions/field_actions/scripts/wait_action.gd" id="1_ir62e"]
 

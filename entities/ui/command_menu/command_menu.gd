@@ -24,7 +24,7 @@ enum Submenu {
 }
 
 
-# TODO These icons should possibly be exported values. All of these properties, actually.
+# [TODO] These icons should possibly be exported values. All of these properties, actually.
 const MAIN_LIST_OPTIONS = [
   {
     'name': 'Skills',
@@ -56,6 +56,24 @@ const MAIN_LIST_OPTIONS = [
 @export var _options_list: CommandMenuItemList;
 
 
+@export_group('Audio')
+
+## An audio node to trigger when the menu cursor moves.
+@export var sound_menu_select: AudioStreamPlayer;
+
+## An audio node to trigger when a choice is made.
+@export var sound_menu_confirm: AudioStreamPlayer;
+
+## An audio node to trigger when a cancel input is given.
+@export var sound_menu_cancel: AudioStreamPlayer;
+
+## An audio node to trigger when the menu opens.
+@export var sound_menu_open: AudioStreamPlayer;
+
+## An audio node to trigger when the menu closes.
+@export var sound_menu_close: AudioStreamPlayer;
+
+
 ## Which submenu of the CommandMenu is being shown.
 var active_menu := Submenu.Main;
 
@@ -63,13 +81,13 @@ var active_menu := Submenu.Main;
 var active_page := 0;
 
 ## The list options for the Abilities submenu.
-var _abilities_submenu_content: Array[FieldAction];
+var _abilities_submenu_content: Array[PlayerInventoryItem];
 
 ## The list options for the Magic submenu.
-var _magic_submenu_content: Array[FieldAction];
+var _magic_submenu_content: Array[PlayerInventoryItem];
 
 ## The list options for the Items submenu.
-var _items_submenu_content: Array[FieldAction];
+var _items_submenu_content: Array[PlayerInventoryItem];
 
 
 func _ready() -> void:
@@ -88,6 +106,7 @@ func _unhandled_input(event: InputEvent) -> void:
   if event.is_action_pressed('open_action_menu'):
     close();
     ui_canceled.emit();
+    sound_menu_close.play();
     accept_event();
 
 
@@ -99,6 +118,8 @@ func open() -> void:
     _switch_to_main_list();
   else:
     _switch_to_options_list(active_menu);
+
+  sound_menu_open.play();
 
 
 ## Opens the menu after resetting the active menu to main.
@@ -124,33 +145,41 @@ func _connect_to_inventory() -> void:
 
 ## Modifies in place the list contents of a [param submenu_list] representing a submenu,
 ## then updates the main menu contents.
-func _update_submenu_content(submenu_list: Array[FieldAction], items: Array[FieldAction]) -> void:
+func _update_submenu_content(submenu_list: Array[PlayerInventoryItem], items: Array[PlayerInventoryItem]) -> void:
   submenu_list.assign(items);
   _update_main_list_options();
 
 
 ## Binds event listeners to main and submenu signals.
 func _connect_to_item_lists() -> void:
-  # TODO Refactor this to require less explanation?
+  # [TODO] Refactor this to require less explanation?
   # Main -> switch to Options
   _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
+  _main_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
+
+  _main_list.cursor_moved.connect(func (): sound_menu_select.play());
 
   # Main (cancel) -> close()
   _main_list.go_back.connect(func ():
     close();
     ui_canceled.emit();
   );
+  _main_list.go_back.connect(func (): sound_menu_close.play());
 
   # Options -> emit action_selected
-  _options_list.item_chosen.connect(func (item: FieldAction): action_selected.emit(item));
+  _options_list.item_chosen.connect(func (item: PlayerInventoryItem): action_selected.emit(item.action));
+  _options_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
+
+  _options_list.cursor_moved.connect(func (): sound_menu_select.play());
 
   # Options (cancel) -> switch to Main
   _options_list.go_back.connect(func (): _switch_to_main_list());
+  _options_list.go_back.connect(func (): sound_menu_cancel.play());
 
 
 ## Configure child ItemList nodes.
 func _configure_item_lists() -> void:
-  # TODO Set main_list content should include only options that have submenu content.
+  # [TODO] Set main_list content should include only options that have submenu content.
   _main_list.set_content(MAIN_LIST_OPTIONS, 0);
   _options_list.resize_cursor_memory(Submenu.size());
 
@@ -160,6 +189,11 @@ func _update_main_list_options() -> void:
   # Tell MainList which options are hidden (by their submenu content > 0)
   #   I'm not sure how to hide them, yet. It may have to be with some complicated adding/removing.
   #   Also... once a menu is shown once, do I really want to hide it again, even if it's empty? I should think on that.
+  #
+  # From the future: selectively adding categories isn't hard, actually. What is hard(er)
+  #   is defining the resource that describes what their names and icons are.
+  #   Presently, they're defined in the editor, and this means they can be lost at runtime
+  #   if I don't save them somewhere.
   pass
 
 

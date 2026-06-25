@@ -3,62 +3,108 @@ extends Node
 
 
 ## Emitted when the list of possessed abilities is changed.
-signal abilities_updated(items: Array[FieldAction]);
+signal abilities_updated(items: Array[PlayerInventoryItem]);
 
 ## Emitted when the list of possessed magics is changed.
-signal magic_updated(items: Array[FieldAction]);
+signal magic_updated(items: Array[PlayerInventoryItem]);
 
 ## Emitted when the list of possessed items is changed.
-signal items_updated(items: Array[FieldAction]);
+signal items_updated(items: Array[PlayerInventoryItem]);
+
+# [FIXME] This is a better implementation than before, but it's still not
+#   very thought out. I don't like this signal being here.
+## Emitted when the player collects enough heart pieces.
+signal heart_container_completed();
+
+
+## The number of heart pieces that make up each heart container.
+const HEART_PIECES_FOR_EACH_CONTAINER := 4;
 
 
 @export_group('Equipment')
 
-# IMPLEMENT Key items in the form of found equipment are not used by anything.
 ## A list of special key-items that are not castable (there is no action script) and
 ## simply represent something the player owns. Think of these like getting the Morph Ball
 ## in Metroid.
 @warning_ignore('unused_private_class_variable')
 @export var _equipment: Array[StringName];
 
+## The number of found heart pieces the player owns.
+@export var _heart_pieces := 0;
+
 
 @export_group('Content')
 
 ## The inventory Dictionary for ability actions.
-@export var _abilities: Dictionary[StringName, FieldAction];
+@export var _abilities: Dictionary[StringName, PlayerInventoryItem];
 
 ## The inventory Dictionary for magic actions.
-@export var _magic: Dictionary[StringName, FieldAction];
+@export var _magic: Dictionary[StringName, PlayerInventoryItem];
 
 ## The inventory Dictionary for item actions.
-@export var _items: Dictionary[StringName, FieldAction];
+@export var _items: Dictionary[StringName, PlayerInventoryItem];
 
 
 func _ready() -> void:
   emit_full_inventory();
 
+  # [TODO] Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
+  #  I could devise a _post_ready() step by sending function calls to a global service. Hm.
+  _announce_magic_quantities();
+
 
 ## Broadcasts the entire inventory contents to any nodes who might be listening.
 ## Useful for resyncing after a node has made connections to the Inventory's signals.
 func emit_full_inventory() -> void:
-  # TODO Emit equipment?
+  # [TODO] Emit equipment?
   abilities_updated.emit(_get_sorted_array(_abilities));
   magic_updated.emit(_get_sorted_array(_magic));
   items_updated.emit(_get_sorted_array(_items));
 
 
+## Broadcasts the magic inventory contents and quantities to any nodes who might be
+## listening. Useful for retriggering magic draw point states.
+func _announce_magic_quantities() -> void:
+  for item_key in _magic:
+    var item := _magic[item_key];
+    Events.player_inventory_item_updated.emit(item.action, item.quantity);
+
+
 ## Adds a FieldAction to the inventory.
 ## If the action already exists, the action's quantity will be incremented instead.
-func add(action: FieldAction) -> void:
-  var dict := _get_inventory_dict(action.action_type);
-  var update_signal := _get_update_signal(action.action_type);
+func add(action: FieldAction, count: int = 1) -> void:
+  add_item(PlayerInventoryItem.new().fill(action, count));
 
-  if dict.has(action.action_uid):
-    dict[action.action_uid].uses_remaining += action.uses_remaining;
+
+## Adds a [PlayerInventoryItem] to the inventory.
+## If the item already exists, the item's quantity will be incremented instead.
+func add_item(item: PlayerInventoryItem) -> void:
+  var dict := _get_inventory_dict(item.action.action_type);
+  var update_signal := _get_update_signal(item.action.action_type);
+
+  if dict.has(item.action.action_uid):
+    dict[item.action.action_uid].quantity += item.quantity;
   else:
-    dict[action.action_uid] = action;
+    dict[item.action.action_uid] = item;
 
-  _emit_update_signal(update_signal, dict);
+  var new_quantity := dict[item.action.action_uid].quantity;
+  Events.player_inventory_item_updated.emit(item.action, new_quantity);
+  _emit_inventory_list_updated_signal(update_signal, dict);
+
+  _send_game_event_message(item);
+
+
+## Adds the equipment keyitem [param item] to the inventory.
+func add_equipment(item: StringName) -> void:
+  match item:
+    &'heart_piece':
+      _add_heart_piece();
+      var event_message := 'Got a heart piece';
+      Events.game_event_message_announced.emit(event_message);
+    _:
+      _equipment.append(item);
+      var event_message := "Got %s artefact" % [item.capitalize()];
+      Events.game_event_message_announced.emit(event_message);
 
 
 ## Returns true if `param action_uid` is held somewhere in this inventory.
@@ -70,73 +116,82 @@ func has(action_uid: StringName) -> bool:
   );
 
 
+## Returns true if [param item] is in the inventory's list of equipment keyitems.
+func has_equipment(item: StringName) -> bool:
+  return (item in _equipment);
+
+
 ## Returns the **FieldAction** held under the key `param action_uid`.
 ## Returns null if the action is not contained.
-func get_by_uid(action_uid: StringName) -> FieldAction:
-  var found_action: FieldAction;
+func get_by_uid(action_uid: StringName) -> PlayerInventoryItem:
+  var found_item: PlayerInventoryItem;
 
-  if _abilities.has(action_uid):
-    found_action = _abilities[action_uid];
-  elif _magic.has(action_uid):
-    found_action = _magic[action_uid];
-  elif _items.has(action_uid):
-    found_action = _items[action_uid];
+  var dicts := [
+    _abilities,
+    _magic,
+    _items,
+  ];
 
-  return found_action;
+  for dict in dicts:
+    if dict.has(action_uid):
+      found_item = dict[action_uid];
+      break;
+
+  return found_item;
 
 
 ## Returns the number of **FieldAction** under `param action_uid` already held.
 func get_quantity(action_uid: StringName) -> int:
-  var action := get_by_uid(action_uid);
-  return 0 if action == null else action.uses_remaining;
+  var item := get_by_uid(action_uid);
+  return 0 if item == null else item.quantity;
 
 
 ## Removes the **FieldAction** held under `param action_uid` from the inventory.
 ## If the action is not contained, does nothing.
 func remove(action_uid: StringName) -> void:
-  var action := get_by_uid(action_uid);
+  var item := get_by_uid(action_uid);
 
-  if action == null:
+  if item == null:
     return;
 
-  var dict := _get_inventory_dict(action.action_type);
-  var update_signal := _get_update_signal(action.action_type);
+  var dict := _get_inventory_dict(item.action.action_type);
+  var update_signal := _get_update_signal(item.action.action_type);
 
   dict.erase(action_uid);
-  _emit_update_signal(update_signal, dict);
+  Events.player_inventory_item_updated.emit(item.action, 0);
+  _emit_inventory_list_updated_signal(update_signal, dict);
 
 
 ## Removes a quantity from the **FieldAction** held under `param action_uid`, if it exists.
 ## If the quantity held falls to 0, then the action is removed from the inventory as well.
-func expend(action_uid: StringName, quantity: int = 1) -> void:
-  var action := get_by_uid(action_uid);
+func expend(action_uid: StringName, count: int = 1) -> void:
+  var item := get_by_uid(action_uid);
 
-  if action == null:
+  if item == null:
     return;
 
-  action.uses_remaining -= quantity;
+  item.quantity -= count;
 
-  var dict := _get_inventory_dict(action.action_type);
-  var update_signal := _get_update_signal(action.action_type);
+  var dict := _get_inventory_dict(item.action.action_type);
+  var update_signal := _get_update_signal(item.action.action_type);
 
-  if action.uses_remaining <= 0:
+  if item.quantity <= 0:
     dict.erase(action_uid);
 
-  _emit_update_signal(update_signal, dict);
+  Events.player_inventory_item_updated.emit(item.action, item.quantity);
+  _emit_inventory_list_updated_signal(update_signal, dict);
 
 
 ## Returns the inventory dictionary associated with `param action_type`.
-func _get_inventory_dict(action_type: Enums.FieldActionType) -> Dictionary[StringName, FieldAction]:
-  var dict: Dictionary[StringName, FieldAction];
+func _get_inventory_dict(action_type: Enums.FieldActionType) -> Dictionary[StringName, PlayerInventoryItem]:
+  var dict: Dictionary[StringName, PlayerInventoryItem];
 
   match action_type:
     Enums.FieldActionType.Ability:
       dict = _abilities;
     Enums.FieldActionType.Magic:
       dict = _magic;
-    # TODO Is there a way to combine these two? 'or' will match action_type with a boolean.
-    Enums.FieldActionType.Item:
-      dict = _items;
+    Enums.FieldActionType.Item, \
     Enums.FieldActionType.KeyItem:
       dict = _items;
 
@@ -152,10 +207,7 @@ func _get_update_signal(action_type: Enums.FieldActionType) -> Signal:
       update_signal = abilities_updated;
     Enums.FieldActionType.Magic:
       update_signal = magic_updated;
-    # TODO Is there a way to combine these two? 'or' will match action_type with a boolean.
-    # TODO Also, I just forgot to update this after updating the _get_inventory_dict above. Can we DRY these two?
-    Enums.FieldActionType.Item:
-      update_signal = items_updated;
+    Enums.FieldActionType.Item, \
     Enums.FieldActionType.KeyItem:
       update_signal = items_updated;
 
@@ -163,23 +215,55 @@ func _get_update_signal(action_type: Enums.FieldActionType) -> Signal:
 
 
 ## Emits `param update_signal` with a sorted inventory array derived from `param dict`.
-func _emit_update_signal(update_signal: Signal, dict: Dictionary[StringName, FieldAction]) -> void:
+func _emit_inventory_list_updated_signal(update_signal: Signal, dict: Dictionary[StringName, PlayerInventoryItem]) -> void:
   update_signal.emit(_get_sorted_array(dict));
 
 
 ## Builds and returns a sorted inventory array from `param dict`.
-func _get_sorted_array(dict: Dictionary[StringName, FieldAction]) -> Array[FieldAction]:
+func _get_sorted_array(dict: Dictionary[StringName, PlayerInventoryItem]) -> Array[PlayerInventoryItem]:
   var actions := dict.values();
 
-  actions.sort_custom(func (a: FieldAction, b: FieldAction):
-    if a.command_menu_sort_priority != b.command_menu_sort_priority:
-      return a.command_menu_sort_priority < b.command_menu_sort_priority;
+  actions.sort_custom(func (a: PlayerInventoryItem, b: PlayerInventoryItem):
+    var action_a := a.action;
+    var action_b := b.action;
 
-    elif a.command_menu_sort_sub_priority != b.command_menu_sort_sub_priority:
-      return a.command_menu_sort_sub_priority < b.command_menu_sort_sub_priority;
+    if action_a.command_menu_sort_priority != action_b.command_menu_sort_priority:
+      return action_a.command_menu_sort_priority < action_b.command_menu_sort_priority;
+
+    elif action_a.command_menu_sort_sub_priority != action_b.command_menu_sort_sub_priority:
+      return action_a.command_menu_sort_sub_priority < action_b.command_menu_sort_sub_priority;
 
     else:
-      return a.action_name < b.action_name;
+      return action_a.action_name < action_b.action_name;
   );
 
   return actions;
+
+
+## Adds a heart piece to the collection. If a full heart container is completed, emits
+## [signal heart_container_completed].
+func _add_heart_piece() -> void:
+  _heart_pieces += 1;
+
+  if _heart_pieces % HEART_PIECES_FOR_EACH_CONTAINER == 0:
+    heart_container_completed.emit();
+
+
+## Returns the number of owned heart containers.
+func get_heart_containers_count() -> int:
+  @warning_ignore('INTEGER_DIVISION')
+  return _heart_pieces / HEART_PIECES_FOR_EACH_CONTAINER;
+
+
+## Creates an "item obtained" message and emits it via the Events module.
+func _send_game_event_message(item: PlayerInventoryItem) -> void:
+  var item_type_name := '';
+
+  match item.action.action_type:
+    Enums.FieldActionType.Magic:
+      item_type_name = 'mana';
+    Enums.FieldActionType.Item:
+      item_type_name = 'items' if item.quantity > 1 else 'item';
+
+  var event_message := "Got %s %s %s" % [item.quantity, item.action.action_name, item_type_name];
+  Events.game_event_message_announced.emit(event_message);

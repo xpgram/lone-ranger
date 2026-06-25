@@ -16,19 +16,23 @@ instance_dock/preview_resolution=Vector2i(64, 64)
 [application]
 
 config/name="Lone Ranger"
-config/features=PackedStringArray("4.5", "Forward Plus")
+run/main_scene="uid://blym4at4ldbp"
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
-Grid="*res://utilities/autoload/grid.gd"
 Events="*res://utilities/autoload/events.gd"
+AudioBus="*res://utilities/autoload/audio_bus.gd"
+Grid="*res://utilities/autoload/grid.gd"
+PersistenceKey="*uid://ym0ujtik52ob"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=480
+window/size/viewport_width=1920
+window/size/viewport_height=1280
+window/stretch/mode="viewport"
 mouse_cursor/tooltip_position_offset=Vector2(256, -16)
 
 [editor_plugins]
@@ -40,6 +44,7 @@ enabled=PackedStringArray("res://addons/InstanceDock/plugin.cfg", "res://addons/
 folder_colors={
 "res://assets/": "green",
 "res://entities/": "pink",
+"res://exports/": "gray",
 "res://stages/": "purple",
 "res://utilities/": "yellow"
 }
@@ -432,7 +437,7 @@ open_action_menu={
 brace={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":9,"pressure":0.0,"pressed":true,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":10,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 
