@@ -17,6 +17,6 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   if actor is Player2D:
     # TODO Play an actual sleep animation.
     actor.faced_direction = Vector2i.DOWN;
-    actor.trigger_rest_and_reset_state();
+    actor.trigger_sleep();
 
   return true;

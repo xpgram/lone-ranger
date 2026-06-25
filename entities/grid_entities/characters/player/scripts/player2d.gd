@@ -281,7 +281,7 @@ func start_coyote_fall() -> void:
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
 ## player is sent back to their last checkpoint and the world's state is reset. [br]
-func trigger_rest_and_reset_state() -> void:
+func trigger_sleep() -> void:
   _state_machine.switch_to(_state_sleep);
 
 
@@ -320,6 +320,24 @@ func wait_until_affairs_settled_async():
   if not _affairs_are_settled:
     await _affairs_settled;
 
+
+## Resets to full all player stats that represent exhaustion, such as HP.
+func _replenish_all() -> void:
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.set_hp_to_full();
+
+
+## Moves the player to the last checkpoint position, resets their health and animation
+## state.
+func _send_player_back_to_checkpoint() -> void:
+  grid_position = _starting_position;
+  faced_direction = Vector2i.DOWN;
+
+  _replenish_all();
+  Events.board_reset_declared.emit();
+
+  # [TODO] This should be a 'wake up' animation.
+  set_animation_state('idle');
 
 
 ## Sets the animation state to `param state_key`.
@@ -620,41 +638,13 @@ func _state_death() -> void:
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
 
-  var fade_out_time := 1.5;
-  var fade_in_time := 1.0;
-  var fade_transition := Tween.TRANS_SINE;
+  await _shader_rect.fade_out_async(1.5, 0.5);
 
-  # Fade out.
-  await get_tree().create_timer(0.5).timeout;
-  var fade_tween := get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_IN);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
-  await fade_tween.finished;
+  _send_player_back_to_checkpoint();
 
-  # Declare reset for the entire game board.
-  # [FIXME] This behavior is shared by angle statues (save idols) and the Sleep action.
-  #   Can I trigger it implicitly?
-  Events.board_reset_declared.emit();
-
-  # Reset player state.
-  set_animation_state('idle');
-  grid_position = _starting_position;
-  faced_direction = Vector2i.DOWN;
-
-  var health := Component.getc(self, HealthComponent) as HealthComponent;
-  health.set_hp_to_full();
-
-  # Fade in.
-  await get_tree().create_timer(3.0).timeout;
-  fade_tween = get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_OUT);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_in_time);
-  await fade_tween.finished;
+  await _shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-
   _settle_affairs();
 
 
@@ -666,48 +656,17 @@ func _state_death() -> void:
 func _state_sleep() -> void:
   _unsettle_affairs();
 
-  # TODO The reset logic here can be factored out. Only the player animation is different.
-  #region Death Reset copy
   _interrupt_ui_subsystems();
-  # set_animation_state('injured');
-  # $Audio/PlayerHurt.play();
+  # [TODO] Play a sleeping animation.
+  # set_animation_state('falling_asleep');
 
-  var fade_out_time := 1.5;
-  var fade_in_time := 1.0;
-  var fade_transition := Tween.TRANS_SINE;
+  await _shader_rect.fade_out_async(1.5, 0.5);
 
-  # Fade out.
-  await get_tree().create_timer(0.5).timeout;
-  var fade_tween := get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_IN);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
-  await fade_tween.finished;
+  _send_player_back_to_checkpoint();
 
-  # Declare reset for the entire game board.
-  # [FIXME] This behavior is shared by angle statues (save idols) and the Death state.
-  Events.board_reset_declared.emit();
-
-  # Reset player state.
-  set_animation_state('idle');
-  grid_position = _starting_position;
-  faced_direction = Vector2i.DOWN;
-
-  # TODO This seems like it should be a property of checkpoints, and not necessarily put here?
-  var health := Component.getc(self, HealthComponent) as HealthComponent;
-  health.set_hp_to_full();
-
-  # Fade in.
-  await get_tree().create_timer(3.0).timeout;
-  fade_tween = get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_OUT);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_in_time);
-  await fade_tween.finished;
+  await _shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-  #endregion Death Reset copy
-
   _settle_affairs();
 
 
