@@ -82,7 +82,7 @@ var _coyote_fall_timer: Timer;
 # FIXME This should be their last reset point, probably something to do with the last seen
 #   angel statue when I finally implement those.
 ## Where the player spawned in.
-@onready var _starting_position: Vector2i = Grid.get_grid_coords(global_position);
+@onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
 
 
 func _init() -> void:
@@ -270,8 +270,8 @@ func get_last_safe_position() -> Vector2i:
 
 
 ## Sets the player's reset position, where they respawn on death or sleep, to [param pos].
-func set_checkpoint_position(pos: Vector2i) -> void:
-  _starting_position = pos;
+func set_revive_point(pos: Vector2i) -> void:
+  _revive_position = pos;
 
 
 ## Returns the number of steps the player can take over pits before falling.
@@ -348,7 +348,7 @@ func replenish_all() -> void:
 ## Moves the player to the last checkpoint position, resets their health and animation
 ## state.
 func _send_player_back_to_checkpoint() -> void:
-  grid_position = _starting_position;
+  grid_position = _revive_position;
   faced_direction = Vector2i.DOWN;
 
   replenish_all();

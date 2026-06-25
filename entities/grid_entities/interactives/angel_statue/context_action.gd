@@ -23,7 +23,7 @@ func perform_interaction_async(actor: GridEntity) -> void:
   var whiteout_phase_time := 0.333;
 
   player.replenish_all();
-  player.set_checkpoint_position(player.grid_position);
+  player.set_revive_point(player.grid_position);
 
   AudioBus.play_audio_scene(_scene_save_audio);
   await screen_shader.white_out_async(whiteout_phase_time);
