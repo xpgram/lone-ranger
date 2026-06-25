@@ -97,7 +97,7 @@ func fade_out_async(time: float, delay: float) -> void:
 
 
 ## Tweens the fade_in property from 0 to 1.
-func _fade_in_async(time: float, delay: float = 0) -> void:
+func fade_in_async(time: float, delay: float = 0) -> void:
   await get_tree().create_timer(delay).timeout;
   await _tween_fade_in_async(0.0, 1.0, time);
 
