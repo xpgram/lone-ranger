@@ -242,8 +242,13 @@ func _move_cursor(direction: int) -> void:
 ## Moves the page_cursor left or right, relative to its current position, then updates the
 ## display. The cursor, if moved beyond a range limit, will wrap around to the other side.
 func _move_page_cursor(direction: int) -> void:
+  var last_page_index := _memory.page_index;
+
   _memory.page_index += direction;
   _memory.page_index = wrapi(_memory.page_index, 0, get_page_count());
+
+  if last_page_index == _memory.page_index:
+    return;
 
   _change_to_page(_memory.page_index);
   cursor_moved.emit();
