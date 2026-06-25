@@ -8,5 +8,6 @@ stream = ExtResource("1_lrjx3")
 volume_db = -2.0
 max_polyphony = 2
 bus = &"Music"
+playback_type = 1
 parameters/looping = true
 script = ExtResource("2_ckkeg")

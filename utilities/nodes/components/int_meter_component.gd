@@ -79,7 +79,7 @@ signal maximum_changed(maximum: int, old_maximum: int);
 ## Sets the meter's value to its maximum.
 func set_hp_to_full() -> void:
   value = maximum;
-  # TODO Add undo/redo?
+  # [TODO] Add undo/redo?
 
 
 ## Returns true if the meter is allowed to emit value-changed event signals.

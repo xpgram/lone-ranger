@@ -13,7 +13,10 @@ signal golem_time_updated(time_remaining: float);
 ## Emitted when the turn system completes a full round.
 signal round_passed();
 
-# FIXME AudioBus is a global autoload, why am I using Events for this?
+## Emitted when the game board is to reset to its starting conditions.
+signal board_reset_declared();
+
+# [FIXME] AudioBus is a global autoload, why am I using Events for this?
 #  AudioBus.play_one_shot() needs to return a reference to the instantiated object so it
 #  can be cut early.
 ## Emitted when a sound object is created.
@@ -21,6 +24,9 @@ signal one_shot_sound_emitted(audio_scene: PackedScene);
 
 ## Emitted when the player's held count of [param action] is adjusted to a new quantity.
 signal player_inventory_item_updated(action: FieldAction, new_quantity: int);
+
+## Emitted by entities when shouting messages to a player's event UI.
+signal game_event_message_announced(message: String);
 
 ##
 signal enemy_appeared();

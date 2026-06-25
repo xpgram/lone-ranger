@@ -17,7 +17,7 @@ instance_dock/preview_resolution=Vector2i(64, 64)
 
 config/name="Lone Ranger"
 run/main_scene="uid://blym4at4ldbp"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -26,11 +26,13 @@ BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 Events="*res://utilities/autoload/events.gd"
 AudioBus="*res://utilities/autoload/audio_bus.gd"
 Grid="*res://utilities/autoload/grid.gd"
+PersistenceKey="*uid://ym0ujtik52ob"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1280
+window/stretch/mode="viewport"
 mouse_cursor/tooltip_position_offset=Vector2(256, -16)
 
 [editor_plugins]
@@ -42,6 +44,7 @@ enabled=PackedStringArray("res://addons/InstanceDock/plugin.cfg", "res://addons/
 folder_colors={
 "res://assets/": "green",
 "res://entities/": "pink",
+"res://exports/": "gray",
 "res://stages/": "purple",
 "res://utilities/": "yellow"
 }

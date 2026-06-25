@@ -1,4 +1,4 @@
-##
+## An object interface for the screen-space shader applied to the player's camera view.
 class_name ScreenSpaceShader
 extends ColorRect
 
@@ -29,6 +29,14 @@ var pulse_progress: float:
 func _ready() -> void:
   _saved_gradient_start = material.get_shader_parameter('gradient_start') as Color;
   _saved_gradient_end = material.get_shader_parameter('gradient_end') as Color;
+
+
+func _process(_delta: float) -> void:
+  var camera := get_parent() as Camera2D;
+  # var mantissa := camera.global_position - Vector2(Vector2i(camera.global_position));
+  # material.set_shader_parameter('pixelizer_subpixel_offset', mantissa);
+
+  material.set_shader_parameter('pixelate_rotation_deg', camera.rotation_degrees);
 
 
 func set_color_gradient_start(start_color: Color) -> void:
@@ -73,32 +81,70 @@ func pulse_color(screen_pulse_color: Color, screen_pulse_gradient_end := NULL_CO
   await tween.finished;
 
 
+## Tweens the fade_in property from [param from] to [param to] over [param time] seconds.
+func _tween_fade_in_async(from: float, to: float, time: float) -> void:
+  var fade_tween := create_tween();
+  fade_tween.set_trans(Tween.TRANS_SINE);
+  fade_tween.set_ease(Tween.EASE_IN);
+  fade_tween.tween_method(set_fade_in, from, to, time);
+  await fade_tween.finished;
+
+
+## Tweens the fade_in property from 1 to 0.
+func fade_out_async(time: float, delay: float) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_fade_in_async(1.0, 0.0, time);
+
+
+## Tweens the fade_in property from 0 to 1.
+func fade_in_async(time: float, delay: float = 0) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_fade_in_async(0.0, 1.0, time);
+
+
 func set_fade_in(value: float) -> void:
+  # [FIXME] This formula, ceil(5v-1) / 4, there's some inconsistency in how it's applied.
+  #   I don't get it, but the shader doesn't like it for the white_silhoette values.
+  #   But it's important for making fade-in look nice.
   # This should limit the value to increments of 0.25.
-  value = round(value * 4) / 4.0;
+  value = ceil(value * 5 - 1) / 4.0;
 
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('fade_in_progress', value);
 
 
 func set_silhoette_threshhold(value: float) -> void:
-  # This should limit the value to increments of 0.25.
-  value = round(value * 4) / 4.0;
-
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('silhoette_threshhold', value);
 
 
-func set_silhoette_white_threshhold(value: float) -> void:
-  value = round(value * 4) / 4.0;
+## Tweens the whiteout property from [param from] to [param to] over [param time] seconds.
+func _tween_whiteout_async(from: float, to: float, time: float) -> void:
+  var tween := create_tween();
+  tween.tween_method(set_silhoette_white_threshhold, from, to, time);
+  await tween.finished;
 
+
+## Tweens the white_silhoette property from none to whited-out.
+func white_out_async(time: float, delay: float = 0) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_whiteout_async(1.0, 0.4, time);
+
+
+## Tweens the white_silhoette property from whited-out to none.
+func white_in_async(time: float, delay: float = 0) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_whiteout_async(0.4, 1.0, time);
+
+
+func set_silhoette_white_threshhold(value: float) -> void:
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('silhoette_white_threshhold', value);
 
 
-# FIXME Remove these debug controls.
+# [FIXME] Remove these debug controls.
 func _unhandled_input(_event: InputEvent) -> void:
-  # FIXME These are being called like 16,000 times a second now. Wtf?
+  # [FIXME] These are being called like 16,000 times a second now. Wtf?
   #   I've determined that was my PS5 controller somehow. Was it doing that before?
   #   That's really weird.
 

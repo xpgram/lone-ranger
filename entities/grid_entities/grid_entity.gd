@@ -1,16 +1,13 @@
-## An object which maintains a position on the Grid.
+## A [Grid] object representing a game entity, e.g., characters, interactive chests,
+## pickups, etc.
 class_name GridEntity
-extends Node2D
+extends GridObject
 
 
 const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 
 
-## Emitted when this entity changes its position on the Grid.
-signal entity_moved();
-
-
-# TODO As I add more conditions here, I should consider extracting them to a Resource.
+# [TODO] As I add more conditions here, I should consider extracting them to a Resource.
 #   Having to go through every monster and object I've ever created just to check
 #   'pushable' is irritating.
 
@@ -23,18 +20,14 @@ signal entity_moved();
 ## Whether this entity is a flooring-type that other entities can stand on.
 @export var standable := false;
 
-# TODO observes_golem_time only makes sense to GridActorComponents, so should be located there?
+# [TODO] observes_golem_time only makes sense to GridActorComponents, so should be located there?
 ## Whether this entity adheres to the more turn-based golem time instead of the ongoing
 ## action timer.
 @export var observes_golem_time := false;
 
-# TODO This attribute-tag system should be a component node, actually.
+# [TODO] This attribute-tag system should be a component node, actually.
 ## A dictionary of applied effects and qualities.
 @export var _attributes: Dictionary[StringName, GridEntityAttribute];
-
-
-## The map of stimulus events to entity reaction behaviors.
-var _stimulus_event_map := InternalEventMap.new();
 
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
@@ -50,39 +43,17 @@ var faced_position: Vector2i:
   get():
     return grid_position + faced_direction;
 
-## This object's position on the Grid.
-## When setting this value, this object's Grid position is automatically updated.
-var grid_position: Vector2i:
-  get():
-    return Grid.get_grid_coords(global_position);
-  set(grid_vector):
-    Grid.remove(self, grid_position);
-    global_position = Grid.get_world_coords(grid_vector);
-    Grid.put(self, grid_position);
-    entity_moved.emit();
-
-    if (
-      ActionUtils.place_is_pit(grid_position)
-      and not ActionUtils.place_is_idleable(grid_position, self)
-    ):
-      react_async(Stimulus.is_over_pit);
-
-
-func _enter_tree() -> void:
-  Grid.put(self, grid_position);
-
-
-func _exit_tree() -> void:
-  Grid.remove(self, grid_position);
-
 
 func _ready() -> void:
   if Engine.is_editor_hint():
     return;
 
-  _bind_stimulus_callbacks();
+  super._ready();
+  _bind_grid_object_signals();
 
 
+# [FIXME] This attribute system is hard to use via the editor: loading a .tres requires
+#   the developer also manually write-in the same attribute key to the dictionary.
 ## Returns true if `param attribute_name` is among the _attributes applied to this entity.
 func has_attribute(attribute_name: StringName) -> bool:
   return _attributes.has(attribute_name);
@@ -116,19 +87,25 @@ func update_attributes() -> void:
       _attributes.erase(attribute_key);
 
 
-## Notifies the [GridEntity] that [param stimulus_name] has occurred and executes its
-## associated behavior, if any is defined.
-func react_async(stimulus_name: StringName) -> void:
-  await _stimulus_event_map.call_event_async(stimulus_name);
+## Binds methods to [GridObject] signals.
+func _bind_grid_object_signals() -> void:
+  grid_position_changed.connect(_on_grid_position_changed);
 
 
-## Returns the Grid distance between this entity and [param other]. [br]
-##
-## [param other] is a [GridEntity] or a [Vector2i].
-func distance_to(other: Variant) -> int:
-  var other_pos: Vector2i = other.grid_position if other is GridEntity else other;
-  var distance_vector := (grid_position - other_pos).abs();
-  return distance_vector.x + distance_vector.y;
+func _bind_stimulus_callbacks() -> void:
+  super._bind_stimulus_callbacks();
+  _stimulus_event_map.add_events({
+    Stimulus.is_over_pit: _on_free_fall,
+  });
+
+
+## Handles [GridEntity]'s reaction to movement or new-location stimuli.
+func _on_grid_position_changed(to: Vector2i, _from: Vector2i) -> void:
+  if (
+      ActionUtils.place_is_pit(to)
+      and not ActionUtils.place_is_idleable(to, self)
+  ):
+    react_async(Stimulus.is_over_pit);
 
 
 ## Overridable function called whenever this GridEntity's facing direction is changed.
@@ -137,22 +114,15 @@ func _facing_changed() -> void:
   pass
 
 
-## Binds methods to event signals in the GridEntity stimulus reaction system. [br]
-##
-## If overriding, remember to call super(). You can add new stimulus callbacks with
-## [method _stimulus_event_map.add_events].
-func _bind_stimulus_callbacks() -> void:
-  _stimulus_event_map.add_events({
-    Stimulus.is_over_pit: _on_free_fall,
-  });
-
-
 ## Overridable function called whenever the Grid cell at this GridEntity's location is
 ## missing a floor to stand on. [br]
 ##
 ## By default, this function waits a small amount of time and then queues self for
 ## deletion.
 func _on_free_fall() -> void:
+  if has_attribute('floating'):
+    return;
+
   await get_tree().create_timer(0.5).timeout;
 
   var fall_effect := _scene_object_fall.instantiate();
@@ -160,53 +130,3 @@ func _on_free_fall() -> void:
   add_sibling(fall_effect);
 
   queue_free();
-
-
-## @internal-only [br]
-## An event-key dictionary manager to facilitate [GridEntity]'s stimulus reaction system. [br]
-##
-## The purpose of this is to enforce stronger parity between types that implement similar
-## functions, but which may not implement them at all. It is recommended to use a
-## collection of constants to manage event keys consistently. [br]
-##
-## Usage example:
-## [codeblock]
-## class_name Enemy2D extends GridEntity
-##
-## func _ready() -> void:
-##     stimulus_map.add_events({
-##         Stimulus.is_burning: _on_burning,
-##         # ...
-##     });
-##
-## func _on_burning() -> void:
-##     # ...
-##
-## func self_combust() -> void:
-##     # ...
-##     stimulus_map.call_event(Stimulus.is_burning);
-## [/codeblock]
-class InternalEventMap extends RefCounted:
-  var _events: Dictionary[StringName, Callable];
-
-  ## Merges [param event_map] with the collection of event callbacks. [br]
-  ##
-  ## This will raise an error when a key conflict is detected. Event handler overrides
-  ## should be done the inheritance way, by overriding the super's function directly.
-  func add_events(event_map: Dictionary[StringName, Callable]) -> void:
-    for key in event_map.keys():
-      assert(not _events.has(key), "Cannot overwrite GridEntity event key '%s'.");
-
-    _events.merge(event_map);
-
-
-  ## If [param event_name] exists in the event map, calls its associated function.
-  func call_event(event_name: StringName) -> void:
-    call_event_async(event_name);
-
-
-  ## If [param event_name] exists in the event map, calls and awaits its associated
-  ## function.
-  func call_event_async(event_name: StringName) -> void:
-    if _events.has(event_name):
-      await _events.get(event_name).call();

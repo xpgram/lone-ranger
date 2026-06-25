@@ -12,6 +12,26 @@ And, to make this more interesting, I guess, following behind Void Stranger and 
 
 
 
+## Scenario
+
+I'm just going to write bullet points right now.
+
+- Like *Blame!*, you exist in some incomprehensibly large megastructure whose builders and purpose are long forgotten.
+- You can meet the buildres, actually: they are machines tasked with turning material into structures. Like the paperclip AI thought experiment, they don't understand the broader context about what they're doing, they only know that materials should become structures.
+- In the beginning, they built outward, trying to fill the infinite space before them. Maybe this was some kind of terraforming mission, or people needed a space to colonize, or maybe it was an industrial effort to build factories; it's no longer known.
+- Those people are gone, though. Only the builders remain. What we have now is not unlike property management companies investing in housing and luxurious apartment buildings that no one is meant to live in—they exist purely as speculative assets, visually similar to but utterly devoid of their original purpose.
+- The builders built out as far as they could into the infinite black void and found the edge. And so, out of space, out of materials, they stopped building outward and started building *in.*
+- This also went on for a long time. So, much of the megastructure is messy. It's filled with rooms that were built on top of each other, hallways that are built through each other, like the girders of a warehouse jutting through the windows of a church.
+- As an analogy, I think of this like the history of the Internet. The Internet used to be a wild-west of personal servers linking to one another in a big spider web, and Google was a traversal tool that you used to help navigate that superstructure. But now, Google *is* the Internet, and is somewhat like an app hub that connects you to Reddit, Twitter, YouTube, or Facebook. The old spider web still exists, but it exists in the periphery, inside the dark shadows that these impossibly large spaces cast.
+- I think the world design of LoneRanger could be like that. There are large, normal-enough looking places connected by super highways, and the space between them is the old world. It's sort of like having a Walmart built on top of a Favela.
+- What I think I'm describing is a very cynical, nihilistic even, view of the things that the human machine has built. Yeah, it's driven by oligarchs, yadda yadda, whatever. What used to be something built by people has since had its humanity hollowed out. The builders build because that's what they're supposed to do. There is no purpose. They build for the sake of building.
+- The characters that you meet are the same. They talk, they have personalities, but they are not really people anymore. Many of them are caricatures of some kind of job, and that job *is* who they are. They no longer understand what it means to be themselves, and in that sense, they are just as mechanical as the building machines are.
+  - I think of the video of that one guy who was live, in the crowd where Kirk was shot, who stopped to advertise his second youtube channel and some t-shirt merch that he was selling, practically in between Kirk's gurgling for air.
+  - I also think of Jake and Logan Paul, the grifters who will say *literally* anything you pay them to. They do not have beliefs.
+  - Also, the Teto song "Spoken For." She's a pop idol, a product, in a way, and the line "I could be a woman / I could be a man / look into the mirror, tell me what I am" is pretty striking. I think it captures that hallowed-out humanity idea pretty well.
+    The title of the song, "Spoken For", by the way, refers to her management company being the thing from which her voice comes from. She is literally spoken for, she does not have her own voice.
+- Final note on magic: I haven't decided what mana is yet, but it does leak from the old world. Maybe it's powering something. You'd find it wafting from pipes and such in the "clean" areas (the facebook zones), and also drifting up from the abyss, probably from some miles deep, old-Internet area.
+
 ## Mechanics
 
 ### Half-time combat

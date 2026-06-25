@@ -24,7 +24,7 @@ enum Submenu {
 }
 
 
-# TODO These icons should possibly be exported values. All of these properties, actually.
+# [TODO] These icons should possibly be exported values. All of these properties, actually.
 const MAIN_LIST_OPTIONS = [
   {
     'name': 'Skills',
@@ -152,7 +152,7 @@ func _update_submenu_content(submenu_list: Array[PlayerInventoryItem], items: Ar
 
 ## Binds event listeners to main and submenu signals.
 func _connect_to_item_lists() -> void:
-  # TODO Refactor this to require less explanation?
+  # [TODO] Refactor this to require less explanation?
   # Main -> switch to Options
   _main_list.item_chosen.connect(func (item): _switch_to_options_list(item['link_to']));
   _main_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
@@ -179,7 +179,7 @@ func _connect_to_item_lists() -> void:
 
 ## Configure child ItemList nodes.
 func _configure_item_lists() -> void:
-  # TODO Set main_list content should include only options that have submenu content.
+  # [TODO] Set main_list content should include only options that have submenu content.
   _main_list.set_content(MAIN_LIST_OPTIONS, 0);
   _options_list.resize_cursor_memory(Submenu.size());
 
@@ -189,6 +189,11 @@ func _update_main_list_options() -> void:
   # Tell MainList which options are hidden (by their submenu content > 0)
   #   I'm not sure how to hide them, yet. It may have to be with some complicated adding/removing.
   #   Also... once a menu is shown once, do I really want to hide it again, even if it's empty? I should think on that.
+  #
+  # From the future: selectively adding categories isn't hard, actually. What is hard(er)
+  #   is defining the resource that describes what their names and icons are.
+  #   Presently, they're defined in the editor, and this means they can be lost at runtime
+  #   if I don't save them somewhere.
   pass
 
 

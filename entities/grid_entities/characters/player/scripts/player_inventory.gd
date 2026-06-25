@@ -11,15 +11,26 @@ signal magic_updated(items: Array[PlayerInventoryItem]);
 ## Emitted when the list of possessed items is changed.
 signal items_updated(items: Array[PlayerInventoryItem]);
 
+# [FIXME] This is a better implementation than before, but it's still not
+#   very thought out. I don't like this signal being here.
+## Emitted when the player collects enough heart pieces.
+signal heart_container_completed();
+
+
+## The number of heart pieces that make up each heart container.
+const HEART_PIECES_FOR_EACH_CONTAINER := 4;
+
 
 @export_group('Equipment')
 
-# IMPLEMENT Key items in the form of found equipment are not used by anything.
 ## A list of special key-items that are not castable (there is no action script) and
 ## simply represent something the player owns. Think of these like getting the Morph Ball
 ## in Metroid.
 @warning_ignore('unused_private_class_variable')
 @export var _equipment: Array[StringName];
+
+## The number of found heart pieces the player owns.
+@export var _heart_pieces := 0;
 
 
 @export_group('Content')
@@ -37,7 +48,7 @@ signal items_updated(items: Array[PlayerInventoryItem]);
 func _ready() -> void:
   emit_full_inventory();
 
-  # TODO Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
+  # [TODO] Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
   #  I could devise a _post_ready() step by sending function calls to a global service. Hm.
   _announce_magic_quantities();
 
@@ -45,7 +56,7 @@ func _ready() -> void:
 ## Broadcasts the entire inventory contents to any nodes who might be listening.
 ## Useful for resyncing after a node has made connections to the Inventory's signals.
 func emit_full_inventory() -> void:
-  # TODO Emit equipment?
+  # [TODO] Emit equipment?
   abilities_updated.emit(_get_sorted_array(_abilities));
   magic_updated.emit(_get_sorted_array(_magic));
   items_updated.emit(_get_sorted_array(_items));
@@ -80,10 +91,20 @@ func add_item(item: PlayerInventoryItem) -> void:
   Events.player_inventory_item_updated.emit(item.action, new_quantity);
   _emit_inventory_list_updated_signal(update_signal, dict);
 
+  _send_game_event_message(item);
+
 
 ## Adds the equipment keyitem [param item] to the inventory.
 func add_equipment(item: StringName) -> void:
-  _equipment.append(item);
+  match item:
+    &'heart_piece':
+      _add_heart_piece();
+      var event_message := 'Got a heart piece';
+      Events.game_event_message_announced.emit(event_message);
+    _:
+      _equipment.append(item);
+      var event_message := "Got %s artefact" % [item.capitalize()];
+      Events.game_event_message_announced.emit(event_message);
 
 
 ## Returns true if `param action_uid` is held somewhere in this inventory.
@@ -217,3 +238,32 @@ func _get_sorted_array(dict: Dictionary[StringName, PlayerInventoryItem]) -> Arr
   );
 
   return actions;
+
+
+## Adds a heart piece to the collection. If a full heart container is completed, emits
+## [signal heart_container_completed].
+func _add_heart_piece() -> void:
+  _heart_pieces += 1;
+
+  if _heart_pieces % HEART_PIECES_FOR_EACH_CONTAINER == 0:
+    heart_container_completed.emit();
+
+
+## Returns the number of owned heart containers.
+func get_heart_containers_count() -> int:
+  @warning_ignore('INTEGER_DIVISION')
+  return _heart_pieces / HEART_PIECES_FOR_EACH_CONTAINER;
+
+
+## Creates an "item obtained" message and emits it via the Events module.
+func _send_game_event_message(item: PlayerInventoryItem) -> void:
+  var item_type_name := '';
+
+  match item.action.action_type:
+    Enums.FieldActionType.Magic:
+      item_type_name = 'mana';
+    Enums.FieldActionType.Item:
+      item_type_name = 'items' if item.quantity > 1 else 'item';
+
+  var event_message := "Got %s %s %s" % [item.quantity, item.action.action_name, item_type_name];
+  Events.game_event_message_announced.emit(event_message);

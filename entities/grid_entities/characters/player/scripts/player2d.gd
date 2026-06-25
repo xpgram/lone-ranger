@@ -32,11 +32,14 @@ var current_animation_state: StringName = 'idle';
 ## A blackboard variable to retain a reference to the player's chosen command menu action.
 var _selected_command_menu_action: FieldAction;
 
+## The grid position that the player last inhabited.
+var _last_position: Vector2i;
+
 ## A grid position that is safe to teleport the player to when they get stuck or lost
 ## (such as after falling into a pit).
 var _last_safe_position: Vector2i;
 
-# TODO Question: Player2D is bound to have tons of little metric numbers like this, do I
+# [TODO] Question: Player2D is bound to have tons of little metric numbers like this, do I
 #   really want to list them all in this script right here? I could put this in a big
 #   numbers repository resource, I guess.
 ## How many steps the player can take over pits before falling.
@@ -76,10 +79,10 @@ var _coyote_fall_timer: Timer;
 ##
 @onready var _shader_rect: ScreenSpaceShader = %ScreenSpaceShaderRect
 
-# FIXME This should be their last reset point, probably something to do with the last seen
+# [FIXME] This should be their last reset point, probably something to do with the last seen
 #   angel statue when I finally implement those.
 ## Where the player spawned in.
-@onready var _starting_position: Vector2i = Grid.get_grid_coords(global_position);
+@onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
 
 
 func _init() -> void:
@@ -94,6 +97,7 @@ func _ready() -> void:
 
   _assemble_machine_states();
   _bind_inherited_signals();
+  _bind_component_signals();
   _bind_input_signals();
 
   _connect_to_ui_subsystems();
@@ -149,7 +153,12 @@ func _assemble_machine_states() -> void:
 
 ## Attaches callbacks to signals emitted by the extended script.
 func _bind_inherited_signals() -> void:
-  entity_moved.connect(_on_entity_moved);
+  pass
+
+
+## Attaches callbacks to signals emitted by owned components.
+func _bind_component_signals() -> void:
+  inventory.heart_container_completed.connect(_on_heart_container_completed);
 
 
 ## Attaches callbacks to input monitor signals.
@@ -256,6 +265,21 @@ func get_action_from_brace_interact_input() -> FieldActionSchedule:
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns the last grid position the player inhabited.
+func get_last_position() -> Vector2i:
+  return _last_position;
+
+
+## Returns the last player-inhabited grid position that was safe to stand on.
+func get_last_safe_position() -> Vector2i:
+  return _last_safe_position;
+
+
+## Sets the player's reset position, where they respawn on death or sleep, to [param pos].
+func set_revive_point(pos: Vector2i) -> void:
+  _revive_position = pos;
+
+
 ## Returns the number of steps the player can take over pits before falling.
 func get_air_steps_remaining() -> int:
   return _air_steps_remaining;
@@ -264,7 +288,7 @@ func get_air_steps_remaining() -> int:
 ## Resets to full the [Player2D]'s air steps.
 func reset_air_steps_remaining() -> void:
   _air_steps_remaining = (
-    # FIXME Get these numbers from a constants file somewhere.
+    # [FIXME] Get these numbers from a constants file somewhere.
     1 if inventory.has_equipment(PlayerEquipment.wings)
     else 0
   );
@@ -281,7 +305,7 @@ func start_coyote_fall() -> void:
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
 ## player is sent back to their last checkpoint and the world's state is reset. [br]
-func trigger_rest_and_reset_state() -> void:
+func trigger_sleep() -> void:
   _state_machine.switch_to(_state_sleep);
 
 
@@ -321,6 +345,29 @@ func wait_until_affairs_settled_async():
     await _affairs_settled;
 
 
+## Resets to full all player stats that represent exhaustion, such as HP.
+func replenish_all() -> void:
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.set_hp_to_full();
+
+
+## Moves the player to the last checkpoint position, resets their health and animation
+## state.
+func _send_player_back_to_checkpoint() -> void:
+  grid_position = _revive_position;
+  faced_direction = Vector2i.DOWN;
+
+  replenish_all();
+  Events.board_reset_declared.emit();
+
+  # [TODO] This should be a 'wake up' animation.
+  set_animation_state('idle');
+
+
+## Returns a reference to the player's screen-space shader interface.
+func get_screen_shader() -> ScreenSpaceShader:
+  return _shader_rect;
+
 
 ## Sets the animation state to `param state_key`.
 func set_animation_state(state_key: StringName) -> void:
@@ -331,7 +378,7 @@ func set_animation_state(state_key: StringName) -> void:
 ## Sets the animation state to a variant of the idle animation dependent on environment
 ## context.
 func _trigger_idle_animation_state() -> void:
-  # TODO Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
+  # [TODO] Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
   if ActionUtils.place_is_idleable(grid_position, self):
     set_animation_state('idle');
   else:
@@ -358,7 +405,7 @@ func retrigger_animation_state() -> void:
 
 ## Resets the animation state to the idle animation set.
 func _on_animation_finished(_from_animation: StringName = '') -> void:
-  # FIXME This function is not necessary anymore. 'injured' is a state now.
+  # [FIXME] This function is not necessary anymore. 'injured' is a state now.
   #  'item_get!' should also be a state.
   var non_resetting_states: Array[StringName] = [
     &'item_get!',
@@ -378,9 +425,9 @@ func _connect_to_ui_subsystems() -> void:
   _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
 
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.value_changed.connect(_on_health_changed);
-  health_component.empty.connect(_on_health_empty);
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.value_changed.connect(_on_health_changed);
+  health.empty.connect(_on_health_empty);
 
 
 ## Returns the [FieldAction] variant the [Player2D] will use for movement.
@@ -470,12 +517,32 @@ func _on_health_empty() -> void:
   _state_machine.switch_to(_state_death);
 
 
-func _on_entity_moved() -> void:
-  if ActionUtils.place_is_idleable(grid_position, self):
-    _last_safe_position = grid_position;
+## Handler for when the player's inventory has a new number of fully complete heart
+## containers.
+func _on_heart_container_completed() -> void:
+  # [TODO] Some of this ought to be... inside the HealthComponent maybe? A wrapper
+  #   to such, maybe?
+  var base_containers := 2;
+  var total_containers := inventory.get_heart_containers_count() + base_containers;
+  var total_max_hp := 2 * total_containers;
+
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+
+  var new_max_hp := total_max_hp - health.maximum;
+  health.maximum = total_max_hp;
+  health.value += new_max_hp;
+
+
+func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
+  super._on_grid_position_changed(to_pos, from_pos);
+
+  _last_position = from_pos;
+
+  if ActionUtils.place_is_idleable_and_sturdy(to_pos, self):
+    _last_safe_position = to_pos;
     reset_air_steps_remaining();
 
-  # FIXME Consider that this is a side-effect. Are we sure this won't interfere with
+  # [FIXME] Consider that this is a side-effect. Are we sure this won't interfere with
   #   FieldAction scripted animations? They set an animation, then move the actor, not
   #   realizing that movement also sets the animation?
   #
@@ -508,7 +575,7 @@ func _state_idle__exit() -> void:
 func _state_idle__input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
-  
+
   elif Input.is_action_pressed('brace'):
     if event.is_action_pressed('interact'):
       var action_schedule := get_action_from_brace_interact_input();
@@ -555,7 +622,7 @@ func _state_coyote_fall() -> void:
 
   set_animation_state('coyote_fall');
 
-  # TODO A utils method for one-shot, auto-freeing Timers would be nice.
+  # [TODO] A utils method for one-shot, auto-freeing Timers would be nice.
   #   The get_tree() method is nice for waits, but if such a timer ever needs to be
   #   cancelled, it has nothing to work with.
   _coyote_fall_timer = Timer.new();
@@ -592,7 +659,7 @@ func _state_fall() -> void:
 
   hide();
 
-  # TODO A utils for creating one-shot vfx like this would be nice.
+  # [TODO] A utils for creating one-shot vfx like this would be nice.
   var fall_effect := _scene_object_fall.instantiate() as OneShotEffect;
   fall_effect.position = position;
   add_sibling(fall_effect);
@@ -602,9 +669,9 @@ func _state_fall() -> void:
 
   show();
 
-  # FIXME Put this damn thing in an @onready already.
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.value -= 1;
+  # [FIXME] Put this damn thing in an @onready already.
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.value -= 1;
 
   _settle_affairs();
 
@@ -618,36 +685,13 @@ func _state_death() -> void:
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
 
-  var fade_out_time := 1.5;
-  var fade_in_time := 1.0;
-  var fade_transition := Tween.TRANS_SINE;
+  await _shader_rect.fade_out_async(1.5, 0.5);
 
-  # Fade out.
-  await get_tree().create_timer(0.5).timeout;
-  var fade_tween := get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_IN);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
-  await fade_tween.finished;
+  _send_player_back_to_checkpoint();
 
-  # Reset player state.
-  set_animation_state('idle');
-  grid_position = _starting_position;
-  faced_direction = Vector2i.DOWN;
-
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.set_hp_to_full();
-
-  # Fade in.
-  await get_tree().create_timer(3.0).timeout;
-  fade_tween = get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_OUT);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_in_time);
-  await fade_tween.finished;
+  await _shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-
   _settle_affairs();
 
 
@@ -659,44 +703,17 @@ func _state_death() -> void:
 func _state_sleep() -> void:
   _unsettle_affairs();
 
-  # TODO The reset logic here can be factored out. Only the player animation is different.
-  #region Death Reset copy
   _interrupt_ui_subsystems();
-  # set_animation_state('injured');
-  # $Audio/PlayerHurt.play();
+  # [TODO] Play a sleeping animation.
+  # set_animation_state('falling_asleep');
 
-  var fade_out_time := 1.5;
-  var fade_in_time := 1.0;
-  var fade_transition := Tween.TRANS_SINE;
+  await _shader_rect.fade_out_async(1.5, 0.5);
 
-  # Fade out.
-  await get_tree().create_timer(0.5).timeout;
-  var fade_tween := get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_IN);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 1.0, 0.0, fade_out_time);
-  await fade_tween.finished;
+  _send_player_back_to_checkpoint();
 
-  # Reset player state.
-  set_animation_state('idle');
-  grid_position = _starting_position;
-  faced_direction = Vector2i.DOWN;
-
-  # TODO This seems like it should be a property of checkpoints, and not necessarily put here?
-  var health_component := Component.get_component(self, HealthComponent) as HealthComponent;
-  health_component.set_hp_to_full();
-
-  # Fade in.
-  await get_tree().create_timer(3.0).timeout;
-  fade_tween = get_tree().create_tween();
-  fade_tween.set_trans(fade_transition);
-  fade_tween.set_ease(Tween.EASE_OUT);
-  fade_tween.tween_method(_shader_rect.set_fade_in, 0.0, 1.0, fade_in_time);
-  await fade_tween.finished;
+  await _shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-  #endregion Death Reset copy
-
   _settle_affairs();
 
 

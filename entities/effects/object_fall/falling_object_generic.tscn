@@ -41,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hrbcm")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall",
 "speed": 8.0
 }]

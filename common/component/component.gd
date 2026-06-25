@@ -7,7 +7,7 @@ class_name Component
 ##
 ## [param component_type] should be an object instance or a class reference to any type
 ## that extends [BaseComponent].
-static func has_component(node: Node, component_type: Variant) -> bool:
+static func has(node: Node, component_type: Variant) -> bool:
   if not node:
     return false;
 
@@ -18,7 +18,7 @@ static func has_component(node: Node, component_type: Variant) -> bool:
 ## as the metadata key. [br]
 ##
 ## [param component] should be an object instance of any type that extends [BaseComponent].
-static func set_component(node: Node, component: BaseComponent) -> void:
+static func setc(node: Node, component: BaseComponent) -> void:
   if not node:
     return;
 
@@ -32,7 +32,7 @@ static func set_component(node: Node, component: BaseComponent) -> void:
 ##
 ## [param component_type] should be an object instance or a class reference to any type
 ## that extends [BaseComponent].
-static func get_component(node: Node, component_type: Variant) -> BaseComponent:
+static func getc(node: Node, component_type: Variant) -> BaseComponent:
   if not node:
     push_error("Cannot get a component from a null value.");
     return null;
@@ -41,12 +41,32 @@ static func get_component(node: Node, component_type: Variant) -> BaseComponent:
   return node.get_node(node_path);
 
 
+## Returns a filtered list of all [param component_type] objects held by [param nodes].
+## Note that this means the returned list of components may be empty even when
+## [param nodes] is not. [br]
+##
+## [param component_type] should be an object instance or a class reference to any type
+## that extends [BaseComponent].
+static func get_all(nodes: Array, component_type: Variant) -> Array[BaseComponent]:
+  var components: Array[BaseComponent];
+
+  for node in nodes:
+    if (
+        node is not Node
+        or not Component.has(node, component_type)
+    ):
+      continue;
+    components.append(Component.getc(node, component_type));
+
+  return components;
+
+
 ## Removes the [param component_type] registered to [param node], or if no component
 ## exists, does nothing. [br]
 ##
 ## [param component_type] should be an object instance or a class reference to any type
 ## that extends [BaseComponent].
-static func remove_component(node: Node, component_type: Variant) -> void:
+static func remove(node: Node, component_type: Variant) -> void:
   if not node:
     return;
 

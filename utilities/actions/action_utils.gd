@@ -6,7 +6,8 @@ class_name ActionUtils
 ## Returns true if [param cell] has any inhabiting entity that is collidable. If given,
 ## [param self_entity] will not count toward a cell's collidable objects.
 static func cell_has_collidables(cell: Grid.Cell, self_entity: GridEntity = null) -> bool:
-  return cell.entities \
+  var entities := get_entities_from_cell(cell);
+  return entities \
     .any(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 
@@ -37,7 +38,8 @@ static func get_collidable_entities_at(place: Vector2i, self_entity: GridEntity 
 ## given [param cell]. If provided, [param self_entity] will be excluded from the returned
 ## list.
 static func get_collidable_entities_from_cell(cell: Grid.Cell, self_entity: GridEntity = null) -> Array[GridEntity]:
-  return cell.entities \
+  var entities := get_entities_from_cell(cell);
+  return entities \
     .filter(func (entity: GridEntity): return entity != self_entity and entity.solid);
 
 
@@ -68,30 +70,78 @@ static func get_direction_to_target(from: Vector2, to: Vector2) -> Vector2i:
   return Vector2.from_angle(angle).round();
 
 
-## Returns a list of all [param component_type] that exist among [param entities].
-static func get_entity_components(entities: Array[GridEntity], component_type: Variant) -> Array:
-  return entities \
-    .filter(func (entity: GridEntity): return Component.has_component(entity, component_type)) \
-    .map(func (entity: GridEntity): return Component.get_component(entity, component_type));
+## Returns a list of [GridEntity] objects held by [param cell].
+static func get_entities_from_cell(cell: Grid.Cell) -> Array[GridEntity]:
+  var entities: Array[GridEntity];
+  entities.assign(cell.objects.filter(func (object): return object is GridEntity));
+  return entities;
 
 
-## Returns a list of all [HealthComponent] that exist among [param entities].
-static func get_entity_health_components(entities) -> Array[HealthComponent]:
-  var components: Array[HealthComponent];
-  components.assign(get_entity_components(entities, HealthComponent));
-  return components;
+## Returns an array of [Vector2i] grid positions that describe a travelable path from the
+## [param actor]'s current position to the [param target_pos] (not inclusive of the
+## actor's current position). [br]
+##
+## If no path could be found, including if the target position is uninhabitable, the
+## returned array will be empty. [br]
+##
+## [param place_is_path_viable] Returns a boolean regarding whether a grid position may be
+## included as part of the returned path. Has the signature:
+## [codeblock] func (place: Vector2i) -> bool [/codeblock]
+static func get_path_to_target(
+    actor: GridEntity,
+    target_pos: Vector2i,
+    within_distance: int,
+    place_is_path_viable: Callable,
+) -> Array[Vector2i]:
+  # [TODO] Can/should this use Godot's built-in AStar2D class?
+  #   AStar is generic enough to handle my custom Grid class, it just needs a bit
+  #   map-to-map conversion.
 
+  # Skip all work if target_pos is not a reachable position.
+  if not place_is_path_viable.call(target_pos):
+    return [] as Array[Vector2i];
 
-## Returns an array of [Vector2i] instructions that if followed would lead [param actor]
-## to [param target_pos]. If no path could be found, the returned array will be empty.
-static func get_path_to_target(actor: GridEntity, target_pos: Vector2i) -> Array[Vector2i]:
-  # IMPLEMENT Use QueueSearch to build a path toward a breadth-found target.
-  # TODO Or use Godot's built-in AStar2D class.
-  #  AStar is generic enough to handle my custom Grid class, it just needs a bit map-to-map
-  #  conversion.
+  var checked_grid_positions := {} as Dictionary[Vector2i, bool];
 
-  print('make the warnings stop: ', actor, target_pos);
-  return [];
+  # The predicate for a QueueSearch that builds a path to the target position.
+  var search_predicate := (func (cursor: Vector2i, path_to_target: Array[Vector2i]):
+    if (
+      path_to_target.size() > within_distance
+      or not place_is_path_viable.call(cursor)
+      or checked_grid_positions.get(cursor) == true
+    ):
+      return QueueSearch.none();
+
+    checked_grid_positions.set(cursor, true);
+
+    var new_path := path_to_target.duplicate();
+    new_path.append(cursor);
+
+    if cursor == target_pos:
+      return QueueSearch.result(new_path);
+
+    return QueueSearch.additions([
+      cursor + Vector2i.UP,
+      cursor + Vector2i.DOWN,
+      cursor + Vector2i.LEFT,
+      cursor + Vector2i.RIGHT,
+    ], new_path);
+  );
+
+  var path = QueueSearch.search(
+    QueueSearch.Mode.BreadthFirst,
+    actor.grid_position,
+    [] as Array[Vector2i],
+    search_predicate,
+  );
+
+  if not path:
+    path = [] as Array[Vector2i];
+
+  # Remove the actor's current position.
+  path.pop_front();
+
+  return path;
 
 
 ## @nullable [br]
@@ -114,7 +164,7 @@ static func place_is_floor(place: Vector2i) -> bool:
   return cell_is_floor(cell);
 
 
-## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
+## Returns true if the cell at [param place] is standable ground and free of obstructions.
 static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
@@ -122,6 +172,16 @@ static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
       cell_is_floor(cell)
       or place_has_standable_grid_entity(place)
     )
+    and not cell_has_collidables(cell, self_entity)
+  );
+
+
+## Returns true if the cell at [param place] is sturdy ground (e.g. excluding glass tiles)
+## and free of obstructions.
+static func place_is_idleable_and_sturdy(place: Vector2i, self_entity: GridEntity) -> bool:
+  var cell := Grid.get_cell(place);
+  return (
+    cell_is_floor(cell)
     and not cell_has_collidables(cell, self_entity)
   );
 

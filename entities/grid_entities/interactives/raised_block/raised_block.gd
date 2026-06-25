@@ -24,6 +24,7 @@ func _ready() -> void:
 
 func _bind_event_handlers() -> void:
   Events.round_passed.connect(_on_round_passed);
+  Events.board_reset_declared.connect(_on_board_reset_declared);
 
 
 func _bind_stimulus_callbacks() -> void:
@@ -32,6 +33,11 @@ func _bind_stimulus_callbacks() -> void:
   _stimulus_event_map.add_events({
     Stimulus.bumped: _on_bumped,
   });
+
+
+func _on_board_reset_declared() -> void:
+  # [FIXME] Other player created objects would have to implement this manually, which is annoying.
+  queue_free();
 
 
 ## Uses the turn system to measure the recovery of bump damage over time.

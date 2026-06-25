@@ -83,7 +83,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2xg4i")
 }],
-"loop": false,
+"loop": 0,
 "name": &"push_right",
 "speed": 14.0
 }, {
@@ -109,7 +109,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6d2nk")
 }],
-"loop": false,
+"loop": 0,
 "name": &"push_up",
 "speed": 14.0
 }]

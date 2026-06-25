@@ -28,7 +28,4 @@ func _give_magic_to_player(player: Player2D) -> void:
   var magic_item := _draw_point.magic_item.duplicate();
   player.inventory.add_item(magic_item);
 
-  # TODO If such a message is logged, it should probably be logged by the inventory itself.
-  print("%s obtained %s %s..." % [player.name, magic_item.quantity, magic_item.action.action_name]);
-
   _draw_point.deactivate();

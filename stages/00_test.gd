@@ -9,6 +9,6 @@ func _ready() -> void:
 
   audio_player.volume_linear = 0.0;
 
-  var volume_tween := get_tree().create_tween();
+  var volume_tween := create_tween();
   volume_tween.tween_property(audio_player, "volume_linear", 1.0, 4.0);
   volume_tween.play();
