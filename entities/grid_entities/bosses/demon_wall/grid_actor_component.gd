@@ -2,6 +2,9 @@
 extends GridActorComponent
 
 
+const _scene_growl_audio := preload('uid://gefct2wfm524');
+
+
 @export var hurt_trigger_container: Node;
 
 @export var wall_spot_container: Node;
@@ -71,6 +74,8 @@ func _on_activated() -> void:
 
   for node in spikes_container.get_children():
     node.show();
+  
+  AudioBus.play_audio_scene(_scene_growl_audio, 0.85);
 
 
 func _on_turn_timer_timeout() -> void:

@@ -35,6 +35,7 @@
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
+[ext_resource type="Script" uid="uid://db2b6araio8t2" path="res://stages/scary_growl_trigger_box.gd" id="34_xa6am"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -1509,6 +1510,13 @@ position = Vector2(464, 48)
 
 [node name="BoulderEntity47" parent="Interactives Container/BossBoulders" unique_id=588945400 instance=ExtResource("10_jadfo")]
 position = Vector2(416, 48)
+
+[node name="ScaryGrowl_TriggerBox" type="Node2D" parent="Interactives Container" unique_id=815339002]
+position = Vector2(112, 80)
+script = ExtResource("34_xa6am")
+_trigger_box_rect = Rect2i(0, 0, 3, 1)
+_trigger_box_color = Color(1, 1, 0, 1)
+metadata/_custom_type_script = "uid://cs2jx75045p66"
 
 [node name="HeartPiecePickup" parent="Interactives Container" unique_id=373335349 instance=ExtResource("22_1sjut")]
 position = Vector2(112, 304)

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://gefct2wfm524"]
+
+[ext_resource type="AudioStream" uid="uid://du71cljbupthg" path="res://assets/audio/music/scary_growl.ogg" id="1_j0ime"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_sm414"]
+
+[node name="ScaryGrowl" type="AudioStreamPlayer" unique_id=452906041]
+stream = ExtResource("1_j0ime")
+bus = &"SoundEffects"
+script = ExtResource("2_sm414")

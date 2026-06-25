@@ -6,8 +6,9 @@ func _ready() -> void:
   Events.one_shot_sound_emitted.connect(_on_one_shot_sound_emitted);
 
 
-func play_audio_scene(scene: PackedScene) -> AudioStreamPlayer:
+func play_audio_scene(scene: PackedScene, volume: float = 1.0) -> AudioStreamPlayer:
   var audio_instance: AudioStreamPlayer = scene.instantiate();
+  audio_instance.volume_linear = volume;
   add_child(audio_instance);
 
   if not audio_instance.playing:
