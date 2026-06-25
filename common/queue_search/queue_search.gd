@@ -216,11 +216,11 @@ static func _pop_next_cursor(search_queue: Array[NodeCursor], search_mode: Mode)
 
 
 ## Modifies [param search_queue] to append [NodeCursor] objects built from [param additions].
-static func _append_additions_to_queue(search_queue: Array[NodeCursor], additions: QueueAdditions) -> void:
+static func _append_additions_to_queue(search_queue: Array[NodeCursor], new_additions: QueueAdditions) -> void:
   var new_cursors: Array[NodeCursor];
 
-  for value in additions.values:
-    new_cursors.append(NodeCursor.new(value, additions.accumulator));
+  for value in new_additions.values:
+    new_cursors.append(NodeCursor.new(value, new_additions.accumulator));
 
   search_queue.append_array(new_cursors);
 
