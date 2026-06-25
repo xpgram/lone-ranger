@@ -70,7 +70,7 @@ func _reconfigure_message_positions() -> void:
     var message := _queue[index];
     var new_y_position := size.y + _get_message_y_displacement(index);
 
-    var y_tween := get_tree().create_tween();
+    var y_tween := create_tween();
     y_tween.set_trans(Tween.TRANS_QUAD);
     y_tween.tween_property(message, 'position:y', new_y_position, _message_tween_time);
 

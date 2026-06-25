@@ -18,7 +18,7 @@ func _on_entered(entity: GridEntity) -> void:
   if _alpha_tween:
     _alpha_tween.kill();
 
-  _alpha_tween = get_tree().create_tween();
+  _alpha_tween = create_tween();
   _alpha_tween.set_trans(Tween.TRANS_QUAD);
   _alpha_tween.tween_property(self, 'modulate:a', 1.0, 1.5);
 
@@ -30,6 +30,6 @@ func _on_exited(entity: GridEntity) -> void:
   if _alpha_tween:
     _alpha_tween.kill();
 
-  _alpha_tween = get_tree().create_tween();
+  _alpha_tween = create_tween();
   _alpha_tween.set_trans(Tween.TRANS_QUAD);
   _alpha_tween.tween_property(self, 'modulate:a', 0.0, 1.5);

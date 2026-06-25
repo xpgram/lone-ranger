@@ -26,7 +26,7 @@ func _ready() -> void:
 func _trigger_animation_async() -> void:
   await get_tree().create_timer(linger_time).timeout;
 
-  var _alpha_tween := get_tree().create_tween();
+  var _alpha_tween := create_tween();
   _alpha_tween.tween_property(self, 'modulate:a', 0.0, fadeout_time);
   await _alpha_tween.finished;
 

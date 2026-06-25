@@ -56,7 +56,7 @@ func _update_track_volumes() -> void:
 func _reset_tween() -> void:
   if _interpolation_tween:
     _interpolation_tween.kill();
-  _interpolation_tween = get_tree().create_tween();
+  _interpolation_tween = create_tween();
 
 
 func _on_enemy_appeared() -> void:

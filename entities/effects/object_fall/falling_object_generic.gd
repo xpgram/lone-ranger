@@ -7,7 +7,7 @@ const _scene_object_fall_audio := preload('uid://wk5w0neyylsi');
 func _ready() -> void:
   super._ready();
 
-  var downward_tween := get_tree().create_tween();
+  var downward_tween := create_tween();
   downward_tween.tween_method(set_position_y, position.y, position.y + 3, 0.75);
 
   AudioBus.play_audio_scene(_scene_object_fall_audio);

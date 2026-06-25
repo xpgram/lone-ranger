@@ -83,7 +83,7 @@ func pulse_color(screen_pulse_color: Color, screen_pulse_gradient_end := NULL_CO
 
 ## Tweens the fade_in property from [param from] to [param to] over [param time] seconds.
 func _tween_fade_in_async(from: float, to: float, time: float) -> void:
-  var fade_tween := get_tree().create_tween();
+  var fade_tween := create_tween();
   fade_tween.set_trans(Tween.TRANS_SINE);
   fade_tween.set_ease(Tween.EASE_IN);
   fade_tween.tween_method(set_fade_in, from, to, time);
