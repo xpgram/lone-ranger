@@ -16,7 +16,7 @@ func play_audio_scene(scene: PackedScene) -> AudioStreamPlayer:
   return audio_instance;
 
 
-func play_dynamic_audio_scene(scene: PackedScene) -> void:
+func play_dynamic_audio_scene(_scene: PackedScene) -> void:
   # [TODO] scene is of a special multi-track type that plays one or another
   #  audio track depending on its settings.
   pass
