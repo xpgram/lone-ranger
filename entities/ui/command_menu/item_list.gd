@@ -210,6 +210,9 @@ func _add_field_action_item(item: PlayerInventoryItem) -> void:
 func _self_select_item(index: int) -> void:
   _memory.cursor_index = clampi(index, 0, item_count - 1);
 
+  if _menu_content.size() == 0:
+    return;
+
   select(_memory.cursor_index);
   item_selected.emit(_memory.cursor_index);
 
@@ -221,6 +224,8 @@ func _on_draw_call() -> void:
 
 ## Moves the menu cursor graphic to the list-item at [param index].
 func _move_cursor_to_item(index: int) -> void:
+  if index >= _menu_content.size():
+    return;
   _menu_cursor_sprite.position.y = get_item_rect(index).get_center().y;
 
 
