@@ -33,7 +33,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
   var camera := get_parent() as Camera2D;
-  var mantissa := camera.global_position - Vector2(Vector2i(camera.global_position));
+  # var mantissa := camera.global_position - Vector2(Vector2i(camera.global_position));
   # material.set_shader_parameter('pixelizer_subpixel_offset', mantissa);
 
   material.set_shader_parameter('pixelate_rotation_deg', camera.rotation_degrees);
@@ -79,6 +79,27 @@ func pulse_color(screen_pulse_color: Color, screen_pulse_gradient_end := NULL_CO
   tween = create_tween();
   tween.tween_property(self, 'pulse_progress', 0.0, 0.5);
   await tween.finished;
+
+
+## Tweens the fade_in property from [param from] to [param to] over [param time] seconds.
+func _tween_fade_in_async(from: float, to: float, time: float) -> void:
+  var fade_tween := get_tree().create_tween();
+  fade_tween.set_trans(Tween.TRANS_SINE);
+  fade_tween.set_ease(Tween.EASE_IN);
+  fade_tween.tween_method(set_fade_in, from, to, time);
+  await fade_tween.finished;
+
+
+## Tweens the fade_in property from 1 to 0.
+func fade_out_async(time: float, delay: float) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_fade_in_async(1.0, 0.0, time);
+
+
+## Tweens the fade_in property from 0 to 1.
+func _fade_in_async(time: float, delay: float = 0) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_fade_in_async(0.0, 1.0, time);
 
 
 func set_fade_in(value: float) -> void:
