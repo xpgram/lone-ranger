@@ -19,7 +19,12 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   
   for entity in entities:
     # [FIXME] Incorrect check being used here.
-    # if entity.has_attribute('compactible_to_floor'):
+    #   This is, more or less, what the stimulus system is for.
+    #   Entities that react to being 'compacted' should define a 'spell_compact' stimulus.
+    #   compact.gd here only checks that there exist some entities which may react to
+    #   being compacted, and if so, asks them to call their own reaction via
+    #   Grid.send_stimulus or whatever I called it.
+
     if entity.name.begins_with('LooseParticles'):
       entity.queue_free();
 
