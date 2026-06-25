@@ -29,35 +29,8 @@ func _give_items_to_actor(actor: Player2D) -> void:
   for item in chest.contents:
     actor.inventory.add_item(item);
 
-    # [TODO] If such a message is logged, it should probably be logged by the inventory itself.
-    var item_plural := 'items' if item.quantity > 1 else 'item';
-    var event_message := 'Got %s %s %s' % [item.quantity, item.action.action_name, item_plural];
-    Events.game_event_message_announced.emit(event_message);
-
   for equipment in chest.equipment_contents:
     actor.inventory.add_equipment(equipment);
-
-    # [TODO] If such a message is logged, it should probably be logged by the inventory itself.
-    var event_message := 'Got %s artefact' % [equipment.capitalize()];
-    Events.game_event_message_announced.emit(event_message);
-
-  # [FIXME] This is scuffed as hell, and should not be here.
-  if chest.heart_pieces > 0:
-    for i in range(chest.heart_pieces):
-      actor.inventory.add_equipment('heart_piece');
-
-    var total_heart_pieces: float = actor.inventory._equipment \
-      .filter(func (equipment): return equipment == 'heart_piece') \
-      .size();
-    # 2 HP is 1 heart container, but half containers are not allowed. Also, base is 2 containers.
-    var num_heart_containers := int(total_heart_pieces / 2) * 2 + 4;
-
-    var health := Component.getc(actor, HealthComponent) as HealthComponent;
-    health.maximum = num_heart_containers;
-
-    var piece_plural := 'pieces' if chest.heart_pieces > 1 else 'piece';
-    var event_message := 'Got %s heart %s!' % [chest.heart_pieces, piece_plural];
-    Events.game_event_message_announced.emit(event_message);
 
 
 ## Plays a scripted animation using [param actor].

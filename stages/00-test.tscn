@@ -944,15 +944,15 @@ contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_dar42")])
 
 [node name="Chest5" parent="Interactives Container" unique_id=1295511240 instance=ExtResource("36_pqjox")]
 position = Vector2(80, -208)
-heart_pieces = 1
+equipment_contents = Array[StringName]([&"heart_piece"])
 
 [node name="Chest7" parent="Interactives Container" unique_id=496387458 instance=ExtResource("36_pqjox")]
 position = Vector2(-80, 80)
-heart_pieces = 1
+equipment_contents = Array[StringName]([&"heart_piece"])
 
 [node name="Chest15" parent="Interactives Container" unique_id=1967242197 instance=ExtResource("36_pqjox")]
 position = Vector2(-384, 48)
-heart_pieces = 1
+equipment_contents = Array[StringName]([&"heart_piece"])
 
 [node name="Chest17" parent="Interactives Container" unique_id=1834259272 instance=ExtResource("36_pqjox")]
 position = Vector2(-656, 48)
@@ -960,19 +960,19 @@ contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_0mqgx")])
 
 [node name="Chest16" parent="Interactives Container" unique_id=1740159882 instance=ExtResource("36_pqjox")]
 position = Vector2(-816, 16)
-heart_pieces = 1
+equipment_contents = Array[StringName]([&"heart_piece"])
 
 [node name="Chest8" parent="Interactives Container" unique_id=1801639471 instance=ExtResource("36_pqjox")]
 position = Vector2(432, -240)
-heart_pieces = 1
+equipment_contents = Array[StringName]([&"heart_piece"])
 
 [node name="Chest6" parent="Interactives Container" unique_id=1770403711 instance=ExtResource("36_pqjox")]
 position = Vector2(576, 112)
-heart_pieces = 1
+equipment_contents = Array[StringName]([&"heart_piece"])
 
 [node name="Chest14" parent="Interactives Container" unique_id=78962433 instance=ExtResource("36_pqjox")]
 position = Vector2(-320, -368)
-heart_pieces = 1
+equipment_contents = Array[StringName]([&"heart_piece"])
 
 [node name="SpecialChest" parent="Interactives Container" unique_id=2016218541 instance=ExtResource("8_ycanp")]
 position = Vector2(496, 0)

@@ -97,6 +97,7 @@ func _ready() -> void:
 
   _assemble_machine_states();
   _bind_inherited_signals();
+  _bind_component_signals();
   _bind_input_signals();
 
   _connect_to_ui_subsystems();
@@ -153,6 +154,11 @@ func _assemble_machine_states() -> void:
 ## Attaches callbacks to signals emitted by the extended script.
 func _bind_inherited_signals() -> void:
   pass
+
+
+## Attaches callbacks to signals emitted by owned components.
+func _bind_component_signals() -> void:
+  inventory.heart_container_completed.connect(_on_heart_container_completed);
 
 
 ## Attaches callbacks to input monitor signals.
@@ -509,6 +515,22 @@ func _on_health_changed(value: int, old_value: int) -> void:
 ## Handler for when the player's HP is completely emptied.
 func _on_health_empty() -> void:
   _state_machine.switch_to(_state_death);
+
+
+## Handler for when the player's inventory has a new number of fully complete heart
+## containers.
+func _on_heart_container_completed() -> void:
+  # [TODO] Some of this ought to be... inside the HealthComponent maybe? A wrapper
+  #   to such, maybe?
+  var base_containers := 2;
+  var total_containers := inventory.get_heart_containers_count() + base_containers;
+  var total_max_hp := 2 * total_containers;
+
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+
+  var new_max_hp := total_max_hp - health.maximum;
+  health.maximum = total_max_hp;
+  health.value += new_max_hp;
 
 
 func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:

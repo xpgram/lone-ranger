@@ -10,17 +10,4 @@ func _on_collide(entity: GridEntity) -> void:
 
 
 func _add_heart_piece_to_player(player: Player2D) -> void:
-  # [FIXME] This is scuffed as hell, and should not be here. (borrowed from open_chest.gd)
-  player.inventory.add_equipment('heart_piece');
-
-  var total_heart_pieces: float = player.inventory._equipment \
-    .filter(func (equipment): return equipment == 'heart_piece') \
-    .size();
-  # 2 HP is 1 heart container, but half containers are not allowed. Also, base is 2 containers.
-  var num_heart_containers := int(total_heart_pieces / 2) * 2 + 4;
-
-  var health := Component.getc(player, HealthComponent) as HealthComponent;
-  health.maximum = num_heart_containers;
-
-  var event_message := 'Got 1 heart piece!';
-  Events.game_event_message_announced.emit(event_message);
+  player.inventory.add_equipment(PlayerEquipment.heart_piece);
