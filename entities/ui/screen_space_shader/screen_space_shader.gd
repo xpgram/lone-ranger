@@ -1,4 +1,4 @@
-##
+## An object interface for the screen-space shader applied to the player's camera view.
 class_name ScreenSpaceShader
 extends ColorRect
 
@@ -116,6 +116,25 @@ func set_fade_in(value: float) -> void:
 func set_silhoette_threshhold(value: float) -> void:
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('silhoette_threshhold', value);
+
+
+## Tweens the whiteout property from [param from] to [param to] over [param time] seconds.
+func _tween_whiteout_async(from: float, to: float, time: float) -> void:
+  var tween := create_tween();
+  tween.tween_method(set_silhoette_white_threshhold, from, to, time);
+  await tween.finished;
+
+
+## Tweens the white_silhoette property from none to whited-out.
+func white_out_async(time: float, delay: float = 0) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_whiteout_async(1.0, 0.4, time);
+
+
+## Tweens the white_silhoette property from whited-out to none.
+func white_in_async(time: float, delay: float = 0) -> void:
+  await get_tree().create_timer(delay).timeout;
+  await _tween_whiteout_async(0.4, 1.0, time);
 
 
 func set_silhoette_white_threshhold(value: float) -> void:

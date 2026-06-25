@@ -18,22 +18,16 @@ func perform_interaction_async(actor: GridEntity) -> void:
   if actor is not Player2D:
     return;
 
-  AudioBus.play_audio_scene(_scene_save_audio);
-
-  # FIXME I need some way of making the screen shader more accessible.
-  #  Uhh... I guess that's kinda what events are for? Hm.
+  var player := actor as Player2D;
+  var screen_shader := player.get_screen_shader();
   var whiteout_phase_time := 0.333;
-  var whiteout_tween := get_tree().create_tween();
-  whiteout_tween.tween_method(actor._shader_rect.set_silhoette_white_threshhold, 1.0, 0.4, whiteout_phase_time);
-  whiteout_tween.tween_callback(Events.board_reset_declared.emit);
-  whiteout_tween.tween_interval(whiteout_phase_time);
-  whiteout_tween.tween_method(actor._shader_rect.set_silhoette_white_threshhold, 0.4, 1.0, whiteout_phase_time);
-  whiteout_tween.play();
 
-  var health := Component.getc(actor, HealthComponent) as HealthComponent;
-  health.set_hp_to_full();
+  player.replenish_all();
+  player.set_checkpoint_position(player.grid_position);
 
-  # FIXME scuffed private variable access :p
-  actor._starting_position = save_idol.grid_position + Vector2i.DOWN;
+  AudioBus.play_audio_scene(_scene_save_audio);
+  await screen_shader.white_out_async(whiteout_phase_time);
 
-  await whiteout_tween.finished;
+  Events.board_reset_declared.emit();
+  
+  await screen_shader.white_in_async(whiteout_phase_time, whiteout_phase_time);

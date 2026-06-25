@@ -269,6 +269,11 @@ func get_last_safe_position() -> Vector2i:
   return _last_safe_position;
 
 
+## Sets the player's reset position, where they respawn on death or sleep, to [param pos].
+func set_checkpoint_position(pos: Vector2i) -> void:
+  _starting_position = pos;
+
+
 ## Returns the number of steps the player can take over pits before falling.
 func get_air_steps_remaining() -> int:
   return _air_steps_remaining;
@@ -335,7 +340,7 @@ func wait_until_affairs_settled_async():
 
 
 ## Resets to full all player stats that represent exhaustion, such as HP.
-func _replenish_all() -> void:
+func replenish_all() -> void:
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.set_hp_to_full();
 
@@ -346,11 +351,16 @@ func _send_player_back_to_checkpoint() -> void:
   grid_position = _starting_position;
   faced_direction = Vector2i.DOWN;
 
-  _replenish_all();
+  replenish_all();
   Events.board_reset_declared.emit();
 
   # [TODO] This should be a 'wake up' animation.
   set_animation_state('idle');
+
+
+## Returns a reference to the player's screen-space shader interface.
+func get_screen_shader() -> ScreenSpaceShader:
+  return _shader_rect;
 
 
 ## Sets the animation state to `param state_key`.
