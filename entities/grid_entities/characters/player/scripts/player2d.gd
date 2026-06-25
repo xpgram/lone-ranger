@@ -506,7 +506,7 @@ func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
 
   _last_position = from_pos;
 
-  if ActionUtils.place_is_idleable(to_pos, self):
+  if ActionUtils.place_is_idleable_and_sturdy(to_pos, self):
     _last_safe_position = to_pos;
     reset_air_steps_remaining();
 

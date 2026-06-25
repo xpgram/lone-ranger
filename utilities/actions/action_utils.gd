@@ -164,7 +164,7 @@ static func place_is_floor(place: Vector2i) -> bool:
   return cell_is_floor(cell);
 
 
-## Returns true if the cell at [param place] is sturdy ground and free of obstructions.
+## Returns true if the cell at [param place] is standable ground and free of obstructions.
 static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
@@ -172,6 +172,16 @@ static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
       cell_is_floor(cell)
       or place_has_standable_grid_entity(place)
     )
+    and not cell_has_collidables(cell, self_entity)
+  );
+
+
+## Returns true if the cell at [param place] is sturdy ground (e.g. excluding glass tiles)
+## and free of obstructions.
+static func place_is_idleable_and_sturdy(place: Vector2i, self_entity: GridEntity) -> bool:
+  var cell := Grid.get_cell(place);
+  return (
+    cell_is_floor(cell)
     and not cell_has_collidables(cell, self_entity)
   );
 
