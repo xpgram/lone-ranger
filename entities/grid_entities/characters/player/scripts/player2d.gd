@@ -382,6 +382,7 @@ func trigger_idle_animation_state() -> void:
   if (
       not ActionUtils.place_is_standable(grid_position)
       and inventory.has_equipment(PlayerEquipment.wings)
+      and _air_steps_remaining >= 0
   ):
     set_animation_state('flying');
   else:
@@ -561,8 +562,8 @@ func _facing_changed() -> void:
 func _on_free_fall() -> void:
   if _air_steps_remaining <= 0:
     _state_machine.switch_to(_state_fall);
-  else:
-    _air_steps_remaining -= 1;
+
+  _air_steps_remaining -= 1;
 
 
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be
@@ -659,6 +660,8 @@ func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
 ## into a pit or hole.
 func _state_fall() -> void:
   _unsettle_affairs();
+
+  await get_tree().create_timer(0.25).timeout;
 
   hide();
 
