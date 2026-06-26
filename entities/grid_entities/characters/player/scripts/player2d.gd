@@ -361,7 +361,7 @@ func _send_player_back_to_checkpoint() -> void:
   Events.board_reset_declared.emit();
 
   # [TODO] This should be a 'wake up' animation.
-  set_animation_state('idle');
+  trigger_idle_animation_state();
 
 
 ## Returns a reference to the player's screen-space shader interface.
@@ -417,7 +417,7 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
   if current_animation_state in non_resetting_states:
     return;
 
-  set_animation_state('idle');
+  trigger_idle_animation_state();
 
 
 ## Makes signal connections to the player's [CommandMenu] and [FieldCursor] instances.

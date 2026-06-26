@@ -34,9 +34,9 @@ func _give_items_to_actor(actor: Player2D) -> void:
 
 
 ## Plays a scripted animation using [param actor].
-func _play_animation_async(actor: Player2D) -> void:
-  actor.set_animation_state('item_get!');
+func _play_animation_async(player: Player2D) -> void:
+  player.set_animation_state('item_get!');
   await get_tree().create_timer(1.0).timeout;
-  actor.set_animation_state('idle');
+  player.trigger_idle_animation_state();
 
   # [TODO] This should trigger a dialogue box, shouldn't it?
