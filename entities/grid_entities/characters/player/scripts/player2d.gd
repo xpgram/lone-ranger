@@ -379,10 +379,13 @@ func set_animation_state(state_key: StringName) -> void:
 ## context.
 func _trigger_idle_animation_state() -> void:
   # [TODO] Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
-  if ActionUtils.place_is_idleable(grid_position, self):
-    set_animation_state('idle');
-  else:
+  if (
+      not ActionUtils.place_is_standable(grid_position)
+      and inventory.has_equipment(PlayerEquipment.wings)
+  ):
     set_animation_state('flying');
+  else:
+    set_animation_state('idle');
 
 
 ## Sets the player avatar's handheld item type to [param item_type].

@@ -158,20 +158,26 @@ static func place_has_standable_grid_entity(place: Vector2i) -> bool:
   return entities.any(func (entity: GridEntity): return entity.standable);
 
 
-## Returns true if the cell at [param place] is a pit-type tile.
+## Returns true if the cell at [param place] is a floor-type tile.
 static func place_is_floor(place: Vector2i) -> bool:
   var cell := Grid.get_cell(place);
   return cell_is_floor(cell);
+
+
+## Returns true if the cell at [param place] is standable ground.
+static func place_is_standable(place: Vector2i) -> bool:
+  var cell := Grid.get_cell(place);
+  return (
+    cell_is_floor(cell)
+    or place_has_standable_grid_entity(place)
+  );
 
 
 ## Returns true if the cell at [param place] is standable ground and free of obstructions.
 static func place_is_idleable(place: Vector2i, self_entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
-    (
-      cell_is_floor(cell)
-      or place_has_standable_grid_entity(place)
-    )
+    place_is_standable(place)
     and not cell_has_collidables(cell, self_entity)
   );
 
@@ -192,7 +198,7 @@ static func place_is_obstructed(place: Vector2i) -> bool:
   return cell_is_wall(cell) or cell_has_collidables(cell);
 
 
-## Returns true if the cell at [param place] is a floor-type tile.
+## Returns true if the cell at [param place] is a pit-type tile.
 static func place_is_pit(place: Vector2i) -> bool:
   var cell := Grid.get_cell(place);
   return cell_is_pit(cell);
@@ -205,6 +211,7 @@ static func place_is_transparent(place: Vector2i) -> bool:
 
 
 ## Returns true if the cell at [param place] is free of obstructions.
+## Note that this is not restricted to 'standable' locations.
 static func place_is_traversable(place: Vector2i, _entity: GridEntity) -> bool:
   var cell := Grid.get_cell(place);
   return (
