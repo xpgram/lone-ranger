@@ -377,7 +377,7 @@ func set_animation_state(state_key: StringName) -> void:
 
 ## Sets the animation state to a variant of the idle animation dependent on environment
 ## context.
-func _trigger_idle_animation_state() -> void:
+func trigger_idle_animation_state() -> void:
   # [TODO] Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
   if (
       not ActionUtils.place_is_standable(grid_position)
@@ -551,7 +551,7 @@ func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
   #
   #   The falling state is handled via Stimulus, maybe resting neatly on solid ground
   #   should also trigger a Stimulus.
-  _trigger_idle_animation_state();
+  trigger_idle_animation_state();
 
 
 func _facing_changed() -> void:
@@ -568,7 +568,7 @@ func _on_free_fall() -> void:
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be
 ## accessed from here.
 func _state_idle() -> void:
-  _trigger_idle_animation_state();
+  trigger_idle_animation_state();
 
 
 func _state_idle__exit() -> void:

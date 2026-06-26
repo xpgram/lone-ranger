@@ -80,7 +80,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
     #  appropriate here. Player2D should be the one returning to its pre-one-shot state.
     #
     #  Also, not all animations are one-shots.
-    actor.set_animation_state('idle');
+    actor.trigger_idle_animation_state()
 
   # [TODO] If hitchable, animate player toward hitch spot
   #   I need to animate the avatar, not the GridEntity: I don't want to trigger fall stimulations, etc.
