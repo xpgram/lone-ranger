@@ -1,4 +1,4 @@
-##
+## A static library for common vector operations not covered by the Godot standard set.
 class_name VectorUtils
 
 
