@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
 [ext_resource type="Resource" uid="uid://d3abxrfst60nr" path="res://utilities/actions/field_actions/resources/rest_action.tres" id="5_p4sl8"]
-[ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="10_jru4w"]
+[ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://common/input_focus/focusable_control.gd" id="10_jru4w"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]

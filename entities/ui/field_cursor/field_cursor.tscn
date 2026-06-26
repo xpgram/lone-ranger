@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dcydrh78pwl4"]
 
 [ext_resource type="Script" uid="uid://qahld4djrvxi" path="res://entities/ui/field_cursor/field_cursor.gd" id="1_k062e"]
-[ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://utilities/nodes/focusable_control.gd" id="1_xa4pa"]
+[ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://common/input_focus/focusable_control.gd" id="1_xa4pa"]
 [ext_resource type="Texture2D" uid="uid://cai16n3tebrgw" path="res://assets/textures_unused/system/field_cursor/field-cursor-fringed-0.png" id="2_rivf3"]
 [ext_resource type="Texture2D" uid="uid://wyuwramwiljn" path="res://assets/textures_unused/system/field_cursor/field-cursor-fringed-1.png" id="3_uee3l"]
 [ext_resource type="Texture2D" uid="uid://dhilxipjbd4he" path="res://assets/textures_unused/system/field_cursor/field-cursor-fringed-2.png" id="4_7l4j4"]
