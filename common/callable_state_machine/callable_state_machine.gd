@@ -42,6 +42,14 @@ extends RefCounted
 #     state_machine.set_state_type(PlayerState.new);
 #   And this would set the constructor used for new CallableState types?
 
+# [TODO] I added a usage example to player2d.gd. Note that I don't really like it.
+#   It's too bare. I don't feel like it tells me enough.
+#   I should try to like it before dismissing it completely, but... yeah, I dunno.
+#   PlayerState.new([...])
+#   PlayerState.new([...])
+#   PlayerState.new([...])
+#   ^ This does actually feel better to me.
+
 
 ## The name of this state machine, for debugging purposes.
 var _machine_name: String;

@@ -123,29 +123,23 @@ func _on_move_input(input_vector: Vector2i) -> void:
 
 ## Builds the Player2D state machine out of its state-related functions.
 func _assemble_machine_states() -> void:
+  _state_machine.set_callable_constructor(PlayerState.new);
+
   _state_machine.add_states([
-    PlayerState.new([
+    [
       _state_idle,
       _state_idle__input,
-      _state_idle__move_input
-    ]),
-    PlayerState.new([
-      _state_injured,
-    ]),
-    PlayerState.new([
+      _state_idle__move_input,
+    ],
+    [_state_injured],
+    [
       _state_coyote_fall,
       _state_coyote_fall__exit,
-      _state_coyote_fall__move_input
-    ]),
-    PlayerState.new([
-      _state_fall,
-    ]),
-    PlayerState.new([
-      _state_death,
-    ]),
-    PlayerState.new([
-      _state_sleep,
-    ]),
+      _state_coyote_fall__move_input,
+    ],
+    [_state_fall],
+    [_state_death],
+    [_state_sleep],
   ]);
 
   _state_machine.switch_to(_state_idle);
