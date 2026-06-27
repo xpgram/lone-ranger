@@ -99,12 +99,13 @@ func add_states(collection: Array[Array]) -> void:
 ##  ]);
 ## [/codeblock]
 func add_states_with_keys(collection: Array[Array]) -> void:
-  # [FIXME] I forget, does GDSCript have destructuring like this?
-  for [key, callables] in collection:
-    for callable in callables:
+  for state_args in collection:
+    var state_key: Variant = state_args[0];
+    var state_callables: Array = state_args[1];
+    for callable in state_callables:
       assert(callable is Callable,
         "State method was not of type Callable.");
-    add_state(callables, key);
+    add_state(state_callables, state_key);
 
 
 ## Adds a [CallableState] object to the machine's dictionary of states.
