@@ -49,6 +49,10 @@ extends RefCounted
 #   PlayerState.new([...])
 #   PlayerState.new([...])
 #   ^ This does actually feel better to me.
+#   I guess it just feels like it's missing headers or something.
+#
+#   I maybe like the dictionary one a little better, but not enough to bother with this,
+#   you know?
 
 
 ## The name of this state machine, for debugging purposes.

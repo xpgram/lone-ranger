@@ -145,6 +145,30 @@ func _assemble_machine_states() -> void:
   _state_machine.switch_to(_state_idle);
 
 
+## Builds the Player2D state machine out of its state-related functions.
+func _assemble_machine_states_2() -> void:
+  _state_machine.set_callable_constructor(PlayerState.new);
+
+  _state_machine.add_states([
+    {states: [
+      _state_idle,
+      _state_idle__input,
+      _state_idle__move_input,
+    ]},
+    {states: [_state_injured]},
+    {states: [
+      _state_coyote_fall,
+      _state_coyote_fall__exit,
+      _state_coyote_fall__move_input,
+    ]},
+    {states: [_state_fall]},
+    {states: [_state_death]},
+    {states: [_state_sleep]},
+  ]);
+
+  _state_machine.switch_to(_state_idle);
+
+
 ## Attaches callbacks to signals emitted by the extended script.
 func _bind_inherited_signals() -> void:
   pass
