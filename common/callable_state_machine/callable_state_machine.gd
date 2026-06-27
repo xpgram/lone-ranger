@@ -9,8 +9,8 @@
 ##  # CallableState will determine which functions are for what automatically.
 ##  # (See CallableState's documentation for more info.)
 ##  state_machine.add_states(
-##      CallableState.new([state_idle]),
-##      CallableState.new([state_walking, state_walking__process, state_walking__exit]),
+##      [state_idle],
+##      [state_walking, state_walking__process, state_walking__exit],
 ##  );
 ##
 ##  # Switch to your initial state using the same enter function it was added with.
