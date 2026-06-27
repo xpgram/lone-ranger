@@ -49,8 +49,66 @@ func _init(machine_name: String = 'Unknown State Machine') -> void:
   _machine_name = machine_name;
 
 
-## Adds a [CallableState] to the machine's dictionary of known states.
-func add_state(state: CallableState) -> void:
+## Adds a collection of state [Callable]s to the machine's dictionary of known states.
+func add_state(callables: Array[Callable]) -> void:
+  var state := CallableState.new(callables);
+  _add_callable_state_to_machine(state);
+
+
+## Adds a collection of state [param callables] to the machine's dictionary of known states
+## under the reference key [param key].
+func add_state_with_key(key: Variant, callables: Array[Callable]) -> void:
+  var state := CallableState.new(callables, key);
+  _add_callable_state_to_machine(state);
+
+
+## Adds a set of state [Callable] collections to the machine's dictionary of known states. [br]
+##
+## [param collection] is of type `Array[ Array[Callable] ]`.
+func add_states(collection: Array[Array]) -> void:
+  for state_callables in collection:
+    for callable in state_callables:
+      assert(callable is Callable,
+        "State method was not of type Callable.");
+    add_state(state_callables);
+
+
+## Adds a collection of state [param callables] to the machine's dictionary of known states
+## under the reference key [param key].
+##
+## [param collection] is of type `Array[ Tuple[Variant, Array[Callable]] ]`. [br]
+##
+## GDScript, at time of writing, does not handle nested types, so here is a usage example:
+##
+## [codeblock]
+##  state_machine.add_states_with_keys([
+##    [
+##      &'move',
+##      [
+##        _state_move,
+##        _state_move__process,
+##      ],
+##    ],
+##    [
+##      StatesEnum.Jump,
+##      [
+##        _state_jump,
+##        _state_jump__process,
+##      ],
+##    ],
+##  ]);
+## [/codeblock]
+func add_states_with_keys(collection: Array[Array]) -> void:
+  # [FIXME] I forget, does GDSCript have destructuring like this?
+  for [key, callables] in collection:
+    for callable in callables:
+      assert(callable is Callable,
+        "State method was not of type Callable.");
+    add_state(callables, key);
+
+
+## Adds a [CallableState] object to the machine's dictionary of states.
+func _add_callable_state_to_machine(state: CallableState) -> void:
   var machine_key: Variant = state.get_machine_key();
 
   assert(not _states_map.has(machine_key),
@@ -58,12 +116,6 @@ func add_state(state: CallableState) -> void:
 
   _states_map.set(machine_key, state);
 
-
-## Adds a list of [CallableState] objects to the machine's dictionary of known states.
-func add_states(states: Array[CallableState]) -> void:
-  for state in states:
-    add_state(state);
-  
 
 ## Returns the currently active [CallableState].
 func get_state() -> CallableState:
