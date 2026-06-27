@@ -34,6 +34,15 @@ class_name CallableStateMachine
 extends RefCounted
 
 
+# [TODO] Check doc strings for accuracy.
+# [TODO] Make CallableState private.
+# [TODO] Wait. I have to be able to extend CallableState...
+#   This branch is pointless unless I can give a constructed StateMachine a type it can
+#   instantiate. Can I do something like:
+#     state_machine.set_state_type(PlayerState.new);
+#   And this would set the constructor used for new CallableState types?
+
+
 ## The name of this state machine, for debugging purposes.
 var _machine_name: String;
 
