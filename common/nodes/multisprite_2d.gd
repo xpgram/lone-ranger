@@ -10,11 +10,10 @@ extends Sprite2D
 ## The dictionary key for the currently displayed texture.
 @export var texture_key: StringName = '':
   set(value):
-    if not textures.has(value):
-      return;
-
     texture_key = value;
-    texture = textures[texture_key];
+
+    if textures.has(value):
+      texture = textures[texture_key];
 
 
 ## A dictionary of all textures available to this sprite object.
