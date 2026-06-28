@@ -4,6 +4,9 @@ class_name ButtonEntity
 extends Interactive2D
 
 
+# [TODO] Button is missing sound effects.
+
+
 ## Emitted when the button is pressed by some heavy object.
 signal pressed();
 
