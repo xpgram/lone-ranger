@@ -15,6 +15,10 @@ signal pressed();
 signal released();
 
 
+## If enabled, the button is pressable once and will not release even when freed.
+@export var _stays_pressed := false;
+
+
 ## Whether the button is currently being pressed down.
 var _is_pressed := false;
 
@@ -61,7 +65,7 @@ func press() -> void:
 
 ## 'Releases' the button, which changes its visuals and emits [signal released].
 func release() -> void:
-  if not _is_pressed:
+  if not _is_pressed or _stays_pressed:
     return;
 
   _is_pressed = false;
