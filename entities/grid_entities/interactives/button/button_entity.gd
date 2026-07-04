@@ -39,12 +39,23 @@ var _is_pressed := false;
 @onready var _sprite := %MultiSprite2D as MultiSprite2D;
 
 
+func _ready() -> void:
+  super._ready();
+  _connect_to_own_signals();
+
+
 func _bind_stimulus_callbacks() -> void:
   super._bind_stimulus_callbacks();
   _stimulus_event_map.add_events({
     Stimulus.object_collision: _on_object_collision,
     Stimulus.object_separation: _on_object_separation,
   });
+
+
+## Connects callbacks to this object's own signals.
+func _connect_to_own_signals() -> void:
+  pressed.connect(_on_pressed);
+  released.connect(_on_released);
 
 
 ## Handler for object grid-collision events.
@@ -89,3 +100,15 @@ func release() -> void:
 ## Returns true if this button is currently being held down.
 func is_pressed() -> bool:
   return _is_pressed;
+
+
+## @virtual [br]
+## Override to add on-pressed behavior to this [ButtonEntity].
+func _on_pressed() -> void:
+  pass
+
+
+## @virtual [br]
+## Override to add on-released behavior to this [ButtonEntity].
+func _on_released() -> void:
+  pass
