@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://nrlqhbx0http"]
+
+[ext_resource type="AudioStream" uid="uid://csoohoin70wlp" path="res://assets/audio/sounds/button_click_out_01.wav" id="1_jjqox"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_p3spr"]
+
+[node name="ButtonClickOut" type="AudioStreamPlayer" unique_id=452906041]
+stream = ExtResource("1_jjqox")
+bus = &"SoundEffects"
+script = ExtResource("2_p3spr")

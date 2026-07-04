@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://d36imc25otxdj"]
+
+[ext_resource type="AudioStream" uid="uid://bo2edxyemyqex" path="res://assets/audio/sounds/button_click_in_01.wav" id="1_q2tpo"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_82v1x"]
+
+[node name="ButtonClickIn" type="AudioStreamPlayer" unique_id=452906041]
+stream = ExtResource("1_q2tpo")
+bus = &"SoundEffects"
+script = ExtResource("2_82v1x")
