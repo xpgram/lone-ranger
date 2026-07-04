@@ -36,7 +36,6 @@
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
 [ext_resource type="Script" uid="uid://db2b6araio8t2" path="res://stages/scary_growl_trigger_box.gd" id="34_xa6am"]
-[ext_resource type="PackedScene" uid="uid://dhu0fsee38xnp" path="res://entities/grid_entities/interactives/button/button.tscn" id="35_n8iye"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
 [ext_resource type="PackedScene" uid="uid://c6q8l2p63we84" path="res://entities/system/turn_manager/turn_manager.tscn" id="35_u8t85"]
 [ext_resource type="PackedScene" uid="uid://dqm128gxj3t0x" path="res://entities/grid_entities/interactives/chest/chest.tscn" id="36_pqjox"]
@@ -1527,9 +1526,6 @@ position = Vector2(-512, -208)
 
 [node name="HeartPiecePickup3" parent="Interactives Container" unique_id=1443787865 instance=ExtResource("22_1sjut")]
 position = Vector2(-80, -368)
-
-[node name="Button" parent="Interactives Container" unique_id=206165091 instance=ExtResource("35_n8iye")]
-position = Vector2(160, -16)
 
 [node name="Enemy Container" type="Node2D" parent="." unique_id=253658292]
 
