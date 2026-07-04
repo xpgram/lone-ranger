@@ -1,4 +1,4 @@
-## A floor-button entity that is depressed when something heavy is placed over the same
+## A floor-button entity that is compressed when something heavy is placed over the same
 ## [Grid] tile. Emits signals when it is pressed and released.
 class_name ButtonEntity
 extends Interactive2D
@@ -17,6 +17,19 @@ signal released();
 
 ## If enabled, the button is pressable once and will not release even when freed.
 @export var _stays_pressed := false;
+
+
+@export_group('Persistence Key')
+
+# [TODO] Should this be a resource? 'null' would do nothing, obvi; anything else would
+#   have a simple interface.
+#   The persistence_key could be initialized with a prefix for specific objects, but
+#   would otherwise generate a random default name. But how would it guarantee uniqueness?
+## [IMPLEMENT]
+@export var _sets_persistence_key := false;
+
+## [IMPLEMENT]
+@export var _persistence_key: StringName;
 
 
 ## Whether the button is currently being pressed down.
@@ -71,3 +84,8 @@ func release() -> void:
   _is_pressed = false;
   _sprite.texture_key = 'neutral';
   released.emit();
+
+
+## Returns true if this button is currently being held down.
+func is_pressed() -> bool:
+  return _is_pressed;
