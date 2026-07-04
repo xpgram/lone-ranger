@@ -4,7 +4,8 @@ class_name ButtonEntity
 extends Interactive2D
 
 
-# [TODO] Button is missing sound effects.
+const _scene_click_in_audio := preload('uid://d36imc25otxdj');
+const _scene_click_out_audio := preload('uid://nrlqhbx0http');
 
 
 ## Emitted when the button is pressed by some heavy object.
@@ -39,23 +40,12 @@ var _is_pressed := false;
 @onready var _sprite := %MultiSprite2D as MultiSprite2D;
 
 
-func _ready() -> void:
-  super._ready();
-  _connect_to_own_signals();
-
-
 func _bind_stimulus_callbacks() -> void:
   super._bind_stimulus_callbacks();
   _stimulus_event_map.add_events({
     Stimulus.object_collision: _on_object_collision,
     Stimulus.object_separation: _on_object_separation,
   });
-
-
-## Connects callbacks to this object's own signals.
-func _connect_to_own_signals() -> void:
-  pressed.connect(_on_pressed);
-  released.connect(_on_released);
 
 
 ## Handler for object grid-collision events.
@@ -84,6 +74,8 @@ func press() -> void:
 
   _is_pressed = true;
   _sprite.texture_key = 'pressed';
+  Events.one_shot_sound_emitted.emit(_scene_click_in_audio);
+  _on_pressed();
   pressed.emit();
 
 
@@ -94,6 +86,8 @@ func release() -> void:
 
   _is_pressed = false;
   _sprite.texture_key = 'neutral';
+  Events.one_shot_sound_emitted.emit(_scene_click_out_audio);
+  _on_released();
   released.emit();
 
 
