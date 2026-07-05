@@ -136,7 +136,7 @@ func _spawn_active_scene() -> void:
 ## Returns the current source scene, the one to populate the active scene with.
 ## Will return null if the current source scene is null.
 func _get_source_scene() -> PackedScene:
-  if PersistenceKey.get_bool(_persistence_key):
+  if PersistenceKey.read_bool(_persistence_key):
     return _true_scene;
   else:
     return _false_scene;

@@ -9,12 +9,11 @@ extends Component
 
 ## Sets the value of the persistence key to [param value].
 func write(value: Variant) -> void:
-  # [FIXME] value is a bool?
-  PersistenceKey.set_bool(_get_key(), value);
+  PersistenceKey.write(_get_key(), value);
 
 
 ## Returns the value held under the persistence key. [br]
 ##
 ## Override this function to specify the return type.
 func read() -> Variant:
-  return PersistenceKey.get_bool(_get_key());
+  return PersistenceKey.read(_get_key());
