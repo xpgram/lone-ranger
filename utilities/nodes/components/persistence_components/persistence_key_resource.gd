@@ -21,7 +21,7 @@ extends Resource
 
 
 func _validate_property(property: Dictionary) -> void:
-  if property.name == &'_initial_value':
+  if property.name == '_initial_value':
     property.type = TYPE_NIL;
 
 
