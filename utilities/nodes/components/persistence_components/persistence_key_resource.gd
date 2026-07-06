@@ -36,10 +36,31 @@ extends Resource
 
 func _validate_property(property: Dictionary) -> void:
   if property.name == '_initial_value':
-    property.type = _value_type;
-    if _value_type == TYPE_NIL:
-      property.erase('type');
-    # [TODO] Set property.initial_value?
+
+    if property.type != _value_type:
+      property.type = _value_type;
+      if _value_type == TYPE_NIL:
+        property.erase('type');
+      # Set the default value for the new type.
+      _initial_value = type_convert(null, _value_type);
+
+
+# [TODO] What if, instead of setting the type and then the value,
+#   we set the value and infer the type in a readonly?
+
+
+func _property_can_revert(property: StringName) -> bool:
+  if property == &'_initial_value':
+    return _initial_value != type_convert(null, _value_type);
+
+  return false;
+
+
+func _property_get_revert(property: StringName) -> Variant:
+  if property == &'_initial_value':
+    return type_convert(null, _value_type);
+
+  return null;
 
 
 ## Sets the value of the persistence key to [param value].
