@@ -1,6 +1,10 @@
-## 
+## A [Resource] to formalize the [PersistenceKey] management of a particular
+## global key.
 class_name GlobalPersistenceKey
-extends PersistenceKeyComponent
+extends PersistenceKeyResource
+
+
+# [TASK] Global has no UID prefix: is this actually valuable?
 
 
 ##
