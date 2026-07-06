@@ -7,7 +7,10 @@ extends PersistenceKeyResource
 
 ## The name of this persistence key. It is ideal to name it something human
 ## readable and debuggable.
-@export var persistence_key: StringName;
+@export var persistence_key: StringName:
+  set(value):
+    persistence_key = value;
+    resource_name = persistence_key;
 
 ## A unique identifier used to avoid naming conflicts between persistence keys. [br]
 ##
