@@ -12,15 +12,34 @@
 extends Resource
 
 
-## The value type of this persistence key.
-@export var _value_type: Variant.Type
+## The value type of this persistence key. [br]
+##
+## If set to [TYPE_NIL], then all types will be considered valid.
+@export var _value_type: Variant.Type:
+  set(value):
+    _value_type = value;
+    notify_property_list_changed();
 
 ## The default value of this persistence key.
-@export var _initial_value: Variant = null;
+@export var _initial_value: Variant;
+
+
+@export var test: String = '':
+  set(value):
+    test = value;
+    print('initial value == ', _initial_value);
 
 
 ## Returns the dictionary key for this persistence value.
 @abstract func _get_key() -> StringName;
+
+
+func _validate_property(property: Dictionary) -> void:
+  if property.name == '_initial_value':
+    property.type = _value_type;
+    if _value_type == TYPE_NIL:
+      property.erase('type');
+    # [TODO] Set property.initial_value?
 
 
 ## Sets the value of the persistence key to [param value].
@@ -38,4 +57,7 @@ func read() -> Variant:
 ## Returns true if [param value] is of the same assigned [Variant.Type] as this
 ## persistence value.
 func _value_type_valid(value: Variant) -> bool:
-  return (typeof(value) == _value_type);
+  return (
+    typeof(value) == _value_type
+    or typeof(value) == TYPE_NIL
+  );
