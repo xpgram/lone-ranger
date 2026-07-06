@@ -23,7 +23,6 @@ extends PersistenceKeyResource
 
 func _property_can_revert(property: StringName) -> bool:
   if property == &'key_uid':
-    print(key_uid != resource_scene_unique_id, ': ', key_uid, ' != ', resource_scene_unique_id)
     return (key_uid != resource_scene_unique_id);
 
   return false;
