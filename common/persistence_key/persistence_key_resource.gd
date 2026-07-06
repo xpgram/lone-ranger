@@ -29,18 +29,18 @@ func _validate_property(property: Dictionary) -> void:
 func write(value: Variant) -> void:
   assert(_value_type_valid(value),
     "Cannot assign value of type %s to persistence key of type %s." % [typeof(value), _get_value_type()]);
-  PersistenceKey.write(_get_key(), value);
+  PersistenceDictionary.write(_get_key(), value);
 
 
 ## Returns the value of this persistence key.
 func read() -> Variant:
-  return PersistenceKey.read(_get_key(), _initial_value);
+  return PersistenceDictionary.read(_get_key(), _initial_value);
 
 
 ## Erases this persistence value from the global dictionary. Returns true if a
 ## value existed, otherwise false.
 func erase() -> bool:
-  return PersistenceKey.erase(_get_key());
+  return PersistenceDictionary.erase(_get_key());
 
 
 ## Returns true if [param value] is of the same assigned [Variant.Type] as this

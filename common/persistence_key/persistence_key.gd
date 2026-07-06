@@ -1,7 +1,7 @@
 @tool
 ## A [Resource] to formalize the [PersistenceKey] management of a particular key
 ## local to a [PackedScene].
-class_name LocalPersistenceKey
+class_name PersistenceKey
 extends PersistenceKeyResource
 
 

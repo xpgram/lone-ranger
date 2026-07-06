@@ -24,4 +24,4 @@ func _on_entered(entity: GridEntity) -> void:
     _matched_entities.has(entity)
     or _match_player_entity and entity is Player2D
   ):
-    PersistenceKey.write_bool(_persistence_key, true);
+    PersistenceDictionary.write_bool(_persistence_key, true);
