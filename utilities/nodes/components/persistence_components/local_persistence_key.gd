@@ -14,23 +14,19 @@ extends PersistenceKeyResource
 ## Note that because this is an editable field, this cannot be strictly enforced.
 ## It is generally preferable to let the object set its own [member key_uid], and
 ## only modify it to resolve issues.
-@export var key_uid: StringName:
-  set(value):
-    if value == '':
-      value = resource_scene_unique_id;
-    key_uid = value;
+@export var key_uid: StringName;
 
 
 func _property_can_revert(property: StringName) -> bool:
-  if property == &'key_uid':
-    return (key_uid != resource_scene_unique_id);
+  if property == 'key_uid':
+    return true;
 
   return false;
 
 
 func _property_get_revert(property: StringName) -> Variant:
-  if property == &'key_uid':
-    return resource_scene_unique_id;
+  if property == 'key_uid':
+    return resource_scene_unique_id as StringName;
 
   return null;
 
@@ -42,34 +38,3 @@ func _get_key() -> StringName:
     key += ' %s' % persistence_key;
 
   return key;
-
-
-# func _validate_property(property: Dictionary) -> void:
-# 	if property.name == "room":
-# 		match area:
-# 			Area.Area1:
-# 				room = Room.Room1
-# 				property.hint_string = "Room 1:0,Room 2:1"
-# 			Area.Area2:
-# 				room = Room.Room3
-# 				property.hint_string = "Room 3:2,Room 4:3"
-
-
-# func _property_can_revert(property: StringName) -> bool:
-# 	if property == "room":
-# 		# room default value depends on the area so we need to use a custom revert value
-# 		return true
-
-# 	return false
-
-
-# func _property_get_revert(property: StringName) -> Variant:
-# 	if property == "room":
-# 		# return the default value depending on the area
-# 		match area:
-# 			Area.Area1:
-# 				return Room.Room1
-# 			Area.Area2:
-# 				return Room.Room3
-
-# 	return null
