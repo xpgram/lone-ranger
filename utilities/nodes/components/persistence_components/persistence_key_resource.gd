@@ -37,6 +37,12 @@ func read() -> Variant:
   return PersistenceKey.read(_get_key(), _initial_value);
 
 
+## Erases this persistence value from the global dictionary. Returns true if a
+## value existed, otherwise false.
+func erase() -> bool:
+  return PersistenceKey.erase(_get_key());
+
+
 ## Returns true if [param value] is of the same assigned [Variant.Type] as this
 ## persistence value.
 func _value_type_valid(value: Variant) -> bool:

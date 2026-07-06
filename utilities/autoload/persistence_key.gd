@@ -17,6 +17,12 @@ func read(key: StringName, default: Variant = null) -> Variant:
   return _dictionary.get(key, default);
 
 
+## Removes the persistence value by key, if it exists. Returns true if the given
+## [param key] existed, otherwise false.
+func erase(key: StringName) -> bool:
+  return _dictionary.erase(key);
+
+
 ## Writes a bool [param value] to the persistence dictionary under [param key].
 func write_bool(key: StringName, value: bool) -> void:
   write(key, value);
