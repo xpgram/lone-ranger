@@ -1,6 +1,9 @@
 @tool
 ## A [Resource] to formalize the [PersistenceKey] management of a particular key
 ## local to a [PackedScene].
+##
+## [b]Note:[/b] This type requires that [PersistenceDictionary] is a global
+## autoload to function.
 class_name PersistenceKey
 extends PersistenceKeyResource
 

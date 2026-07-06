@@ -1,4 +1,6 @@
-## The global list of persistence keys
+## The global dictionary of persistence values. These may be written or read
+## with a key, but as these are loose and easy to corrupt, it is recommended
+## to use a concrete implementation like [PersistenceKey] for access.
 extends Node
 
 
