@@ -44,6 +44,7 @@
 [ext_resource type="Script" uid="uid://c7j1bl3v6vaju" path="res://entities/ui/on_screen_instructionals/instructions_hookshot.gd" id="40_hwv0m"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://entities/grid_entities/enemies/mouth/enemy_mouth.tscn" id="40_nbivo"]
 [ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://entities/grid_entities/characters/player/player_module.tscn" id="41_p22wk"]
+[ext_resource type="Script" uid="uid://dw8xb1s2xtbur" path="res://common/persistence_key/persistence_key.gd" id="42_52iru"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
@@ -763,6 +764,70 @@ script = ExtResource("9_7oan8")
 action = ExtResource("10_7oan8")
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="Resource" id="Resource_y8k2y"]
+resource_name = "shove bridge puzzle"
+script = ExtResource("42_52iru")
+persistence_key = &"shove bridge puzzle"
+key_uid = &"Pkey_pw6lv"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
+[sub_resource type="Resource" id="Resource_i3hfr"]
+resource_name = "shove exit puzzle"
+script = ExtResource("42_52iru")
+persistence_key = &"shove exit puzzle"
+key_uid = &"Pkey_n8iye"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
+[sub_resource type="Resource" id="Resource_hdlvt"]
+resource_name = "west save used"
+script = ExtResource("42_52iru")
+persistence_key = &"west save used"
+key_uid = &"Pkey_n8iye"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
+[sub_resource type="Resource" id="Resource_ubj5x"]
+resource_name = "west save north puzzle"
+script = ExtResource("42_52iru")
+persistence_key = &"west save north puzzle"
+key_uid = &"Pkey_n8iye"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
+[sub_resource type="Resource" id="Resource_kgk2j"]
+resource_name = "west save west puzzle stage 1"
+script = ExtResource("42_52iru")
+persistence_key = &"west save west puzzle stage 1"
+key_uid = &"Pkey_n8iye"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
+[sub_resource type="Resource" id="Resource_nkq0a"]
+resource_name = "west save west puzzle stage 2"
+script = ExtResource("42_52iru")
+persistence_key = &"west save west puzzle stage 2"
+key_uid = &"Pkey_n8iye"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
+[sub_resource type="Resource" id="Resource_km6s0"]
+resource_name = "north save puzzle"
+script = ExtResource("42_52iru")
+persistence_key = &"north save puzzle"
+key_uid = &"Pkey_n8iye"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
+[sub_resource type="Resource" id="Resource_vpijh"]
+resource_name = "hookshot obtained"
+script = ExtResource("42_52iru")
+persistence_key = &"hookshot obtained"
+key_uid = &"Pkey_n8iye"
+_initial_value = false
+metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
+
 [node name="Game" type="Node2D" unique_id=355498460]
 script = ExtResource("1_7u74a")
 
@@ -993,7 +1058,6 @@ equipment_contents = Array[StringName]([&"sword"])
 
 [node name="BoardRespawner" type="Node2D" parent="Interactives Container" unique_id=978362828 node_paths=PackedStringArray("_false_container")]
 script = ExtResource("18_r4137")
-_persistence_key = "none"
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
@@ -1056,7 +1120,7 @@ position = Vector2(-240, -176)
 [node name="Spawner_ShoveBridgePuzzle" type="Node2D" parent="Interactives Container" unique_id=1958610913 node_paths=PackedStringArray("_false_container")]
 position = Vector2(464, 16)
 script = ExtResource("18_r4137")
-_persistence_key = "shove_bridge_puzzle_solved"
+_persistence_key = SubResource("Resource_y8k2y")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
@@ -1065,7 +1129,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1675729944 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(32, 16)
 script = ExtResource("28_snb1o")
-_persistence_key = "shove_bridge_puzzle_solved"
+_persistence_key = SubResource("Resource_y8k2y")
 _matched_entities = [NodePath("../StatuePlatformEntity")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 
@@ -1075,7 +1139,7 @@ position = Vector2(32, 96)
 [node name="Spawner_ShoveExitPuzzle" type="Node2D" parent="Interactives Container" unique_id=216648388 node_paths=PackedStringArray("_false_container", "_true_container")]
 position = Vector2(432, 16)
 script = ExtResource("18_r4137")
-_persistence_key = "shove_exit_puzzle_solved"
+_persistence_key = SubResource("Resource_i3hfr")
 _false_container = NodePath("FalseScene")
 _true_container = NodePath("TrueScene")
 
@@ -1084,7 +1148,7 @@ _true_container = NodePath("TrueScene")
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=532844618 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(-128, 32)
 script = ExtResource("28_snb1o")
-_persistence_key = "shove_exit_puzzle_solved"
+_persistence_key = SubResource("Resource_i3hfr")
 _matched_entities = [NodePath("../BoulderEntity")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 
@@ -1130,7 +1194,7 @@ position = Vector2(-32, 0)
 [node name="Spawner_WestSaveUsed" type="Node2D" parent="Interactives Container" unique_id=1247411898 node_paths=PackedStringArray("_false_container")]
 position = Vector2(-288, -48)
 script = ExtResource("18_r4137")
-_persistence_key = "west_save_used"
+_persistence_key = SubResource("Resource_hdlvt")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
@@ -1139,7 +1203,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=1517408776]
 position = Vector2(0, 32)
 script = ExtResource("28_snb1o")
-_persistence_key = "west_save_used"
+_persistence_key = SubResource("Resource_hdlvt")
 _match_player_entity = true
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 
@@ -1149,7 +1213,7 @@ position = Vector2(48, 32)
 [node name="Spawner_WestSaveNorthPuzzle" type="Node2D" parent="Interactives Container" unique_id=118395334 node_paths=PackedStringArray("_false_container")]
 position = Vector2(-288, -80)
 script = ExtResource("18_r4137")
-_persistence_key = "west_save_north_puzzle_solved"
+_persistence_key = SubResource("Resource_ubj5x")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
@@ -1158,7 +1222,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1777531799 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(16, -32)
 script = ExtResource("28_snb1o")
-_persistence_key = "west_save_north_puzzle_solved"
+_persistence_key = SubResource("Resource_ubj5x")
 _matched_entities = [NodePath("../StatuePlatformEntity3")]
 _trigger_box_rect = Rect2i(0, 0, 3, 1)
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
@@ -1185,7 +1249,7 @@ position = Vector2(32, 0)
 [node name="Spawner_WestSaveWestPuzzleStage1" type="Node2D" parent="Interactives Container" unique_id=385580288 node_paths=PackedStringArray("_false_container", "_true_container")]
 position = Vector2(-352, -32)
 script = ExtResource("18_r4137")
-_persistence_key = "west_save_west_puzzle_stage_1_solved"
+_persistence_key = SubResource("Resource_kgk2j")
 _false_container = NodePath("FalseContainer")
 _true_container = NodePath("TrueContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
@@ -1195,7 +1259,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1589036559 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(16, 32)
 script = ExtResource("28_snb1o")
-_persistence_key = "west_save_west_puzzle_stage_1_solved"
+_persistence_key = SubResource("Resource_kgk2j")
 _matched_entities = [NodePath("../StatuePlatformEntity2")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
@@ -1225,7 +1289,7 @@ position = Vector2(0, 32)
 [node name="Spawner_WestSaveWestPuzzleStage2" type="Node2D" parent="Interactives Container" unique_id=1819709241 node_paths=PackedStringArray("_false_container")]
 position = Vector2(-352, -16)
 script = ExtResource("18_r4137")
-_persistence_key = "west_save_west_puzzle_stage_2_solved"
+_persistence_key = SubResource("Resource_nkq0a")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
@@ -1234,7 +1298,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2/FalseContainer" unique_id=1230150847 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(16, 112)
 script = ExtResource("28_snb1o")
-_persistence_key = "west_save_west_puzzle_stage_2_solved"
+_persistence_key = SubResource("Resource_nkq0a")
 _matched_entities = [NodePath("../BoulderEntity48")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
@@ -1248,7 +1312,7 @@ position = Vector2(16, 48)
 [node name="Spawner_NorthSavePuzzle" type="Node2D" parent="Interactives Container" unique_id=755329562 node_paths=PackedStringArray("_false_container")]
 position = Vector2(-208, -304)
 script = ExtResource("18_r4137")
-_persistence_key = "north_save_puzzle_solved"
+_persistence_key = SubResource("Resource_km6s0")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
@@ -1257,7 +1321,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=570259697 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(-48, 16)
 script = ExtResource("28_snb1o")
-_persistence_key = "north_save_puzzle_solved"
+_persistence_key = SubResource("Resource_km6s0")
 _matched_entities = [NodePath("../StatuePlatformEntity5")]
 _trigger_box_rect = Rect2i(0, 0, 1, 2)
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
@@ -1266,7 +1330,7 @@ metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
 [node name="PersistenceKeyTriggerBox2" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=293989299 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(-32, 48)
 script = ExtResource("28_snb1o")
-_persistence_key = "north_save_puzzle_solved"
+_persistence_key = SubResource("Resource_km6s0")
 _matched_entities = [NodePath("../StatuePlatformEntity5")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
@@ -1277,7 +1341,7 @@ position = Vector2(16, 16)
 [node name="Spawner_HookshotObtained" type="Node2D" parent="Interactives Container" unique_id=559912282 node_paths=PackedStringArray("_false_container")]
 position = Vector2(-176, 64)
 script = ExtResource("18_r4137")
-_persistence_key = "hookshot_obtained"
+_persistence_key = SubResource("Resource_vpijh")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
@@ -1286,7 +1350,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 [node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1014307744]
 position = Vector2(0, 32)
 script = ExtResource("28_snb1o")
-_persistence_key = "hookshot_obtained"
+_persistence_key = SubResource("Resource_vpijh")
 _match_player_entity = true
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
@@ -1531,7 +1595,6 @@ position = Vector2(-80, -368)
 
 [node name="BoardRespawner" type="Node2D" parent="Enemy Container" unique_id=841907397 node_paths=PackedStringArray("_false_container")]
 script = ExtResource("18_r4137")
-_persistence_key = "none"
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 

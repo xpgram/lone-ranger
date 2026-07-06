@@ -3,8 +3,9 @@ class_name PersistenceKeyTriggerBox
 extends TriggerBox
 
 
-## The persistence key to set.
-@export var _persistence_key: String;
+## The `bool` persistence key to set to `true` when the collision conditions
+## have been met.
+@export var _persistence_key: PersistenceKey;
 
 ## The entities to watch for. When any of these enter this trigger box,
 ## the persistence key will be set to true.
@@ -24,4 +25,4 @@ func _on_entered(entity: GridEntity) -> void:
     _matched_entities.has(entity)
     or _match_player_entity and entity is Player2D
   ):
-    PersistenceDictionary.write_bool(_persistence_key, true);
+    _persistence_key.write(true);

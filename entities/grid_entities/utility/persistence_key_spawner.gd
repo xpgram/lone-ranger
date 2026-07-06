@@ -18,9 +18,11 @@ class_name PersistenceKeySpawner
 extends Node2D
 
 
-## The persistence key whose value determines which scene is spawned by
-## this spawner.
-@export var _persistence_key: String;
+## The `bool` persistence key whose value determines which scene is spawned by
+## this spawner. [br]
+##
+## If the Resource is left empty, it is interpreted as `false`.
+@export var _persistence_key: PersistenceKey;
 
 ## The source container to use when the persistence key is 'false'.
 ##
@@ -136,7 +138,7 @@ func _spawn_active_scene() -> void:
 ## Returns the current source scene, the one to populate the active scene with.
 ## Will return null if the current source scene is null.
 func _get_source_scene() -> PackedScene:
-  if PersistenceDictionary.read_bool(_persistence_key):
+  if _persistence_key and _persistence_key.read():
     return _true_scene;
   else:
     return _false_scene;
