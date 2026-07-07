@@ -14,7 +14,7 @@
 ## Objects to be spawned must be children of one of the container nodes.
 ## This tool script will create these for you, if they do not exist, when this
 ## node is first '_ready'.
-class_name PersistenceKeySpawner
+class_name BooleanSpawner
 extends Node2D
 
 

@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cqx4i6o5f7y0t" path="res://entities/grid_entities/interactives/loose_particles/loose_particles.tscn" id="14_2ba2c"]
 [ext_resource type="PackedScene" uid="uid://cokxrxu6mgxob" path="res://entities/grid_entities/enemies/diamond/enemy_diamond.tscn" id="17_mhctp"]
 [ext_resource type="PackedScene" uid="uid://dowqydii3t2w0" path="res://entities/grid_entities/interactives/statue_platform/statue_platform_entity.tscn" id="18_mhctp"]
-[ext_resource type="Script" uid="uid://4gxxctr2fcu0" path="res://entities/grid_entities/utility/persistence_key_spawner.gd" id="18_r4137"]
+[ext_resource type="Script" uid="uid://4gxxctr2fcu0" path="res://common/persistence_key/boolean_spawner.gd" id="18_r4137"]
 [ext_resource type="PackedScene" uid="uid://dtux3ehasyvly" path="res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn" id="19_0lxvj"]
 [ext_resource type="PackedScene" uid="uid://bby6nr1v10a5c" path="res://entities/grid_entities/enemies/bull/enemy_bull.tscn" id="20_3oxmp"]
 [ext_resource type="PackedScene" uid="uid://v76t6hfbja7y" path="res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn" id="21_0lxvj"]
@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://b025q84ct55mo" path="res://entities/grid_entities/interactives/magic_draw_point/magic_draw_point.tscn" id="26_gcv67"]
 [ext_resource type="Resource" uid="uid://72omta0cvh7l" path="res://utilities/actions/field_actions/resources/magic_push_action.tres" id="27_0mqgx"]
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
-[ext_resource type="Script" uid="uid://dj3d0k5yxrtac" path="res://entities/grid_entities/utility/persistence_key_trigger_box.gd" id="28_snb1o"]
+[ext_resource type="Script" uid="uid://dj3d0k5yxrtac" path="res://entities/grid_entities/utility/trigger_box_boolean_pkey.gd" id="28_snb1o"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
@@ -1126,7 +1126,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_ShoveBridgePuzzle" unique_id=1695275531]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1675729944 node_paths=PackedStringArray("_matched_entities")]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1675729944 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(32, 16)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_y8k2y")
@@ -1145,7 +1145,7 @@ _true_container = NodePath("TrueScene")
 
 [node name="FalseScene" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle" unique_id=339364980]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=532844618 node_paths=PackedStringArray("_matched_entities")]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=532844618 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(-128, 32)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_i3hfr")
@@ -1200,7 +1200,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1379610959]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=1517408776]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=1517408776]
 position = Vector2(0, 32)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_hdlvt")
@@ -1219,7 +1219,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveNorthPuzzle" unique_id=1749525139]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1777531799 node_paths=PackedStringArray("_matched_entities")]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1777531799 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(16, -32)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_ubj5x")
@@ -1256,7 +1256,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1" unique_id=594986040]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1589036559 node_paths=PackedStringArray("_matched_entities")]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1589036559 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(16, 32)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_kgk2j")
@@ -1295,7 +1295,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2" unique_id=413445398]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2/FalseContainer" unique_id=1230150847 node_paths=PackedStringArray("_matched_entities")]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage2/FalseContainer" unique_id=1230150847 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(16, 112)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_nkq0a")
@@ -1318,7 +1318,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle" unique_id=411617021]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=570259697 node_paths=PackedStringArray("_matched_entities")]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=570259697 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(-48, 16)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_km6s0")
@@ -1327,7 +1327,7 @@ _trigger_box_rect = Rect2i(0, 0, 1, 2)
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
 
-[node name="PersistenceKeyTriggerBox2" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=293989299 node_paths=PackedStringArray("_matched_entities")]
+[node name="TriggerBoxBooleanPkey2" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=293989299 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(-32, 48)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_km6s0")
@@ -1347,7 +1347,7 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained" unique_id=1345047135]
 
-[node name="PersistenceKeyTriggerBox" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1014307744]
+[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1014307744]
 position = Vector2(0, 32)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_vpijh")

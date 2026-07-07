@@ -1,5 +1,5 @@
 @tool
-class_name PersistenceKeyTriggerBox
+class_name TriggerBoxBooleanPkey
 extends TriggerBox
 
 
