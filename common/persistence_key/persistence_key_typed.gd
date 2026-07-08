@@ -1,5 +1,6 @@
-@tool
+## @tool [br]
 ## A template for typed variants of [PersistenceKey].
+@tool
 @abstract class_name PersistenceKeyTyped
 extends PersistenceKey
 

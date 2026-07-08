@@ -1,4 +1,4 @@
-@tool
+## @tool [br]
 ## A [Resource] interface for a key value in the global [PersistenceDictionary]. [br]
 ##
 ## This type allows a persistence key to take advantage of the Resource UID
@@ -7,6 +7,7 @@
 ##
 ## [b]Note:[/b] This type requires that [PersistenceDictionary] is a global
 ## autoload to function.
+@tool
 class_name PersistenceKey
 extends Resource
 

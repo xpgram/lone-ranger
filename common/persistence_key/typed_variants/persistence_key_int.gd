@@ -1,6 +1,7 @@
-@tool
+## @tool [br]
 ## An integer-type [PersistenceKey], an interface for a key-value in the global
 ## [PersistenceDictionary].
+@tool
 class_name PersistenceKeyInt
 extends PersistenceKeyTyped
 

@@ -1,6 +1,7 @@
-@tool
+## @tool [br]
 ## A Vector2-type [PersistenceKey], an interface for a key-value in the global
 ## [PersistenceDictionary].
+@tool
 class_name PersistenceKeyVector2
 extends PersistenceKeyTyped
 

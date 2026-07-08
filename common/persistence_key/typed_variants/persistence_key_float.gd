@@ -1,6 +1,7 @@
-@tool
+## @tool [br]
 ## A float-type [PersistenceKey], an interface for a key-value in the global
 ## [PersistenceDictionary].
+@tool
 class_name PersistenceKeyFloat
 extends PersistenceKeyTyped
 

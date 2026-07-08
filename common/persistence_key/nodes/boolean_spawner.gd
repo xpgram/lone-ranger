@@ -1,4 +1,3 @@
-@tool
 ## @tool [br]
 ##
 ## A container node to capture branches of the scene and spawn or respawn them as
@@ -14,6 +13,7 @@
 ## Objects to be spawned must be children of one of the container nodes.
 ## This tool script will create these for you, if they do not exist, when this
 ## node is first '_ready'.
+@tool
 class_name BooleanSpawner
 extends Node2D
 

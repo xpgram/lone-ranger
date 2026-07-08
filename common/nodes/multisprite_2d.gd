@@ -1,8 +1,9 @@
-@tool
+## @tool [br]
 ## A [Sprite2D] that keeps a dictionary of available textures accessible by key. [br]
 ##
 ## The preferred method of setting textures via code is via [member texture_key] — setting
 ## [member texture] directly may cause [member texture_key] to become unsynced.
+@tool
 class_name MultiSprite2D
 extends Sprite2D
 

@@ -1,6 +1,7 @@
-@tool
+## @tool [br]
 ## The observer entity listens for button signals and coordinates multi-button trigger
 ## behavior.
+@tool
 class_name ButtonObserver
 extends Node2D
 
