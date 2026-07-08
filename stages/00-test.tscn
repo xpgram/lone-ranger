@@ -767,56 +767,56 @@ metadata/_custom_type_script = "uid://ue6jqko73xxa"
 [sub_resource type="Resource" id="Resource_y8k2y"]
 resource_name = "shove bridge puzzle"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_pw6lv"
+key_uid = &"Pkey_2rx5x8uw"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
 [sub_resource type="Resource" id="Resource_i3hfr"]
 resource_name = "shove exit puzzle"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_n8iye"
+key_uid = &"Pkey_puryojf4"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
 [sub_resource type="Resource" id="Resource_hdlvt"]
 resource_name = "west save used"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_n8iye"
+key_uid = &"Pkey_lq7x0amm"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
 [sub_resource type="Resource" id="Resource_ubj5x"]
 resource_name = "west save north puzzle"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_n8iye"
+key_uid = &"Pkey_fpvl03o0"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
 [sub_resource type="Resource" id="Resource_kgk2j"]
 resource_name = "west save west puzzle stage 1"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_n8iye"
+key_uid = &"Pkey_kni1up6v"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
 [sub_resource type="Resource" id="Resource_nkq0a"]
 resource_name = "west save west puzzle stage 2"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_n8iye"
+key_uid = &"Pkey_sjisrvvt"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
 [sub_resource type="Resource" id="Resource_km6s0"]
 resource_name = "north save puzzle"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_n8iye"
+key_uid = &"Pkey_ykgwrim5"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
 [sub_resource type="Resource" id="Resource_vpijh"]
 resource_name = "hookshot obtained"
 script = ExtResource("42_52iru")
-key_uid = &"Pkey_n8iye"
+key_uid = &"Pkey_lpampfe2"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 
