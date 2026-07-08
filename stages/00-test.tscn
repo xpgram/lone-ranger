@@ -767,7 +767,6 @@ metadata/_custom_type_script = "uid://ue6jqko73xxa"
 [sub_resource type="Resource" id="Resource_y8k2y"]
 resource_name = "shove bridge puzzle"
 script = ExtResource("42_52iru")
-key_name = "shove bridge puzzle"
 key_uid = &"Pkey_pw6lv"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
@@ -775,7 +774,6 @@ metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 [sub_resource type="Resource" id="Resource_i3hfr"]
 resource_name = "shove exit puzzle"
 script = ExtResource("42_52iru")
-key_name = "shove exit puzzle"
 key_uid = &"Pkey_n8iye"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
@@ -783,7 +781,6 @@ metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 [sub_resource type="Resource" id="Resource_hdlvt"]
 resource_name = "west save used"
 script = ExtResource("42_52iru")
-key_name = "west save used"
 key_uid = &"Pkey_n8iye"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
@@ -791,7 +788,6 @@ metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 [sub_resource type="Resource" id="Resource_ubj5x"]
 resource_name = "west save north puzzle"
 script = ExtResource("42_52iru")
-key_name = "west save north puzzle"
 key_uid = &"Pkey_n8iye"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
@@ -799,7 +795,6 @@ metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 [sub_resource type="Resource" id="Resource_kgk2j"]
 resource_name = "west save west puzzle stage 1"
 script = ExtResource("42_52iru")
-key_name = "west save west puzzle stage 1"
 key_uid = &"Pkey_n8iye"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
@@ -807,7 +802,6 @@ metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 [sub_resource type="Resource" id="Resource_nkq0a"]
 resource_name = "west save west puzzle stage 2"
 script = ExtResource("42_52iru")
-key_name = "west save west puzzle stage 2"
 key_uid = &"Pkey_n8iye"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
@@ -815,7 +809,6 @@ metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 [sub_resource type="Resource" id="Resource_km6s0"]
 resource_name = "north save puzzle"
 script = ExtResource("42_52iru")
-key_name = "north save puzzle"
 key_uid = &"Pkey_n8iye"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
@@ -823,7 +816,6 @@ metadata/_custom_type_script = "uid://dw8xb1s2xtbur"
 [sub_resource type="Resource" id="Resource_vpijh"]
 resource_name = "hookshot obtained"
 script = ExtResource("42_52iru")
-key_name = "hookshot obtained"
 key_uid = &"Pkey_n8iye"
 _initial_value = false
 metadata/_custom_type_script = "uid://dw8xb1s2xtbur"

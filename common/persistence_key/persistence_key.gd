@@ -68,6 +68,8 @@ func _deserialize_ready() -> void:
 
 
 func _validate_property(property: Dictionary) -> void:
+  if property.name == 'key_name':
+    property.usage &= ~PROPERTY_USAGE_STORAGE;
   if not _edit_key_uid and property.name == 'key_uid':
     property.usage |= PROPERTY_USAGE_READ_ONLY;
 
