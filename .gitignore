@@ -12,3 +12,6 @@ exports/*
 *-autosave.kra
 *.kra~
 *.png~
+
+# Annoying OS files
+.DS_Store
