@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cqx4i6o5f7y0t" path="res://entities/grid_entities/interactives/loose_particles/loose_particles.tscn" id="14_2ba2c"]
 [ext_resource type="PackedScene" uid="uid://cokxrxu6mgxob" path="res://entities/grid_entities/enemies/diamond/enemy_diamond.tscn" id="17_mhctp"]
 [ext_resource type="PackedScene" uid="uid://dowqydii3t2w0" path="res://entities/grid_entities/interactives/statue_platform/statue_platform_entity.tscn" id="18_mhctp"]
-[ext_resource type="Script" uid="uid://4gxxctr2fcu0" path="res://common/persistence_key/boolean_spawner.gd" id="18_r4137"]
+[ext_resource type="Script" uid="uid://4gxxctr2fcu0" path="res://common/persistence_key/nodes/boolean_spawner.gd" id="18_r4137"]
 [ext_resource type="PackedScene" uid="uid://dtux3ehasyvly" path="res://entities/grid_entities/interactives/growable_twig/growable_twig.tscn" id="19_0lxvj"]
 [ext_resource type="PackedScene" uid="uid://bby6nr1v10a5c" path="res://entities/grid_entities/enemies/bull/enemy_bull.tscn" id="20_3oxmp"]
 [ext_resource type="PackedScene" uid="uid://v76t6hfbja7y" path="res://entities/grid_entities/enemies/maggot/enemy_maggot.tscn" id="21_0lxvj"]
@@ -44,7 +44,7 @@
 [ext_resource type="Script" uid="uid://c7j1bl3v6vaju" path="res://entities/ui/on_screen_instructionals/instructions_hookshot.gd" id="40_hwv0m"]
 [ext_resource type="PackedScene" uid="uid://hd6tv01qq0ed" path="res://entities/grid_entities/enemies/mouth/enemy_mouth.tscn" id="40_nbivo"]
 [ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://entities/grid_entities/characters/player/player_module.tscn" id="41_p22wk"]
-[ext_resource type="Script" uid="uid://42c85n34qcju" path="res://common/persistence_key/persistence_key_bool.gd" id="42_52iru"]
+[ext_resource type="Script" uid="uid://42c85n34qcju" path="res://common/persistence_key/typed_variants/persistence_key_bool.gd" id="42_52iru"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1aara"]
 resource_name = "VoidStranger"
