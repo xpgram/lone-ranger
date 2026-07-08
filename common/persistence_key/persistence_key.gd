@@ -8,7 +8,7 @@
 ## [b]Note:[/b] This type requires that [PersistenceDictionary] is a global
 ## autoload to function.
 class_name PersistenceKey
-extends PersistenceKeyResource
+extends Resource
 
 
 # [TODO] Merge this script with PersistenceKeyResource.
@@ -29,10 +29,17 @@ extends PersistenceKeyResource
 ## [PersistenceDictionary]. [br]
 ##
 ## This value is auto-generated with enough variability to avoid collisions, but
-## it is not guaranteed to be unique. If you need to modify it, check the box
-## below to enable editing, **but be warned** this may invalidate user save data.
-## Plan a migration strategy if a key is already being used.
+## it is not guaranteed to be unique. If you need to modify it, enable this
+## property in the 'Enable Edit Flags' group, **but be warned** this may
+## invalidate user save data. Plan a migration strategy if a key is already
+## being used.
 @export var key_uid: StringName;
+
+## The default value of this persistence key.
+@export var _initial_value: Variant;
+
+
+@export_group('Enable Edit Flags')
 
 ## Whether to allow editing of the key's UID. [br]
 ##
@@ -71,8 +78,22 @@ func _validate_property(property: Dictionary) -> void:
     property.usage |= PROPERTY_USAGE_READ_ONLY;
 
 
-func _get_key() -> StringName:
-  return key_uid;
+## Sets the value of the persistence key to [param value].
+func write(value: Variant) -> void:
+  assert(_value_type_valid(value),
+    "Cannot assign value of type %s to persistence key of type %s." % [typeof(value), _get_value_type()]);
+  PersistenceDictionary.write(key_uid, value);
+
+
+## Returns the value of this persistence key.
+func read() -> Variant:
+  return PersistenceDictionary.read(key_uid, _initial_value);
+
+
+## Erases this persistence value from the global dictionary. Returns true if a
+## value existed, otherwise false.
+func erase() -> bool:
+  return PersistenceDictionary.erase(key_uid);
 
 
 ## Returns a string with a unique-ish random set of characters.
@@ -83,13 +104,27 @@ func _generate_key_uid() -> StringName:
   ];
 
 
+## Returns the value type of this persistence key.
+func _get_value_type() -> Variant.Type:
+  return typeof(_initial_value) as Variant.Type;
+
+
+## Returns true if [param value] is of the same assigned [Variant.Type] as this
+## persistence value.
+func _value_type_valid(value: Variant) -> bool:
+  var preferred_type := _get_value_type();
+  return (
+    typeof(value) == preferred_type
+    or preferred_type == TYPE_NIL
+  );
+
+
 ## Push an error reminding the developer to unset [member _edit_key_uid].
 func _push_editable_key_error() -> void:
   if not _deserialized:
     return;
 
   var display_key_name := key_name if key_name else '[unnamed]';
-
   push_error(
     "The PersistencyKey '%s: %s' is flagged as key-editable.\n  Path: %s"
     % [key_uid, display_key_name, resource_path]
