@@ -1,6 +1,9 @@
 @tool
-## A [Resource] to formalize the [PersistenceKey] management of a particular key
-## local to a [PackedScene].
+## A [Resource] interface for a key value in the global [PersistenceDictionary]. [br]
+##
+## This type allows a persistence key to take advantage of the Resource UID
+## system, meaning that this key-object may be referenced by multiple object
+## fields while maintaining a only single definition. [br]
 ##
 ## [b]Note:[/b] This type requires that [PersistenceDictionary] is a global
 ## autoload to function.
@@ -8,35 +11,39 @@ class_name PersistenceKey
 extends PersistenceKeyResource
 
 
-## Whether to allow editing of this PersistenceKey's key-name. [br]
-##
-## [b]WARNING:[/b] Altering a key-name will invalidate save data and should
-## generally not be done after you've started using a key. If you must, plan a
-## migration strategy for the [PersistenceDictionary]. [br]
-##
-## If you just want to edit the public description of this key, consider
-## altering [member resource_name] instead.
-@export var _edit_key_name := false:
+# [TODO] Merge this script with PersistenceKeyResource.
+#   I no longer think they need to be different, really.
+#   And I want to move _initial_value higher up in the inspector.
+# [TODO] Hide _edit_key_uid in a group called "Enable Edit Flags".
+
+
+## The name of this persistence key. This also sets the [member resource_name]
+## and is only for developer purposes.
+@export var key_name: String:
+  get():
+    return resource_name;
   set(value):
-    _edit_key_name = value;
-    if _edit_key_name:
+    resource_name = value;
+
+## A pseudo-unique random identifier used to access a value in the
+## [PersistenceDictionary]. [br]
+##
+## This value is auto-generated with enough variability to avoid collisions, but
+## it is not guaranteed to be unique. If you need to modify it, check the box
+## below to enable editing, **but be warned** this may invalidate user save data.
+## Plan a migration strategy if a key is already being used.
+@export var key_uid: StringName;
+
+## Whether to allow editing of the key's UID. [br]
+##
+## [b]WARNING:[/b] Altering a UID will invalidate save data. If you must, plan
+## a migration strategy for the [PersistenceDictionary].
+@export var _edit_key_uid := false:
+  set(value):
+    _edit_key_uid = value;
+    if _edit_key_uid:
       _push_editable_key_error();
     notify_property_list_changed();
-
-## The name of this persistence key. It is ideal to name it something human
-## readable and debuggable.
-@export var persistence_key: StringName:
-  set(value):
-    persistence_key = value;
-    resource_name = persistence_key;
-
-## A unique-ish random identifier used to avoid naming conflicts between
-## persistence keys. It is recommended you still try to name your keys
-## intelligently, however. [br]
-##
-## In the rare case of a collision, this value may be edited in the .tscn or
-## .tres this Resource is saved in.
-@export var key_uid: StringName;
 
 
 ## Whether this [Resource] has finished being deserialized.
@@ -49,7 +56,7 @@ func _init() -> void:
 
 func _deserialize_ready() -> void:
   _deserialized = true;
-  var editable_when_loaded := (_edit_key_name);
+  var editable_when_loaded := (_edit_key_uid);
   var is_not_yet_configured := (not key_uid);
 
   if editable_when_loaded:
@@ -57,24 +64,15 @@ func _deserialize_ready() -> void:
 
   if is_not_yet_configured:
     key_uid = _generate_key_uid();
-    _edit_key_name = true;
 
 
 func _validate_property(property: Dictionary) -> void:
-  if (
-      not _edit_key_name and property.name == 'persistence_key'
-      or property.name == 'key_uid'
-  ):
+  if not _edit_key_uid and property.name == 'key_uid':
     property.usage |= PROPERTY_USAGE_READ_ONLY;
 
 
 func _get_key() -> StringName:
-  var key := key_uid;
-
-  if persistence_key.length() > 0:
-    key += ': %s' % persistence_key;
-
-  return key;
+  return key_uid;
 
 
 ## Returns a string with a unique-ish random set of characters.
@@ -85,9 +83,14 @@ func _generate_key_uid() -> StringName:
   ];
 
 
-## Push an error reminding the developer to unset [member _edit_key_name].
+## Push an error reminding the developer to unset [member _edit_key_uid].
 func _push_editable_key_error() -> void:
   if not _deserialized:
     return;
 
-  push_error("The PersistencyKey '%s' is flagged as key-editable.\n  Path: %s" % [_get_key(), resource_path]);
+  var display_key_name := key_name if key_name else '[unnamed]';
+
+  push_error(
+    "The PersistencyKey '%s: %s' is flagged as key-editable.\n  Path: %s"
+    % [key_uid, display_key_name, resource_path]
+  );
