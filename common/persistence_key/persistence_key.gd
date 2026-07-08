@@ -79,7 +79,10 @@ func _get_key() -> StringName:
 
 ## Returns a string with a unique-ish random set of characters.
 func _generate_key_uid() -> StringName:
-  return "Pkey_%s" % generate_scene_unique_id();
+  return "Pkey_%s%s" % [
+    generate_scene_unique_id(),
+    generate_scene_unique_id().left(3),
+  ];
 
 
 ## Push an error reminding the developer to unset [member _edit_key_name].
