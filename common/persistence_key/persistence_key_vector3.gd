@@ -1,5 +1,6 @@
 @tool
-## A Vector3-type [PersistenceKey].
+## A Vector3-type [PersistenceKey], an interface for a key-value in the global
+## [PersistenceDictionary].
 class_name PersistenceKeyVector3
 extends PersistenceKeyTyped
 
@@ -8,6 +9,9 @@ func _get_value_type() -> Variant.Type:
   return TYPE_VECTOR3;
 
 
-## Returns the Vector3 value of this persistence key.
+func write(value: Vector3) -> void:
+  super.write(value);
+
+
 func read() -> Vector3:
   return super.read();

@@ -1,5 +1,6 @@
 @tool
-## A Vector2-type [PersistenceKey].
+## A Vector2-type [PersistenceKey], an interface for a key-value in the global
+## [PersistenceDictionary].
 class_name PersistenceKeyVector2
 extends PersistenceKeyTyped
 
@@ -8,6 +9,9 @@ func _get_value_type() -> Variant.Type:
   return TYPE_VECTOR2;
 
 
-## Returns the Vector2 value of this persistence key.
+func write(value: Vector2) -> void:
+  super.write(value);
+
+
 func read() -> Vector2:
   return super.read();

@@ -73,7 +73,7 @@ func _validate_property(property: Dictionary) -> void:
 
 
 ## Sets the value of the persistence key to [param value].
-func write(value: Variant) -> void:
+func write(value) -> void:
   assert(_value_type_valid(value),
     "Cannot assign value of type %s to persistence key of type %s." % [typeof(value), _get_value_type()]);
   PersistenceDictionary.write(key_uid, value);

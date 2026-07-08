@@ -1,15 +1,17 @@
 @tool
-## A boolean-type [PersistenceKey].
+## A boolean-type [PersistenceKey], an interface for a key-value in the global
+## [PersistenceDictionary].
 class_name PersistenceKeyBool
 extends PersistenceKeyTyped
-
-# [TODO] Write a better doc string for PersistenceKey, borrow it here.
 
 
 func _get_value_type() -> Variant.Type:
   return TYPE_BOOL;
 
 
-## Returns the boolean value of this persistence key.
+func write(value: bool) -> void:
+  super.write(value);
+
+
 func read() -> bool:
   return super.read();

@@ -1,5 +1,6 @@
 @tool
-## A string-type [PersistenceKey].
+## A String-type [PersistenceKey], an interface for a key-value in the global
+## [PersistenceDictionary].
 class_name PersistenceKeyString
 extends PersistenceKeyTyped
 
@@ -8,6 +9,9 @@ func _get_value_type() -> Variant.Type:
   return TYPE_STRING;
 
 
-## Returns the String value of this persistence key.
+func write(value: String) -> void:
+  super.write(value);
+
+
 func read() -> String:
   return super.read();
