@@ -24,7 +24,7 @@ extends Resource
 ##
 ## This value is auto-generated with enough variability to avoid collisions, but
 ## it is not guaranteed to be unique. If you need to modify it, enable this
-## property in the 'Enable Edit Flags' group, **but be warned** this may
+## property in the 'Enable Edit Flags' group, [b]but be warned[/b] this may
 ## invalidate user save data. Plan a migration strategy if a key is already
 ## being used.
 @export var key_uid: StringName;
