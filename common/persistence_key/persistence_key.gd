@@ -11,12 +11,6 @@ class_name PersistenceKey
 extends Resource
 
 
-# [TODO] Merge this script with PersistenceKeyResource.
-#   I no longer think they need to be different, really.
-#   And I want to move _initial_value higher up in the inspector.
-# [TODO] Hide _edit_key_uid in a group called "Enable Edit Flags".
-
-
 ## The name of this persistence key. This also sets the [member resource_name]
 ## and is only for developer purposes.
 @export var key_name: String:
