@@ -22,7 +22,7 @@ extends Node2D
 ## this spawner. [br]
 ##
 ## If the Resource is left empty, it is interpreted as `false`.
-@export var _persistence_key: PersistenceKey;
+@export var _persistence_key: PersistenceKeyBool;
 
 ## The source container to use when the persistence key is 'false'.
 ##

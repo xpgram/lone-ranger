@@ -5,7 +5,7 @@ extends TriggerBox
 
 ## The `bool` persistence key to set to `true` when the collision conditions
 ## have been met.
-@export var _persistence_key: PersistenceKey;
+@export var _persistence_key: PersistenceKeyBool;
 
 ## The entities to watch for. When any of these enter this trigger box,
 ## the persistence key will be set to true.
