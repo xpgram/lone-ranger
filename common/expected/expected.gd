@@ -19,8 +19,6 @@ class_name Expected
 extends RefCounted
 
 
-# [TODO] This is similar to [GodotPromise]; should I look there for
-#   implementation tips?
 # [TODO] Add ExpectedInt, ExpectedString, etc., typed extensions.
 # [TODO] Add abstract ExpectedType that can be arbitrarily extended for any
 #   script which really wants to use it?
