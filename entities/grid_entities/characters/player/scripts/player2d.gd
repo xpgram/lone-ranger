@@ -79,8 +79,6 @@ var _coyote_fall_timer: Timer;
 ##
 @onready var _shader_rect: ScreenSpaceShader = %ScreenSpaceShaderRect
 
-# [FIXME] This should be their last reset point, probably something to do with the last seen
-#   angel statue when I finally implement those.
 ## Where the player spawned in.
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
 
