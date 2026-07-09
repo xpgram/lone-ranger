@@ -7,7 +7,7 @@
 ##    # ...
 ##  var exp_file := get_file('.../file/path');
 ##  if exp_file.succeeded:
-##    var file: File = exp_file.value;
+##    var file: File = exp_file._value;
 ##    # ...
 ##  else:
 ##    push_error('Problem reading file: ', exp_file.reason);
@@ -19,19 +19,16 @@ class_name Expected
 extends RefCounted
 
 
-# [TODO] Add ExpectedInt, ExpectedString, etc., typed extensions.
-# [TODO] Add abstract ExpectedType that can be arbitrarily extended for any
-#   script which really wants to use it?
-
 # [FIXME] Add Expected[Type] template whenever Godot allows such.
+#   I don't need it, actually. I do need to write extension instructions, though.
 
 
-## Return a successful [Expected] object with the expected [param value].
+## Return a successful [Expected] object with the expected [param _value].
 @warning_ignore("shadowed_variable")
 static func expected(value: Variant) -> Expected:
   var expected_value := Expected.new();
   expected_value.succeeded = true;
-  expected_value.value = value;
+  expected_value._value = value;
   return expected_value;
 
 
@@ -44,12 +41,18 @@ static func unexpected(reason: String) -> Expected:
   return unexpected_issue;
 
 
-## Whether [member value] succeeded in being filled. If it could not be,
-## [member value] will be null and [member reason] should have an error message.
+## Whether [member _value] succeeded in being filled. If it could not be,
+## [member _value] will be null and [member reason] should have an error message.
 var succeeded: bool;
-
-## The expected value, if succeeded.
-var value: Variant;
 
 ## The reason given for an unexpected failure; an error message.
 var reason: String;
+
+## The expected _value, if succeeded.
+var _value: Variant;
+
+
+## Returns the value that this [Expected] object resolved with. Returns `false`
+## if [member succeeded] is `false`.
+func get_value():
+  return _value;

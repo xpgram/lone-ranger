@@ -1,0 +1,8 @@
+## A alternative error handling method that puts exceptions into the return
+## type, encouraging developers to deal with them.
+class_name ExpectedBool
+extends Expected
+
+
+func get_value() -> bool:
+  return super.get_value();
