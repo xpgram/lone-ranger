@@ -19,10 +19,6 @@ class_name Expected
 extends RefCounted
 
 
-# [FIXME] Add Expected[Type] template whenever Godot allows such.
-#   I don't need it, actually. I do need to write extension instructions, though.
-
-
 ## Return a successful [Expected] object with the expected [param _value].
 @warning_ignore("shadowed_variable")
 static func expected(value: Variant) -> Expected:
