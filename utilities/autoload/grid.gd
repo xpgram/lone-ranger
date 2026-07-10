@@ -14,6 +14,13 @@ var _terrain_type_undo_schedule := [] as Array[TileMapChange];
 var _terrain_type_permanent_schedule := [] as Array[TileMapChange];
 
 
+func _ready() -> void:
+  if Engine.is_editor_hint():
+    return;
+
+  Events.board_reset_declared.connect(undo_all_tile_map_changes);
+
+
 ## Inserts [param object] into the Grid at position [param place]. If given, will also
 ## remove [param object] from [param from]. [br]
 ##
@@ -206,7 +213,7 @@ func _log_tile_map_change(place: Vector2i, from: int, to: int, permanent: bool) 
 
 ## Plays back a [param number] of tile map changes and removes them from the
 ## undo schedule.
-func _undo_tile_map_change(number: int = 1) -> void:
+func undo_tile_map_change(number: int = 1) -> void:
   for i in range(number):
     var change := _terrain_type_undo_schedule.pop_back() as TileMapChange;
 
@@ -218,8 +225,8 @@ func _undo_tile_map_change(number: int = 1) -> void:
 
 ## Plays back all tile map changes in the undo schedule until the schedule is
 ## empty.
-func _undo_all_tile_map_changes() -> void:
-  _undo_tile_map_change(_terrain_type_undo_schedule.size());
+func undo_all_tile_map_changes() -> void:
+  undo_tile_map_change(_terrain_type_undo_schedule.size());
 
 
 ## Tries to add [param object] to the Grid at [param place_key] and returns true if the

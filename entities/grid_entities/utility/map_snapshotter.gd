@@ -6,7 +6,7 @@
 # Grid.set_tile_type(place, terrain_type, permanent: bool)
 #
 # [x] set_tile_type() logs all map changes into an undo/redo schedule.
-# [ ] The undo/redo schedule is played back on board-reset events.
+# [x] The undo/redo schedule is played back on board-reset events.
 # [x] set_tile_type(..., permanent: bool) logs map changes in a save-file schedule.
 #
 # [ ] The Tail statue gets a pair-type collidable that Tail uses to discern
