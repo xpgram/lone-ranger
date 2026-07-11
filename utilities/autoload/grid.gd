@@ -5,6 +5,21 @@ extends Node
 ## The map of all grid cells.
 var _map: Dictionary[StringName, InternalCell];
 
+## A list of all map terrain changes since the map was loaded.
+@export_storage
+var _terrain_type_undo_schedule := [] as Array[TileMapChange];
+
+## A list of all permanent, save-file-kept terrain changes since the map was loaded.
+@export_storage
+var _terrain_type_permanent_schedule := [] as Array[TileMapChange];
+
+
+func _ready() -> void:
+  if Engine.is_editor_hint():
+    return;
+
+  Events.board_reset_declared.connect(undo_all_tile_map_changes);
+
 
 ## Inserts [param object] into the Grid at position [param place]. If given, will also
 ## remove [param object] from [param from]. [br]
@@ -103,10 +118,21 @@ func has_object(object: GridObject, place: Vector2) -> bool:
 ## Sets the [param terrain_type] of a tile at [param place] in the world [TileMapLayer]. [br]
 ##
 ## Use [param terrain_type] -1 to erase cells.
-func set_tile_type(place: Vector2i, terrain_type: int) -> void:
+func set_tile_type(place: Vector2i, terrain_type: int, permanent := false) -> void:
+  var previous_terrain_type := BetterTerrain.get_cell(_get_tilemap(), place);
+
+  if previous_terrain_type == terrain_type:
+    return;
+
+  _log_tile_map_change(place, previous_terrain_type, terrain_type, permanent);
+  _set_tile_type(place, terrain_type);
+
+
+## A helper to [method set_tile_type] that performs the actual work of calling
+## the tile map to update its tile type to [param terrain_type] at [param place].
+func _set_tile_type(place: Vector2i, terrain_type: int) -> void:
   var tilemap := _get_tilemap();
   var update_dimensions := Rect2i(place, Vector2.ZERO);
-
   BetterTerrain.set_cell(tilemap, place, terrain_type);
   BetterTerrain.update_terrain_area(tilemap, update_dimensions);
 
@@ -172,6 +198,35 @@ func _get_tilemap() -> GridTileMapLayer:
     push_error('Grid: No tile map layers found.');
 
   return tile_layers[0];
+
+
+## Records a tile map change in either the undo schedule or the permanent-
+## change schedule.
+func _log_tile_map_change(place: Vector2i, from: int, to: int, permanent: bool) -> void:
+  var change := TileMapChange.new(place, from, to);
+
+  if permanent:
+    _terrain_type_permanent_schedule.append(change);
+  else:
+    _terrain_type_undo_schedule.append(change);
+
+
+## Plays back a [param number] of tile map changes and removes them from the
+## undo schedule.
+func undo_tile_map_change(number: int = 1) -> void:
+  for i in range(number):
+    var change := _terrain_type_undo_schedule.pop_back() as TileMapChange;
+
+    if not change:
+      break;
+
+    _set_tile_type(change.place, change.from);
+
+
+## Plays back all tile map changes in the undo schedule until the schedule is
+## empty.
+func undo_all_tile_map_changes() -> void:
+  undo_tile_map_change(_terrain_type_undo_schedule.size());
 
 
 ## Tries to add [param object] to the Grid at [param place_key] and returns true if the
@@ -264,3 +319,17 @@ class InternalCell extends RefCounted:
 class Cell extends RefCounted:
   var tile_data: CellTerrainData;
   var objects: Array[GridObject];
+
+
+## A struct to describe map terrain changes in service of the Grid's undo/redo
+## and permanent-change schedules.
+class TileMapChange extends RefCounted:
+  var place: Vector2i;
+  var from: int;
+  var to: int;
+
+  @warning_ignore("shadowed_variable")
+  func _init(place: Vector2i, from: int, to: int) -> void:
+    self.place = place;
+    self.from = from;
+    self.to = to;
