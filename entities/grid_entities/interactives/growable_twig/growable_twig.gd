@@ -52,7 +52,7 @@ func activate_growth_async() -> void:
       # [TODO] These twigs could be set into the board respawner instead.
       # [FIXME] Any non-permanent solution will conflict with board-reset events
       #   since said events do not interrupt this async call.
-      Grid.set_tile_type(grid_point, 2);
+      Grid.set_tile_type(grid_point, 2, true);
 
     await get_tree().create_timer(0.2).timeout;
 
