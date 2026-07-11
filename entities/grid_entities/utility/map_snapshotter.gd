@@ -29,6 +29,15 @@
 #     themselves to now, they don't need the node segregation. And it's annoying
 #     to modify the boss area in two different places.
 #
+# Improve Debug: Add a way to get equipment, etc., quickly:
+# [x] Debug dropdown has a line edit node.
+# [ ] Fix LineEdit can't backspace for some reason.
+# [ ] LineEdit can 'submit' text.
+# [ ] 'Submitted' text is interpreted like a command line.
+#   [ ] give shove -> grants shove equipment
+# [ ] LineEdit is clickable to focus
+#     (I think the Viewport stuff is getting in the way?)
+#
 # Fix compactible particles:
 # [ ] Particles exist in board spawner.
 # [ ] Some are permanent (just set a flag).
