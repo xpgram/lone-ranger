@@ -1439,12 +1439,6 @@ modulate = Color(1, 1, 1, 0.42352942)
 position = Vector2(-192, -304)
 pushable = false
 
-[node name="StatuePlatformEntity7" parent="Interactives Container" unique_id=412672747 instance=ExtResource("18_mhctp")]
-position = Vector2(-160, 32)
-
-[node name="StatuePlatformEntity4" parent="Interactives Container" unique_id=456651796 instance=ExtResource("18_mhctp")]
-position = Vector2(-400, -96)
-
 [node name="GrowableTwig" parent="Interactives Container" unique_id=232660030 instance=ExtResource("19_0lxvj")]
 position = Vector2(48, -64)
 _platform_points = Array[Vector2i]([Vector2i(0, -1), Vector2i(0, -2), Vector2i(0, -3), Vector2i(0, -4), Vector2i(1, -4), Vector2i(2, -4), Vector2i(2, -5), Vector2i(2, -6)])
