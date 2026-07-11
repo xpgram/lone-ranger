@@ -37,7 +37,12 @@ static func getc(node: Node, component_type: Variant) -> BaseComponent:
     push_error("Cannot get a component from a null value.");
     return null;
 
-  var node_path: String = node.get_meta(TypeString.from(component_type));
+  var type_str := TypeString.from(component_type);
+
+  if not node.has_meta(type_str):
+    return null;
+
+  var node_path: String = node.get_meta(type_str);
   return node.get_node(node_path);
 
 

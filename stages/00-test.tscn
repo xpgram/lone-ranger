@@ -32,6 +32,7 @@
 [ext_resource type="Resource" uid="uid://72omta0cvh7l" path="res://utilities/actions/field_actions/resources/magic_push_action.tres" id="27_0mqgx"]
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
 [ext_resource type="Script" uid="uid://dj3d0k5yxrtac" path="res://entities/grid_entities/utility/trigger_box_boolean_pkey.gd" id="28_snb1o"]
+[ext_resource type="Script" uid="uid://bchkts4e674ww" path="res://utilities/nodes/components/grid_entity_components/grid_message_component.gd" id="29_ekj6j"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
@@ -1109,6 +1110,12 @@ position = Vector2(-464, -112)
 [node name="BoulderEntity63" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1004471591 instance=ExtResource("10_jadfo")]
 position = Vector2(-240, -176)
 
+[node name="StatuePlatformEntity7" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=412672747 instance=ExtResource("18_mhctp")]
+position = Vector2(-160, 32)
+
+[node name="StatuePlatformEntity4" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=456651796 instance=ExtResource("18_mhctp")]
+position = Vector2(-400, -96)
+
 [node name="Spawner_ShoveBridgePuzzle" type="Node2D" parent="Interactives Container" unique_id=1958610913 node_paths=PackedStringArray("_false_container")]
 position = Vector2(464, 16)
 script = ExtResource("18_r4137")
@@ -1124,6 +1131,14 @@ script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_y8k2y")
 _matched_entities = [NodePath("../StatuePlatformEntity")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/GridMessageComponent = NodePath("GridMessageComponent")
+
+[node name="GridMessageComponent" type="Node" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer/TriggerBoxBooleanPkey" unique_id=1127592743 node_paths=PackedStringArray("_matched_grid_objects")]
+script = ExtResource("29_ekj6j")
+_message = 1
+_filter_objects = true
+_matched_grid_objects = [NodePath("../../StatuePlatformEntity")]
+metadata/_custom_type_script = "uid://bchkts4e674ww"
 
 [node name="StatuePlatformEntity" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1679984845 instance=ExtResource("18_mhctp")]
 position = Vector2(32, 96)
@@ -1219,6 +1234,14 @@ _matched_entities = [NodePath("../StatuePlatformEntity3")]
 _trigger_box_rect = Rect2i(0, 0, 3, 1)
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+metadata/GridMessageComponent = NodePath("GridMessageComponent")
+
+[node name="GridMessageComponent" type="Node" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer/TriggerBoxBooleanPkey" unique_id=1095632546 node_paths=PackedStringArray("_matched_grid_objects")]
+script = ExtResource("29_ekj6j")
+_message = 1
+_filter_objects = true
+_matched_grid_objects = [NodePath("../../StatuePlatformEntity3")]
+metadata/_custom_type_script = "uid://bchkts4e674ww"
 
 [node name="BoulderEntity52" parent="Interactives Container/Spawner_WestSaveNorthPuzzle/FalseContainer" unique_id=1176024233 instance=ExtResource("10_jadfo")]
 position = Vector2(32, 16)
@@ -1255,6 +1278,14 @@ _persistence_key = SubResource("Resource_kgk2j")
 _matched_entities = [NodePath("../StatuePlatformEntity2")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+metadata/GridMessageComponent = NodePath("GridMessageComponent")
+
+[node name="GridMessageComponent" type="Node" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer/TriggerBoxBooleanPkey" unique_id=1351779386 node_paths=PackedStringArray("_matched_grid_objects")]
+script = ExtResource("29_ekj6j")
+_message = 1
+_filter_objects = true
+_matched_grid_objects = [NodePath("../../StatuePlatformEntity2")]
+metadata/_custom_type_script = "uid://bchkts4e674ww"
 
 [node name="StatuePlatformEntity2" parent="Interactives Container/Spawner_WestSaveWestPuzzleStage1/FalseContainer" unique_id=1586754406 instance=ExtResource("18_mhctp")]
 position = Vector2(16, 0)
@@ -1318,6 +1349,14 @@ _matched_entities = [NodePath("../StatuePlatformEntity5")]
 _trigger_box_rect = Rect2i(0, 0, 1, 2)
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+metadata/GridMessageComponent = NodePath("GridMessageComponent")
+
+[node name="GridMessageComponent" type="Node" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer/TriggerBoxBooleanPkey" unique_id=904413855 node_paths=PackedStringArray("_matched_grid_objects")]
+script = ExtResource("29_ekj6j")
+_message = 1
+_filter_objects = true
+_matched_grid_objects = [NodePath("../../StatuePlatformEntity5")]
+metadata/_custom_type_script = "uid://bchkts4e674ww"
 
 [node name="TriggerBoxBooleanPkey2" type="Node2D" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=293989299 node_paths=PackedStringArray("_matched_entities")]
 position = Vector2(-32, 48)
@@ -1326,6 +1365,14 @@ _persistence_key = SubResource("Resource_km6s0")
 _matched_entities = [NodePath("../StatuePlatformEntity5")]
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+metadata/GridMessageComponent = NodePath("GridMessageComponent")
+
+[node name="GridMessageComponent" type="Node" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer/TriggerBoxBooleanPkey2" unique_id=1574873626 node_paths=PackedStringArray("_matched_grid_objects")]
+script = ExtResource("29_ekj6j")
+_message = 1
+_filter_objects = true
+_matched_grid_objects = [NodePath("../../StatuePlatformEntity5")]
+metadata/_custom_type_script = "uid://bchkts4e674ww"
 
 [node name="StatuePlatformEntity5" parent="Interactives Container/Spawner_NorthSavePuzzle/FalseContainer" unique_id=1046909404 instance=ExtResource("18_mhctp")]
 position = Vector2(16, 16)

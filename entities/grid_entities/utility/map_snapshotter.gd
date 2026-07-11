@@ -9,9 +9,9 @@
 # [x] The undo/redo schedule is played back on board-reset events.
 # [x] set_tile_type(..., permanent: bool) logs map changes in a save-file schedule.
 #
-# [ ] The Tail statue gets a pair-type collidable that Tail uses to discern
+# [x] The Tail statue gets a pair-type collidable that Tail uses to discern
 #     undoable from permanent map changes.
-#     [ ] This pair-type is generalizable: it is a box-area that puts itself, or
+#     [x] This pair-type is generalizable: it is a box-area that puts itself, or
 #         a known child maybe, into each Grid spot it covers; Tail, on collision,
 #         asks it for a message its been given, like `"tail-permanent"` or
 #         `ColliderMessageEnum.TailPermanent`, or something like that.
@@ -21,7 +21,7 @@
 #         return something useful if `self` matches its criteria.
 #
 # DemonWall boss, seperate feature branch:
-# [ ] These map changes will be undoable by default.
+# [x] These map changes will be undoable by default.
 # [ ] The DemonWall entity is resettable unless the player reached the hallway end.
 #
 # Changing map details:

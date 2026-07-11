@@ -48,7 +48,9 @@ func activate_growth_async() -> void:
     var grid_point := relative_point + grid_position;
 
     if ActionUtils.place_is_pit(grid_point):
-      Grid.set_tile_type(grid_point, 2);
+      # [FIXME] Permanent should be a bool property of this object.
+      # [TODO] These twigs could be set into the board respawner instead.
+      Grid.set_tile_type(grid_point, 2, true);
 
     await get_tree().create_timer(0.2).timeout;
 
