@@ -7,8 +7,11 @@ extends Control
     _show_debug_panel = value;
     _set_visible(_show_debug_panel);
 
+    if _show_debug_panel:
+      line_edit.grab_focus();
 
-@onready var focus_node: FocusableControl = %FocusableControl;
+
+@onready var line_edit: LineEdit = %LineEdit;
 
 
 func _ready() -> void:
@@ -19,9 +22,9 @@ func _unhandled_input(event: InputEvent) -> void:
   if not OS.is_debug_build():
     return;
 
-  if event is InputEventMouseButton:
-    if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-      grab_focus();
+  # if event is InputEventMouseButton:
+  #   if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+  #     grab_focus();
 
   if event.pressed and event.keycode == KEY_F1:
     _show_debug_panel = !_show_debug_panel;
