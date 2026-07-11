@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://80iof325xsg0" path="res://entities/system/debug/debug_ui.gd" id="1_hnfw2"]
 [ext_resource type="PackedScene" uid="uid://kfekvnl8dv3f" path="res://entities/system/debug/inaction_timer_clock/inaction_timer_clock.tscn" id="2_pfcia"]
 [ext_resource type="Script" uid="uid://cxd7e70k4ct58" path="res://entities/system/debug/debug_background.gd" id="2_q0256"]
+[ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://common/input_focus/focusable_control.gd" id="4_q0256"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqfm4"]
 content_margin_left = 4.0
@@ -53,3 +54,11 @@ emoji_menu_enabled = false
 clear_button_enabled = true
 select_all_on_focus = true
 caret_blink = true
+
+[node name="FocusableControl" type="Control" parent="LineEdit" unique_id=724473486]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_q0256")
+metadata/_custom_type_script = "uid://dx2don6d2tt38"
