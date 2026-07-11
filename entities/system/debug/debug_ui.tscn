@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://80iof325xsg0" path="res://entities/system/debug/debug_ui.gd" id="1_hnfw2"]
 [ext_resource type="PackedScene" uid="uid://kfekvnl8dv3f" path="res://entities/system/debug/inaction_timer_clock/inaction_timer_clock.tscn" id="2_pfcia"]
+[ext_resource type="Script" uid="uid://cxd7e70k4ct58" path="res://entities/system/debug/debug_background.gd" id="2_q0256"]
 
 [node name="DebugUI" type="Control" unique_id=469792231]
 layout_mode = 3
@@ -18,6 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
+script = ExtResource("2_q0256")
 
 [node name="InactionTimerClock" parent="." unique_id=883868298 instance=ExtResource("2_pfcia")]
 layout_mode = 0
