@@ -16,7 +16,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   AudioBus.play_audio_scene(_scene_cast_audio);
 
   var entities := Grid.get_entities(playbill.target_position);
-  
+
   for entity in entities:
     # [FIXME] Incorrect check being used here.
     #   This is, more or less, what the stimulus system is for.
@@ -31,6 +31,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   # [TODO] How do we know that '2' is a floor? I wish I could define these numbers somewhere.
   #  I think I can get rid of the magic number, at least, by asking BetterTerrain to tell
   #  me which type index is for 'floor' or whatever I've called it.
-  Grid.set_tile_type(playbill.target_position, 2);
+  # [FIXME] Not all loose particles are permanent map changes.
+  Grid.set_tile_type(playbill.target_position, 2, true);
 
   return true;

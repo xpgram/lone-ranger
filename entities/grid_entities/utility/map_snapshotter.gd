@@ -22,7 +22,16 @@
 #
 # DemonWall boss, seperate feature branch:
 # [x] These map changes will be undoable by default.
-# [ ] The DemonWall entity is resettable unless the player reached the hallway end.
+# [x] The DemonWall entity is resettable unless the player reaches the hallway end.
+# [x] The DemonWall switches back the music track when despawned.
+# [ ] The interactives / npcs / enemies node-containers are merged into one play
+#     space, maybe segmented by location. Such objects have groups they add
+#     themselves to now, they don't need the node segregation. And it's annoying
+#     to modify the boss area in two different places.
+#
+# Fix compactible particles:
+# [ ] Particles exist in board spawner.
+# [ ] Some are permanent (just set a flag).
 #
 # Changing map details:
 # [ ] Implement sub-TileMapLayers that can be drawn and used to paint into the
