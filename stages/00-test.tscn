@@ -1725,7 +1725,7 @@ _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://cs2jx75045p66"
 
 [node name="DeactivationTrigger" type="Node2D" parent="Enemy Container/DemonWallBossSpawner/FalseContainer" unique_id=221945970]
-position = Vector2(864, 416)
+position = Vector2(864, 400)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_i8c80")
 _match_player_entity = true
