@@ -23,7 +23,7 @@
 # DemonWall boss, seperate feature branch:
 # [x] These map changes will be undoable by default.
 # [x] The DemonWall entity is resettable unless the player reaches the hallway end.
-# [ ] The DemonWall switches back the music track when despawned.
+# [x] The DemonWall switches back the music track when despawned.
 # [ ] The interactives / npcs / enemies node-containers are merged into one play
 #     space, maybe segmented by location. Such objects have groups they add
 #     themselves to now, they don't need the node segregation. And it's annoying

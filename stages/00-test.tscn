@@ -1712,9 +1712,10 @@ metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
 [node name="FalseContainer" type="Node2D" parent="Enemy Container/DemonWallBossSpawner" unique_id=839969864]
 
-[node name="DemonWallBoss" parent="Enemy Container/DemonWallBossSpawner/FalseContainer" unique_id=1641093864 node_paths=PackedStringArray("activation_trigger") instance=ExtResource("28_fyjc2")]
+[node name="DemonWallBoss" parent="Enemy Container/DemonWallBossSpawner/FalseContainer" unique_id=1641093864 node_paths=PackedStringArray("activation_trigger", "deactivation_trigger") instance=ExtResource("28_fyjc2")]
 position = Vector2(240, 336)
 activation_trigger = NodePath("../ActivationTrigger")
+deactivation_trigger = NodePath("../DeactivationTrigger")
 
 [node name="ActivationTrigger" type="Node2D" parent="Enemy Container/DemonWallBossSpawner/FalseContainer" unique_id=1782879598]
 position = Vector2(288, 336)
