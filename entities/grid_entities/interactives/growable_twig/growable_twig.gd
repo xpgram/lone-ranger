@@ -50,7 +50,9 @@ func activate_growth_async() -> void:
     if ActionUtils.place_is_pit(grid_point):
       # [FIXME] Permanent should be a bool property of this object.
       # [TODO] These twigs could be set into the board respawner instead.
-      Grid.set_tile_type(grid_point, 2, true);
+      # [FIXME] Any non-permanent solution will conflict with board-reset events
+      #   since said events do not interrupt this async call.
+      Grid.set_tile_type(grid_point, 2);
 
     await get_tree().create_timer(0.2).timeout;
 
