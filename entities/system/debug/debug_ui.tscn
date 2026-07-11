@@ -11,9 +11,7 @@ base_scale = 0.35
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqfm4"]
 content_margin_left = 4.0
-content_margin_top = 1.0
 content_margin_right = 4.0
-content_margin_bottom = 1.0
 
 [node name="DebugUI" type="Control" unique_id=469792231]
 layout_mode = 3
@@ -42,7 +40,7 @@ anchors_preset = -1
 anchor_top = 0.85700005
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -2.9920044
+offset_top = -0.9920044
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_placeholder_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
