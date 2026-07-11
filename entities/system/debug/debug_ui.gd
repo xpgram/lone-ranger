@@ -12,12 +12,11 @@ func _ready() -> void:
   _set_visible(_show_debug_panel);
 
 
-func _unhandled_input(_event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
   if not OS.is_debug_build():
     return;
 
-  # [TODO] Do input bindings matter? Should I want to enable DebugUI with a controller? (i.e., should I use param _event)
-  if Input.is_key_pressed(KEY_F1):
+  if event.is_pressed() and event.keycode == KEY_F1:
     _show_debug_panel = !_show_debug_panel;
     accept_event();
 
