@@ -24,6 +24,10 @@
 # [x] These map changes will be undoable by default.
 # [ ] The DemonWall entity is resettable unless the player reached the hallway end.
 #
+# Fix compactible particles:
+# [ ] Particles exist in board spawner.
+# [ ] Some are permanent (just set a flag).
+#
 # Changing map details:
 # [ ] Implement sub-TileMapLayers that can be drawn and used to paint into the
 #     main one, like a stamp.
