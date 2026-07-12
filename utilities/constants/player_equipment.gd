@@ -3,6 +3,10 @@
 class_name PlayerEquipment
 
 
+# [FIXME] We can convert this to an enum.
+#   Enums show their proper names in the editor pretty consistently now.
+#   And they're iterable like Dictionaries——apparently because they are dictionaries.
+#   We'll probably move this to Enums.gd
 # [TODO] At some point, the equipment inventory will be revamped. Uh... I guess this script
 #  could still exist, though. It would yield Resources like FieldActionList does.
 

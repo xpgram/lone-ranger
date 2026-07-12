@@ -46,11 +46,17 @@ const HEART_PIECES_FOR_EACH_CONTAINER := 4;
 
 
 func _ready() -> void:
+  _bind_global_signals();
+
   emit_full_inventory();
 
   # [TODO] Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
   #  I could devise a _post_ready() step by sending function calls to a global service. Hm.
   _announce_magic_quantities();
+
+
+func _bind_global_signals() -> void:
+  Events.debug_command_submitted.connect(_on_cmd_input);
 
 
 ## Broadcasts the entire inventory contents to any nodes who might be listening.
@@ -267,3 +273,40 @@ func _send_game_event_message(item: PlayerInventoryItem) -> void:
 
   var event_message := "Got %s %s %s" % [item.quantity, item.action.action_name, item_type_name];
   Events.game_event_message_announced.emit(event_message);
+
+
+## Handler for input from the debug command line.
+func _on_cmd_input(text: String) -> void:
+  var tokens := text.split(' ');
+
+  var equipment := [
+    PlayerEquipment.shove,
+    PlayerEquipment.wings,
+    PlayerEquipment.sword,
+    PlayerEquipment.hookshot,
+  ];
+
+  # [FIXME] This performs no verification that a real equipment is being added.
+  # [FIXME] Would this be better in a Debug class that emits a debug_give_equipment signal?
+  #   The difference being the CLI interpreter could be held in one place and not distributed
+  #   all over the project.
+  # [FIXME] This naturally doesn't account for magic or items.
+  if tokens.size() == 2 and tokens[0] == 'give':
+    if tokens[1] == 'all':
+      for artefact in equipment:
+        add_equipment(artefact);
+      for magic in FieldActionList.Magic.values():
+        var item := PlayerInventoryItem.new();
+        item.action = magic;
+        item.quantity = 6;
+        add_item(item);
+    elif (
+        tokens[1] in equipment
+        or tokens[1] == PlayerEquipment.heart_piece
+    ):
+      add_equipment(tokens[1]);
+    elif tokens[1] in FieldActionList.Magic.keys():
+      var item := PlayerInventoryItem.new();
+      item.action = FieldActionList.Magic.get(tokens[1]);
+      item.quantity = 6;
+      add_item(item);

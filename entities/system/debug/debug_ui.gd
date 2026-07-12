@@ -61,3 +61,4 @@ func _set_visible(visible_enabled: bool) -> void:
 func _on_command_line_submitted(text: String) -> void:
   _cmd_line.text = "";
   Events.debug_command_submitted.emit(text);
+  # [TODO] Implement a command history you can up arrow through.
