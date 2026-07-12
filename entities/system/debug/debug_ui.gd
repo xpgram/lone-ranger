@@ -32,12 +32,10 @@ func _unhandled_input(event: InputEvent) -> void:
     return;
 
   if event.keycode == KEY_F1:
-    _show_debug_panel = true;
-    _cmd_line.grab_focus();
-    accept_event();
-
-  if event.keycode == KEY_F2:
-    _show_debug_panel = true;
+    if _show_debug_panel:
+      _cmd_line.grab_focus();
+    else:
+      _show_debug_panel = true;
     accept_event();
 
   if event.keycode == KEY_ESCAPE:
