@@ -21,17 +21,13 @@ func _unhandled_input(event: InputEvent) -> void:
   if not OS.is_debug_build():
     return;
 
-  # if event is InputEventMouseButton:
-  #   if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-  #     grab_focus();
-
   if event.pressed and event.keycode == KEY_F1:
     _show_debug_panel = true;
+    _cmd_line.grab_focus();
     accept_event();
 
   if event.pressed and event.keycode == KEY_F2:
     _show_debug_panel = true;
-    _cmd_line.grab_focus();
     accept_event();
 
   if event.pressed and event.keycode == KEY_ESCAPE:
