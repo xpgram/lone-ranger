@@ -33,6 +33,7 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
   if what == NOTIFICATION_PREDELETE:
+    # [FIXME] This shouldn't (?) occur during the BooleanSpawner scene packing.
     _on_deactivated();
 
 

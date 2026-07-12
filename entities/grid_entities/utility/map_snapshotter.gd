@@ -24,6 +24,8 @@
 # [x] These map changes will be undoable by default.
 # [x] The DemonWall entity is resettable unless the player reaches the hallway end.
 # [x] The DemonWall switches back the music track when despawned.
+# [ ] Fix: The first node-delete cause by BooleanSpawner's scene packing tells the
+#     music stream that an enemy has disappeared, so we get -1.
 # [ ] The interactives / npcs / enemies node-containers are merged into one play
 #     space, maybe segmented by location. Such objects have groups they add
 #     themselves to now, they don't need the node segregation. And it's annoying
