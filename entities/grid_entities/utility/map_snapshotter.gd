@@ -33,12 +33,14 @@
 #
 # Improve Debug: Add a way to get equipment, etc., quickly:
 # [x] Debug dropdown has a line edit node.
-# [ ] Fix LineEdit can't backspace for some reason.
-# [ ] LineEdit can 'submit' text.
-# [ ] 'Submitted' text is interpreted like a command line.
-#   [ ] give shove -> grants shove equipment
+# [x] Fix LineEdit can't backspace for some reason.
+# [x] LineEdit can 'submit' text.
+# [ ] LineEdit can't move the caret left or right.
+# [x] 'Submitted' text is interpreted like a command line.
+#   [x] give shove -> grants shove equipment
 # [ ] LineEdit is clickable to focus
 #     (I think the Viewport stuff is getting in the way?)
+# [ ] LineEdit -> DebugUI -> Debug.interpreter -> signal debug_give_item -> player.inventory
 #
 # Fix compactible particles:
 # [ ] Particles exist in board spawner.
