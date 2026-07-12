@@ -54,6 +54,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_nqfm4")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_nqfm4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_nqfm4")
 placeholder_text = "Enter a command..."
+keep_editing_on_text_submit = true
 emoji_menu_enabled = false
 clear_button_enabled = true
 select_all_on_focus = true
