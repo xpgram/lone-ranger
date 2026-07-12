@@ -1,18 +1,11 @@
 extends Control
 
 
-const MAX_CMD_HISTORY := 20;
-const DEFAULT_CMD_INDEX := 0;
-
 ## Whether to show the debug panel on game start. In non-debug builds, does nothing.
 @export var _show_debug_panel := false:
   set(value):
     _show_debug_panel = value;
     _set_visible(_show_debug_panel);
-
-
-var _cmd_history := [] as Array[String];
-var _cmd_history_index := DEFAULT_CMD_INDEX;
 
 
 @onready var _cmd_line: LineEdit = %CommandLineEdit;
@@ -48,9 +41,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
   if _cmd_line.has_focus():
     if event.keycode == KEY_UP:
-      _move_up_cmd_history();
+      DebugCLI.History.cursor += 1;
+      _cmd_line.text = DebugCLI.History.get_cursor_line();
     if event.keycode == KEY_DOWN:
-      _move_down_cmd_history();
+      DebugCLI.History.cursor -= 1;
+      _cmd_line.text = DebugCLI.History.get_cursor_line();
 
     # [FIXME] This doesn't do anything, and I think that _might_ be because
     #   screen_shader gets to handle input first? I dunno.
@@ -68,23 +63,7 @@ func _set_visible(visible_enabled: bool) -> void:
 
 ## Handler for submit events emitted from the command line node.
 func _on_command_line_submitted(text: String) -> void:
+  DebugCLI.History.append(text);
+  DebugCLI.History.reset_cursor();
   _cmd_line.text = "";
   Events.debug_command_submitted.emit(text);
-
-  _cmd_history.push_back(text);
-  if _cmd_history.size() > MAX_CMD_HISTORY:
-    _cmd_history.pop_front();
-  _cmd_history_index = DEFAULT_CMD_INDEX;
-
-
-func _move_up_cmd_history() -> void:
-  _cmd_history_index = clampi(_cmd_history_index + 1, DEFAULT_CMD_INDEX, _cmd_history.size());
-  _cmd_line.text = _cmd_history[_cmd_history.size() - _cmd_history_index];
-
-
-func _move_down_cmd_history() -> void:
-  _cmd_history_index = clampi(_cmd_history_index - 1, DEFAULT_CMD_INDEX, _cmd_history.size());
-  if _cmd_history_index == DEFAULT_CMD_INDEX:
-    _cmd_line.text = "";
-  else:
-    _cmd_line.text = _cmd_history.get(_cmd_history.size() - _cmd_history_index);
