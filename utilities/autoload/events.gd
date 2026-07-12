@@ -4,6 +4,9 @@ extends Node
 @warning_ignore_start('UNUSED_SIGNAL')
 
 
+## Emitted when the user submits input via the debug command line.
+signal debug_command_submitted(text: String);
+
 ## Emitted when the turn system's real-time count changes.
 signal real_time_updated(time_remaining: float);
 

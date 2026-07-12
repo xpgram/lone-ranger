@@ -57,7 +57,7 @@ func _set_visible(visible_enabled: bool) -> void:
     show();
 
 
-##
+## Handler for submit events emitted from the command line node.
 func _on_command_line_submitted(text: String) -> void:
   _cmd_line.text = "";
-  print(text);
+  Events.debug_command_submitted.emit(text);
