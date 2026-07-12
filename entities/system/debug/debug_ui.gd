@@ -33,6 +33,7 @@ func _unhandled_input(event: InputEvent) -> void:
   if has_focus():
     # [FIXME] This doesn't do anything, and I think that _might_ be because
     #   screen_shader gets to handle input first? I dunno.
+    #   Notably, the player isn't arrow-key-movable while the LineEdit is focused.
     accept_event();
 
 
