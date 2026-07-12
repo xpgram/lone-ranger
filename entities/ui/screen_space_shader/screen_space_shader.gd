@@ -144,6 +144,9 @@ func set_silhoette_white_threshhold(value: float) -> void:
 
 # [FIXME] Remove these debug controls.
 func _unhandled_input(_event: InputEvent) -> void:
+  # [FIXME] Does not refuse if it does not have focus.
+  # [FIXME] Does not accept_input()
+
   # [FIXME] These are being called like 16,000 times a second now. Wtf?
   #   I've determined that was my PS5 controller somehow. Was it doing that before?
   #   That's really weird.

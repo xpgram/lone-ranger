@@ -30,6 +30,11 @@ func _unhandled_input(event: InputEvent) -> void:
     _show_debug_panel = !_show_debug_panel;
     accept_event();
 
+  if has_focus():
+    # [FIXME] This doesn't do anything, and I think that _might_ be because
+    #   screen_shader gets to handle input first? I dunno.
+    accept_event();
+
 
 ## Shows or hides the debug panel.
 func _set_visible(visible_enabled: bool) -> void:
