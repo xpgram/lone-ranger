@@ -8,13 +8,13 @@ extends Control
     _set_visible(_show_debug_panel);
 
 
-@onready var line_edit: LineEdit = %LineEdit;
+@onready var _cmd_line: LineEdit = %CommandLineEdit;
 
 
 func _ready() -> void:
   _set_visible(_show_debug_panel);
 
-  line_edit.text_submitted.connect(_on_command_line_submitted);
+  _cmd_line.text_submitted.connect(_on_command_line_submitted);
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -31,12 +31,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
   if event.pressed and event.keycode == KEY_F2:
     _show_debug_panel = true;
-    line_edit.grab_focus();
+    _cmd_line.grab_focus();
     accept_event();
 
   if event.pressed and event.keycode == KEY_ESCAPE:
-    if line_edit.has_focus():
-      line_edit.release_focus();
+    if _cmd_line.has_focus():
+      _cmd_line.release_focus();
       accept_event();
     elif _show_debug_panel == true:
       _show_debug_panel = false;
@@ -59,5 +59,5 @@ func _set_visible(visible_enabled: bool) -> void:
 
 ##
 func _on_command_line_submitted(text: String) -> void:
-  line_edit.text = "";
+  _cmd_line.text = "";
   print(text);
