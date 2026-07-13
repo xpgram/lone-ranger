@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
+DebugCLI="*uid://by8cmlvr4g3s8"
 Events="*res://utilities/autoload/events.gd"
 AudioBus="*res://utilities/autoload/audio_bus.gd"
 Grid="*res://utilities/autoload/grid.gd"
