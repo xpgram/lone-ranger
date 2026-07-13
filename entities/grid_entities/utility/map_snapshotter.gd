@@ -42,6 +42,10 @@
 #       -> player.inventory
 # [ ] LineEdit is clickable to focus
 #     (I think the Viewport stuff is getting in the way?)
+# [ ] Project settings has no caret_up/down binding, but adding such blocks the
+#     history traversal buttons from receiving input.
+#     In other words, if I gave the player a multiline textbox, how will they
+#     use it?
 #
 # Fix compactible particles:
 # [ ] Particles exist in board spawner.
