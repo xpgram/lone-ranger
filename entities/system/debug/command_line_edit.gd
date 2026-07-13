@@ -22,11 +22,13 @@ func _gui_input(event: InputEvent) -> void:
     accept_event();
 
 
+## Resets the command line to base conditions.
 func reset_cmd_line() -> void:
   text = "";
   DebugCLI.History.reset_cursor();
 
 
+## Moves the history cursor and assumes the text of that historical element.
 func _increment_history_cursor(paces: int) -> void:
   DebugCLI.History.cursor += paces;
   text = DebugCLI.History.get_cursor_line();
