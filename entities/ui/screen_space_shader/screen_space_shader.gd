@@ -102,10 +102,11 @@ func fade_in_async(time: float, delay: float = 0) -> void:
   await _tween_fade_in_async(0.0, 1.0, time);
 
 
+func get_fade_in() -> float:
+  return material.get_shader_parameter('fade_in_progress');
+
+
 func set_fade_in(value: float) -> void:
-  # [FIXME] This formula, ceil(5v-1) / 4, there's some inconsistency in how it's applied.
-  #   I don't get it, but the shader doesn't like it for the white_silhoette values.
-  #   But it's important for making fade-in look nice.
   # This should limit the value to increments of 0.25.
   value = ceil(value * 5 - 1) / 4.0;
 
@@ -113,7 +114,14 @@ func set_fade_in(value: float) -> void:
   material.set_shader_parameter('fade_in_progress', value);
 
 
+func get_silhoette_threshhold() -> float:
+  return material.get_shader_parameter('silhoette_threshhold');
+
+
 func set_silhoette_threshhold(value: float) -> void:
+  # [FIXME] This formula, ceil(5v-1) / 4, there's some inconsistency in how it's applied.
+  #   I don't get it, but the shader doesn't like it for the silhoette values.
+  # value = ceil(value * 5 - 1) / 4.0;
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('silhoette_threshhold', value);
 
@@ -143,56 +151,61 @@ func set_silhoette_white_threshhold(value: float) -> void:
 
 
 # [FIXME] Remove these debug controls.
-func _unhandled_input(_event: InputEvent) -> void:
-  # [FIXME] These are being called like 16,000 times a second now. Wtf?
-  #   I've determined that was my PS5 controller somehow. Was it doing that before?
-  #   That's really weird.
+func _unhandled_input(event: InputEvent) -> void:
+  if not event.pressed:
+    return;
 
   # Adjust fade-in.
-  if Input.is_key_pressed(KEY_Y):
-    var progress: float = material.get_shader_parameter('fade_in_progress');
-    progress = clampf(progress + 0.25, 0.0, 1.0);
-    material.set_shader_parameter('fade_in_progress', progress);
-  elif Input.is_key_pressed(KEY_H):
-    var progress: float = material.get_shader_parameter('fade_in_progress');
-    progress = clampf(progress - 0.25, 0.0, 1.0);
-    material.set_shader_parameter('fade_in_progress', progress);
+  if event.keycode == KEY_Y:
+    set_fade_in(get_fade_in() + 0.25);
+    accept_event();
+  elif event.keycode == KEY_H:
+    set_fade_in(get_fade_in() - 0.25);
+    accept_event();
 
   # Adjust silhoette.
-  if Input.is_key_pressed(KEY_J):
-    var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
-    set_silhoette_threshhold(threshhold + 0.25);
-  elif Input.is_key_pressed(KEY_U):
-    var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
-    set_silhoette_threshhold(threshhold - 0.25);
+  if event.keycode == KEY_J:
+    set_silhoette_threshhold(get_silhoette_threshhold() + 0.25);
+    accept_event();
+  elif event.keycode == KEY_U:
+    set_silhoette_threshhold(get_silhoette_threshhold() - 0.25);
+    accept_event();
 
   # Adjust white-silhoette
-  if Input.is_key_pressed(KEY_I):
+  if event.keycode == KEY_I:
     var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
     set_silhoette_white_threshhold(threshhold + 0.25);
-  elif Input.is_key_pressed(KEY_K):
+    accept_event();
+  elif event.keycode == KEY_K:
     var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
     set_silhoette_white_threshhold(threshhold - 0.25);
+    accept_event();
 
   # Toggle gradient.
-  if Input.is_key_pressed(KEY_O):
+  if event.keycode == KEY_O:
     set_color_gradient_start(Color.WHITE);
     set_color_gradient_end(Color.WHITE);
-  elif Input.is_key_pressed(KEY_L):
+    accept_event();
+  elif event.keycode == KEY_L:
     set_color_gradient_start(Color.from_hsv(200 / 360.0, 1.0, 1.0));
     set_color_gradient_end(Color.from_hsv(160 / 360.0, 1.0, 1.0));
+    accept_event();
 
   # Toggle color invert.
-  if Input.is_key_pressed(KEY_P):
-    material.set_shader_parameter('invert_colors', true);
-  elif Input.is_key_pressed(KEY_SEMICOLON):
+  if event.keycode == KEY_P:
     material.set_shader_parameter('invert_colors', false);
+    accept_event();
+  elif event.keycode == KEY_SEMICOLON:
+    material.set_shader_parameter('invert_colors', true);
+    accept_event();
 
   # Do a color pulse.
-  if Input.is_key_pressed(KEY_COMMA):
+  if event.keycode == KEY_COMMA:
     pulse_color(
       Color.from_hsv( 0 / 360.0, 0.80, 1.00),
       # Color.from_hsv( 15 / 360.0, 0.80, 1.00),
     );
-  if Input.is_key_pressed(KEY_PERIOD):
+    accept_event();
+  if event.keycode == KEY_PERIOD:
     pulse_color(Color.PURPLE, Color.MAROON);
+    accept_event();

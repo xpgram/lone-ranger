@@ -69,7 +69,7 @@ func _on_enemy_appeared() -> void:
 
 
 func _on_enemy_disappeared() -> void:
-  _enemy_presence_value -= 1;
+  _enemy_presence_value = maxi(0, _enemy_presence_value - 1);
 
   if _enemy_presence_value < 1:
     _reset_tween();

@@ -8,18 +8,38 @@ extends Control
     _set_visible(_show_debug_panel);
 
 
+@onready var _background: ColorRect = %DebugBackground;
+@onready var _cmd_line: LineEdit = %CommandLineEdit;
+
+
 func _ready() -> void:
   _set_visible(_show_debug_panel);
 
+  _cmd_line.focus_entered.connect(_on_cmd_focus_entered);
+  _cmd_line.focus_exited.connect(_on_cmd_focus_exited);
+  _cmd_line.text_submitted.connect(_on_command_line_submitted);
 
-func _unhandled_input(_event: InputEvent) -> void:
-  if not OS.is_debug_build():
+
+func _unhandled_input(event: InputEvent) -> void:
+  if (
+      not OS.is_debug_build()
+      or event is not InputEventKey
+      or not event.pressed
+  ):
     return;
 
-  # [TODO] Do input bindings matter? Should I want to enable DebugUI with a controller? (i.e., should I use param _event)
-  if Input.is_key_pressed(KEY_F1):
-    _show_debug_panel = !_show_debug_panel;
+  if event.keycode == KEY_F1:
+    if not _show_debug_panel:
+      _cmd_line.reset_cmd_line();
+      _show_debug_panel = true;
+    else:
+      _cmd_line.grab_focus();
     accept_event();
+
+  if event.keycode == KEY_ESCAPE:
+    if _show_debug_panel == true:
+      _show_debug_panel = false;
+      accept_event();
 
 
 ## Shows or hides the debug panel.
@@ -28,3 +48,22 @@ func _set_visible(visible_enabled: bool) -> void:
     hide();
   else:
     show();
+
+
+## Handler for command-line focused events.
+func _on_cmd_focus_entered() -> void:
+  _background.color.a = 1.0;
+
+
+## Handler for command-line focus-exited events.
+func _on_cmd_focus_exited() -> void:
+  _background.color.a = 0.5;
+
+
+## Handler for submit events emitted from the command line node.
+func _on_command_line_submitted(input: String) -> void:
+  DebugCLI.History.append(input);
+  DebugCLI.History.reset_cursor();
+  _cmd_line.text = "";
+  # [TODO] This returns a DebugCLI.Error we don't do anything with.
+  DebugCLI.process(input);

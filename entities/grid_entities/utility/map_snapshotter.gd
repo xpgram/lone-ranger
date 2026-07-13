@@ -24,10 +24,28 @@
 # [x] These map changes will be undoable by default.
 # [x] The DemonWall entity is resettable unless the player reaches the hallway end.
 # [x] The DemonWall switches back the music track when despawned.
+# [-] Fix: The first node-delete cause by BooleanSpawner's scene packing tells the
+#     music stream that an enemy has disappeared, so we get -1.
 # [ ] The interactives / npcs / enemies node-containers are merged into one play
 #     space, maybe segmented by location. Such objects have groups they add
 #     themselves to now, they don't need the node segregation. And it's annoying
 #     to modify the boss area in two different places.
+#
+# Improve Debug: Add a way to get equipment, etc., quickly:
+# [x] Debug dropdown has a line edit node.
+# [x] Fix LineEdit can't backspace for some reason.
+# [x] LineEdit can 'submit' text.
+# [x] LineEdit can't move the caret left or right.
+# [x] 'Submitted' text is interpreted like a command line.
+#   [x] give shove -> grants shove equipment
+#   [x] LineEdit -> DebugUI -> Debug.interpreter -> signal Events.debug_give_item
+#       -> player.inventory
+# [ ] LineEdit is clickable to focus
+#     (I think the Viewport stuff is getting in the way?)
+# [x] Project settings has no caret_up/down binding, but adding such blocks the
+#     history traversal buttons from receiving input.
+#     In other words, if I gave the player a multiline textbox, how will they
+#     use it?
 #
 # Fix compactible particles:
 # [ ] Particles exist in board spawner.

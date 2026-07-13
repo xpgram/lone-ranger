@@ -46,11 +46,18 @@ const HEART_PIECES_FOR_EACH_CONTAINER := 4;
 
 
 func _ready() -> void:
+  _bind_global_signals();
+
   emit_full_inventory();
 
   # [TODO] Technically there could be a missed timing here, if any drawpoints _ready() after the player does.
   #  I could devise a _post_ready() step by sending function calls to a global service. Hm.
   _announce_magic_quantities();
+
+
+func _bind_global_signals() -> void:
+  DebugEvents.give_player_equipment.connect(add_equipment);
+  DebugEvents.give_player_inventory_item.connect(add_item);
 
 
 ## Broadcasts the entire inventory contents to any nodes who might be listening.
