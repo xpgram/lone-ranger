@@ -10,7 +10,9 @@ enum Error {
 
 ## Engages the interpreter for a line of user input.
 static func process(input: String) -> Error:
-  # pop first token, match it to different sub-programs
+  var args := input.split(' ');
+
+  # pop first arg, match it to different sub-programs
   #   give
   #   spawn
   #   etc.

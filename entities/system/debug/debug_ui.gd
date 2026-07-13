@@ -62,8 +62,9 @@ func _set_visible(visible_enabled: bool) -> void:
 
 
 ## Handler for submit events emitted from the command line node.
-func _on_command_line_submitted(text: String) -> void:
-  DebugCLI.History.append(text);
+func _on_command_line_submitted(input: String) -> void:
+  DebugCLI.History.append(input);
   DebugCLI.History.reset_cursor();
   _cmd_line.text = "";
-  Events.debug_command_submitted.emit(text);
+  # DebugCLI.process(input);
+  Events.debug_command_submitted.emit(input);
