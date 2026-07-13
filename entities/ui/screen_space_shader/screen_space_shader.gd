@@ -152,7 +152,7 @@ func set_silhoette_white_threshhold(value: float) -> void:
 
 # [FIXME] Remove these debug controls.
 func _unhandled_input(event: InputEvent) -> void:
-  if not event.pressed:
+  if event is not InputEventKey or not event.pressed:
     return;
 
   # Adjust fade-in.
