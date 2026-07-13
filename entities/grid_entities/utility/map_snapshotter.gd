@@ -35,14 +35,14 @@
 # [x] Debug dropdown has a line edit node.
 # [x] Fix LineEdit can't backspace for some reason.
 # [x] LineEdit can 'submit' text.
-# [ ] LineEdit can't move the caret left or right.
-# [-] 'Submitted' text is interpreted like a command line.
+# [x] LineEdit can't move the caret left or right.
+# [x] 'Submitted' text is interpreted like a command line.
 #   [x] give shove -> grants shove equipment
-#   [ ] LineEdit -> DebugUI -> Debug.interpreter -> signal Events.debug_give_item
+#   [x] LineEdit -> DebugUI -> Debug.interpreter -> signal Events.debug_give_item
 #       -> player.inventory
 # [ ] LineEdit is clickable to focus
 #     (I think the Viewport stuff is getting in the way?)
-# [ ] Project settings has no caret_up/down binding, but adding such blocks the
+# [x] Project settings has no caret_up/down binding, but adding such blocks the
 #     history traversal buttons from receiving input.
 #     In other words, if I gave the player a multiline textbox, how will they
 #     use it?

@@ -10,13 +10,11 @@ func _gui_input(event: InputEvent) -> void:
     return;
 
   if event.keycode == KEY_UP:
-    DebugCLI.History.cursor += 1;
-    text = DebugCLI.History.get_cursor_line();
+    _increment_history_cursor(1);
     accept_event();
 
   if event.keycode == KEY_DOWN:
-    DebugCLI.History.cursor -= 1;
-    text = DebugCLI.History.get_cursor_line();
+    _increment_history_cursor(-1)
     accept_event();
 
   if event.keycode == KEY_ESCAPE:
@@ -27,3 +25,9 @@ func _gui_input(event: InputEvent) -> void:
 func reset_cmd_line() -> void:
   text = "";
   DebugCLI.History.reset_cursor();
+
+
+func _increment_history_cursor(paces: int) -> void:
+  DebugCLI.History.cursor += paces;
+  text = DebugCLI.History.get_cursor_line();
+  caret_column = text.length();

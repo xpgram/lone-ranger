@@ -65,5 +65,5 @@ func _on_command_line_submitted(input: String) -> void:
   DebugCLI.History.append(input);
   DebugCLI.History.reset_cursor();
   _cmd_line.text = "";
-  # DebugCLI.process(input);
-  Events.debug_command_submitted.emit(input);
+  # [TODO] This returns a DebugCLI.Error we don't do anything with.
+  DebugCLI.process(input);
