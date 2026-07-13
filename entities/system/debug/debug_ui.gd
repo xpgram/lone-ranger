@@ -8,12 +8,15 @@ extends Control
     _set_visible(_show_debug_panel);
 
 
+@onready var _background: ColorRect = %DebugBackground;
 @onready var _cmd_line: LineEdit = %CommandLineEdit;
 
 
 func _ready() -> void:
   _set_visible(_show_debug_panel);
 
+  _cmd_line.focus_entered.connect(_on_cmd_focus_entered);
+  _cmd_line.focus_exited.connect(_on_cmd_focus_exited);
   _cmd_line.text_submitted.connect(_on_command_line_submitted);
 
 
@@ -26,32 +29,17 @@ func _unhandled_input(event: InputEvent) -> void:
     return;
 
   if event.keycode == KEY_F1:
-    if _show_debug_panel:
-      _cmd_line.grab_focus();
-    else:
+    if not _show_debug_panel:
+      _cmd_line.reset_cmd_line();
       _show_debug_panel = true;
+    else:
+      _cmd_line.grab_focus();
     accept_event();
 
   if event.keycode == KEY_ESCAPE:
-    if _cmd_line.has_focus():
-      _cmd_line.release_focus();
-      accept_event();
-    elif _show_debug_panel == true:
+    if _show_debug_panel == true:
       _show_debug_panel = false;
       accept_event();
-
-  if _cmd_line.has_focus():
-    if event.keycode == KEY_UP:
-      DebugCLI.History.cursor += 1;
-      _cmd_line.text = DebugCLI.History.get_cursor_line();
-    if event.keycode == KEY_DOWN:
-      DebugCLI.History.cursor -= 1;
-      _cmd_line.text = DebugCLI.History.get_cursor_line();
-
-    # [FIXME] This doesn't do anything, and I think that _might_ be because
-    #   screen_shader gets to handle input first? I dunno.
-    #   Notably, the player isn't arrow-key-movable while the LineEdit is focused.
-    accept_event();
 
 
 ## Shows or hides the debug panel.
@@ -60,6 +48,18 @@ func _set_visible(visible_enabled: bool) -> void:
     hide();
   else:
     show();
+
+
+## Handler for command-line focused events.
+func _on_cmd_focus_entered() -> void:
+  _background.color.a = 1.0;
+  # _background.size.y = 16 * 3.5;
+
+
+## Handler for command-line focus-exited events.
+func _on_cmd_focus_exited() -> void:
+  _background.color.a = 0.5;
+  # _background.size.y = 16;
 
 
 ## Handler for submit events emitted from the command line node.

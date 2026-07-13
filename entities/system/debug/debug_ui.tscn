@@ -5,11 +5,6 @@
 [ext_resource type="Script" uid="uid://cxd7e70k4ct58" path="res://entities/system/debug/debug_background.gd" id="2_q0256"]
 [ext_resource type="Script" uid="uid://wsalbkul4nwa" path="res://entities/system/debug/command_line_edit.gd" id="4_q0256"]
 
-[sub_resource type="DPITexture" id="DPITexture_pfcia"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#fff\" fill-opacity=\".75\" d=\"m1 3 2-2 5 5 5-5 2 2-5 5 5 5-2 2-5-5-5 5-2-2 5-5z\"/></svg>
-"
-base_scale = 0.35
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqfm4"]
 content_margin_left = 4.0
 content_margin_right = 4.0
@@ -22,10 +17,12 @@ offset_bottom = 56.0
 script = ExtResource("1_hnfw2")
 
 [node name="DebugBackground" type="ColorRect" parent="." unique_id=633333714]
+unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.57100004
+offset_bottom = 0.02399826
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5019608)
@@ -38,19 +35,20 @@ layout_mode = 0
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.85700005
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -3.9920044
+anchor_top = 0.286
+anchor_right = 0.53300005
+anchor_bottom = 0.57100004
+offset_top = -0.016000748
+offset_right = 0.07998657
+offset_bottom = 0.02399826
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_placeholder_color = Color(0.75, 0.75, 0.75, 1)
 theme_override_colors/caret_color = Color(1, 1, 0.99215686, 1)
-theme_override_colors/selection_color = Color(0.5019608, 0.5019608, 0.8745098, 1)
+theme_override_colors/selection_color = Color(0.5, 0.66666675, 1, 1)
 theme_override_colors/clear_button_color = Color(1, 1, 1, 1)
 theme_override_colors/clear_button_color_pressed = Color(0.8745098, 0.8745098, 0.8745098, 1)
 theme_override_font_sizes/font_size = 6
-theme_override_icons/clear = SubResource("DPITexture_pfcia")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_nqfm4")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_nqfm4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_nqfm4")

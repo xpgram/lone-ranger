@@ -3,16 +3,27 @@ extends LineEdit
 
 func _gui_input(event: InputEvent) -> void:
   if (
-      event is InputEventKey
-      and event.keycode in [KEY_UP, KEY_DOWN]
+      not has_focus()
+      or event is not InputEventKey
+      or not event.pressed
   ):
-    # Ignore LineEdit's default behavior.
+    return;
+
+  if event.keycode == KEY_UP:
+    DebugCLI.History.cursor += 1;
+    text = DebugCLI.History.get_cursor_line();
     accept_event();
 
-    # [TODO] Move the LineEdit-specific functionality from debug_ui to in here.
-    #
-    # DebugCLI.History.cursor += 1;
-    # Events.debug_move_history_cursor_up.emit();
-    # Input.trigger_action('debug_cli_cursor_up') <- This isn't even a thing I can do.
+  if event.keycode == KEY_DOWN:
+    DebugCLI.History.cursor -= 1;
+    text = DebugCLI.History.get_cursor_line();
+    accept_event();
 
-    return;
+  if event.keycode == KEY_ESCAPE:
+    release_focus();
+    accept_event();
+
+
+func reset_cmd_line() -> void:
+  text = "";
+  DebugCLI.History.reset_cursor();
