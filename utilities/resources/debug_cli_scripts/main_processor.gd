@@ -32,6 +32,9 @@ func _cmd_give(args: Array[String]) -> DebugCLI.Error:
     PlayerEquipment.sword,
     PlayerEquipment.hookshot,
   ];
+  var consumables := {} as Dictionary[String, FieldAction];
+  consumables.merge(FieldActionList.all_magic);
+  consumables.merge(FieldActionList.all_items);
 
   var item_name := args[0];
   var quantity: int = 1 if args.size() == 1 else type_convert(args[1], TYPE_INT);
@@ -43,9 +46,9 @@ func _cmd_give(args: Array[String]) -> DebugCLI.Error:
     for i in range(quantity):
       DebugEvents.give_player_equipment.emit(item_name);
 
-  elif item_name in FieldActionList.Magic.keys():
+  elif consumables.has(item_name):
     var item := PlayerInventoryItem.new();
-    item.action = FieldActionList.Magic.get(item_name);
+    item.action = consumables.get(item_name);
     item.quantity = quantity;
     DebugEvents.give_player_inventory_item.emit(item);
 
@@ -66,13 +69,17 @@ func _cmd_give_all() -> DebugCLI.Error:
     PlayerEquipment.sword,
     PlayerEquipment.hookshot,
   ];
+  var consumables := (
+    FieldActionList.all_magic.values()
+    + FieldActionList.all_items.values()
+  );
 
   for artefact in equipment:
     DebugEvents.give_player_equipment.emit(artefact);
 
-  for magic in FieldActionList.Magic.values():
+  for action in consumables:
     var item := PlayerInventoryItem.new();
-    item.action = magic;
+    item.action = action;
     item.quantity = quantity_for_each;
     DebugEvents.give_player_inventory_item.emit(item);
 
