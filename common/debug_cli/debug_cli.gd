@@ -1,5 +1,5 @@
 ## The command-line interpreter for testing and debugging purposes.
-class_name DebugCLI
+extends Node
 
 
 enum Error {
@@ -9,7 +9,7 @@ enum Error {
 
 
 ## Engages the interpreter for a line of user input.
-static func process(input: String) -> Error:
+func process(input: String) -> Error:
   var args := input.split(' ');
 
   # pop first arg, match it to different sub-programs
