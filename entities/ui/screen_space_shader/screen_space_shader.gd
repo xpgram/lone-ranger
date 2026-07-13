@@ -102,10 +102,11 @@ func fade_in_async(time: float, delay: float = 0) -> void:
   await _tween_fade_in_async(0.0, 1.0, time);
 
 
+func get_fade_in() -> float:
+  return material.get_shader_parameter('fade_in_progress');
+
+
 func set_fade_in(value: float) -> void:
-  # [FIXME] This formula, ceil(5v-1) / 4, there's some inconsistency in how it's applied.
-  #   I don't get it, but the shader doesn't like it for the white_silhoette values.
-  #   But it's important for making fade-in look nice.
   # This should limit the value to increments of 0.25.
   value = ceil(value * 5 - 1) / 4.0;
 
@@ -113,7 +114,14 @@ func set_fade_in(value: float) -> void:
   material.set_shader_parameter('fade_in_progress', value);
 
 
+func get_silhoette_threshhold() -> float:
+  return material.get_shader_parameter('silhoette_threshhold');
+
+
 func set_silhoette_threshhold(value: float) -> void:
+  # [FIXME] This formula, ceil(5v-1) / 4, there's some inconsistency in how it's applied.
+  #   I don't get it, but the shader doesn't like it for the silhoette values.
+  # value = ceil(value * 5 - 1) / 4.0;
   value = clampf(value, 0.0, 1.0);
   material.set_shader_parameter('silhoette_threshhold', value);
 
@@ -149,34 +157,28 @@ func _unhandled_input(event: InputEvent) -> void:
 
   # Adjust fade-in.
   if event.keycode == KEY_Y:
-    var progress: float = material.get_shader_parameter('fade_in_progress');
-    progress = clampf(progress + 0.25, 0.0, 1.0);
-    material.set_shader_parameter('fade_in_progress', progress);
+    set_fade_in(get_fade_in() + 0.25);
     accept_event();
   elif event.keycode == KEY_H:
-    var progress: float = material.get_shader_parameter('fade_in_progress');
-    progress = clampf(progress - 0.25, 0.0, 1.0);
-    material.set_shader_parameter('fade_in_progress', progress);
+    set_fade_in(get_fade_in() - 0.25);
     accept_event();
 
   # Adjust silhoette.
   if event.keycode == KEY_J:
-    var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
-    set_silhoette_threshhold(threshhold + 0.249);
+    set_silhoette_threshhold(get_silhoette_threshhold() + 0.25);
     accept_event();
   elif event.keycode == KEY_U:
-    var threshhold: float = material.get_shader_parameter('silhoette_threshhold');
-    set_silhoette_threshhold(threshhold - 0.249);
+    set_silhoette_threshhold(get_silhoette_threshhold() - 0.25);
     accept_event();
 
   # Adjust white-silhoette
   if event.keycode == KEY_I:
     var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
-    set_silhoette_white_threshhold(threshhold + 0.249);
+    set_silhoette_white_threshhold(threshhold + 0.25);
     accept_event();
   elif event.keycode == KEY_K:
     var threshhold: float = material.get_shader_parameter('silhoette_white_threshhold');
-    set_silhoette_white_threshhold(threshhold - 0.249);
+    set_silhoette_white_threshhold(threshhold - 0.25);
     accept_event();
 
   # Toggle gradient.
