@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://80iof325xsg0" path="res://entities/system/debug/debug_ui.gd" id="1_hnfw2"]
 [ext_resource type="PackedScene" uid="uid://kfekvnl8dv3f" path="res://entities/system/debug/inaction_timer_clock/inaction_timer_clock.tscn" id="2_pfcia"]
 [ext_resource type="Script" uid="uid://cxd7e70k4ct58" path="res://entities/system/debug/debug_background.gd" id="2_q0256"]
+[ext_resource type="Script" uid="uid://wsalbkul4nwa" path="res://entities/system/debug/command_line_edit.gd" id="4_q0256"]
 
 [sub_resource type="DPITexture" id="DPITexture_pfcia"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#fff\" fill-opacity=\".75\" d=\"m1 3 2-2 5 5 5-5 2 2-5 5 5 5-2 2-5-5-5 5-2-2 5-5z\"/></svg>
@@ -58,3 +59,4 @@ keep_editing_on_text_submit = true
 emoji_menu_enabled = false
 select_all_on_focus = true
 caret_blink = true
+script = ExtResource("4_q0256")
