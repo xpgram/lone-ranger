@@ -53,13 +53,11 @@ func _set_visible(visible_enabled: bool) -> void:
 ## Handler for command-line focused events.
 func _on_cmd_focus_entered() -> void:
   _background.color.a = 1.0;
-  # _background.size.y = 16 * 3.5;
 
 
 ## Handler for command-line focus-exited events.
 func _on_cmd_focus_exited() -> void:
   _background.color.a = 0.5;
-  # _background.size.y = 16;
 
 
 ## Handler for submit events emitted from the command line node.
