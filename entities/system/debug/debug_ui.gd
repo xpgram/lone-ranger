@@ -20,6 +20,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
   if (
       not OS.is_debug_build()
+      or event is not InputEventKey
       or not event.pressed
   ):
     return;
