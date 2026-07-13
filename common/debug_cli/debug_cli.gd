@@ -6,6 +6,7 @@ extends Node
 
 enum Error {
   OK,
+  NO_INPUT,
   COULD_NOT_PROCESS_LINE,
 }
 
@@ -17,8 +18,11 @@ enum Error {
 ## Engages the interpreter for a line of user input.
 func process(input: String) -> DebugCLI.Error:
   History.append(input);
-
   var args := input.split(' ');
+
+  if args.size() == 0:
+    return Error.NO_INPUT;
+
   return _processor.exec(args);
 
 

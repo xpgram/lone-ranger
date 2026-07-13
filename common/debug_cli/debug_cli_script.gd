@@ -7,5 +7,7 @@ extends Resource
 
 
 ## The process function for this subprogram. Called when this program is
-## invoked.
+## invoked. [br]
+##
+## You may assume that [param args] is an array of size at least 1.
 @abstract func exec(args: Array[String]) -> DebugCLI.Error;
