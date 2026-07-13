@@ -1,3 +1,5 @@
+## class_name DebugCLI [br]
+##
 ## The command-line interpreter for testing and debugging purposes.
 extends Node
 
@@ -8,17 +10,16 @@ enum Error {
 }
 
 
+## The processor used to process input.
+@export var _processor: DebugCLIScript;
+
+
 ## Engages the interpreter for a line of user input.
-func process(input: String) -> Error:
-  var args := input.split(' ');
-
-  # pop first arg, match it to different sub-programs
-  #   give
-  #   spawn
-  #   etc.
-
+func process(input: String) -> DebugCLI.Error:
   History.append(input);
-  return OK;
+
+  var args := input.split(' ');
+  return _processor.exec(args);
 
 
 
