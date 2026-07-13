@@ -7,5 +7,5 @@ script = ExtResource("1_gd23v")
 action_uid = &"hookshot"
 action_name = "Hookshot"
 action_description = "Extends a chain rope with a metal head that can attach to objects."
-action_time_cost = 0.0
+action_time_cost = 7.5
 metadata/_custom_type_script = "uid://7prl5havckgd"
