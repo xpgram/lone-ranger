@@ -22,15 +22,10 @@ signal released();
 
 @export_group('Persistence Key')
 
-# [TODO] Should this be a resource? 'null' would do nothing, obvi; anything else would
-#   have a simple interface.
-#   The persistence_key could be initialized with a prefix for specific objects, but
-#   would otherwise generate a random default name. But how would it guarantee uniqueness?
-## [IMPLEMENT]
-@export var _sets_persistence_key := false;
-
-## [IMPLEMENT]
-@export var _persistence_key: StringName;
+## @nullable [br]
+## The [PersistenceKeyBool] object to set along with this button entity's
+## pressed state. If this object is null, no persistence key is set.
+@export var _persistence_key: PersistenceKeyBool;
 
 
 ## Whether the button is currently being pressed down.
@@ -57,7 +52,7 @@ func _on_object_collision(_entity: GridEntity) -> void:
 func _on_object_separation(_entity: GridEntity) -> void:
   if not _is_pressed:
     return;
-  
+
   var tile_entities := Grid.get_entities(grid_position);
   var solid_entities := tile_entities.filter(func (entity: GridEntity):
     return entity.solid and entity != self;
