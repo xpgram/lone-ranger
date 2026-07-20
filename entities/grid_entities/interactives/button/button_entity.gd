@@ -33,7 +33,28 @@ signal released();
 
 
 ## Whether the button is currently being pressed down.
-var _is_pressed := false;
+var is_pressed := false:
+  set(value):
+    var old_value := is_pressed;
+    is_pressed = value;
+
+    if (
+        old_value == is_pressed
+        or is_pressed and _stays_pressed
+    ):
+      return;
+
+    var sprite_texture_key := 'pressed' if is_pressed else 'neutral';
+    var sound_to_play := _scene_click_in_audio if is_pressed else _scene_click_out_audio;
+    var virtual_to_call := _on_pressed if is_pressed else _on_released;
+    var signal_to_emit := pressed if is_pressed else released;
+
+    _sprite.texture_key = sprite_texture_key;
+    Events.one_shot_sound_emitted.emit(sound_to_play);
+    virtual_to_call.call();
+    _notify_powerable_targets();
+    signal_to_emit.emit();
+    _update_persistence_key();
 
 
 @onready var _sprite := %MultiSprite2D as MultiSprite2D;
@@ -49,15 +70,15 @@ func _bind_stimulus_callbacks() -> void:
 
 ## Handler for object grid-collision events.
 func _on_object_collision(entity: GridEntity) -> void:
-  if _is_pressed or not _entity_can_press_button(entity):
+  if is_pressed or not _entity_can_press_button(entity):
     return;
 
-  press();
+  is_pressed = true;
 
 
 ## Handler for object grid-separation events.
 func _on_object_separation(_entity: GridEntity) -> void:
-  if not _is_pressed:
+  if not is_pressed:
     return;
 
   var tile_entities := Grid.get_entities(grid_position);
@@ -65,41 +86,7 @@ func _on_object_separation(_entity: GridEntity) -> void:
     return tile_entity != self and _entity_can_press_button(tile_entity)
   ) as Array[GridEntity];
 
-  if heavy_entities.size() == 0:
-    release();
-
-
-## 'Presses' the button, which changes its visuals and emits [signal pressed].
-func press() -> void:
-  if _is_pressed:
-    return;
-
-  _is_pressed = true;
-  _sprite.texture_key = 'pressed';
-  Events.one_shot_sound_emitted.emit(_scene_click_in_audio);
-  _on_pressed();
-  _notify_powerable_targets();
-  pressed.emit();
-  _update_persistence_key();
-
-
-## 'Releases' the button, which changes its visuals and emits [signal released].
-func release() -> void:
-  if not _is_pressed or _stays_pressed:
-    return;
-
-  _is_pressed = false;
-  _sprite.texture_key = 'neutral';
-  Events.one_shot_sound_emitted.emit(_scene_click_out_audio);
-  _on_released();
-  _notify_powerable_targets();
-  released.emit();
-  _update_persistence_key();
-
-
-## Returns true if this button is currently being held down.
-func is_pressed() -> bool:
-  return _is_pressed;
+  is_pressed = (heavy_entities.size() == 0);
 
 
 ## @virtual [br]
@@ -129,7 +116,7 @@ func _notify_powerable_targets() -> void:
   for target in _powerable_targets:
     var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
     if powerable:
-      powerable.powered = _is_pressed;
+      powerable.powered = is_pressed;
 
 
 ## Tries to update the state of the [member _persistence_key] associated with
@@ -138,4 +125,4 @@ func _update_persistence_key() -> void:
   if not _persistence_key:
     return;
 
-  _persistence_key.write(_is_pressed);
+  _persistence_key.write(is_pressed);

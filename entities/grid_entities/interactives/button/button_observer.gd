@@ -178,7 +178,7 @@ func _reevaluate_trigger_state() -> void:
 
 ## Returns true if the given [param button] is currently pressed.
 func _button_is_pressed(button: ButtonEntity) -> bool:
-  return button.is_pressed();
+  return button.is_pressed;
 
 
 ## @virtual [br]
