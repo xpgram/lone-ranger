@@ -2,6 +2,18 @@
 class_name LoneRangerCLIProcessor
 extends DebugCLIScript
 
+# [TODO] Add more debug commands.
+# [ ] give spawn_mouth -> "S.Mouth" spawn_enemy<Mouth>
+#     give spawn mouth -> "S.Mouth" spawn_object<Mouth>
+#   spawn_object is a special spell-action only available to devs via the
+#   command-line.
+#   The spell itself is contained within the special dictionary, and the object
+#   to spawn in its own dictionary; the command duplicates the spell and adds
+#   the object to its `creation_target: GridObject` field, which makes the CLI
+#   command dynamic and somewhat auto-generated.
+#   Spawning just does a simple check that the object can be spawned in
+#   unobstructed space.
+
 
 var _subprograms: Dictionary[String, Callable] = {
   'give': _cmd_give,
