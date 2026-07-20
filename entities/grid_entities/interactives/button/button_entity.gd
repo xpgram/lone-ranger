@@ -13,7 +13,7 @@ const _scene_click_out_audio := preload('uid://nrlqhbx0http');
 @export var _powerable_targets := [] as Array[Node]:
   set(value):
     _powerable_targets = value;
-    _button_logic.set_powerable_targets(_powerable_targets);
+    _button_logic.powerable_targets = _powerable_targets;
 
 
 ## The press/release and listener-notification handler for this ButtonEntity.
@@ -24,10 +24,9 @@ const _scene_click_out_audio := preload('uid://nrlqhbx0http');
 
 ## Whether the button is currently being pressed down.
 var is_pressed: bool:
-  get():
-    return _button_logic.is_activated;
   set(value):
     _button_logic.is_activated = value;
+    is_pressed = _button_logic.is_activated;
 
     var sprite_texture_key := 'pressed' if is_pressed else 'neutral';
     var sound_to_play := _scene_click_in_audio if is_pressed else _scene_click_out_audio;

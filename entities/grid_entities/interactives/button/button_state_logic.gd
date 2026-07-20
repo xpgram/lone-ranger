@@ -40,29 +40,23 @@ signal deactivated();
 ## [member is_activated] state. If this object is null, no persistence key is set.
 @export var _persistence_key: PersistenceKeyBool;
 
-## A list of [Node]s that own a [PowerableComponent] to toggle in accordance
-## with this button logic's [member is_activated] state. [br]
+## A list of [Node]s to toggle in accordance with this button logic's
+## [member is_activated] state. All referenced [Node]s must own a
+## [PowerableComponent] to be notified of changes. [br]
 ##
 ## [Resource] objects cannot have fields that contain [Node] references, so this
 ## must be set by the resource-owner.
-var _powerable_targets := [] as Array[Node];
-
-
-## Sets the list of target [Node]s to toggle in accordance with this button
-## logic's [member is_activated] state. All referenced [Node]s must own a
-## [PowerableComponent] to be correctly notified.
-func set_powerable_targets(targets: Array[Node]) -> void:
-  _powerable_targets = targets;
+var powerable_targets := [] as Array[Node];
 
 
 ## Updates the powered state of all [PowerableComponent]s found in this button
-## logic's list of [member _powerable_targets] to match this object's
+## logic's list of [member powerable_targets] to match this object's
 ## [member is_activated] state.
 func _notify_powerable_targets() -> void:
-  if not _powerable_targets:
+  if not powerable_targets:
     return;
 
-  for target in _powerable_targets:
+  for target in powerable_targets:
     var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
     if powerable:
       powerable.powered = is_activated;
