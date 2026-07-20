@@ -36,12 +36,10 @@ signal deactivated();
 
 @export_group('Persistence Key')
 
-# [TODO] See todo note in ButtonEntity. This should be a resource.
-## [IMPLEMENT]
-@export var _sets_persistence_key := false;
-
-## [IMPLEMENT]
-@export var _persistence_key: StringName;
+## @nullable [br]
+## The [PersistenceKeyBool] object to set along with this button observer's
+## activated state. If this object is null, no persistence key is set.
+@export var _persistence_key: PersistenceKeyBool;
 
 
 ## A reference to the Engine's EditorInterface singleton. [br]
