@@ -95,7 +95,7 @@ func _on_object_separation(_entity: GridEntity) -> void:
     return tile_entity != self and _entity_can_press_button(tile_entity)
   ) as Array[GridEntity];
 
-  is_pressed = (heavy_entities.size() == 0);
+  is_pressed = heavy_entities.size() > 0;
 
 
 ## Returns true if the given entity is of a kind that is capable of pressing
