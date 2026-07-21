@@ -65,10 +65,10 @@ var _is_activated := false:
     ):
       return;
 
-    if _is_activated:
-      activated.emit();
-    else:
-      deactivated.emit();
+    var signal_to_emit := activated if _is_activated else deactivated;
+
+    signal_to_emit.emit();
+    _update_persistence_key();
 
 
 func _ready() -> void:
@@ -189,3 +189,12 @@ func _on_activated() -> void:
 ## Override to add on-deactivation behavior to this [ButtonObserver].
 func _on_deactivated() -> void:
   pass
+
+
+## Updates the state of the [member _persistence_key] associated with this
+## button to match its [member is_pressed] state.
+func _update_persistence_key() -> void:
+  if not _persistence_key:
+    return;
+
+  _persistence_key.write(_is_activated);
