@@ -13,7 +13,8 @@ extends DebugCLIScript
 #   command dynamic and somewhat auto-generated.
 #   Spawning just does a simple check that the object can be spawned in
 #   unobstructed space.
-# [ ] give delete
+# [ ] Add a spawn_object .tres for easier editing.
+# [x] give delete
 #   This is developer-only, but can be placed in the FieldActionList, I think.
 #   Deletes all objects/entities at a given location.
 
