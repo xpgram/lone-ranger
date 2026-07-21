@@ -38,6 +38,10 @@ func _cmd_give(args: Array[String]) -> DebugCLI.Error:
   if args[0] == 'all':
     return _cmd_give_all();
 
+  if args[0] == 'spawn':
+    args.pop_front();
+    return _cmd_give_spawn_object(args);
+
   var consumables := {} as Dictionary[String, FieldAction];
   consumables.merge(FieldActionList.all_magic);
   consumables.merge(FieldActionList.all_items);
@@ -83,6 +87,34 @@ func _cmd_give_all() -> DebugCLI.Error:
     var item := PlayerInventoryItem.new();
     item.action = action;
     item.quantity = quantity_for_each;
+    DebugEvents.give_player_inventory_item.emit(item);
+
+  return DebugCLI.Error.OK;
+
+
+## A program to give the player developer spells to spawn objects and monsters
+## in the play area. Useful for live-testing object configurations and interplay.
+func _cmd_give_spawn_object(args: Array[String]) -> DebugCLI.Error:
+  if args.size() == 0:
+    return DebugCLI.Error.COULD_NOT_PROCESS_LINE;
+
+  var quantity: int = type_convert(args[1], TYPE_INT) if args.size() >= 2 else 3;
+  var target_name := args[0];
+
+  for object_name in GridObjectsDict.all_objects.keys():
+    if object_name != target_name:
+      continue;
+
+    var spell := SpawnObject_FieldAction.new();
+    spell.action_name = "S.%s" % object_name.capitalize();
+    spell.action_uid = spell.action_name;
+    spell.action_type = Enums.FieldActionType.Magic;
+    spell.action_time_cost = 0;
+    spell.object_scene = GridObjectsDict.all_objects[object_name];
+
+    var item := PlayerInventoryItem.new();
+    item.action = spell;
+    item.quantity = quantity;
     DebugEvents.give_player_inventory_item.emit(item);
 
   return DebugCLI.Error.OK;
