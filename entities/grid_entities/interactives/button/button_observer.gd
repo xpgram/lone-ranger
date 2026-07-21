@@ -24,6 +24,11 @@ signal activated();
 signal deactivated();
 
 
+## A list of [Node]s to toggle in accordance with this observer's
+## [member _is_activated] state. All referenced [Node]s must own a
+## [PowerableComponent] to be notified of changes.
+@export var _powerable_targets := [] as Array[Node];
+
 ## A list of [ButtonEntity] objects to observe.
 @export var _button_list: Array[ButtonEntity]:
   set(value):
@@ -33,15 +38,10 @@ signal deactivated();
 ## Describes how the observer listens to its connected buttons for activation cues.
 @export var _activation_style := ActivationStyle.ALL;
 
-
-@export_group('Persistence Key')
-
-# [TODO] See todo note in ButtonEntity. This should be a resource.
-## [IMPLEMENT]
-@export var _sets_persistence_key := false;
-
-## [IMPLEMENT]
-@export var _persistence_key: StringName;
+## @nullable [br]
+## The [PersistenceKeyBool] object to set along with this button observer's
+## activated state. If this object is null, no persistence key is set.
+@export var _persistence_key: PersistenceKeyBool;
 
 
 ## A reference to the Engine's EditorInterface singleton. [br]
@@ -67,16 +67,16 @@ var _is_activated := false:
     ):
       return;
 
-    if _is_activated:
-      activated.emit();
-    else:
-      deactivated.emit();
+    var signal_to_emit := activated if _is_activated else deactivated;
+
+    signal_to_emit.emit();
+    _notify_powerable_targets();
+    _update_persistence_key();
 
 
 func _ready() -> void:
   if not Engine.is_editor_hint():
     _connect_to_button_entities();
-    _connect_to_own_signals();
 
   if Engine.is_editor_hint():
     _connect_to_editor();
@@ -101,12 +101,6 @@ func _connect_to_button_entities() -> void:
   for button in _button_list:
     button.pressed.connect(_on_button_state_updated);
     button.released.connect(_on_button_state_updated);
-
-
-## Connects callbacks to this object's own signals.
-func _connect_to_own_signals() -> void:
-  activated.connect(_on_activated);
-  deactivated.connect(_on_deactivated);
 
 
 ## Draws lines in Godot's editor view to all connected [ButtonEntity] objects.
@@ -178,16 +172,29 @@ func _reevaluate_trigger_state() -> void:
 
 ## Returns true if the given [param button] is currently pressed.
 func _button_is_pressed(button: ButtonEntity) -> bool:
-  return button.is_pressed();
+  return button.is_pressed;
 
 
-## @virtual [br]
-## Override to add on-activation behavior to this [ButtonObserver].
-func _on_activated() -> void:
-  pass
+## Updates the powered state of all [PowerableComponent]s found in this observer's
+## list of [member _powerable_targets] to match this observer's
+## [member _is_activated] state.
+func _notify_powerable_targets() -> void:
+  if not _powerable_targets:
+    return;
+
+  for target in _powerable_targets:
+    if target is PowerableComponent:
+      target.powered = _is_activated;
+    else:
+      var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
+      if powerable:
+        powerable.powered = _is_activated;
 
 
-## @virtual [br]
-## Override to add on-deactivation behavior to this [ButtonObserver].
-func _on_deactivated() -> void:
-  pass
+## Updates the state of the [member _persistence_key] associated with this
+## button to match its [member _is_activated] state.
+func _update_persistence_key() -> void:
+  if not _persistence_key:
+    return;
+
+  _persistence_key.write(_is_activated);

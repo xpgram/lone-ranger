@@ -8,35 +8,64 @@ const _scene_click_in_audio := preload('uid://d36imc25otxdj');
 const _scene_click_out_audio := preload('uid://nrlqhbx0http');
 
 
-## Emitted when the button is pressed by some heavy object.
+## Emitted when this button is first pressed or 'powered on'. [br]
+##
+## [b]Note:[/b] This signal exists primarily to serve button systems. The
+## preferred method for button interoperability is to set a [PowerableComponent]
+## on an object and set that object as a target of this button with
+## [member _powerable_targets].
 signal pressed();
 
-## Emitted when all heavy objects leave the button's [Grid] location and it is no longer
-## being held down.
+## Emitted when this button is first released or 'powered off'. [br]
+##
+## [b]Note:[/b] This signal exists primarily to serve button systems. The
+## preferred method for button interoperability is to set a [PowerableComponent]
+## on an object and set that object as a target of this button with
+## [member _powerable_targets].
 signal released();
 
 
-## If enabled, the button is pressable once and will not release even when freed.
-@export var _stays_pressed := false;
+## A list of [Node]s to toggle in accordance with this button's
+## [member is_pressed] state. All referenced [Node]s must own a
+## [PowerableComponent] to be notified of changes.
+@export var _powerable_targets := [] as Array[Node];
+
+## Whether the button is currently being pressed down. [br]
+##
+## Setting this value will immediately notify listeners of the state change. [br]
+##
+## If [member stays_pressed] is `true`, this value cannot be set to `false`
+## after it has been set to `true`.
+@export var is_pressed: bool:
+  set(value):
+    if (
+        value == is_pressed
+        or is_pressed and stays_pressed
+    ):
+      return;
+
+    is_pressed = value;
+
+    var sprite_texture_key := 'pressed' if is_pressed else 'neutral';
+    var sound_to_play := _scene_click_in_audio if is_pressed else _scene_click_out_audio;
+    var signal_to_emit := pressed if is_pressed else released;
+
+    _sprite.texture_key = sprite_texture_key;
+    Events.one_shot_sound_emitted.emit(sound_to_play);
+    signal_to_emit.emit();
+    _notify_powerable_targets();
+    _update_persistence_key();
+
+## Whether this button remains in its 'pressed' state even after being released.
+@export var stays_pressed := false;
+
+## @nullable [br]
+## The [PersistenceKeyBool] object to set along with this button's
+## [member is_pressed] state. If this object is null, no persistence key is set.
+@export var _persistence_key: PersistenceKeyBool;
 
 
-@export_group('Persistence Key')
-
-# [TODO] Should this be a resource? 'null' would do nothing, obvi; anything else would
-#   have a simple interface.
-#   The persistence_key could be initialized with a prefix for specific objects, but
-#   would otherwise generate a random default name. But how would it guarantee uniqueness?
-## [IMPLEMENT]
-@export var _sets_persistence_key := false;
-
-## [IMPLEMENT]
-@export var _persistence_key: StringName;
-
-
-## Whether the button is currently being pressed down.
-var _is_pressed := false;
-
-
+## A reference to the button's sprite object.
 @onready var _sprite := %MultiSprite2D as MultiSprite2D;
 
 
@@ -49,60 +78,52 @@ func _bind_stimulus_callbacks() -> void:
 
 
 ## Handler for object grid-collision events.
-func _on_object_collision(_entity: GridEntity) -> void:
-  press();
+func _on_object_collision(entity: GridEntity) -> void:
+  if is_pressed or not _entity_can_press_button(entity):
+    return;
+
+  is_pressed = true;
 
 
 ## Handler for object grid-separation events.
 func _on_object_separation(_entity: GridEntity) -> void:
-  if not _is_pressed:
+  if not is_pressed:
     return;
-  
+
   var tile_entities := Grid.get_entities(grid_position);
-  var solid_entities := tile_entities.filter(func (entity: GridEntity):
-    return entity.solid and entity != self;
+  var heavy_entities := tile_entities.filter(func (tile_entity: GridEntity):
+    return tile_entity != self and _entity_can_press_button(tile_entity)
   ) as Array[GridEntity];
 
-  if solid_entities.size() == 0:
-    release();
+  is_pressed = heavy_entities.size() > 0;
 
 
-## 'Presses' the button, which changes its visuals and emits [signal pressed].
-func press() -> void:
-  if _is_pressed:
+## Returns true if the given entity is of a kind that is capable of pressing
+## this button.
+func _entity_can_press_button(entity: GridEntity) -> bool:
+  return entity.solid;
+
+
+## Updates the powered state of all [PowerableComponent]s found in this button's
+## list of [member _powerable_targets] to match this button's
+## [member is_pressed] state.
+func _notify_powerable_targets() -> void:
+  if not _powerable_targets:
     return;
 
-  _is_pressed = true;
-  _sprite.texture_key = 'pressed';
-  Events.one_shot_sound_emitted.emit(_scene_click_in_audio);
-  _on_pressed();
-  pressed.emit();
+  for target in _powerable_targets:
+    if target is PowerableComponent:
+      target.powered = is_pressed;
+    else:
+      var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
+      if powerable:
+        powerable.powered = is_pressed;
 
 
-## 'Releases' the button, which changes its visuals and emits [signal released].
-func release() -> void:
-  if not _is_pressed or _stays_pressed:
+## Updates the state of the [member _persistence_key] associated with this
+## button to match its [member is_pressed] state.
+func _update_persistence_key() -> void:
+  if not _persistence_key:
     return;
 
-  _is_pressed = false;
-  _sprite.texture_key = 'neutral';
-  Events.one_shot_sound_emitted.emit(_scene_click_out_audio);
-  _on_released();
-  released.emit();
-
-
-## Returns true if this button is currently being held down.
-func is_pressed() -> bool:
-  return _is_pressed;
-
-
-## @virtual [br]
-## Override to add on-pressed behavior to this [ButtonEntity].
-func _on_pressed() -> void:
-  pass
-
-
-## @virtual [br]
-## Override to add on-released behavior to this [ButtonEntity].
-func _on_released() -> void:
-  pass
+  _persistence_key.write(is_pressed);
