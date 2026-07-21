@@ -28,7 +28,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
 
   # [FIXME] This adds the object to the PlayerModule instead of the entities node.
   playbill.performer.add_sibling(object);
-  playbill.get_parent().move_child(object, 0);
+  playbill.performer.get_parent().move_child(object, 0);
 
   object.grid_position = playbill.target_position;
 
