@@ -33,8 +33,10 @@ signal deactivated();
 ## Describes how the observer listens to its connected buttons for activation cues.
 @export var _activation_style := ActivationStyle.ALL;
 
-
-@export_group('Persistence Key')
+## A list of [Node]s to toggle in accordance with this observer's
+## [member _is_activated] state. All referenced [Node]s must own a
+## [PowerableComponent] to be notified of changes.
+@export var _powerable_targets := [] as Array[Node];
 
 ## @nullable [br]
 ## The [PersistenceKeyBool] object to set along with this button observer's
@@ -68,6 +70,7 @@ var _is_activated := false:
     var signal_to_emit := activated if _is_activated else deactivated;
 
     signal_to_emit.emit();
+    _notify_powerable_targets();
     _update_persistence_key();
 
 
@@ -191,8 +194,21 @@ func _on_deactivated() -> void:
   pass
 
 
+## Updates the powered state of all [PowerableComponent]s found in this observer's
+## list of [member _powerable_targets] to match this observer's
+## [member _is_activated] state.
+func _notify_powerable_targets() -> void:
+  if not _powerable_targets:
+    return;
+
+  for target in _powerable_targets:
+    var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
+    if powerable:
+      powerable.powered = _is_activated;
+
+
 ## Updates the state of the [member _persistence_key] associated with this
-## button to match its [member is_pressed] state.
+## button to match its [member _is_activated] state.
 func _update_persistence_key() -> void:
   if not _persistence_key:
     return;
