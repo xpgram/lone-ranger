@@ -24,6 +24,11 @@ signal activated();
 signal deactivated();
 
 
+## A list of [Node]s to toggle in accordance with this observer's
+## [member _is_activated] state. All referenced [Node]s must own a
+## [PowerableComponent] to be notified of changes.
+@export var _powerable_targets := [] as Array[Node];
+
 ## A list of [ButtonEntity] objects to observe.
 @export var _button_list: Array[ButtonEntity]:
   set(value):
@@ -32,11 +37,6 @@ signal deactivated();
 
 ## Describes how the observer listens to its connected buttons for activation cues.
 @export var _activation_style := ActivationStyle.ALL;
-
-## A list of [Node]s to toggle in accordance with this observer's
-## [member _is_activated] state. All referenced [Node]s must own a
-## [PowerableComponent] to be notified of changes.
-@export var _powerable_targets := [] as Array[Node];
 
 ## @nullable [br]
 ## The [PersistenceKeyBool] object to set along with this button observer's
