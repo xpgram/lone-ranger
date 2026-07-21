@@ -8,44 +8,65 @@ const _scene_click_in_audio := preload('uid://d36imc25otxdj');
 const _scene_click_out_audio := preload('uid://nrlqhbx0http');
 
 
-## A list of [Node] objects that may have a [PowerableComponent] to toggle
-## in accordance with this button's state.
-@export var _powerable_targets := [] as Array[Node]:
+## Emitted when this button is first pressed or 'powered on'. [br]
+##
+## [b]Note:[/b] This signal exists primarily to serve button systems. The
+## preferred method for button interoperability is to set a [PowerableComponent]
+## on an object and set that object as a target of this button with
+## [member _powerable_targets].
+signal pressed();
+
+## Emitted when this button is first released or 'powered off'. [br]
+##
+## [b]Note:[/b] This signal exists primarily to serve button systems. The
+## preferred method for button interoperability is to set a [PowerableComponent]
+## on an object and set that object as a target of this button with
+## [member _powerable_targets].
+signal released();
+
+
+## A list of [Node]s to toggle in accordance with this button's
+## [member is_pressed] state. All referenced [Node]s must own a
+## [PowerableComponent] to be notified of changes.
+@export var _powerable_targets := [] as Array[Node];
+
+## Whether the button is currently being pressed down. [br]
+##
+## Setting this value will immediately notify listeners of the state change. [br]
+##
+## If [member stays_pressed] is `true`, this value cannot be set to `false`
+## after it has been set to `true`.
+@export var is_pressed: bool:
   set(value):
-    _powerable_targets = value;
-    _button_logic.powerable_targets = _powerable_targets;
+    if (
+        value == is_pressed
+        or is_pressed and stays_pressed
+    ):
+      return;
 
-
-## The press/release and listener-notification handler for this ButtonEntity.
-@export var _button_logic := ButtonStateLogic.new():
-  set(value):
-    _button_logic = value if value else ButtonStateLogic.new();
-
-
-## Whether the button is currently being pressed down.
-var is_pressed: bool:
-  set(value):
-    _button_logic.is_activated = value;
-    is_pressed = _button_logic.is_activated;
+    is_pressed = value;
 
     var sprite_texture_key := 'pressed' if is_pressed else 'neutral';
     var sound_to_play := _scene_click_in_audio if is_pressed else _scene_click_out_audio;
+    var signal_to_emit := pressed if is_pressed else released;
 
     _sprite.texture_key = sprite_texture_key;
     Events.one_shot_sound_emitted.emit(sound_to_play);
+    signal_to_emit.emit();
+    _notify_powerable_targets();
+    _update_persistence_key();
+
+## Whether this button remains in its 'pressed' state even after being released.
+@export var stays_pressed := false;
+
+## @nullable [br]
+## The [PersistenceKeyBool] object to set along with this button's
+## [member is_pressed] state. If this object is null, no persistence key is set.
+@export var _persistence_key: PersistenceKeyBool;
 
 
+## A reference to the button's sprite object.
 @onready var _sprite := %MultiSprite2D as MultiSprite2D;
-
-
-## Returns this button entity's state logic resource. [br]
-##
-## [b]Note:[/b] While this method may be used to get access to the button's 'on'
-## and 'off' signals, the preferred method for button interoperability is to set
-## a [PowerableComponent] on an object and set that object as a target of this
-## button with [member _powerable_targets].
-func get_button_logic() -> ButtonStateLogic:
-  return _button_logic;
 
 
 func _bind_stimulus_callbacks() -> void:
@@ -81,3 +102,25 @@ func _on_object_separation(_entity: GridEntity) -> void:
 ## this button.
 func _entity_can_press_button(entity: GridEntity) -> bool:
   return entity.solid;
+
+
+## Updates the powered state of all [PowerableComponent]s found in this button's
+## list of [member _powerable_targets] to match this button's
+## [member is_pressed] state.
+func _notify_powerable_targets() -> void:
+  if not _powerable_targets:
+    return;
+
+  for target in _powerable_targets:
+    var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
+    if powerable:
+      powerable.powered = is_pressed;
+
+
+## Updates the state of the [member _persistence_key] associated with this
+## button to match its [member is_pressed] state.
+func _update_persistence_key() -> void:
+  if not _persistence_key:
+    return;
+
+  _persistence_key.write(is_pressed);
