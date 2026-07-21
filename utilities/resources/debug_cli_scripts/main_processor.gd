@@ -3,7 +3,7 @@ class_name LoneRangerCLIProcessor
 extends DebugCLIScript
 
 # [TODO] Add more debug commands.
-# [ ] give spawn_mouth -> "S.Mouth" spawn_enemy<Mouth>
+# [x] give spawn_mouth -> "S.Mouth" spawn_enemy<Mouth>
 #     give spawn mouth -> "S.Mouth" spawn_object<Mouth>
 #   spawn_object is a special spell-action only available to devs via the
 #   command-line.
@@ -13,6 +13,9 @@ extends DebugCLIScript
 #   command dynamic and somewhat auto-generated.
 #   Spawning just does a simple check that the object can be spawned in
 #   unobstructed space.
+# [ ] give delete
+#   This is developer-only, but can be placed in the FieldActionList, I think.
+#   Deletes all objects/entities at a given location.
 
 
 var _subprograms: Dictionary[String, Callable] = {
