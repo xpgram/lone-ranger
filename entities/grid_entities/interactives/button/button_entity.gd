@@ -112,9 +112,12 @@ func _notify_powerable_targets() -> void:
     return;
 
   for target in _powerable_targets:
-    var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
-    if powerable:
-      powerable.powered = is_pressed;
+    if target is PowerableComponent:
+      target.powered = is_pressed;
+    else:
+      var powerable := Component.getc(target, PowerableComponent) as PowerableComponent;
+      if powerable:
+        powerable.powered = is_pressed;
 
 
 ## Updates the state of the [member _persistence_key] associated with this
