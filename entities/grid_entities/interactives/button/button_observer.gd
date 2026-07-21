@@ -77,7 +77,6 @@ var _is_activated := false:
 func _ready() -> void:
   if not Engine.is_editor_hint():
     _connect_to_button_entities();
-    _connect_to_own_signals();
 
   if Engine.is_editor_hint():
     _connect_to_editor();
@@ -102,12 +101,6 @@ func _connect_to_button_entities() -> void:
   for button in _button_list:
     button.pressed.connect(_on_button_state_updated);
     button.released.connect(_on_button_state_updated);
-
-
-## Connects callbacks to this object's own signals.
-func _connect_to_own_signals() -> void:
-  activated.connect(_on_activated);
-  deactivated.connect(_on_deactivated);
 
 
 ## Draws lines in Godot's editor view to all connected [ButtonEntity] objects.
@@ -180,18 +173,6 @@ func _reevaluate_trigger_state() -> void:
 ## Returns true if the given [param button] is currently pressed.
 func _button_is_pressed(button: ButtonEntity) -> bool:
   return button.is_pressed;
-
-
-## @virtual [br]
-## Override to add on-activation behavior to this [ButtonObserver].
-func _on_activated() -> void:
-  pass
-
-
-## @virtual [br]
-## Override to add on-deactivation behavior to this [ButtonObserver].
-func _on_deactivated() -> void:
-  pass
 
 
 ## Updates the powered state of all [PowerableComponent]s found in this observer's
