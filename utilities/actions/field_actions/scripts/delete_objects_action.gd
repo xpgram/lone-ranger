@@ -20,6 +20,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   var deletable := grid_objects.filter(_object_is_deletable) as Array[GridObject];
 
   for object in deletable:
+    print("Deleted %s" % object.name)
     object.queue_free();
 
   return true;
