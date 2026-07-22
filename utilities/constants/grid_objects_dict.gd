@@ -3,19 +3,41 @@
 class_name GridObjectsDict
 
 
-static var all_objects: Dictionary[String, PackedScene]:
+# [TODO] Refactor this to search the grid_entities directory for valid objects
+#   and auto-compose the dictionary of all_objects.
+#   - The dictionary keys are also CLI words: should it be that these are intentional?
+
+
+## A list of resource UIDs to [GridObject] scenes known to [GridObjectsDict]. [br]
+##
+## Note that this property is not auto-generated from the project directory, and
+## is therefore not a comprehensive list. In particular, any object which has
+## no function without configuration, like a button which needs a 'when pressed'
+## target, is excluded from the list.
+static var all_object_uids: Dictionary[String, String]:
   get():
     return {
       'boulder': boulder,
+      'bull': enemy_bull,
+      'diamond': enemy_diamond,
+      'glass_tile': glass_tile,
+      'leech': enemy_leech,
+      'platform_statue': platform_statue,
+      'save_statue': save_statue,
+      'maggot': enemy_maggot,
+      'mouth': enemy_mouth,
     };
   set(value):
     pass
 
 
-# [FIXME] Doesn't this preload via this global dictionary require that all
-#   entities be loaded into memory at all times? That's probably bad, right?
-#   I guess I should iterate over the ./entities directory?
-#
-#   I guess I could also just save the path/uid and load it at the time it's
-#   requested. Meaning, this is not a Dictionary of PackedScenes.
-const boulder := preload("res://entities/grid_entities/interactives/boulder/boulder.tscn");
+const boulder := 'uid://oysxdqutfm51';
+const glass_tile := 'uid://6imckxwaw70b';
+const platform_statue := 'uid://dowqydii3t2w0';
+const save_statue := 'uid://cieqoiwkjqwtb';
+
+const enemy_bull := 'uid://bby6nr1v10a5c';
+const enemy_diamond := 'uid://cokxrxu6mgxob';
+const enemy_leech := 'uid://cwpfqmqnobovf';
+const enemy_maggot := 'uid://v76t6hfbja7y';
+const enemy_mouth := 'uid://hd6tv01qq0ed';
