@@ -22,6 +22,7 @@ static var all_object_uids: Dictionary[String, String]:
       'diamond': enemy_diamond,
       'glass_tile': glass_tile,
       'leech': enemy_leech,
+      'loose_particles': loose_particles,
       'platform_statue': platform_statue,
       'save_statue': save_statue,
       'maggot': enemy_maggot,
@@ -33,6 +34,7 @@ static var all_object_uids: Dictionary[String, String]:
 
 const boulder := 'uid://oysxdqutfm51';
 const glass_tile := 'uid://6imckxwaw70b';
+const loose_particles := 'uid://cqx4i6o5f7y0t';
 const platform_statue := 'uid://dowqydii3t2w0';
 const save_statue := 'uid://cieqoiwkjqwtb';
 
