@@ -90,16 +90,18 @@ func _cmd_give_spawn_object(args: Array[String]) -> DebugCLI.Error:
   var quantity: int = type_convert(args[1], TYPE_INT) if args.size() >= 2 else 1;
   var target_name := args[0];
 
-  for object_name in GridObjectsDict.all_objects.keys():
+  for object_name in GridObjectsDict.all_object_uids.keys():
     if object_name != target_name:
       continue;
+
+    var object_uid := GridObjectsDict.all_object_uids[object_name];
 
     var spell := _spawn_object_resource.duplicate();
     spell.action_name = "S.%s" % object_name.capitalize();
     spell.action_uid = spell.action_name;
     spell.action_type = Enums.FieldActionType.Magic;
     spell.action_time_cost = 0;
-    spell.object_scene = GridObjectsDict.all_objects[object_name];
+    spell.object_scene = load(object_uid);
 
     var item := PlayerInventoryItem.new();
     item.action = spell;
