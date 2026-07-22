@@ -13,7 +13,7 @@ extends DebugCLIScript
 #   command dynamic and somewhat auto-generated.
 #   Spawning just does a simple check that the object can be spawned in
 #   unobstructed space.
-# [ ] Add a spawn_object .tres for easier editing.
+# [x] Add a spawn_object .tres for easier editing.
 # [x] give delete
 #   This is developer-only, but can be placed in the FieldActionList, I think.
 #   Deletes all objects/entities at a given location.
@@ -102,14 +102,15 @@ func _cmd_give_spawn_object(args: Array[String]) -> DebugCLI.Error:
   if args.size() == 0:
     return DebugCLI.Error.COULD_NOT_PROCESS_LINE;
 
-  var quantity: int = type_convert(args[1], TYPE_INT) if args.size() >= 2 else 3;
+  var _spawn_object_resource := load('uid://brrderc3o5ct0');
+  var quantity: int = type_convert(args[1], TYPE_INT) if args.size() >= 2 else 1;
   var target_name := args[0];
 
   for object_name in GridObjectsDict.all_objects.keys():
     if object_name != target_name:
       continue;
 
-    var spell := SpawnObject_FieldAction.new();
+    var spell := _spawn_object_resource.duplicate();
     spell.action_name = "S.%s" % object_name.capitalize();
     spell.action_uid = spell.action_name;
     spell.action_type = Enums.FieldActionType.Magic;
