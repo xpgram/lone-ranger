@@ -8,10 +8,10 @@
 atlas = ExtResource("2_is4bj")
 region = Rect2(32, 96, 16, 16)
 
-[node name="ExtendableBridgeEntity" type="Node2D" unique_id=1557784400]
+[node name="ExtendableBridgeEntity" type="Node2D" unique_id=1695804406]
 script = ExtResource("1_x4kkl")
 standable = true
-metadata/_custom_type_script = "uid://f8wof0bqh7u6"
+metadata/_custom_type_script = "uid://cwphjbfgvje0r"
 metadata/PowerableComponent = NodePath("PowerableComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=462103602]

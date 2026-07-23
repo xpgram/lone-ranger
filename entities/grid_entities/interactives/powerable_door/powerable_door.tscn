@@ -40,10 +40,10 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="PowerableDoorEntity" type="Node2D" unique_id=398494341]
+[node name="PowerableDoorEntity" type="Node2D" unique_id=828120137]
 script = ExtResource("1_wl8kq")
 solid = true
-metadata/_custom_type_script = "uid://f8wof0bqh7u6"
+metadata/_custom_type_script = "uid://r24lu5fkkwpq"
 metadata/PowerableComponent = NodePath("PowerableComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1545688004]
