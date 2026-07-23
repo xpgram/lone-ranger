@@ -44,6 +44,8 @@
 # [x] Refactor BooleanSpawner such that the PackedScenes it creates stop breaking
 #     references to other test-level objects its objects should know about.
 #     i.e. stop breaking InteractionTriggers.
+# [ ] Recent changes have broken the glass tile with the boulder over it.
+#     This makes sense; that architecture for that was never well thought out.
 #
 # Set PersistenceKey by interaction:
 # [x] Events has a signal for the player interacting with an object.
