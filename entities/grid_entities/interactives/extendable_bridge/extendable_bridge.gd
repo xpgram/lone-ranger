@@ -12,11 +12,13 @@ extends Interactive2D
 
 
 func _ready() -> void:
-  _powerable.powered_on.connect(func (): _set_activated(true));
-  _powerable.powered_off.connect(func (): _set_activated(false));
+  _powerable.powered_on.connect(func (): _set_powered(true));
+  _powerable.powered_off.connect(func (): _set_powered(false));
+
+  _set_powered(false);
 
 
-func _set_activated(value: bool) -> void:
+func _set_powered(value: bool) -> void:
   if _invert_power:
     value = !value;
 
