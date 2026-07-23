@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DeleteObjects_FieldAction" format=3 uid="uid://bav6pj2rtw70y"]
+
+[ext_resource type="Script" uid="uid://u8h4jhp0vwxm" path="res://utilities/actions/field_actions/scripts/delete_objects_action.gd" id="1_e50s0"]
+
+[resource]
+script = ExtResource("1_e50s0")
+action_uid = &"delete_objects"
+action_name = "Delete Obj"
+action_type = 1
+action_description = "Deletes all non-structural Grid objects at the target location."
+action_time_cost = 0.0
+metadata/_custom_type_script = "uid://blg3pg11wjt6k"

@@ -2,18 +2,6 @@
 class_name LoneRangerCLIProcessor
 extends DebugCLIScript
 
-# [TODO] Add more debug commands.
-# [ ] give spawn_mouth -> "S.Mouth" spawn_enemy<Mouth>
-#     give spawn mouth -> "S.Mouth" spawn_object<Mouth>
-#   spawn_object is a special spell-action only available to devs via the
-#   command-line.
-#   The spell itself is contained within the special dictionary, and the object
-#   to spawn in its own dictionary; the command duplicates the spell and adds
-#   the object to its `creation_target: GridObject` field, which makes the CLI
-#   command dynamic and somewhat auto-generated.
-#   Spawning just does a simple check that the object can be spawned in
-#   unobstructed space.
-
 
 var _subprograms: Dictionary[String, Callable] = {
   'give': _cmd_give,
@@ -37,6 +25,10 @@ func _cmd_give(args: Array[String]) -> DebugCLI.Error:
 
   if args[0] == 'all':
     return _cmd_give_all();
+
+  if args[0] == 'spawn':
+    args.pop_front();
+    return _cmd_give_spawn_object(args);
 
   var consumables := {} as Dictionary[String, FieldAction];
   consumables.merge(FieldActionList.all_magic);
@@ -83,6 +75,37 @@ func _cmd_give_all() -> DebugCLI.Error:
     var item := PlayerInventoryItem.new();
     item.action = action;
     item.quantity = quantity_for_each;
+    DebugEvents.give_player_inventory_item.emit(item);
+
+  return DebugCLI.Error.OK;
+
+
+## A program to give the player developer spells to spawn objects and monsters
+## in the play area. Useful for live-testing object configurations and interplay.
+func _cmd_give_spawn_object(args: Array[String]) -> DebugCLI.Error:
+  if args.size() == 0:
+    return DebugCLI.Error.COULD_NOT_PROCESS_LINE;
+
+  var _spawn_object_resource := load('uid://brrderc3o5ct0');
+  var quantity: int = type_convert(args[1], TYPE_INT) if args.size() >= 2 else 1;
+  var target_name := args[0];
+
+  for object_name in GridObjectsDict.all_object_uids.keys():
+    if object_name != target_name:
+      continue;
+
+    var object_uid := GridObjectsDict.all_object_uids[object_name];
+
+    var spell := _spawn_object_resource.duplicate();
+    spell.action_name = "S.%s" % object_name.capitalize();
+    spell.action_uid = spell.action_name;
+    spell.action_type = Enums.FieldActionType.Magic;
+    spell.action_time_cost = 0;
+    spell.object_scene = load(object_uid);
+
+    var item := PlayerInventoryItem.new();
+    item.action = spell;
+    item.quantity = quantity;
     DebugEvents.give_player_inventory_item.emit(item);
 
   return DebugCLI.Error.OK;

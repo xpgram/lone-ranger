@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpawnObject_FieldAction" format=3 uid="uid://brrderc3o5ct0"]
+
+[ext_resource type="Script" uid="uid://strxscmhrq36" path="res://utilities/actions/field_actions/scripts/spawn_object_action.gd" id="1_82tfq"]
+
+[resource]
+script = ExtResource("1_82tfq")
+action_uid = &"s.object"
+action_name = "S.Object"
+action_type = 1
+action_description = "Spawns an object at the target location."
+action_time_cost = 0.0

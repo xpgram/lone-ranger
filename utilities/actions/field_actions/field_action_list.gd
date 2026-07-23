@@ -59,6 +59,7 @@ static var all_magic: Dictionary[String, FieldAction]:
       'grow': magic_grow,
       'move': magic_move,
       'raise': magic_raise,
+      'delete': dev_magic_delete_objects,
     };
   set(value):
     pass
@@ -69,6 +70,7 @@ const magic_compact := preload('uid://bnxi3iwan6g35');
 const magic_grow := preload('uid://dx6yyw024ctch');
 const magic_move := preload('uid://72omta0cvh7l');
 const magic_raise := preload('uid://cswtlyl54v4ck');
+const dev_magic_delete_objects := preload('uid://bav6pj2rtw70y');
 
 
 ## All castable item actions resulting from collected objects.
