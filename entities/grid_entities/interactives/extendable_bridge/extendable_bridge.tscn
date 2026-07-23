@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dbdkkmlrv5se"]
+
+[ext_resource type="Script" uid="uid://cwphjbfgvje0r" path="res://entities/grid_entities/interactives/extendable_bridge/extendable_bridge.gd" id="1_x4kkl"]
+[ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_is4bj"]
+[ext_resource type="Script" uid="uid://cow3h3cdimw8l" path="res://utilities/nodes/components/powerable_component.gd" id="3_ddvmg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8c80"]
+atlas = ExtResource("2_is4bj")
+region = Rect2(32, 96, 16, 16)
+
+[node name="ExtendableBridgeEntity" type="Node2D" unique_id=1557784400]
+script = ExtResource("1_x4kkl")
+standable = true
+metadata/_custom_type_script = "uid://f8wof0bqh7u6"
+metadata/PowerableComponent = NodePath("PowerableComponent")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=462103602]
+unique_name_in_owner = true
+texture = SubResource("AtlasTexture_i8c80")
+
+[node name="PowerableComponent" type="Node" parent="." unique_id=850419915]
+unique_name_in_owner = true
+script = ExtResource("3_ddvmg")
+metadata/_custom_type_script = "uid://cow3h3cdimw8l"
