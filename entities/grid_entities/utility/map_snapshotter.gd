@@ -37,6 +37,26 @@
 #     [ ] A BridgeEntity is a floor-type enabled by buttons (or disabled by them).
 #     [ ] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
 #
+# BooleanSpawner uses 'load as placeholder':
+# [ ] Confirm 'load as placeholder' allows me to tweak objects in editor visually
+#     without the game instantiating them like it does normal nodes.
+# [ ] Refactor BooleanSpawner such that it instantiates placeholders instead of
+#     instantiating a node branch, packing it, deleting it, then reinstantiating
+#     it.
+#     - This would save me so much architectural fussing with objects that are
+#       first instantiated for packing but have _init() or _deinit() side effects,
+#       like the DemonWall subtracting enemy presence by 1 when it's queue_freed.
+#       - Tbf, DemonWall shouldn't -1 enemy presence unless it knows it has first
+#         incremented it. Maybe enemy presence should be a list of references,
+#         not just an int.
+#
+# Set PersistenceKey by interaction:
+# [x] Events has a signal for the player interacting with an object.
+# [ ] An object like TriggerBox instead triggers when an interaction with a
+#     specific object reference occurs.
+# [ ] The west GlassTile disappears when either the SaveStatue or Hookshot
+#     chest is interacted with.
+#
 # Improve Debug: Add a way to get equipment, etc., quickly:
 # [x] Debug dropdown has a line edit node.
 # [x] Fix LineEdit can't backspace for some reason.
