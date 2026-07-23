@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://w8c7503qyp61" path="res://entities/grid_entities/bosses/demon_wall/demon_wall_boss.tscn" id="28_fyjc2"]
 [ext_resource type="Script" uid="uid://dj3d0k5yxrtac" path="res://entities/grid_entities/utility/trigger_box_boolean_pkey.gd" id="28_snb1o"]
 [ext_resource type="Script" uid="uid://bchkts4e674ww" path="res://utilities/nodes/components/grid_entity_components/grid_message_component.gd" id="29_ekj6j"]
+[ext_resource type="Script" uid="uid://6h4h3dk0p6g1" path="res://utilities/nodes/interaction_trigger.gd" id="30_ekj6j"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
@@ -1342,14 +1343,13 @@ _persistence_key = SubResource("Resource_hdlvt")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1379610959]
-
-[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=1517408776]
-position = Vector2(0, 32)
-script = ExtResource("28_snb1o")
+[node name="InteractionTrigger" type="Node" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1447676690 node_paths=PackedStringArray("_watched_objects")]
+script = ExtResource("30_ekj6j")
+_watched_objects = [NodePath("../../AngelStatue4"), NodePath("../../SpecialChest2")]
 _persistence_key = SubResource("Resource_hdlvt")
-_match_player_entity = true
-_trigger_box_color = Color(1, 1, 0, 0.5019608)
+metadata/_custom_type_script = "uid://6h4h3dk0p6g1"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1379610959]
 
 [node name="GlassTile2" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=785045072 instance=ExtResource("25_mmv8l")]
 position = Vector2(48, 32)
@@ -1521,15 +1521,13 @@ _persistence_key = SubResource("Resource_vpijh")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained" unique_id=1345047135]
-
-[node name="TriggerBoxBooleanPkey" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1014307744]
-position = Vector2(0, 32)
-script = ExtResource("28_snb1o")
+[node name="InteractionTrigger" type="Node" parent="Interactives Container/Spawner_HookshotObtained" unique_id=963982249 node_paths=PackedStringArray("_watched_objects")]
+script = ExtResource("30_ekj6j")
+_watched_objects = [NodePath("../../SpecialChest2")]
 _persistence_key = SubResource("Resource_vpijh")
-_match_player_entity = true
-_trigger_box_color = Color(1, 1, 0, 0.5019608)
-metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
+metadata/_custom_type_script = "uid://6h4h3dk0p6g1"
+
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained" unique_id=1345047135]
 
 [node name="GlassTile3" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
 position = Vector2(-128, 48)
