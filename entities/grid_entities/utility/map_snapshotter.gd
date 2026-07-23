@@ -31,6 +31,12 @@
 #     themselves to now, they don't need the node segregation. And it's annoying
 #     to modify the boss area in two different places.
 #
+# Make ButtonEntities useful:
+# [ ] The ButtonEntity has no objects to toggle.
+#     [ ] 'stays-pressed' buttons have a different pressed-in sprite.
+#     [ ] A BridgeEntity is a floor-type enabled by buttons (or disabled by them).
+#     [ ] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
+#
 # Improve Debug: Add a way to get equipment, etc., quickly:
 # [x] Debug dropdown has a line edit node.
 # [x] Fix LineEdit can't backspace for some reason.
@@ -40,7 +46,7 @@
 #   [x] give shove -> grants shove equipment
 #   [x] LineEdit -> DebugUI -> Debug.interpreter -> signal Events.debug_give_item
 #       -> player.inventory
-# [ ] LineEdit is clickable to focus
+# [-] LineEdit is clickable to focus
 #     (I think the Viewport stuff is getting in the way?)
 # [x] Project settings has no caret_up/down binding, but adding such blocks the
 #     history traversal buttons from receiving input.
@@ -49,7 +55,8 @@
 #
 # Fix compactible particles:
 # [ ] Particles exist in board spawner.
-# [ ] Some are permanent (just set a flag).
+# [-] Some are permanent (just set a flag).
+#     Presently, all are permanent, there is no flag to set.
 #
 # Changing map details:
 # [ ] Implement sub-TileMapLayers that can be drawn and used to paint into the
