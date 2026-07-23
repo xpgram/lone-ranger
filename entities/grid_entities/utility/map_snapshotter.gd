@@ -24,24 +24,26 @@
 # [x] These map changes will be undoable by default.
 # [x] The DemonWall entity is resettable unless the player reaches the hallway end.
 # [x] The DemonWall switches back the music track when despawned.
+# [-] Fix: The first node-delete cause by BooleanSpawner's scene packing tells the
+#     music stream that an enemy has disappeared, so we get -1.
 #     [ ] The enemy_presence metric uses object references instead of an int to
 #         more accurately track conditions; i.e., it won't "reduce" for an enemy
 #         that never incremented in the first place, which is something that can
 #         happen when I'm writing sloppy code.
 #     [ ] Enemy2D calls AudioBus.decrement(self) in its exit_tree() to catch all
 #         misses——or eventually catch them.
-# [-] Fix: The first node-delete cause by BooleanSpawner's scene packing tells the
-#     music stream that an enemy has disappeared, so we get -1.
 # [ ] The interactives / npcs / enemies node-containers are merged into one play
 #     space, maybe segmented by location. Such objects have groups they add
 #     themselves to now, they don't need the node segregation. And it's annoying
 #     to modify the boss area in two different places.
 #
 # Make ButtonEntities useful:
-# [ ] The ButtonEntity has no objects to toggle.
+# [x] The ButtonEntity has no objects to toggle.
 #     [ ] 'stays-pressed' buttons have a different pressed-in sprite.
-#     [ ] A BridgeEntity is a floor-type enabled by buttons (or disabled by them).
-#     [ ] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
+#     [x] A BridgeEntity is a floor-type enabled by buttons (or disabled by them).
+#     [ ] Multiple BridgeEntities can be animated open instead of just popping in.
+#     [x] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
+#     [ ] DoorEntity has a unique set of sprites——not Raised Block's.
 #
 # BooleanSpawner stops breaking references:
 # [x] Confirm 'load as placeholder' allows me to tweak objects in editor visually
