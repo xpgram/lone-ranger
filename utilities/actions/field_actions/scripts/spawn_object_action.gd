@@ -1,4 +1,7 @@
-## A dev-only spell to spawn some object at some location.
+## A dev-only spell to spawn some object at some location. [br]
+##
+## An implementing script must assign [member object_scene] during resource
+## duplication or the casting of this [FieldAction] will fail.
 class_name SpawnObject_FieldAction
 extends FieldAction
 
