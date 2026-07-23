@@ -60,10 +60,12 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
 
   assert(interactive_idx >= 0,
     "Interact_FieldAction is trying to interact with a Grid position that has no context actions. coords: %s" % interact_position);
-  
-  var context_action := entities[interactive_idx].get_node('ContextAction') as ContextAction;
+
+  var interacted_entity := entities[interactive_idx];
+  var context_action := interacted_entity.get_node('ContextAction') as ContextAction;
 
   @warning_ignore('redundant_await')
   await context_action.perform_interaction_async(playbill.performer);
+  Events.player_interacted_with.emit(interacted_entity);
 
   return true;

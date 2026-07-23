@@ -22,6 +22,9 @@ signal board_reset_declared();
 ## Emitted when a sound object is created.
 signal one_shot_sound_emitted(audio_scene: PackedScene);
 
+## Emitted when the player uses [Interact_FieldAction] on another [GridObject].
+signal player_interacted_with(object: GridObject);
+
 ## Emitted when the player's held count of [param action] is adjusted to a new quantity.
 signal player_inventory_item_updated(action: FieldAction, new_quantity: int);
 
