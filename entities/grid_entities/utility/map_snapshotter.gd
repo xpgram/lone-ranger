@@ -37,18 +37,13 @@
 #     [ ] A BridgeEntity is a floor-type enabled by buttons (or disabled by them).
 #     [ ] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
 #
-# BooleanSpawner uses 'load as placeholder':
-# [ ] Confirm 'load as placeholder' allows me to tweak objects in editor visually
+# BooleanSpawner stops breaking references:
+# [x] Confirm 'load as placeholder' allows me to tweak objects in editor visually
 #     without the game instantiating them like it does normal nodes.
-# [ ] Refactor BooleanSpawner such that it instantiates placeholders instead of
-#     instantiating a node branch, packing it, deleting it, then reinstantiating
-#     it.
-#     - This would save me so much architectural fussing with objects that are
-#       first instantiated for packing but have _init() or _deinit() side effects,
-#       like the DemonWall subtracting enemy presence by 1 when it's queue_freed.
-#       - Tbf, DemonWall shouldn't -1 enemy presence unless it knows it has first
-#         incremented it. Maybe enemy presence should be a list of references,
-#         not just an int.
+#     - It doesn't. Well, not for my purposes, anyway.
+# [x] Refactor BooleanSpawner such that the PackedScenes it creates stop breaking
+#     references to other test-level objects its objects should know about.
+#     i.e. stop breaking InteractionTriggers.
 #
 # Set PersistenceKey by interaction:
 # [x] Events has a signal for the player interacting with an object.
@@ -56,9 +51,8 @@
 #     specific object reference occurs.
 # [x] The west GlassTile disappears when either the SaveStatue or Hookshot
 #     chest is interacted with.
-# [ ] Fix InteractionTrigger is not compatible with reinstantiation, such
+# [x] Fix InteractionTrigger is not compatible with reinstantiation, such
 #     as from a BooleanSpawner.
-#     - This _may_ be solved by using placeholder nodes?
 #
 # Improve Debug: Add a way to get equipment, etc., quickly:
 # [x] Debug dropdown has a line edit node.
