@@ -1,3 +1,4 @@
+class_name ExtendableBridgeEntity
 extends Interactive2D
 
 # [TODO] Allow drawing a path for this bridge, like the GrowTwig.
