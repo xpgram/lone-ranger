@@ -10,10 +10,8 @@ var object_scene: PackedScene;
 
 
 func can_perform(playbill: FieldActionPlaybill) -> bool:
-  # [TODO] This can_spawn_here check depends on which object you're trying to spawn.
   return (
     not ActionUtils.place_is_obstructed(playbill.target_position)
-    and ActionUtils.place_is_floor(playbill.target_position)
   );
 
 
