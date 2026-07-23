@@ -1,5 +1,6 @@
 ## @static [br]
-## A utility script containing string keys for spawnable grid objects.
+## A utility script containing constants for UIDs to [GridObject] scenes and a
+## dictionary for iterating through said objects.
 class_name GridObjectsDict
 
 
