@@ -64,6 +64,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   var interacted_entity := entities[interactive_idx];
   var context_action := interacted_entity.get_node('ContextAction') as ContextAction;
 
+  Events.player_interacting_with.emit(interacted_entity);
   @warning_ignore('redundant_await')
   await context_action.perform_interaction_async(playbill.performer);
   Events.player_interacted_with.emit(interacted_entity);
