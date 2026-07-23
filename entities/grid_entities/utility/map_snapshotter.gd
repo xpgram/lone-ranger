@@ -24,6 +24,12 @@
 # [x] These map changes will be undoable by default.
 # [x] The DemonWall entity is resettable unless the player reaches the hallway end.
 # [x] The DemonWall switches back the music track when despawned.
+#     [ ] The enemy_presence metric uses object references instead of an int to
+#         more accurately track conditions; i.e., it won't "reduce" for an enemy
+#         that never incremented in the first place, which is something that can
+#         happen when I'm writing sloppy code.
+#     [ ] Enemy2D calls AudioBus.decrement(self) in its exit_tree() to catch all
+#         misses——or eventually catch them.
 # [-] Fix: The first node-delete cause by BooleanSpawner's scene packing tells the
 #     music stream that an enemy has disappeared, so we get -1.
 # [ ] The interactives / npcs / enemies node-containers are merged into one play
@@ -44,7 +50,7 @@
 # [x] Refactor BooleanSpawner such that the PackedScenes it creates stop breaking
 #     references to other test-level objects its objects should know about.
 #     i.e. stop breaking InteractionTriggers.
-# [ ] Recent changes have broken the glass tile with the boulder over it.
+# [x] Recent changes have broken the glass tile with the boulder over it.
 #     This makes sense; that architecture for that was never well thought out.
 #
 # Set PersistenceKey by interaction:
