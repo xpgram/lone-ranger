@@ -52,10 +52,13 @@
 #
 # Set PersistenceKey by interaction:
 # [x] Events has a signal for the player interacting with an object.
-# [ ] An object like TriggerBox instead triggers when an interaction with a
+# [x] An object like TriggerBox instead triggers when an interaction with a
 #     specific object reference occurs.
-# [ ] The west GlassTile disappears when either the SaveStatue or Hookshot
+# [x] The west GlassTile disappears when either the SaveStatue or Hookshot
 #     chest is interacted with.
+# [ ] Fix InteractionTrigger is not compatible with reinstantiation, such
+#     as from a BooleanSpawner.
+#     - This _may_ be solved by using placeholder nodes?
 #
 # Improve Debug: Add a way to get equipment, etc., quickly:
 # [x] Debug dropdown has a line edit node.
