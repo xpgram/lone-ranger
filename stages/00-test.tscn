@@ -1052,206 +1052,206 @@ equipment_contents = Array[StringName]([&"wings"])
 position = Vector2(-560, -96)
 equipment_contents = Array[StringName]([&"sword"])
 
-[node name="BoardRespawner" type="Node2D" parent="Interactives Container" unique_id=978362828 node_paths=PackedStringArray("_false_container")]
+[node name="BoardRespawner" type="Node2D" parent="Interactives Container" unique_id=978362828 node_paths=PackedStringArray("_default_container")]
 script = ExtResource("18_r4137")
-_false_container = NodePath("FalseContainer")
+_default_container = NodePath("DefaultScene")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="FalseContainer" type="Node2D" parent="Interactives Container/BoardRespawner" unique_id=553684941]
+[node name="DefaultScene" type="Node2D" parent="Interactives Container/BoardRespawner" unique_id=553684941]
 
-[node name="BoulderEntity6" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=734811352 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity6" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=734811352 instance=ExtResource("10_jadfo")]
 position = Vector2(16, -48)
 
-[node name="BoulderEntity7" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1752518642 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity7" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=1752518642 instance=ExtResource("10_jadfo")]
 position = Vector2(0, -48)
 
-[node name="BoulderEntity79" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=876429238 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity79" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=876429238 instance=ExtResource("10_jadfo")]
 position = Vector2(-80, -64)
 
-[node name="BoulderEntity64" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1305744534 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity64" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=1305744534 instance=ExtResource("10_jadfo")]
 position = Vector2(-16, -176)
 
-[node name="BoulderEntity73" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1339853815 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity73" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=1339853815 instance=ExtResource("10_jadfo")]
 position = Vector2(-64, -224)
 
-[node name="BoulderEntity50" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1139347413 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity50" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=1139347413 instance=ExtResource("10_jadfo")]
 position = Vector2(336, -304)
 
-[node name="BoulderEntity74" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=839263875 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity74" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=839263875 instance=ExtResource("10_jadfo")]
 position = Vector2(352, -288)
 
-[node name="BoulderEntity80" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=564268907 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity80" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=564268907 instance=ExtResource("10_jadfo")]
 position = Vector2(-352, -128)
 
-[node name="BoulderEntity56" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=2033464979 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity56" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=2033464979 instance=ExtResource("10_jadfo")]
 position = Vector2(-560, -64)
 
-[node name="BoulderEntity57" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=709834078 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity57" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=709834078 instance=ExtResource("10_jadfo")]
 position = Vector2(-576, 48)
 
-[node name="BoulderEntity67" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1796222344 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity67" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=1796222344 instance=ExtResource("10_jadfo")]
 position = Vector2(-592, 0)
 
-[node name="BoulderEntity68" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=584781739 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity68" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=584781739 instance=ExtResource("10_jadfo")]
 position = Vector2(-592, 96)
 
-[node name="BoulderEntity58" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=875324869 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity58" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=875324869 instance=ExtResource("10_jadfo")]
 position = Vector2(-448, 0)
 
-[node name="BoulderEntity59" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=150726567 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity59" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=150726567 instance=ExtResource("10_jadfo")]
 position = Vector2(-416, 48)
 
-[node name="BoulderEntity60" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=170865635 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity60" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=170865635 instance=ExtResource("10_jadfo")]
 position = Vector2(-400, 48)
 
-[node name="BoulderEntity61" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=783856398 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity61" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=783856398 instance=ExtResource("10_jadfo")]
 position = Vector2(-592, 48)
 
-[node name="BoulderEntity62" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1826244722 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity62" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=1826244722 instance=ExtResource("10_jadfo")]
 position = Vector2(-464, -112)
 
-[node name="BoulderEntity63" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=1004471591 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity63" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=1004471591 instance=ExtResource("10_jadfo")]
 position = Vector2(-240, -176)
 
-[node name="StatuePlatformEntity7" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=412672747 instance=ExtResource("18_mhctp")]
+[node name="StatuePlatformEntity7" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=412672747 instance=ExtResource("18_mhctp")]
 position = Vector2(-160, 32)
 
-[node name="StatuePlatformEntity4" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=456651796 instance=ExtResource("18_mhctp")]
+[node name="StatuePlatformEntity4" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=456651796 instance=ExtResource("18_mhctp")]
 position = Vector2(-400, -96)
 
-[node name="BossBoulders" type="Node2D" parent="Interactives Container/BoardRespawner/FalseContainer" unique_id=2045354790]
+[node name="BossBoulders" type="Node2D" parent="Interactives Container/BoardRespawner/DefaultScene" unique_id=2045354790]
 position = Vector2(320, 336)
 
-[node name="BoulderEntity8" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=98333401 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity8" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=98333401 instance=ExtResource("10_jadfo")]
 position = Vector2(32, 0)
 
-[node name="BoulderEntity9" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=341979565 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity9" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=341979565 instance=ExtResource("10_jadfo")]
 position = Vector2(16, 48)
 
-[node name="BoulderEntity10" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1539104271 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity10" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1539104271 instance=ExtResource("10_jadfo")]
 position = Vector2(16, 0)
 
-[node name="BoulderEntity11" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=766483404 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity11" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=766483404 instance=ExtResource("10_jadfo")]
 position = Vector2(32, 48)
 
-[node name="BoulderEntity12" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=779518404 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity12" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=779518404 instance=ExtResource("10_jadfo")]
 position = Vector2(32, 16)
 
-[node name="BoulderEntity13" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=600797455 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity13" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=600797455 instance=ExtResource("10_jadfo")]
 position = Vector2(16, 32)
 
-[node name="BoulderEntity14" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=978524160 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity14" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=978524160 instance=ExtResource("10_jadfo")]
 position = Vector2(80, 0)
 
-[node name="BoulderEntity15" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=892941678 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity15" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=892941678 instance=ExtResource("10_jadfo")]
 position = Vector2(96, 0)
 
-[node name="BoulderEntity16" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1175234092 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity16" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1175234092 instance=ExtResource("10_jadfo")]
 position = Vector2(96, 16)
 
-[node name="BoulderEntity17" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=915473367 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity17" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=915473367 instance=ExtResource("10_jadfo")]
 position = Vector2(112, 16)
 
-[node name="BoulderEntity18" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1093463832 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity18" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1093463832 instance=ExtResource("10_jadfo")]
 position = Vector2(96, 32)
 
-[node name="BoulderEntity19" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=311863426 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity19" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=311863426 instance=ExtResource("10_jadfo")]
 position = Vector2(80, 48)
 
-[node name="BoulderEntity20" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1929000562 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity20" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1929000562 instance=ExtResource("10_jadfo")]
 position = Vector2(64, 48)
 
-[node name="BoulderEntity21" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=138919015 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity21" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=138919015 instance=ExtResource("10_jadfo")]
 position = Vector2(128, 32)
 
-[node name="BoulderEntity76" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=539577766 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity76" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=539577766 instance=ExtResource("10_jadfo")]
 position = Vector2(144, 32)
 
-[node name="BoulderEntity22" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1857528055 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity22" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1857528055 instance=ExtResource("10_jadfo")]
 position = Vector2(176, 48)
 
-[node name="BoulderEntity23" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=76851131 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity23" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=76851131 instance=ExtResource("10_jadfo")]
 position = Vector2(192, 48)
 
-[node name="BoulderEntity24" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1037479426 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity24" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1037479426 instance=ExtResource("10_jadfo")]
 position = Vector2(192, 32)
 
-[node name="BoulderEntity25" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1354770309 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity25" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1354770309 instance=ExtResource("10_jadfo")]
 position = Vector2(176, 32)
 
-[node name="BoulderEntity26" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=898179164 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity26" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=898179164 instance=ExtResource("10_jadfo")]
 position = Vector2(176, 0)
 
-[node name="BoulderEntity27" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=760577845 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity27" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=760577845 instance=ExtResource("10_jadfo")]
 position = Vector2(208, 16)
 
-[node name="BoulderEntity28" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=288818809 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity28" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=288818809 instance=ExtResource("10_jadfo")]
 position = Vector2(240, 16)
 
-[node name="BoulderEntity29" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1690695693 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity29" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1690695693 instance=ExtResource("10_jadfo")]
 position = Vector2(224, 32)
 
-[node name="BoulderEntity30" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=127398994 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity30" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=127398994 instance=ExtResource("10_jadfo")]
 position = Vector2(256, 32)
 
-[node name="BoulderEntity31" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=827818662 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity31" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=827818662 instance=ExtResource("10_jadfo")]
 position = Vector2(208, 48)
 
-[node name="BoulderEntity32" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=623608330 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity32" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=623608330 instance=ExtResource("10_jadfo")]
 position = Vector2(224, 48)
 
-[node name="BoulderEntity33" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=984640662 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity33" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=984640662 instance=ExtResource("10_jadfo")]
 position = Vector2(240, 0)
 
-[node name="BoulderEntity34" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=503015750 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity34" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=503015750 instance=ExtResource("10_jadfo")]
 position = Vector2(256, 0)
 
-[node name="BoulderEntity35" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1996403822 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity35" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1996403822 instance=ExtResource("10_jadfo")]
 position = Vector2(272, 16)
 
-[node name="BoulderEntity36" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1669424712 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity36" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1669424712 instance=ExtResource("10_jadfo")]
 position = Vector2(256, 48)
 
-[node name="BoulderEntity37" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=2090972829 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity37" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=2090972829 instance=ExtResource("10_jadfo")]
 position = Vector2(320, 32)
 
-[node name="BoulderEntity38" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=2080558806 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity38" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=2080558806 instance=ExtResource("10_jadfo")]
 position = Vector2(336, 32)
 
-[node name="BoulderEntity39" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1547953302 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity39" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1547953302 instance=ExtResource("10_jadfo")]
 position = Vector2(336, 16)
 
-[node name="BoulderEntity40" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=459456489 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity40" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=459456489 instance=ExtResource("10_jadfo")]
 position = Vector2(352, 16)
 
-[node name="BoulderEntity77" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=551850536 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity77" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=551850536 instance=ExtResource("10_jadfo")]
 position = Vector2(368, 16)
 
-[node name="BoulderEntity41" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=844969151 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity41" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=844969151 instance=ExtResource("10_jadfo")]
 position = Vector2(352, 0)
 
-[node name="BoulderEntity42" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1292415479 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity42" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1292415479 instance=ExtResource("10_jadfo")]
 position = Vector2(368, 0)
 
-[node name="BoulderEntity43" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=319002824 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity43" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=319002824 instance=ExtResource("10_jadfo")]
 position = Vector2(368, 32)
 
-[node name="BoulderEntity44" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=565479666 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity44" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=565479666 instance=ExtResource("10_jadfo")]
 position = Vector2(384, 32)
 
-[node name="BoulderEntity45" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1181097961 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity45" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1181097961 instance=ExtResource("10_jadfo")]
 position = Vector2(352, 48)
 
-[node name="BoulderEntity46" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1483348623 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity46" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1483348623 instance=ExtResource("10_jadfo")]
 position = Vector2(384, 48)
 
-[node name="BoulderEntity69" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1393489024 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity69" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1393489024 instance=ExtResource("10_jadfo")]
 position = Vector2(448, 32)
 
-[node name="BoulderEntity70" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=1232120109 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity70" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=1232120109 instance=ExtResource("10_jadfo")]
 position = Vector2(464, 48)
 
-[node name="BoulderEntity47" parent="Interactives Container/BoardRespawner/FalseContainer/BossBoulders" unique_id=588945400 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity47" parent="Interactives Container/BoardRespawner/DefaultScene/BossBoulders" unique_id=588945400 instance=ExtResource("10_jadfo")]
 position = Vector2(416, 48)
 
 [node name="Spawner_ShoveBridgePuzzle" type="Node2D" parent="Interactives Container" unique_id=1958610913 node_paths=PackedStringArray("_false_container")]
@@ -1281,12 +1281,28 @@ metadata/_custom_type_script = "uid://bchkts4e674ww"
 [node name="StatuePlatformEntity" parent="Interactives Container/Spawner_ShoveBridgePuzzle/FalseContainer" unique_id=1679984845 instance=ExtResource("18_mhctp")]
 position = Vector2(32, 96)
 
-[node name="Spawner_ShoveExitPuzzle" type="Node2D" parent="Interactives Container" unique_id=216648388 node_paths=PackedStringArray("_false_container", "_true_container")]
+[node name="Spawner_ShoveExitPuzzle" type="Node2D" parent="Interactives Container" unique_id=1954909269 node_paths=PackedStringArray("_default_container", "_false_container", "_true_container")]
 position = Vector2(432, 16)
 script = ExtResource("18_r4137")
 _persistence_key = SubResource("Resource_i3hfr")
+_default_container = NodePath("DefaultScene")
 _false_container = NodePath("FalseScene")
 _true_container = NodePath("TrueScene")
+metadata/_custom_type_script = "uid://4gxxctr2fcu0"
+
+[node name="DefaultScene" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle" unique_id=952593128]
+
+[node name="BoulderEntity" parent="Interactives Container/Spawner_ShoveExitPuzzle/DefaultScene" unique_id=1312966178 instance=ExtResource("10_jadfo")]
+position = Vector2(-144, 32)
+
+[node name="BoulderEntity2" parent="Interactives Container/Spawner_ShoveExitPuzzle/DefaultScene" unique_id=38670167 instance=ExtResource("10_jadfo")]
+position = Vector2(-32, 48)
+
+[node name="BoulderEntity3" parent="Interactives Container/Spawner_ShoveExitPuzzle/DefaultScene" unique_id=1959115695 instance=ExtResource("10_jadfo")]
+position = Vector2(-32, 0)
+
+[node name="BoulderEntity4" parent="Interactives Container/Spawner_ShoveExitPuzzle/DefaultScene" unique_id=884832794 instance=ExtResource("10_jadfo")]
+position = Vector2(-16, 16)
 
 [node name="FalseScene" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle" unique_id=339364980]
 
@@ -1300,41 +1316,17 @@ _trigger_box_color = Color(1, 1, 0, 0.5019608)
 [node name="BoulderEntity" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1371042490 instance=ExtResource("10_jadfo")]
 position = Vector2(-48, 32)
 
-[node name="BoulderEntity78" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1312966178 instance=ExtResource("10_jadfo")]
-position = Vector2(-144, 32)
-
-[node name="BoulderEntity2" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=38670167 instance=ExtResource("10_jadfo")]
-position = Vector2(-32, 48)
-
-[node name="BoulderEntity3" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1859858413 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity2" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1859858413 instance=ExtResource("10_jadfo")]
 position = Vector2(-16, 32)
-
-[node name="BoulderEntity4" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=884832794 instance=ExtResource("10_jadfo")]
-position = Vector2(-16, 16)
-
-[node name="BoulderEntity5" parent="Interactives Container/Spawner_ShoveExitPuzzle/FalseScene" unique_id=1959115695 instance=ExtResource("10_jadfo")]
-position = Vector2(-32, 0)
 
 [node name="TrueScene" type="Node2D" parent="Interactives Container/Spawner_ShoveExitPuzzle" unique_id=1257387668]
 visible = false
 
-[node name="BoulderEntity6" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=2051502298 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=2051502298 instance=ExtResource("10_jadfo")]
 position = Vector2(-128, 32)
 
-[node name="BoulderEntity79" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=292938375 instance=ExtResource("10_jadfo")]
-position = Vector2(-144, 32)
-
-[node name="BoulderEntity7" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=1214325311 instance=ExtResource("10_jadfo")]
-position = Vector2(-32, 48)
-
-[node name="BoulderEntity8" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=1109977709 instance=ExtResource("10_jadfo")]
+[node name="BoulderEntity2" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=1109977709 instance=ExtResource("10_jadfo")]
 position = Vector2(-112, 32)
-
-[node name="BoulderEntity9" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=9154801 instance=ExtResource("10_jadfo")]
-position = Vector2(-16, 16)
-
-[node name="BoulderEntity10" parent="Interactives Container/Spawner_ShoveExitPuzzle/TrueScene" unique_id=1183510417 instance=ExtResource("10_jadfo")]
-position = Vector2(-32, 0)
 
 [node name="Spawner_WestSaveUsed" type="Node2D" parent="Interactives Container" unique_id=1247411898 node_paths=PackedStringArray("_false_container")]
 position = Vector2(-288, -48)
@@ -1343,13 +1335,13 @@ _persistence_key = SubResource("Resource_hdlvt")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="InteractionTrigger" type="Node" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1447676690 node_paths=PackedStringArray("_watched_objects")]
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1379610959]
+
+[node name="InteractionTrigger" type="Node" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=1447676690 node_paths=PackedStringArray("_watched_objects")]
 script = ExtResource("30_ekj6j")
-_watched_objects = [NodePath("../../AngelStatue4"), NodePath("../../SpecialChest2")]
+_watched_objects = [NodePath("../../../AngelStatue4"), NodePath("../../../SpecialChest2")]
 _persistence_key = SubResource("Resource_hdlvt")
 metadata/_custom_type_script = "uid://6h4h3dk0p6g1"
-
-[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_WestSaveUsed" unique_id=1379610959]
 
 [node name="GlassTile2" parent="Interactives Container/Spawner_WestSaveUsed/FalseContainer" unique_id=785045072 instance=ExtResource("25_mmv8l")]
 position = Vector2(48, 32)
@@ -1521,13 +1513,13 @@ _persistence_key = SubResource("Resource_vpijh")
 _false_container = NodePath("FalseContainer")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="InteractionTrigger" type="Node" parent="Interactives Container/Spawner_HookshotObtained" unique_id=963982249 node_paths=PackedStringArray("_watched_objects")]
+[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained" unique_id=1345047135]
+
+[node name="InteractionTrigger" type="Node" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=963982249 node_paths=PackedStringArray("_watched_objects")]
 script = ExtResource("30_ekj6j")
-_watched_objects = [NodePath("../../SpecialChest2")]
+_watched_objects = [NodePath("../../../SpecialChest2")]
 _persistence_key = SubResource("Resource_vpijh")
 metadata/_custom_type_script = "uid://6h4h3dk0p6g1"
-
-[node name="FalseContainer" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained" unique_id=1345047135]
 
 [node name="GlassTile3" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
 position = Vector2(-128, 48)
@@ -1629,100 +1621,100 @@ position = Vector2(-80, -368)
 
 [node name="Enemy Container" type="Node2D" parent="." unique_id=253658292]
 
-[node name="BoardRespawner" type="Node2D" parent="Enemy Container" unique_id=841907397 node_paths=PackedStringArray("_false_container")]
+[node name="BoardRespawner" type="Node2D" parent="Enemy Container" unique_id=841907397 node_paths=PackedStringArray("_default_container")]
 script = ExtResource("18_r4137")
-_false_container = NodePath("FalseContainer")
+_default_container = NodePath("DefaultScene")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="FalseContainer" type="Node2D" parent="Enemy Container/BoardRespawner" unique_id=103423134]
+[node name="DefaultScene" type="Node2D" parent="Enemy Container/BoardRespawner" unique_id=103423134]
 
-[node name="EnemyDiamond" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1624186022 instance=ExtResource("17_mhctp")]
+[node name="EnemyDiamond" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1624186022 instance=ExtResource("17_mhctp")]
 position = Vector2(656, -16)
 
-[node name="EnemyDiamond2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1269545093 instance=ExtResource("17_mhctp")]
+[node name="EnemyDiamond2" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1269545093 instance=ExtResource("17_mhctp")]
 position = Vector2(688, -144)
 
-[node name="EnemyMouth" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=2063089673 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=2063089673 instance=ExtResource("40_nbivo")]
 position = Vector2(352, -48)
 
-[node name="EnemyMouth3" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=830813877 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth3" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=830813877 instance=ExtResource("40_nbivo")]
 position = Vector2(-224, -272)
 
-[node name="EnemyMouth7" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1542706135 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth7" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1542706135 instance=ExtResource("40_nbivo")]
 position = Vector2(-304, -240)
 
-[node name="EnemyMouth2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=662792721 instance=ExtResource("40_nbivo")]
+[node name="EnemyMouth2" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=662792721 instance=ExtResource("40_nbivo")]
 position = Vector2(304, -224)
 
-[node name="EnemyBull" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=315521398 instance=ExtResource("20_3oxmp")]
+[node name="EnemyBull" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=315521398 instance=ExtResource("20_3oxmp")]
 position = Vector2(352, -144)
 
-[node name="EnemyBull2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1083440297 instance=ExtResource("20_3oxmp")]
+[node name="EnemyBull2" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1083440297 instance=ExtResource("20_3oxmp")]
 position = Vector2(-240, -32)
 
-[node name="EnemySnake" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1527492042 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1527492042 instance=ExtResource("22_7oan8")]
 position = Vector2(448, -336)
 
-[node name="EnemySnake2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1559381823 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake2" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1559381823 instance=ExtResource("22_7oan8")]
 position = Vector2(-656, 96)
 
-[node name="EnemySnake3" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=494150888 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake3" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=494150888 instance=ExtResource("22_7oan8")]
 position = Vector2(-672, 0)
 
-[node name="EnemySnake5" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=862418547 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake5" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=862418547 instance=ExtResource("22_7oan8")]
 position = Vector2(-528, 144)
 
-[node name="EnemySnake4" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1705956067 instance=ExtResource("22_7oan8")]
+[node name="EnemySnake4" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1705956067 instance=ExtResource("22_7oan8")]
 position = Vector2(-320, -304)
 
-[node name="EnemyMaggot2" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1507008406 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot2" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1507008406 instance=ExtResource("21_0lxvj")]
 position = Vector2(512, -256)
 
-[node name="EnemyMaggot8" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1264771360 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot8" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1264771360 instance=ExtResource("21_0lxvj")]
 position = Vector2(-240, -208)
 
-[node name="EnemyMaggot7" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=92230362 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot7" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=92230362 instance=ExtResource("21_0lxvj")]
 position = Vector2(-80, -240)
 
-[node name="EnemyMaggot3" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=140054358 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot3" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=140054358 instance=ExtResource("21_0lxvj")]
 position = Vector2(-112, -80)
 
-[node name="EnemyMaggot4" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1876760045 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot4" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1876760045 instance=ExtResource("21_0lxvj")]
 position = Vector2(-144, -64)
 
-[node name="EnemyMaggot5" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=10049832 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot5" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=10049832 instance=ExtResource("21_0lxvj")]
 position = Vector2(-416, -96)
 
-[node name="EnemyMaggot10" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=1284297691 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot10" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=1284297691 instance=ExtResource("21_0lxvj")]
 position = Vector2(-432, -96)
 
-[node name="EnemyMaggot6" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=138187296 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot6" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=138187296 instance=ExtResource("21_0lxvj")]
 position = Vector2(-448, -96)
 
-[node name="EnemyMaggot9" parent="Enemy Container/BoardRespawner/FalseContainer" unique_id=513312333 instance=ExtResource("21_0lxvj")]
+[node name="EnemyMaggot9" parent="Enemy Container/BoardRespawner/DefaultScene" unique_id=513312333 instance=ExtResource("21_0lxvj")]
 position = Vector2(-464, -96)
 
 [node name="DemonWallBossSpawner" type="Node2D" parent="Enemy Container" unique_id=10431291 node_paths=PackedStringArray("_false_container")]
 script = ExtResource("18_r4137")
 _persistence_key = SubResource("Resource_i8c80")
-_false_container = NodePath("FalseContainer")
+_false_container = NodePath("FalseScene")
 metadata/_custom_type_script = "uid://4gxxctr2fcu0"
 
-[node name="FalseContainer" type="Node2D" parent="Enemy Container/DemonWallBossSpawner" unique_id=839969864]
+[node name="FalseScene" type="Node2D" parent="Enemy Container/DemonWallBossSpawner" unique_id=839969864]
 
-[node name="DemonWallBoss" parent="Enemy Container/DemonWallBossSpawner/FalseContainer" unique_id=1641093864 node_paths=PackedStringArray("activation_trigger", "deactivation_trigger") instance=ExtResource("28_fyjc2")]
+[node name="DemonWallBoss" parent="Enemy Container/DemonWallBossSpawner/FalseScene" unique_id=1641093864 node_paths=PackedStringArray("activation_trigger", "deactivation_trigger") instance=ExtResource("28_fyjc2")]
 position = Vector2(240, 336)
 activation_trigger = NodePath("../ActivationTrigger")
 deactivation_trigger = NodePath("../DeactivationTrigger")
 
-[node name="ActivationTrigger" type="Node2D" parent="Enemy Container/DemonWallBossSpawner/FalseContainer" unique_id=1782879598]
+[node name="ActivationTrigger" type="Node2D" parent="Enemy Container/DemonWallBossSpawner/FalseScene" unique_id=1782879598]
 position = Vector2(288, 336)
 script = ExtResource("38_ofvvy")
 _trigger_box_rect = Rect2i(0, 0, 4, 4)
 _trigger_box_color = Color(1, 1, 0, 0.5019608)
 metadata/_custom_type_script = "uid://cs2jx75045p66"
 
-[node name="DeactivationTrigger" type="Node2D" parent="Enemy Container/DemonWallBossSpawner/FalseContainer" unique_id=221945970]
+[node name="DeactivationTrigger" type="Node2D" parent="Enemy Container/DemonWallBossSpawner/FalseScene" unique_id=221945970]
 position = Vector2(864, 400)
 script = ExtResource("28_snb1o")
 _persistence_key = SubResource("Resource_i8c80")

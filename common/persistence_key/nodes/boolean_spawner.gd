@@ -1,18 +1,17 @@
 ## @tool [br]
 ##
 ## A container node to capture branches of the scene and spawn or respawn them as
-## needed.
+## needed. [br]
 ##
-## This spawner has two source scene branches, [member _false_container] and
+## This spawner has three source scene branches: [member _false_container] and
 ## [member _true_container], which are used according to the boolean value of
-## the persistence key with name [member _persistence_key].
+## the persistence key with name [member _persistence_key], and
+## [member _default_container], which is always spawned. [br]
 ##
 ## Spawning happens when this object is loaded, and again when
-## [signal Events.board_reset_declared] is emitted.
+## [signal Events.board_reset_declared] is emitted. [br]
 ##
 ## Objects to be spawned must be children of one of the container nodes.
-## This tool script will create these for you, if they do not exist, when this
-## node is first '_ready'.
 @tool
 class_name BooleanSpawner
 extends Node2D
@@ -24,34 +23,41 @@ extends Node2D
 ## If the Resource is left empty, it is interpreted as `false`.
 @export var _persistence_key: PersistenceKeyBool;
 
-## The source container to use when the persistence key is 'false'.
+## @nullable [br]
+## The source container to use for always-added objects. [br]
 ##
-## When the game is run, this node is converted to a [PackedScene] and unloaded.
-@export var _false_container: Node2D;
-
-## The source container to spawn if the persistence key is 'true'.
-##
-## When the game is run, this node is converted to a [PackedScene] and unloaded.
-@export var _true_container: Node2D;
+## When the game is run, this node is removed from the node_tree and duplicated
+## every time the spawner is invoked.
+@export var _default_container: Node;
 
 ## @nullable [br]
-## The PackedScene to instantiate if the persistence key is 'false'.
-var _false_scene: PackedScene;
+## The source container to use when the persistence key is 'false'. [br]
+##
+## When the game is run, this node is removed from the node_tree and duplicated
+## according to the persistence key value. [br]
+@export var _false_container: Node;
 
 ## @nullable [br]
-## The PackedScene to instantiate if the persistence key is 'true'.
-var _true_scene: PackedScene;
+## The source container to spawn if the persistence key is 'true'. [br]
+##
+## When the game is run, this node is removed from the node_tree and duplicated
+## according to the persistence key value.
+@export var _true_container: Node;
+
+## The default scene used during gameplay.
+var _default_instance: Node;
 
 ## The active scene used during gameplay.
-var _active_container: Node2D;
+var _active_instance: Node;
 
 
 func _ready() -> void:
   _bind_editor_events();
 
   if not Engine.is_editor_hint():
-    _false_scene = _pack_scene_and_unload(_false_container);
-    _true_scene = _pack_scene_and_unload(_true_container);
+    _freeze_node_branch(_default_container);
+    _freeze_node_branch(_false_container);
+    _freeze_node_branch(_true_container);
     _respawn_objects();
     _bind_global_events();
 
@@ -77,48 +83,40 @@ func _bind_editor_events() -> void:
 
 ## Binds handlers to global event signals.
 func _bind_global_events() -> void:
+  # [FIXME] This script is in ./common but depends on a game-specific library: Events.
   Events.board_reset_declared.connect(_respawn_objects);
 
 
-## @nullable
-##
-## Converts the given [param node] into a [PackedScene], then queue frees the
-## node. Returns the created [PackedScene], or null if [param node] wasn't given.
-func _pack_scene_and_unload(node: Node) -> PackedScene:
+## Disables and removes from the SceneTree the given [param node].
+func _freeze_node_branch(node: Node) -> void:
   if not node:
-    return null;
+    return;
 
-  # Reset commonly tweaked properties for scene container nodes.
+  remove_child(node);
+
+
+## Enables and prepares for use the given [param node] before adding it to the
+## [SceneTree].
+func _unfreeze_node_branch(node: Node) -> void:
+  if not node:
+    return;
+
   node.visible = true;
-
-  var scene := ScenePacker.pack(node);
-  node.queue_free();
-  return scene;
-
-
-## If the child [param node] does not exist, creates one and returns it.
-func _ensure_node_exists(node: Node2D, node_name: String) -> Node2D:
-  # [FIXME] This doesn't add to scene in the editor properly.
-  if node:
-    return node;
-
-  var new_node = Node2D.new();
-  new_node.name = node_name;
-  add_child(new_node);
-
-  return new_node;
+  add_child(node);
 
 
 ## Delete the active scene and repopulate it with a new copy of the source scene.
 func _respawn_objects() -> void:
   _delete_active_scene();
-  _spawn_active_scene();
+  _spawn_active_scene.call_deferred();
 
 
 ## Queue free's all active container children.
 func _delete_active_scene() -> void:
-  if _active_container:
-    _active_container.queue_free();
+  if _default_instance:
+    _default_instance.queue_free();
+  if _active_instance:
+    _active_instance.queue_free();
 
 
 ## Populates the active scene with a new copy of the source scene. If the
@@ -126,19 +124,21 @@ func _delete_active_scene() -> void:
 func _spawn_active_scene() -> void:
   var source_scene := _get_source_scene();
 
-  if not source_scene:
-    return;
+  if _default_container:
+    _default_instance = _default_container.duplicate();
+    _unfreeze_node_branch(_default_instance);
 
-  _active_container = source_scene.instantiate();
-  add_child(_active_container);
+  if source_scene:
+    _active_instance = source_scene.duplicate();
+    _unfreeze_node_branch(_active_instance);
 
 
 ## @nullable
 ##
 ## Returns the current source scene, the one to populate the active scene with.
 ## Will return null if the current source scene is null.
-func _get_source_scene() -> PackedScene:
-  if _persistence_key and _persistence_key.read():
-    return _true_scene;
-  else:
-    return _false_scene;
+func _get_source_scene() -> Node:
+  return (
+    _true_container if _persistence_key and _persistence_key.read()
+    else _false_container
+  );
