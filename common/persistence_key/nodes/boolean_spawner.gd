@@ -55,9 +55,9 @@ func _ready() -> void:
   _bind_editor_events();
 
   if not Engine.is_editor_hint():
-    _freeze_node_branch(_default_container);
-    _freeze_node_branch(_false_container);
-    _freeze_node_branch(_true_container);
+    _default_container = _prepare_source_scene(_default_container);
+    _false_container = _prepare_source_scene(_false_container);
+    _true_container = _prepare_source_scene(_true_container);
     _respawn_objects();
     _bind_global_events();
 
@@ -87,22 +87,31 @@ func _bind_global_events() -> void:
   Events.board_reset_declared.connect(_respawn_objects);
 
 
-## Disables and removes from the SceneTree the given [param node].
-func _freeze_node_branch(node: Node) -> void:
+## @nullable [br]
+## Creates and returns a source scene [Node] from the given [param node]. [br]
+##
+## [b]Note:[/b] This process creates an as-is copy of the given branch and will
+## destroy the original once it is finished.
+func _prepare_source_scene(node: Node) -> Node:
   if not node:
-    return;
+    return null;
 
+  var branch_copy := node.duplicate();
   remove_child(node);
+  node.free();
+
+  return branch_copy;
 
 
-## Enables and prepares for use the given [param node] before adding it to the
-## [SceneTree].
-func _unfreeze_node_branch(node: Node) -> void:
+## @nullable [br]
+## Creates an instance of the given source scene [param node] and returns it.
+func _instantiate_source_scene(node: Node) -> Node:
   if not node:
-    return;
+    return null;
 
-  node.visible = true;
-  add_child(node);
+  var source_copy := node.duplicate();
+  source_copy.visible = true;
+  return source_copy;
 
 
 ## Delete the active scene and repopulate it with a new copy of the source scene.
@@ -125,12 +134,12 @@ func _spawn_active_scene() -> void:
   var source_scene := _get_source_scene();
 
   if _default_container:
-    _default_instance = _default_container.duplicate();
-    _unfreeze_node_branch(_default_instance);
+    _default_instance = _instantiate_source_scene(_default_container);
+    add_child(_default_instance);
 
   if source_scene:
-    _active_instance = source_scene.duplicate();
-    _unfreeze_node_branch(_active_instance);
+    _active_instance = _instantiate_source_scene(source_scene);
+    add_child(_active_instance);
 
 
 ## @nullable

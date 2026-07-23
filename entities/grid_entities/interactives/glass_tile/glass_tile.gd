@@ -33,6 +33,18 @@ func _on_entity_separated(entity: GridEntity) -> void:
 
 
 func _break_glass() -> void:
+  # [FIXME] This shouldn't be called when a BooleanSpawner 'freezes' a branch.
+  #   Or said another way, this shouldn't be called when this glass tile is, or
+  #   is about to be, queue_free()'d. At least I think?
+  #
+  #   The problem:
+  #   When the node branch is being destroyed, the boulder 'leaves' the Grid,
+  #   causing a separation collision. Glass tile tries to break itself
+  #   accordingly, fails, and then is queue_freed itself moments later.
+  #
+  #   Um. It's possible this isn't a problem, per se, but it does cause annoying
+  #   errors, and it _might_ represent a structural issue in the sense that
+  #   unnecessary work is being done.
   var glass_break := _scene_glass_break_effect.instantiate();
   add_sibling(glass_break);
 
