@@ -54,7 +54,7 @@
 #     [x] A BridgeEntity is a floor-type enabled by buttons (or disabled by them).
 #     [ ] Multiple BridgeEntities can be animated open instead of just popping in.
 #     [x] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
-#     [ ] DoorEntity has a unique set of sprites——not Raised Block's.
+#     [x] DoorEntity has a unique set of sprites——not Raised Block's.
 #
 # BooleanSpawner stops breaking references:
 # [x] Confirm 'load as placeholder' allows me to tweak objects in editor visually
