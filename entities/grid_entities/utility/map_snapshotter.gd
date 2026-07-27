@@ -37,6 +37,17 @@
 #     themselves to now, they don't need the node segregation. And it's annoying
 #     to modify the boss area in two different places.
 #
+# Boss ideas:
+#   I dunno how many of these will be done by the boss themselves... considering it
+#   is just a wall of spikes. Should it only be a wall of spikes?
+# [ ] Insta-kill move (large area) that takes a turn or two of setup.
+#     Used most often when the boss detects you may have gotten stuck, unable to
+#     proceed down the hallway.
+#     [ ] An alternative / addition: It's normal pushing attack will do 1 heart
+#         (2 hp) of damage if it pushes you or pushes you and 1 thing behind you,
+#         like Shove, but kills completely if you are squished more than that.
+# [ ] Line attack (hor and ver) you have to avoid.
+#
 # Make ButtonEntities useful:
 # [x] The ButtonEntity has no objects to toggle.
 #     [ ] 'stays-pressed' buttons have a different pressed-in sprite.
