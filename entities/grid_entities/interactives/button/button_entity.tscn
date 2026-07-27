@@ -12,9 +12,16 @@ region = Rect2(16, 16, 16, 16)
 atlas = ExtResource("2_dtvtk")
 region = Rect2(32, 16, 16, 16)
 
-[node name="ButtonEntity" type="Node2D" unique_id=206165091]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_njlay"]
+load_path = "res://.godot/imported/objects_traps_sheet.png-b8dda71948c860a5ffebf8fb12768508.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtvtk"]
+atlas = SubResource("CompressedTexture2D_njlay")
+region = Rect2(48, 16, 16, 16)
+
+[node name="ButtonEntity" type="Node2D" unique_id=189323873]
 script = ExtResource("1_njlay")
-metadata/_custom_type_script = "uid://f8wof0bqh7u6"
+metadata/_custom_type_script = "uid://bkdsqe4ebs213"
 
 [node name="MultiSprite2D" type="Sprite2D" parent="." unique_id=529447215]
 unique_name_in_owner = true
@@ -23,6 +30,7 @@ script = ExtResource("3_0qyyl")
 texture_key = &"neutral"
 textures = Dictionary[StringName, Texture2D]({
 &"neutral": SubResource("AtlasTexture_r1me1"),
-&"pressed": SubResource("AtlasTexture_yqepq")
+&"pressed": SubResource("AtlasTexture_yqepq"),
+&"pressed_stuck": SubResource("AtlasTexture_dtvtk")
 })
 metadata/_custom_type_script = "uid://b2sj7ahf7rwd3"

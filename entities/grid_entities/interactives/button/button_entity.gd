@@ -46,7 +46,11 @@ signal released();
 
     is_pressed = value;
 
-    var sprite_texture_key := 'pressed' if is_pressed else 'neutral';
+    var sprite_texture_key := (
+      'pressed_stuck' if is_pressed and stays_pressed
+      else 'pressed' if is_pressed
+      else 'neutral'
+    );
     var sound_to_play := _scene_click_in_audio if is_pressed else _scene_click_out_audio;
     var signal_to_emit := pressed if is_pressed else released;
 
