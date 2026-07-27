@@ -4,36 +4,36 @@
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_fp0g0"]
 [ext_resource type="Script" uid="uid://cow3h3cdimw8l" path="res://utilities/nodes/components/powerable_component.gd" id="3_wl8kq"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f7fts"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wl8kq"]
 atlas = ExtResource("2_fp0g0")
-region = Rect2(48, 64, 16, 16)
+region = Rect2(64, 80, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l7v4b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cq7c1"]
 atlas = ExtResource("2_fp0g0")
-region = Rect2(32, 64, 16, 16)
+region = Rect2(96, 64, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tuxcf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvoia"]
 atlas = ExtResource("2_fp0g0")
-region = Rect2(16, 64, 16, 16)
+region = Rect2(80, 64, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6jo74"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hta11"]
 atlas = ExtResource("2_fp0g0")
-region = Rect2(0, 64, 16, 16)
+region = Rect2(64, 64, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wl8kq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f7fts")
+"texture": SubResource("AtlasTexture_wl8kq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l7v4b")
+"texture": SubResource("AtlasTexture_cq7c1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tuxcf")
+"texture": SubResource("AtlasTexture_jvoia")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6jo74")
+"texture": SubResource("AtlasTexture_hta11")
 }],
 "loop": 0,
 "name": &"raise",
@@ -51,6 +51,7 @@ unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_wl8kq")
 animation = &"raise"
 autoplay = "raise"
+frame = 3
 
 [node name="PowerableComponent" type="Node" parent="." unique_id=44258850]
 unique_name_in_owner = true
