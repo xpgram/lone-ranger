@@ -27,6 +27,9 @@ extends Interactive2D
 @export var _bridge_reveal_step_time := 0.15;
 
 
+var _extended_progress := 0.0;
+
+
 @onready var _sprite: Sprite2D = %Sprite2D;
 @onready var _powerable: PowerableComponent = %PowerableComponent;
 
