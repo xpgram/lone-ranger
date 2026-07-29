@@ -1,5 +1,5 @@
 ## @tool [br]
-## 
+##
 @tool
 class_name ExtendableBridgeEntity
 extends Interactive2D
@@ -7,6 +7,7 @@ extends Interactive2D
 # [TODO] Allow drawing a path for this bridge, like the GrowTwig.
 # [x] A list of extended-to points.
 # [x] These are drawn/shown in-editor.
+# [x] Multi-bridge fills other Grid locations and is usable by the player.
 # [ ] _sprite is duplicated to each extended space.
 
 
@@ -37,6 +38,9 @@ func _ready() -> void:
   _powerable.powered_on.connect(func (): _set_powered(true));
   _powerable.powered_off.connect(func (): _set_powered(false));
 
+  tree_exiting.connect(_remove_self_from_multi_points);
+
+  _add_self_to_multi_points();
   _set_powered(false);
 
 
@@ -70,12 +74,28 @@ func _set_powered(value: bool) -> void:
   # [TODO] Tell Grid to notify grid_position the floor has changed.
 
 
-func _get_multi_points_excluding_self() -> Array[Vector2i]:
+func _add_self_to_multi_points() -> void:
+  var points := _get_grid_points_excluding_self();
+
+  for point in points:
+    Grid.put(self, point);
+
+
+func _remove_self_from_multi_points() -> void:
+  var points := _get_grid_points_excluding_self();
+
+  for point in points:
+    Grid.remove(self, point);
+
+
+## Returns a list of Grid points excluding the [member grid_position] this
+## entity already exists in.
+func _get_grid_points_excluding_self() -> Array[Vector2i]:
   var points := _multi_bridge_points.duplicate();
 
-  points = (points
+  points.assign(points
     .filter(func (point: Vector2i): return point != Vector2i.ZERO)
     .map(func (point: Vector2i): return point + grid_position)
-  ) as Array[Vector2i];
+  );
 
   return points;
