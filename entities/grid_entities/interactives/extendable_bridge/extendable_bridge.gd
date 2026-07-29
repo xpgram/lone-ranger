@@ -44,33 +44,20 @@ func _draw() -> void:
   if not Engine.is_editor_hint():
     return;
 
-  _draw_multi_bridge_connecting_lines();
-  _draw_multi_bridge_dots();
+  _draw_multi_bridge_other_locations();
 
 
-func _draw_multi_bridge_connecting_lines() -> void:
-  var points := _get_multi_points_including_self();
-
-  if points.size() <= 1:
+func _draw_multi_bridge_other_locations() -> void:
+  if _multi_bridge_points.size() <= 1:
     return;
 
-  for i in range(1, points.size()):
-    var pointA := Grid.get_world_coords(points[i - 1]);
-    var pointB := Grid.get_world_coords(points[i]);
-    draw_line(pointA, pointB, Color.YELLOW, 1.0);
+  var texture_displacement := -Vector2.ONE * (Constants.GRID_SIZE / 2.0);
 
-
-func _draw_multi_bridge_dots() -> void:
-  var points := _get_multi_points_including_self();
-
-  if points.size() <= 1:
-    return;
-
-  for point in points:
-    draw_circle(
-      Grid.get_world_coords(point),
-      1.5,
-      Color.YELLOW,
+  for point in _multi_bridge_points:
+    draw_texture(
+      _sprite.texture,
+      Grid.get_world_coords(point) + texture_displacement,
+      Color(0.8, 0.8, 0.8, 0.5),
     );
 
 
@@ -81,10 +68,3 @@ func _set_powered(value: bool) -> void:
   _sprite.visible = value;
   standable = value;
   # [TODO] Tell Grid to notify grid_position the floor has changed.
-
-
-func _get_multi_points_including_self() -> Array[Vector2i]:
-  var points := _multi_bridge_points.duplicate();
-  if Vector2i.ZERO not in points:
-    points.push_front(Vector2i.ZERO);
-  return points;
