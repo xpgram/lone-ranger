@@ -5,8 +5,8 @@ class_name ExtendableBridgeEntity
 extends Interactive2D
 
 # [TODO] Allow drawing a path for this bridge, like the GrowTwig.
-# [ ] A list of extended-to points.
-# [ ] These are drawn/shown in-editor.
+# [x] A list of extended-to points.
+# [x] These are drawn/shown in-editor.
 # [ ] _sprite is duplicated to each extended space.
 
 
@@ -68,3 +68,14 @@ func _set_powered(value: bool) -> void:
   _sprite.visible = value;
   standable = value;
   # [TODO] Tell Grid to notify grid_position the floor has changed.
+
+
+func _get_multi_points_excluding_self() -> Array[Vector2i]:
+  var points := _multi_bridge_points.duplicate();
+
+  points = (points
+    .filter(func (point: Vector2i): return point != Vector2i.ZERO)
+    .map(func (point: Vector2i): return point + grid_position)
+  ) as Array[Vector2i];
+
+  return points;
