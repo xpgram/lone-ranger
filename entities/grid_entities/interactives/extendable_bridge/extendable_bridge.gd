@@ -21,6 +21,8 @@ extends Interactive2D
 
 const _texture_bridge_piece := preload('uid://bux7mk1j6iy44');
 
+const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
+
 
 ## The [Grid]-positions this extendable bridge occupies.
 ##
@@ -170,3 +172,48 @@ func _get_grid_points_excluding_self() -> Array[Vector2i]:
   );
 
   return points;
+
+
+
+## Private class to help model the bridge piece to piece manager relationship.
+class BridgePiece extends RefCounted:
+  var entity: ExtendableBridgeEntity;
+
+  var powered := false:
+    set(value):
+      if (powered == value):
+        return;
+
+      powered = value;
+      entity.queue_redraw();
+
+      if powered:
+        Grid.put(entity, location);
+      else:
+        Grid.remove(entity, location);
+
+  var location: Vector2i;
+
+
+  @warning_ignore("shadowed_variable")
+  func _init(entity: ExtendableBridgeEntity, location: Vector2i) -> void:
+    self.entity = entity;
+    self.location = location;
+
+
+  func draw() -> void:
+    if not powered:
+      return;
+
+    entity.draw_texture(
+      _texture_bridge_piece,
+      Grid.get_world_coords(location) - _texture_origin,
+    );
+
+
+  func draw_editor() -> void:
+    entity.draw_texture(
+      _texture_bridge_piece,
+      Grid.get_world_coords(location) - _texture_origin,
+      Color(0.8, 0.8, 0.8, 0.5),
+    );
