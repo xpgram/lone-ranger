@@ -164,10 +164,8 @@ class BridgePiece extends RefCounted:
 
 
   func _draw_texture(modulate := Color.WHITE) -> void:
-    var grid_location := location + entity.grid_position;
-
     entity.draw_texture(
       _texture_bridge_piece,
-      Grid.get_world_coords(grid_location) - _texture_origin,
+      Grid.get_world_coords(location) - _texture_origin,
       modulate,
     );
