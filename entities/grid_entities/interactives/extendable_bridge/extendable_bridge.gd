@@ -125,15 +125,20 @@ func _set_bridge_piece_on(index: int, on: bool) -> void:
   if index < 0 or index >= _piece_locations.size():
     return;
 
+  var previously_on := _bridge_piece_powered_states[index];
+  if on == previously_on:
+    return;
+
   var relative_point := _piece_locations[index];
   var grid_point = relative_point + grid_position;
 
-  if on and not Grid.has_object(self, grid_point):
+  if on:
     Grid.put(self, grid_point);
-    queue_redraw();
-  elif not on and Grid.has_object(self, grid_point):
+  else:
     Grid.remove(self, grid_point);
-    queue_redraw();
+
+  _bridge_piece_powered_states[index] = on;
+  queue_redraw();
 
 
 func _remove_self_from_multi_points() -> void:
