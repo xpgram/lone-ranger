@@ -70,6 +70,8 @@ var _extended_progress := 0.0:
 
 
 func _ready() -> void:
+  _construct_bridge_pieces();
+
   if Engine.is_editor_hint():
     return;
 
