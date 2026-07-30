@@ -1,6 +1,6 @@
 ## @tool [br]
 ##
-# @tool
+@tool
 class_name ExtendableBridgeEntity
 extends Interactive2D
 
