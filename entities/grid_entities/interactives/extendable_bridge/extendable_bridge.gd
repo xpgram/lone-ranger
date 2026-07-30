@@ -27,9 +27,6 @@ const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
 ## The [Grid]-positions this extendable bridge occupies.
 @export var _piece_locations := [Vector2i.ZERO] as Array[Vector2i]:
   set(value):
-    if value.size() == 0:
-      value = [Vector2i.ZERO];
-
     _piece_locations = value;
     _construct_bridge_pieces();
     queue_redraw();
