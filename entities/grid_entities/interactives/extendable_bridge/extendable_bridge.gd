@@ -105,7 +105,16 @@ func _draw_editor_multi_bridge_other_locations() -> void:
 
 
 func _draw_bridge_pieces() -> void:
-  pass
+  var texture_displacement := -Vector2.ONE * (Constants.GRID_SIZE / 2.0);
+
+  for i in range(_piece_locations.size()):
+    if not _bridge_piece_powered_states[i]:
+      continue;
+
+    draw_texture(
+      _texture_bridge_piece,
+      Grid.get_world_coords(_piece_locations[i]) + texture_displacement,
+    );
 
 
 func _set_all_bridge_piece_states(on: bool) -> void:
