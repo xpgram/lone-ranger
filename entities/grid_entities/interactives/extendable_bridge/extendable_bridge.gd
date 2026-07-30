@@ -82,6 +82,7 @@ func _set_powered(value: bool) -> void:
 
   _sprite.visible = value;
   standable = value;
+  # [TODO] Queue the pop-in/out animation: tween _extended_progress.
   # [TODO] Tell Grid to notify grid_position the floor has changed.
 
 
