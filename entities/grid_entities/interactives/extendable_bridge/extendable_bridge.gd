@@ -77,8 +77,7 @@ func _ready() -> void:
   _powerable.powered_on.connect(func (): _set_powered(true));
   _powerable.powered_off.connect(func (): _set_powered(false));
 
-  _set_all_bridge_piece_states(false);
-  _set_powered(false);
+  _set_powered(false, true);
 
   tree_exiting.connect(_remove_self_from_multi_points);
 
@@ -122,15 +121,16 @@ func _set_all_bridge_piece_states(on: bool) -> void:
     _bridge_piece_powered_states[i] = on;
 
 
-func _set_powered(value: bool) -> void:
+func _set_powered(value: bool, skip_animation := false) -> void:
   if _invert_power:
     value = !value;
 
-  # standable = value;
-  pass
-
-  # [TODO] Queue the pop-in/out animation: tween _extended_progress.
-  # [TODO] Tell Grid to notify grid_position the floor has changed.
+  if skip_animation:
+    _set_all_bridge_piece_states(value);
+  else:
+    # [TODO] Queue the pop-in/out animation: tween _extended_progress.
+    _set_all_bridge_piece_states(value);
+    pass
 
 
 func _set_bridge_piece_on(index: int, on: bool) -> void:
@@ -151,6 +151,7 @@ func _set_bridge_piece_on(index: int, on: bool) -> void:
 
   _bridge_piece_powered_states[index] = on;
   queue_redraw();
+  # [TODO] Tell Grid to notify grid_position the floor has changed.
 
 
 func _remove_self_from_multi_points() -> void:

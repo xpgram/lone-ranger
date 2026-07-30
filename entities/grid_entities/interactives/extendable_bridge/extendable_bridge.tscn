@@ -5,14 +5,7 @@
 
 [node name="ExtendableBridgeEntity" type="Node2D" unique_id=1695804406]
 script = ExtResource("1_x4kkl")
-_piece_locations = null
-_invert_power = null
-_bridge_reveal_step_time = null
-solid = null
-pushable = null
 standable = true
-observes_golem_time = null
-_attributes = null
 metadata/_custom_type_script = "uid://cwphjbfgvje0r"
 metadata/PowerableComponent = NodePath("PowerableComponent")
 
