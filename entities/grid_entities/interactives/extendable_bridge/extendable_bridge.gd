@@ -82,12 +82,12 @@ func _ready() -> void:
 
 func _draw() -> void:
   if Engine.is_editor_hint():
-    _draw_editor_multi_bridge_other_locations();
+    _draw_editor_bridge_pieces();
   else:
     _draw_bridge_pieces();
 
 
-func _draw_editor_multi_bridge_other_locations() -> void:
+func _draw_editor_bridge_pieces() -> void:
   for piece in _bridge_pieces:
     piece.draw_editor();
 
