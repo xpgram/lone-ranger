@@ -1,6 +1,6 @@
 ## @tool [br]
 ##
-@tool
+# @tool
 class_name ExtendableBridgeEntity
 extends Interactive2D
 
@@ -9,6 +9,14 @@ extends Interactive2D
 # [x] These are drawn/shown in-editor.
 # [x] Multi-bridge fills other Grid locations and is usable by the player.
 # [ ] _sprite is duplicated to each extended space.
+#
+#
+# I don't like how this is working so far. It's too complicated.
+# [ ] Remove _sprite, but @export a texture field.
+# [ ] _multi_bridge_points always includes grid_position: never an empty list.
+# [ ] separate _bridge_piece_state: Array[bool].
+# [ ] _extension_progress setter sets bools and queue's redraws when something is changed.
+# [ ] self is inserted/removed according to bools as well.
 
 
 ## The [Grid]-positions this extendable bridge occupies.
