@@ -19,6 +19,9 @@ extends Interactive2D
 # [ ] self is inserted/removed according to bools as well.
 
 
+const _texture_bridge_piece := preload('uid://bux7mk1j6iy44');
+
+
 ## The [Grid]-positions this extendable bridge occupies.
 ##
 ## The `self` location is always included and need not be listed here.
@@ -62,7 +65,6 @@ var _extended_progress := 0.0:
       _set_bridge_piece_on(_remove_index, false);
 
 
-@onready var _sprite: Sprite2D = %Sprite2D;
 @onready var _powerable: PowerableComponent = %PowerableComponent;
 
 
@@ -96,7 +98,7 @@ func _draw_editor_multi_bridge_other_locations() -> void:
 
   for point in _piece_locations:
     draw_texture(
-      _sprite.texture,
+      _texture_bridge_piece,
       Grid.get_world_coords(point) + texture_displacement,
       Color(0.8, 0.8, 0.8, 0.5),
     );
@@ -115,8 +117,9 @@ func _set_powered(value: bool) -> void:
   if _invert_power:
     value = !value;
 
-  _sprite.visible = value;
-  standable = value;
+  # standable = value;
+  pass
+
   # [TODO] Queue the pop-in/out animation: tween _extended_progress.
   # [TODO] Tell Grid to notify grid_position the floor has changed.
 
