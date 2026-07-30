@@ -1731,7 +1731,7 @@ metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
 
 [node name="ExtendableBridgeEntity" parent="NPC Container" unique_id=1557784400 instance=ExtResource("44_qavmn")]
 position = Vector2(112, 192)
-_multi_bridge_points = Array[Vector2i]([Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2), Vector2i(1, 3)])
+_piece_locations = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2), Vector2i(1, 3)])
 
 [node name="ExtendableBridgeEntity2" parent="NPC Container" unique_id=742506520 instance=ExtResource("44_qavmn")]
 position = Vector2(112, 208)
