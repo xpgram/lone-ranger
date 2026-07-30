@@ -75,6 +75,7 @@ func _ready() -> void:
   _powerable.powered_on.connect(func (): _set_powered(true));
   _powerable.powered_off.connect(func (): _set_powered(false));
 
+  _set_all_bridge_piece_states(false);
   _set_powered(false);
 
   tree_exiting.connect(_remove_self_from_multi_points);
@@ -103,6 +104,11 @@ func _draw_editor_multi_bridge_other_locations() -> void:
 
 func _draw_bridge_pieces() -> void:
   pass
+
+
+func _set_all_bridge_piece_states(on: bool) -> void:
+  for i in range(_bridge_piece_powered_states):
+    _bridge_piece_powered_states[i] = on;
 
 
 func _set_powered(value: bool) -> void:
