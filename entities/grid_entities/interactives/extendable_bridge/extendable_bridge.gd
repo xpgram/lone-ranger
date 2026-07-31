@@ -111,7 +111,7 @@ func _set_powered(value: bool, skip_animation := false) -> void:
     if _active_progress_tween:
       _active_progress_tween.kill();
 
-    var maximum := _piece_locations.size() - 1.0;
+    var maximum := _piece_locations.size() as float;
     var final_value := maximum if value else 0.0;
     var total_time := maximum * _bridge_reveal_step_time;
 
