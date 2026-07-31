@@ -86,6 +86,17 @@ func _draw_editor_bridge_pieces() -> void:
   for piece in _bridge_pieces:
     piece.draw_editor();
 
+  # Draw connecting lines between bridge pieces to show animation trajectory.
+  for i in range(1, _bridge_pieces.size()):
+    var line_start := Grid.get_world_coords(_bridge_pieces[i - 1].location);
+    var line_end := Grid.get_world_coords(_bridge_pieces[i].location);
+    draw_line(
+      line_start,
+      line_end,
+      Color(1, 1, 0, .35),
+      1.0,
+    );
+
 
 ## Draws the Bridge in game view.
 func _draw_bridge_pieces() -> void:
