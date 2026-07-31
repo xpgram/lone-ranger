@@ -48,7 +48,6 @@
 [ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://entities/grid_entities/characters/player/player_module.tscn" id="41_p22wk"]
 [ext_resource type="Script" uid="uid://42c85n34qcju" path="res://common/persistence_key/typed_variants/persistence_key_bool.gd" id="42_52iru"]
 [ext_resource type="PackedScene" uid="uid://dbdkkmlrv5se" path="res://entities/grid_entities/interactives/extendable_bridge/extendable_bridge.tscn" id="44_qavmn"]
-[ext_resource type="Script" uid="uid://c3r8woyhh8k7j" path="res://entities/grid_entities/interactives/button/button_observer.gd" id="46_i3hfr"]
 [ext_resource type="PackedScene" uid="uid://p61f0u1v7qqg" path="res://entities/grid_entities/interactives/button/button_entity.tscn" id="47_ekj6j"]
 [ext_resource type="PackedScene" uid="uid://xoteepm328de" path="res://entities/grid_entities/interactives/powerable_door/powerable_door.tscn" id="47_hdlvt"]
 
@@ -1733,18 +1732,13 @@ metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
 position = Vector2(112, 192)
 _piece_locations = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3)])
 
-[node name="ButtonEntity" parent="NPC Container" unique_id=206165091 instance=ExtResource("47_ekj6j")]
+[node name="ButtonEntity" parent="NPC Container" unique_id=206165091 node_paths=PackedStringArray("_powerable_targets") instance=ExtResource("47_ekj6j")]
 position = Vector2(112, 160)
+_powerable_targets = [NodePath("../ExtendableBridgeEntity")]
 
-[node name="ButtonEntity2" parent="NPC Container" unique_id=1970979698 instance=ExtResource("47_ekj6j")]
+[node name="ButtonEntity2" parent="NPC Container" unique_id=1970979698 node_paths=PackedStringArray("_powerable_targets") instance=ExtResource("47_ekj6j")]
 position = Vector2(144, 96)
-
-[node name="ButtonObserver" type="Node2D" parent="NPC Container" unique_id=1415959148 node_paths=PackedStringArray("_powerable_targets", "_button_list")]
-position = Vector2(112, 96)
-script = ExtResource("46_i3hfr")
-_powerable_targets = [NodePath("../ExtendableBridgeEntity"), NodePath("../PowerableDoorEntity"), NodePath("../PowerableDoorEntity2"), NodePath("../PowerableDoorEntity3")]
-_button_list = [NodePath("../ButtonEntity"), NodePath("../ButtonEntity2")]
-metadata/_custom_type_script = "uid://c3r8woyhh8k7j"
+_powerable_targets = [NodePath("../PowerableDoorEntity"), NodePath("../PowerableDoorEntity2"), NodePath("../PowerableDoorEntity3")]
 
 [node name="BoulderEntity" parent="NPC Container" unique_id=1130051096 instance=ExtResource("10_jadfo")]
 position = Vector2(112, 144)
