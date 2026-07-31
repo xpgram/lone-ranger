@@ -50,9 +50,9 @@
 #
 # Make ButtonEntities useful:
 # [x] The ButtonEntity has no objects to toggle.
-#     [ ] 'stays-pressed' buttons have a different pressed-in sprite.
+#     [x] 'stays-pressed' buttons have a different pressed-in sprite.
 #     [x] A BridgeEntity is a floor-type enabled by buttons (or disabled by them).
-#     [ ] Multiple BridgeEntities can be animated open instead of just popping in.
+#     [x] Multiple BridgeEntities can be animated open instead of just popping in.
 #     [x] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
 #     [x] DoorEntity has a unique set of sprites——not Raised Block's.
 #
