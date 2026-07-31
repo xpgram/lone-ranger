@@ -40,17 +40,16 @@ const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
 ## The time in seconds between each bridge piece revealing itself during the
 ## power-on or power-off animation.
 @export_custom(PROPERTY_HINT_NONE, 'suffix:s')
-var _bridge_reveal_step_time := 0.15;
+var _bridge_reveal_step_time := 0.1;
 
 ##
 var _bridge_pieces := [] as Array[BridgePiece];
-
 
 ##
 var _extended_progress := 0.0:
   set(value):
     var minimum := 0;
-    var maximum := _piece_locations.size() - 1;
+    var maximum := _piece_locations.size();
     _extended_progress = clampf(value, minimum, maximum);
 
     var progress_index := (
@@ -61,6 +60,10 @@ var _extended_progress := 0.0:
     for i in range(_bridge_pieces.size()):
       var is_powered := (i <= progress_index);
       _bridge_pieces[i].powered = is_powered;
+
+## @nullable [br]
+## A reference to the current [Tween] for [member _extended_progress].
+var _active_progress_tween: Tween;
 
 
 @onready var _powerable: PowerableComponent = %PowerableComponent;
@@ -105,9 +108,15 @@ func _set_powered(value: bool, skip_animation := false) -> void:
     for piece in _bridge_pieces:
       piece.powered = value;
   else:
-    # [TODO] Queue the pop-in/out animation: tween _extended_progress.
-    for piece in _bridge_pieces:
-      piece.powered = value;
+    if _active_progress_tween:
+      _active_progress_tween.kill();
+
+    var maximum := _piece_locations.size() - 1.0;
+    var final_value := maximum if value else 0.0;
+    var total_time := maximum * _bridge_reveal_step_time;
+
+    _active_progress_tween = get_tree().create_tween();
+    _active_progress_tween.tween_property(self, "_extended_progress", final_value, total_time);
 
 
 func _construct_bridge_pieces() -> void:
