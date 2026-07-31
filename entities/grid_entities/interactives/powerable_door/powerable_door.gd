@@ -21,6 +21,7 @@ const _audio_gate_lower := preload('uid://c8s66in3f1leb');
 func _ready() -> void:
   _powerable.powered_on.connect(func (): _set_powered(true));
   _powerable.powered_off.connect(func (): _set_powered(false));
+  _anim.frame_changed.connect(_on_sprite_frame_changed);
 
   _set_powered(false, true);
 
@@ -44,8 +45,10 @@ func _set_powered(value: bool, skip_animation := false) -> void:
       _anim.play_backwards("raise");
       AudioBus.play_audio_scene(_audio_gate_lower);
 
-  solid = value;
-
   # [TODO] Tell Grid to notify grid_position that a wall has appeared.
   #   Actually, what should happen when this does? And can it be cool enough
   #   to inspire clever puzzle tech?
+
+
+func _on_sprite_frame_changed() -> void:
+  solid = (_anim.frame != 0);
