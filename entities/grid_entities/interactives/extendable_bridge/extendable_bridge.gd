@@ -6,8 +6,6 @@ class_name ExtendableBridgeEntity
 extends Interactive2D
 
 
-# [TODO] Add sound for individual piece power-on/off.
-#   tink-tink-tink-tink (4 pieces on), tonk-tonk-tonk-tonk (4 pieces off).
 # [TODO] Add pieces also set the floor tile-type so that we get underhangs.
 #   The crumbly bit just below each floor-tile that is above a pit-tile.
 #   Question: Is this a permanent map change? What if you open/close the bridge
@@ -20,6 +18,9 @@ const _texture_bridge_piece := preload('uid://bux7mk1j6iy44');
 
 ## The draw-origin of the texture used to display bridge pieces.
 const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
+
+const _audio_bridge_appear := preload('uid://dqor7ytb612m3');
+const _audio_bridge_disappear := preload('uid://cjt2c7yfchyu5');
 
 
 ## The [Grid]-positions this extendable bridge occupies.
@@ -164,8 +165,10 @@ class BridgePiece extends RefCounted:
 
       if powered:
         Grid.put(entity, grid_location);
+        AudioBus.play_audio_scene(_audio_bridge_appear);
       else:
         Grid.remove(entity, grid_location);
+        AudioBus.play_audio_scene(_audio_bridge_disappear);
 
       # [TODO] Tell Grid to notify grid_position the floor has changed.
       entity.queue_redraw();

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dqor7ytb612m3"]
+
+[ext_resource type="AudioStream" uid="uid://chorqswysptcn" path="res://assets/audio/sounds/bridge-appear.wav" id="1_63p8v"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_223qn"]
+
+[node name="BridgeAppear" type="AudioStreamPlayer" unique_id=1598987174]
+stream = ExtResource("1_63p8v")
+volume_db = -1.0
+bus = &"SoundEffects"
+script = ExtResource("2_223qn")
+metadata/_custom_type_script = "uid://me30ja85krjn"

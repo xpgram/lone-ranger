@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cjt2c7yfchyu5"]
+
+[ext_resource type="AudioStream" uid="uid://w52w5jlbpev4" path="res://assets/audio/sounds/bridge-disappear.wav" id="1_6ukia"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_v2b2v"]
+
+[node name="BridgeDisappear" type="AudioStreamPlayer" unique_id=1598987174]
+stream = ExtResource("1_6ukia")
+volume_db = -1.0
+bus = &"SoundEffects"
+script = ExtResource("2_v2b2v")
+metadata/_custom_type_script = "uid://me30ja85krjn"
