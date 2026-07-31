@@ -104,7 +104,8 @@ func _set_powered(value: bool, skip_animation := false) -> void:
 
     var maximum := _piece_locations.size() as float;
     var final_value := maximum if value else 0.0;
-    var total_time := maximum * _bridge_reveal_step_time;
+    var travel_distance := absf(final_value - _extended_progress);
+    var total_time := travel_distance * _bridge_reveal_step_time;
 
     _active_progress_tween = get_tree().create_tween();
     _active_progress_tween.tween_property(self, "_extended_progress", final_value, total_time);
