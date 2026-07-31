@@ -11,6 +11,14 @@ extends Interactive2D
 #   Question: Is this a permanent map change? What if you open/close the bridge
 #   a _bunch_ of times in a row? How does that work?
 # [TODO] How does persistence work? Set a rock back onto the button?
+# 
+# [TODO] Factor out the staccato-power logic.
+#   I know this is annoying, I just put it all in here, but a container of
+#   Powerables that does this staccato thing with its children would be more
+#   applicable and useful than having this Bridge class do it all itself.
+#   Button -> PowerableContainer (+ settings to staccato power) -> BridgeEntity1, BridgeEntity2, etc...
+#   This would also be easier to work with in the editor since I'll get all the
+#   same object-editor features Godot ships with.
 
 
 ## The [Texture] resource used to display the bridge pieces.
