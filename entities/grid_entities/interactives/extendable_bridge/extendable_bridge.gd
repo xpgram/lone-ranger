@@ -12,6 +12,7 @@ extends Interactive2D
 #   The crumbly bit just below each floor-tile that is above a pit-tile.
 #   Question: Is this a permanent map change? What if you open/close the bridge
 #   a _bunch_ of times in a row? How does that work?
+# [TODO] How does persistence work? Set a rock back onto the button?
 
 
 ## The [Texture] resource used to display the bridge pieces.
