@@ -8,6 +8,8 @@ extends Interactive2D
 
 # [TODO] Add sound for individual piece power-on/off.
 #   tink-tink-tink-tink (4 pieces on), tonk-tonk-tonk-tonk (4 pieces off).
+# [TODO] Add pieces also set the floor tile-type so that we get underhangs.
+#   The crumbly bit just below each floor-tile that is above a pit-tile.
 
 
 ## The [Texture] resource used to display the bridge pieces.
