@@ -21,8 +21,8 @@ extends Interactive2D
 #   same object-editor features Godot ships with.
 
 
-## The [Texture] resource used to display the bridge pieces.
 const _texture_bridge_piece := preload('uid://bux7mk1j6iy44');
+const _texture_bridge_underside := preload('uid://chvt8xocptyhe');
 
 ## The draw-origin of the texture used to display bridge pieces.
 const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
@@ -198,6 +198,7 @@ class BridgePiece extends RefCounted:
       return;
 
     _draw_texture();
+    _draw_underhang_texture();
 
 
   ## Draw the BridgePiece in editor view.
@@ -208,8 +209,26 @@ class BridgePiece extends RefCounted:
   ## Draws the bridge-piece texture via the owner [member entity] with the
   ## [param modulate] color.
   func _draw_texture(modulate := Color.WHITE) -> void:
+    var draw_coords := Grid.get_world_coords(location);
+
     entity.draw_texture(
       _texture_bridge_piece,
-      Grid.get_world_coords(location) - _texture_origin,
+      draw_coords - _texture_origin,
+      modulate,
+    );
+
+
+  ## Draws the bridge-piece underside texture via the owner [member entity] with
+  ## the [param modulate] color.
+  func _draw_underhang_texture(modulate := Color.WHITE) -> void:
+    var global_location := location + entity.grid_position;
+    var draw_coords := Grid.get_world_coords(location + Vector2i.DOWN);
+
+    if not ActionUtils.place_is_pit(global_location + Vector2i.DOWN):
+      return;
+
+    entity.draw_texture(
+      _texture_bridge_underside,
+      draw_coords - _texture_origin,
       modulate,
     );
