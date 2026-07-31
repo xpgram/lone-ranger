@@ -47,6 +47,10 @@
 #         (2 hp) of damage if it pushes you or pushes you and 1 thing behind you,
 #         like Shove, but kills completely if you are squished more than that.
 # [ ] Line attack (hor and ver) you have to avoid.
+# [ ] Floor objects (non-solid) are not destroyed as the DemonWall passes over.
+#     This allows stays-pressed buttons to continue to power bridges and doors
+#     even when the player is slow.
+#     [ ] Cosmetic: Stays-pressed buttons are only spared after being pressed.
 #
 # Make ButtonEntities useful:
 # [x] The ButtonEntity has no objects to toggle.
