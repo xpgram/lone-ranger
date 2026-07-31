@@ -130,7 +130,7 @@ func _remove_self_from_grid() -> void:
 
 
 
-## Private class to help model the bridge piece to piece manager relationship.
+## Member class to encapsulate the individual bridge piece behavior.
 class BridgePiece extends RefCounted:
   var entity: ExtendableBridgeEntity;
 
