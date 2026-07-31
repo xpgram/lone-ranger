@@ -26,7 +26,7 @@ const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
 ## The time in seconds between each bridge piece revealing itself during the
 ## power-on or power-off animation.
 @export_custom(PROPERTY_HINT_NONE, 'suffix:s')
-var _bridge_reveal_step_time := 0.1;
+var _bridge_reveal_step_time := 0.08;
 
 ## A list of [BridgePieces] constructed from the list of [member _piece_locations].
 var _bridge_pieces := [] as Array[BridgePiece];
