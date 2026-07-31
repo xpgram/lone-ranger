@@ -1,26 +1,15 @@
 ## @tool [br]
-##
+## A class to describe a bridge [Interactive2D] that may be powered on and off
+## and which animates open or closed depending on its power state.
 @tool
 class_name ExtendableBridgeEntity
 extends Interactive2D
 
-# [TODO] Allow drawing a path for this bridge, like the GrowTwig.
-# [x] A list of extended-to points.
-# [ ] These are drawn/shown in-editor.
-# [ ] Multi-bridge fills other Grid locations and is usable by the player.
-# [ ] _sprite is duplicated to each extended space.
-#
-#
-# I don't like how this is working so far. It's too complicated.
-# [ ] Remove _sprite, but @export a texture field.
-# [ ] _piece_locations always includes grid_position: never an empty list.
-# [ ] separate _bridge_piece_state: Array[bool].
-# [ ] _extension_progress setter sets bools and queue's redraws when something is changed.
-# [ ] self is inserted/removed according to bools as well.
 
-
+## The [Texture] resource used to display the bridge pieces.
 const _texture_bridge_piece := preload('uid://bux7mk1j6iy44');
 
+## The draw-origin of the texture used to display bridge pieces.
 const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
 
 
@@ -32,20 +21,18 @@ const _texture_origin := Vector2.ONE * (Constants.GRID_SIZE / 2.0);
     queue_redraw();
 
 ## If true, powering this device hides the bridge instead of extending it.
-@export var _invert_power := false:
-  set(value):
-    _invert_power = value;
-    queue_redraw();
+@export var _invert_power := false;
 
 ## The time in seconds between each bridge piece revealing itself during the
 ## power-on or power-off animation.
 @export_custom(PROPERTY_HINT_NONE, 'suffix:s')
 var _bridge_reveal_step_time := 0.1;
 
-##
+## A list of [BridgePieces] constructed from the list of [member _piece_locations].
 var _bridge_pieces := [] as Array[BridgePiece];
 
-##
+## How extended this bridge is. This value ranges from `0` (fully closed) to
+## `_piece_locations.size()` (fully open).
 var _extended_progress := 0.0:
   set(value):
     var minimum := 0;
@@ -90,16 +77,20 @@ func _draw() -> void:
     _draw_bridge_pieces();
 
 
+## Draws the Bridge in editor view.
 func _draw_editor_bridge_pieces() -> void:
   for piece in _bridge_pieces:
     piece.draw_editor();
 
 
+## Draws the Bridge in game view.
 func _draw_bridge_pieces() -> void:
   for piece in _bridge_pieces:
     piece.draw();
 
 
+## Sets the powered-state of the Bridge, triggering the open/close animation
+## accordingly. Skips the animation if [member skip_animation] is `true`.
 func _set_powered(value: bool, skip_animation := false) -> void:
   if _invert_power:
     value = !value;
@@ -119,12 +110,15 @@ func _set_powered(value: bool, skip_animation := false) -> void:
     _active_progress_tween.tween_property(self, "_extended_progress", final_value, total_time);
 
 
+## Constructs the list of [member _bridge_pieces] from the editor export list
+## of [member _piece_locations].
 func _construct_bridge_pieces() -> void:
   _bridge_pieces.assign(_piece_locations
     .map(func (location: Vector2i): return BridgePiece.new(self, location))
   );
 
 
+## Removes this entity from all its occupied locations on the [Grid].
 func _remove_self_from_grid() -> void:
   for point in _piece_locations:
     Grid.remove(self, point);
@@ -135,6 +129,9 @@ func _remove_self_from_grid() -> void:
 class BridgePiece extends RefCounted:
   var entity: ExtendableBridgeEntity;
 
+  ## Whether this BridgePiece is active. If `true`, sets the [ExtendableBridge]
+  ## into the [Grid], else removes it. Queues a redraw of the entity when the
+  ## value is successfully changed.
   var powered := false:
     set(value):
       if (powered == value):
@@ -152,6 +149,8 @@ class BridgePiece extends RefCounted:
       # [TODO] Tell Grid to notify grid_position the floor has changed.
       entity.queue_redraw();
 
+  ## Where on the [Grid] this [BridgePiece] is located, relative to the origin
+  ## of [member entity].
   var location: Vector2i;
 
 
@@ -161,6 +160,7 @@ class BridgePiece extends RefCounted:
     self.location = location;
 
 
+  ## Draw the BridgePiece in game view.
   func draw() -> void:
     if not powered:
       return;
@@ -168,10 +168,13 @@ class BridgePiece extends RefCounted:
     _draw_texture();
 
 
+  ## Draw the BridgePiece in editor view.
   func draw_editor() -> void:
     _draw_texture(Color(0.8, 0.8, 0.8, 0.5));
 
 
+  ## Draws the bridge-piece texture via the owner [member entity] with the
+  ## [param modulate] color.
   func _draw_texture(modulate := Color.WHITE) -> void:
     entity.draw_texture(
       _texture_bridge_piece,
