@@ -1734,10 +1734,10 @@ position = Vector2(112, 192)
 _piece_locations = Array[Vector2i]([Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3)])
 
 [node name="ButtonEntity" parent="NPC Container" unique_id=206165091 instance=ExtResource("47_ekj6j")]
-position = Vector2(112, 144)
+position = Vector2(112, 160)
 
 [node name="ButtonEntity2" parent="NPC Container" unique_id=1970979698 instance=ExtResource("47_ekj6j")]
-position = Vector2(128, 128)
+position = Vector2(144, 96)
 
 [node name="ButtonObserver" type="Node2D" parent="NPC Container" unique_id=1415959148 node_paths=PackedStringArray("_powerable_targets", "_button_list")]
 position = Vector2(112, 96)
@@ -1747,10 +1747,10 @@ _button_list = [NodePath("../ButtonEntity"), NodePath("../ButtonEntity2")]
 metadata/_custom_type_script = "uid://c3r8woyhh8k7j"
 
 [node name="BoulderEntity" parent="NPC Container" unique_id=1130051096 instance=ExtResource("10_jadfo")]
-position = Vector2(128, 144)
+position = Vector2(112, 144)
 
 [node name="BoulderEntity2" parent="NPC Container" unique_id=1734515166 instance=ExtResource("10_jadfo")]
-position = Vector2(128, 112)
+position = Vector2(144, 112)
 
 [node name="PowerableDoorEntity" parent="NPC Container" unique_id=398494341 instance=ExtResource("47_hdlvt")]
 position = Vector2(112, 64)
