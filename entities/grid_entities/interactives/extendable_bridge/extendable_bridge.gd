@@ -10,6 +10,8 @@ extends Interactive2D
 #   tink-tink-tink-tink (4 pieces on), tonk-tonk-tonk-tonk (4 pieces off).
 # [TODO] Add pieces also set the floor tile-type so that we get underhangs.
 #   The crumbly bit just below each floor-tile that is above a pit-tile.
+#   Question: Is this a permanent map change? What if you open/close the bridge
+#   a _bunch_ of times in a row? How does that work?
 
 
 ## The [Texture] resource used to display the bridge pieces.
