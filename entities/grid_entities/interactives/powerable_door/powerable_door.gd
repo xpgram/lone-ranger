@@ -6,6 +6,10 @@ extends Interactive2D
 #   short lines, and maybe 2x2 areas.
 
 
+const _audio_gate_rise := preload('uid://boaohmhl4ak16');
+const _audio_gate_lower := preload('uid://c8s66in3f1leb');
+
+
 ## If true, powering this device hides the bridge instead of extending it.
 @export var _invert_power := false;
 
@@ -18,17 +22,27 @@ func _ready() -> void:
   _powerable.powered_on.connect(func (): _set_powered(true));
   _powerable.powered_off.connect(func (): _set_powered(false));
 
-  _set_powered(false);
+  _set_powered(false, true);
 
 
-func _set_powered(value: bool) -> void:
+func _set_powered(value: bool, skip_animation := false) -> void:
   if _invert_power:
     value = !value;
 
   if value:
-    _anim.play("raise")
+    if skip_animation:
+      _anim.pause();
+      _anim.frame = _anim.sprite_frames.get_frame_count('raise') - 1;
+    else:
+      _anim.play("raise");
+      AudioBus.play_audio_scene(_audio_gate_rise);
   else:
-    _anim.play_backwards("raise");
+    if skip_animation:
+      _anim.pause();
+      _anim.frame = 0;
+    else:
+      _anim.play_backwards("raise");
+      AudioBus.play_audio_scene(_audio_gate_lower);
 
   solid = value;
 

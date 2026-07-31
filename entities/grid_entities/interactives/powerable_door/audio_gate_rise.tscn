@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://boaohmhl4ak16"]
+
+[ext_resource type="AudioStream" uid="uid://bkknfubkrcqxp" path="res://assets/audio/sounds/gate_rise.wav" id="1_m2cqu"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_84mcs"]
+
+[node name="GateRise" type="AudioStreamPlayer" unique_id=1598987174]
+stream = ExtResource("1_m2cqu")
+bus = &"SoundEffects"
+script = ExtResource("2_84mcs")
+metadata/_custom_type_script = "uid://me30ja85krjn"

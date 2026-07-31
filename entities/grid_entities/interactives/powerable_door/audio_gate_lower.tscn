@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c8s66in3f1leb"]
+
+[ext_resource type="AudioStream" uid="uid://dmftesacxh7sj" path="res://assets/audio/sounds/gate_lower.wav" id="1_kuh81"]
+[ext_resource type="Script" uid="uid://me30ja85krjn" path="res://entities/audio/one_shot_audio.gd" id="2_lvii5"]
+
+[node name="GateLower" type="AudioStreamPlayer" unique_id=1598987174]
+stream = ExtResource("1_kuh81")
+bus = &"SoundEffects"
+script = ExtResource("2_lvii5")
+metadata/_custom_type_script = "uid://me30ja85krjn"
