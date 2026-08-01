@@ -60,6 +60,10 @@
 #     [x] A DoorEntity is a wall-type enabled by buttons (or disabled by them).
 #     [x] DoorEntity has a unique set of sprites——not Raised Block's.
 #
+# Bridge fall and safe-return:
+# [ ] Bridge tiles are recognized as safe-returns.
+# [ ] A backup "firm ground" safe-return is used if the bridge is gone.
+#
 # BooleanSpawner stops breaking references:
 # [x] Confirm 'load as placeholder' allows me to tweak objects in editor visually
 #     without the game instantiating them like it does normal nodes.
