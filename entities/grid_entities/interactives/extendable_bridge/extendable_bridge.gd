@@ -6,12 +6,6 @@ class_name ExtendableBridgeEntity
 extends Interactive2D
 
 
-# [TODO] Add pieces also set the floor tile-type so that we get underhangs.
-#   The crumbly bit just below each floor-tile that is above a pit-tile.
-#   Question: Is this a permanent map change? What if you open/close the bridge
-#   a _bunch_ of times in a row? How does that work?
-# [TODO] How does persistence work? Set a rock back onto the button?
-# 
 # [TODO] Factor out the staccato-power logic.
 #   I know this is annoying, I just put it all in here, but a container of
 #   Powerables that does this staccato thing with its children would be more
