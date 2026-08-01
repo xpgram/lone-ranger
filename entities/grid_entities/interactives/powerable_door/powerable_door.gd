@@ -1,10 +1,6 @@
 class_name PowerableDoorEntity
 extends Interactive2D
 
-# [TODO] Allow drawing a path for this door, like the GrowTwig.
-#   Unlike ExtendableBridge, this is likely to be used for double-doors,
-#   short lines, and maybe 2x2 areas.
-
 
 const _audio_gate_rise := preload('uid://boaohmhl4ak16');
 const _audio_gate_lower := preload('uid://c8s66in3f1leb');
