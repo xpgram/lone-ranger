@@ -1,0 +1,21 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 1, 1, 1),
+&"custom_info": {
+"prefix": "",
+"sound_mood_default": "",
+"sound_moods": {},
+"style": "",
+"suffix": ""
+},
+&"default_portrait": "",
+&"description": "A litte boy who tests",
+&"display_name": "Test Character",
+&"mirror": false,
+&"nicknames": ["Testie"],
+&"offset": Vector2(0, 0),
+&"portraits": {},
+&"scale": 1.0
+}
