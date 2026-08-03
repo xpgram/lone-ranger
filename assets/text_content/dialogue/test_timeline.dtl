@@ -1,7 +1,7 @@
 join test_character center
 join test_character center
-test_character: Hello, stranger.
-test_character: Oh,[pause] you have water.
-test_character: Please,[pause] come to my house.
-test_character_2: No.[pause=2] I can't.[pause=4] Not even if I want to.[pause] I hate happiness.
+test_character: Hello,[pause=0.25] stranger.
+test_character: Oh,[pause=0.25] you have water.
+test_character: Please,[pause=0.15] come to my house.
+test_character_2: No.[pause=.5] I can't.[pause=1.5] Not even if I want to.[pause=1] I hate happiness.
 test_character_2: And water...[pause=1] I dislike bathing.
