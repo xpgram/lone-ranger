@@ -1,2 +1,4 @@
 join test_character center
-test_character: Hello. Welcome to my house.
+test_character: Hello, stranger.
+test_character: Oh, you have water.
+test_character: Please, come to my house.
