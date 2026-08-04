@@ -40,10 +40,7 @@ directories/dch_directory={
 directories/dtl_directory={
 "test_timeline": "res://assets/text_content/dialogue/test_timeline.dtl"
 }
-layout/style_directory={
-"": "res://assets/text_content/dialogic_styles/test_style.tres",
-"test_style": "res://assets/text_content/dialogic_styles/test_style.tres"
-}
+layout/style_directory={}
 text/letter_speed=0.02
 text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.1
@@ -78,8 +75,8 @@ audio/channel_defaults={
 }
 glossary/default_case_sensitive=true
 variables={}
-layout/style_list=["res://assets/text_content/dialogic_styles/test_style.tres"]
-layout/default_style="res://assets/text_content/dialogic_styles/test_style.tres"
+layout/style_list=[]
+layout/default_style=""
 
 [display]
 
