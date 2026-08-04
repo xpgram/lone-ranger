@@ -664,26 +664,40 @@ func emit_meta_signal(meta:Variant, sig:String) -> void:
 ################################################################################
 
 func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
-	if skipped:
-		return
-
-	# We want to ignore pauses if we're skipping.
-	if dialogic.Inputs.auto_skip.enabled:
+	if skipped or dialogic.Inputs.auto_skip.enabled:
 		return
 
 	var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
-	var pause_duration := 0.3;
-	var default_pause_count := 1;
+	var single_pause_duration := 0.1;
+	var pause_count := 1;
+	var skip_multipliers := false;
 
 	if argument:
 		if argument.ends_with('!'):
-			await get_tree().create_timer(float(argument.trim_suffix('!'))).timeout
+			skip_multipliers = true;
+			argument = argument.trim_suffix('!');
 
-		elif _speed_multiplier != 0 and text_speed != 0:
-			await get_tree().create_timer(float(argument) * pause_duration * _speed_multiplier * text_speed).timeout
+		match argument:
+			's', 'short':
+				pause_count = 3;
+			'm', 'medium':
+				pause_count = 5;
+			'l', 'long':
+				pause_count = 7;
+			'xl', 'extra-long':
+				pause_count = 10;
+			'xxl', 'extra-extra-long':
+				pause_count = 15;
+			_:
+				pause_count = float(argument);
+
+	var wait_duration := single_pause_duration * pause_count;
+
+	if skip_multipliers:
+		await get_tree().create_timer(wait_duration).timeout
 
 	elif _speed_multiplier != 0 and text_speed != 0:
-		await get_tree().create_timer(default_pause_count * pause_duration * _speed_multiplier * text_speed).timeout
+		await get_tree().create_timer(wait_duration * _speed_multiplier * text_speed).timeout
 
 
 func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:

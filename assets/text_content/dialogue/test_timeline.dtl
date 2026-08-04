@@ -1,7 +1,5 @@
-join test_character center
-join test_character center
-test_character: Hello, stranger.
-test_character: Oh,[p] you have water.
-test_character: Please,[p] come to my house.
-test_character_2: No.[p=2] I can't.[p] Not even if I want to.[p=3] I hate happiness.
-test_character_2: And water...[p=3] I dislike bathing.
+join keiichi left
+join rena right
+keiichi: Hey, Rena...[p=xxl] Is there something...[p=xl] that everyone is keeping from me?
+rena: Huh?[p=xl] No.[p=m] Not at all.
+keiichi: ...[p=xxl] You're lying,[p=l] aren't you?
