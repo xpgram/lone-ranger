@@ -672,6 +672,17 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 	var pause_count := 1;
 	var skip_multipliers := false;
 
+	# [TODO] We should reframe these codes: every pause count is 1 additional text_speed letter.
+	#   I realize that [p] doesn't end up being that useful when that's half the speed of each message.
+	#   So, we _do_ increment in 2, but now we know it's normal.
+	#   s = 1 extra letter.
+	#   m = 3 extra letters. Unless 2.5 is better.
+	#   l = 5 extra letters. That's a full second.
+	#   xl= 7.5 extra letters. That's 1.5 seconds.
+	#   xxl=10 extra letters. That's 2 seconds.
+
+	# [TODO] Also, this is elsewhere, but: add slow, normal, fast aliases for lspeed.
+
 	if argument:
 		if argument.ends_with('!'):
 			skip_multipliers = true;
