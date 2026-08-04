@@ -747,6 +747,22 @@ func effect_pause_quarter_dot(_text_node:Control, skipped:bool, argument:String)
 	await _effect_await_seconds(1.5 / 4, skipped);
 
 
+func effect_pause_fifth(_text_node:Control, skipped:bool, argument:String) -> void:
+	await _effect_await_seconds(1.0 / 5, skipped);
+
+
+func effect_pause_fifth_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await _effect_await_seconds(1.5 / 5, skipped);
+
+
+func effect_pause_sixth(_text_node:Control, skipped:bool, argument:String) -> void:
+	await _effect_await_seconds(1.0 / 6, skipped);
+
+
+func effect_pause_sixth_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await _effect_await_seconds(1.5 / 6, skipped);
+
+
 func effect_pause_eighth(_text_node:Control, skipped:bool, argument:String) -> void:
 	await _effect_await_seconds(1.0 / 8, skipped);
 
