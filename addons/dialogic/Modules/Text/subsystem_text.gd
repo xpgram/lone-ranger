@@ -668,7 +668,7 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 		return
 
 	var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
-	var pause_duration: float = 0.2;
+	var pause_duration: float = 0.1;
 	var pause_count := 1;
 	var skip_multipliers := false;
 
@@ -682,29 +682,37 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 			argument = argument.trim_suffix('!');
 		pause_count = float(argument);
 
-	var wait_duration := pause_duration * pause_count;
+	var wait_duration := pause_count * pause_duration;
 
-	if skip_multipliers:
-		await get_tree().create_timer(wait_duration).timeout
+	if not skip_multipliers:
+		wait_duration *= _speed_multiplier * text_speed;
 
-	elif wait_duration != 0 and _speed_multiplier != 0 and text_speed != 0:
-		await get_tree().create_timer(wait_duration * _speed_multiplier * text_speed).timeout
-
-
-func effect_pause_medium(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "2.5");
+	if wait_duration != 0:
+		await get_tree().create_timer(wait_duration).timeout;
 
 
-func effect_pause_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "3.75");
+func effect_pause_whole(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, "10");
 
 
-func effect_pause_extra_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "5");
+func effect_pause_half(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(10.0 / 2));
 
 
-func effect_pause_double_extra_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "7.5");
+func effect_pause_third(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(10.0 / 3));
+
+
+func effect_pause_quarter(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(10.0 / 4));
+
+
+func effect_pause_eighth(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(10.0 / 8));
+
+
+func effect_pause_sixteenth(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(10.0 / 16));
 
 
 func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
