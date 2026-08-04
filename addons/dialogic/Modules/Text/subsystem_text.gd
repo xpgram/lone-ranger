@@ -682,6 +682,7 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 	#   xxl=10 extra letters. That's 2 seconds.
 
 	# [TODO] Also, this is elsewhere, but: add slow, normal, fast aliases for lspeed.
+	# [TODO] What is the different between speed and lspeed?
 
 	if argument:
 		if argument.ends_with('!'):
