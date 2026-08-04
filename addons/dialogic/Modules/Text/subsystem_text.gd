@@ -707,11 +707,11 @@ func effect_pause_whole_dot(_text_node:Control, skipped:bool, argument:String) -
 	await _effect_await_seconds(1.5, skipped);
 
 
-func effect_pause_whole_double_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+func effect_pause_double_whole(_text_node:Control, skipped:bool, argument:String) -> void:
 	await _effect_await_seconds(2.0, skipped);
 
 
-func effect_pause_whole_triple_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+func effect_pause_double_whole_dot(_text_node:Control, skipped:bool, argument:String) -> void:
 	await _effect_await_seconds(2.5, skipped);
 
 
