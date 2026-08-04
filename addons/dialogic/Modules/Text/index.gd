@@ -26,6 +26,10 @@ func _get_text_effects() -> Array[Dictionary]:
 		{'command':'lspeed', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
 		{'command':'pause', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
 		{'command':'p', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
+		{'command':'pm', 'subsystem':'Text', 'method':'effect_pause_medium', 'arg':false},
+		{'command':'pl', 'subsystem':'Text', 'method':'effect_pause_long', 'arg':false},
+		{'command':'pxl', 'subsystem':'Text', 'method':'effect_pause_extra_long', 'arg':false},
+		{'command':'pdl', 'subsystem':'Text', 'method':'effect_pause_double_long', 'arg':false},
 		{'command':'signal', 'subsystem':'Text', 'method':'effect_signal', 'arg':true},
 		{'command':'mood', 'subsystem':'Text', 'method':'effect_mood', 'arg':true},
 	]
