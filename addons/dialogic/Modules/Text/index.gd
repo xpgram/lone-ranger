@@ -24,12 +24,17 @@ func _get_text_effects() -> Array[Dictionary]:
 	return [
 		{'command':'speed', 'subsystem':'Text', 'method':'effect_speed', 'arg':true},
 		{'command':'lspeed', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
+
 		{'command':'pause', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
 		{'command':'p', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
-		{'command':'pm', 'subsystem':'Text', 'method':'effect_pause_medium', 'arg':false},
-		{'command':'pl', 'subsystem':'Text', 'method':'effect_pause_long', 'arg':false},
-		{'command':'pxl', 'subsystem':'Text', 'method':'effect_pause_extra_long', 'arg':false},
-		{'command':'pxxl', 'subsystem':'Text', 'method':'effect_pause_double_extra_long', 'arg':false},
+
+		{'command':'p1', 'subsystem':'Text', 'method':'effect_pause_whole', 'arg':false},
+		{'command':'p2', 'subsystem':'Text', 'method':'effect_pause_half', 'arg':false},
+		{'command':'p3', 'subsystem':'Text', 'method':'effect_pause_third', 'arg':false},
+		{'command':'p4', 'subsystem':'Text', 'method':'effect_pause_quarter', 'arg':false},
+		{'command':'p8', 'subsystem':'Text', 'method':'effect_pause_eighth', 'arg':false},
+		{'command':'p16', 'subsystem':'Text', 'method':'effect_pause_sixteenth', 'arg':false},
+
 		{'command':'signal', 'subsystem':'Text', 'method':'effect_signal', 'arg':true},
 		{'command':'mood', 'subsystem':'Text', 'method':'effect_mood', 'arg':true},
 	]
