@@ -687,7 +687,7 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 	if skip_multipliers:
 		await get_tree().create_timer(wait_duration).timeout
 
-	elif _speed_multiplier != 0 and text_speed != 0:
+	elif wait_duration != 0 and _speed_multiplier != 0 and text_speed != 0:
 		await get_tree().create_timer(wait_duration * _speed_multiplier * text_speed).timeout
 
 
