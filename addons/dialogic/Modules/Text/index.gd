@@ -27,11 +27,10 @@ func _get_text_effects() -> Array[Dictionary]:
 
 		{'command':'pause', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
 		{'command':'p', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
-
+		{'command':'pd', 'subsystem':'Text', 'method':'effect_pause_double_whole', 'arg':false},
+		{'command':'pd.', 'subsystem':'Text', 'method':'effect_pause_double_whole_dot', 'arg':false},
 		{'command':'p1', 'subsystem':'Text', 'method':'effect_pause_whole', 'arg':false},
 		{'command':'p1.', 'subsystem':'Text', 'method':'effect_pause_whole_dot', 'arg':false},
-		{'command':'p1..', 'subsystem':'Text', 'method':'effect_pause_whole_double_dot', 'arg':false},
-		{'command':'p1...', 'subsystem':'Text', 'method':'effect_pause_whole_triple_dot', 'arg':false},
 		{'command':'p2', 'subsystem':'Text', 'method':'effect_pause_half', 'arg':false},
 		{'command':'p2.', 'subsystem':'Text', 'method':'effect_pause_half_dot', 'arg':false},
 		{'command':'p3', 'subsystem':'Text', 'method':'effect_pause_third', 'arg':false},
