@@ -695,24 +695,56 @@ func effect_pause_whole(_text_node:Control, skipped:bool, argument:String) -> vo
 	await effect_pause(_text_node, skipped, "10");
 
 
+func effect_pause_whole_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, "15");
+
+
+func effect_pause_whole_double_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, "20");
+
+
+func effect_pause_whole_triple_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, "25");
+
+
 func effect_pause_half(_text_node:Control, skipped:bool, argument:String) -> void:
 	await effect_pause(_text_node, skipped, str(10.0 / 2));
+
+
+func effect_pause_half_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(15.0 / 2));
 
 
 func effect_pause_third(_text_node:Control, skipped:bool, argument:String) -> void:
 	await effect_pause(_text_node, skipped, str(10.0 / 3));
 
 
+func effect_pause_third_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(15.0 / 3));
+
+
 func effect_pause_quarter(_text_node:Control, skipped:bool, argument:String) -> void:
 	await effect_pause(_text_node, skipped, str(10.0 / 4));
+
+
+func effect_pause_quarter_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(15.0 / 4));
 
 
 func effect_pause_eighth(_text_node:Control, skipped:bool, argument:String) -> void:
 	await effect_pause(_text_node, skipped, str(10.0 / 8));
 
 
+func effect_pause_eighth_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(15.0 / 8));
+
+
 func effect_pause_sixteenth(_text_node:Control, skipped:bool, argument:String) -> void:
 	await effect_pause(_text_node, skipped, str(10.0 / 16));
+
+
+func effect_pause_sixteenth_dot(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, str(15.0 / 16));
 
 
 func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
