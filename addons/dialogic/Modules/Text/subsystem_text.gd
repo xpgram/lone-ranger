@@ -773,11 +773,11 @@ func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
 
 
 func effect_speed_sedate(_text_node:Control, skipped:bool, argument:String) -> void:
-	effect_speed(_text_node, skipped, "0.25");
+	effect_speed(_text_node, skipped, "4.0");
 
 
 func effect_speed_slow(_text_node:Control, skipped:bool, argument:String) -> void:
-	effect_speed(_text_node, skipped, "0.5");
+	effect_speed(_text_node, skipped, "2.0");
 
 
 func effect_speed_steady(_text_node:Control, skipped:bool, argument:String) -> void:
@@ -785,11 +785,11 @@ func effect_speed_steady(_text_node:Control, skipped:bool, argument:String) -> v
 
 
 func effect_speed_quick(_text_node:Control, skipped:bool, argument:String) -> void:
-	effect_speed(_text_node, skipped, "1.5");
+	effect_speed(_text_node, skipped, "0.75");
 
 
 func effect_speed_fast(_text_node:Control, skipped:bool, argument:String) -> void:
-	effect_speed(_text_node, skipped, "2.0");
+	effect_speed(_text_node, skipped, "0.5");
 
 
 func effect_lspeed(_text_node:Control, skipped:bool, argument:String) -> void:
