@@ -34,6 +34,8 @@ func _get_text_effects() -> Array[Dictionary]:
 		{'command':'p', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
 		{'command':'pb', 'subsystem':'Text', 'method':'effect_pause_breve', 'arg':false},
 		{'command':'pb.', 'subsystem':'Text', 'method':'effect_pause_breve_dot', 'arg':false},
+		{'command':'pl', 'subsystem':'Text', 'method':'effect_pause_longa', 'arg':false},
+		{'command':'pl.', 'subsystem':'Text', 'method':'effect_pause_longa_dot', 'arg':false},
 		{'command':'p1', 'subsystem':'Text', 'method':'effect_pause_whole', 'arg':false},
 		{'command':'p1.', 'subsystem':'Text', 'method':'effect_pause_whole_dot', 'arg':false},
 		{'command':'p2', 'subsystem':'Text', 'method':'effect_pause_half', 'arg':false},
