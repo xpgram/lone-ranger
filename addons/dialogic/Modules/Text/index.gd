@@ -23,12 +23,14 @@ func _get_character_editor_sections() -> Array:
 func _get_text_effects() -> Array[Dictionary]:
 	return [
 		{'command':'speed', 'subsystem':'Text', 'method':'effect_speed', 'arg':true},
+		{'command':'sedate', 'subsystem':'Text', 'method':'effect_speed_sedate', 'arg':false},
+		{'command':'slow', 'subsystem':'Text', 'method':'effect_speed_slow', 'arg':false},
+		{'command':'stutter', 'subsystem':'Text', 'method':'effect_speed_slow', 'arg':false},
+		{'command':'steady', 'subsystem':'Text', 'method':'effect_speed_steady', 'arg':false},
+		{'command':'quick', 'subsystem':'Text', 'method':'effect_speed_quick', 'arg':false},
+		{'command':'fast', 'subsystem':'Text', 'method':'effect_speed_fast', 'arg':false},
 
 		{'command':'lspeed', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
-		{'command':'stutter', 'subsystem':'Text', 'method':'effect_lspeed_slow', 'arg':false},
-		{'command':'slow', 'subsystem':'Text', 'method':'effect_lspeed_slow', 'arg':false},
-		{'command':'normal', 'subsystem':'Text', 'method':'effect_lspeed_normal', 'arg':false},
-		{'command':'fast', 'subsystem':'Text', 'method':'effect_lspeed_fast', 'arg':false},
 
 		{'command':'pause', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
 		{'command':'p', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},

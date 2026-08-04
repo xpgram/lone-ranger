@@ -772,6 +772,26 @@ func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
 		update_text_speed(-1, false, 1)
 
 
+func effect_speed_sedate(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_speed(_text_node, skipped, "0.25");
+
+
+func effect_speed_slow(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_speed(_text_node, skipped, "0.5");
+
+
+func effect_speed_steady(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_speed(_text_node, skipped, "1.0");
+
+
+func effect_speed_quick(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_speed(_text_node, skipped, "1.5");
+
+
+func effect_speed_fast(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_speed(_text_node, skipped, "2.0");
+
+
 func effect_lspeed(_text_node:Control, skipped:bool, argument:String) -> void:
 	if skipped:
 		return
@@ -782,18 +802,6 @@ func effect_lspeed(_text_node:Control, skipped:bool, argument:String) -> void:
 			update_text_speed(float(argument), false)
 	else:
 		update_text_speed()
-
-
-func effect_lspeed_slow(_text_node:Control, skipped:bool, argument:String) -> void:
-	effect_lspeed(_text_node, skipped, "0.04");
-
-
-func effect_lspeed_normal(_text_node:Control, skipped:bool, argument:String) -> void:
-	effect_lspeed(_text_node, skipped, "0.02");
-
-
-func effect_lspeed_fast(_text_node:Control, skipped:bool, argument:String) -> void:
-	effect_lspeed(_text_node, skipped, "0.01");
 
 
 func effect_signal(_text_node:Control, _skipped:bool, argument:String) -> void:
