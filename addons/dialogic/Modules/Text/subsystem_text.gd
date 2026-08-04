@@ -692,19 +692,19 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 
 
 func effect_pause_medium(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "2");
+	await effect_pause(_text_node, skipped, "2.5");
 
 
 func effect_pause_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "4");
+	await effect_pause(_text_node, skipped, "3.75");
 
 
 func effect_pause_extra_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "8");
+	await effect_pause(_text_node, skipped, "5");
 
 
 func effect_pause_double_extra_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "12");
+	await effect_pause(_text_node, skipped, "7.5");
 
 
 func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
