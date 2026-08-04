@@ -668,18 +668,9 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 		return
 
 	var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
-	var single_pause_duration := 0.1;
+	var pause_duration: float = ProjectSettings.get_setting('dialogic/text/letter_speed', 0.01);
 	var pause_count := 1;
 	var skip_multipliers := false;
-
-	# [TODO] We should reframe these codes: every pause count is 1 additional text_speed letter.
-	#   I realize that [p] doesn't end up being that useful when that's half the speed of each message.
-	#   So, we _do_ increment in 2, but now we know it's normal.
-	#   s = 1 extra letter.
-	#   m = 3 extra letters. Unless 2.5 is better.
-	#   l = 5 extra letters. That's a full second.
-	#   xl= 7.5 extra letters. That's 1.5 seconds.
-	#   xxl=10 extra letters. That's 2 seconds.
 
 	# [TODO] Also, this is elsewhere, but: add slow, normal, fast aliases for lspeed.
 	# [TODO] 'stutter' could be an alias for slow, I guess.
@@ -689,28 +680,31 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 		if argument.ends_with('!'):
 			skip_multipliers = true;
 			argument = argument.trim_suffix('!');
+		pause_count = float(argument);
 
-		match argument:
-			's', 'short':
-				pause_count = 3;
-			'm', 'medium':
-				pause_count = 5;
-			'l', 'long':
-				pause_count = 7;
-			'xl', 'extra-long':
-				pause_count = 10;
-			'xxl', 'extra-extra-long':
-				pause_count = 15;
-			_:
-				pause_count = float(argument);
-
-	var wait_duration := single_pause_duration * pause_count;
+	var wait_duration := text_speed * pause_count;
 
 	if skip_multipliers:
 		await get_tree().create_timer(wait_duration).timeout
 
 	elif _speed_multiplier != 0 and text_speed != 0:
 		await get_tree().create_timer(wait_duration * _speed_multiplier * text_speed).timeout
+
+
+func effect_pause_medium(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_pause(_text_node, skipped, "3");
+
+
+func effect_pause_long(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_pause(_text_node, skipped, "5");
+
+
+func effect_pause_extra_long(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_pause(_text_node, skipped, "7.5");
+
+
+func effect_pause_double_long(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_pause(_text_node, skipped, "10");
 
 
 func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
