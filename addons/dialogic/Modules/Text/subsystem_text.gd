@@ -682,7 +682,7 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 			argument = argument.trim_suffix('!');
 		pause_count = float(argument);
 
-	var wait_duration := text_speed * pause_count;
+	var wait_duration := pause_duration * pause_count;
 
 	if skip_multipliers:
 		await get_tree().create_timer(wait_duration).timeout
