@@ -700,59 +700,59 @@ func _effect_await_seconds(time: float, skipped: bool) -> void:
 
 
 func effect_pause_whole(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.0, skipped);
+	await _effect_await_seconds(1.0, skipped);
 
 
 func effect_pause_whole_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.5, skipped);
+	await _effect_await_seconds(1.5, skipped);
 
 
 func effect_pause_whole_double_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(2.0, skipped);
+	await _effect_await_seconds(2.0, skipped);
 
 
 func effect_pause_whole_triple_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(2.5, skipped);
+	await _effect_await_seconds(2.5, skipped);
 
 
 func effect_pause_half(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.0 / 2, skipped);
+	await _effect_await_seconds(1.0 / 2, skipped);
 
 
 func effect_pause_half_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.5 / 2, skipped);
+	await _effect_await_seconds(1.5 / 2, skipped);
 
 
 func effect_pause_third(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.0 / 3, skipped);
+	await _effect_await_seconds(1.0 / 3, skipped);
 
 
 func effect_pause_third_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.5 / 3, skipped);
+	await _effect_await_seconds(1.5 / 3, skipped);
 
 
 func effect_pause_quarter(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.0 / 4, skipped);
+	await _effect_await_seconds(1.0 / 4, skipped);
 
 
 func effect_pause_quarter_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.5 / 4, skipped);
+	await _effect_await_seconds(1.5 / 4, skipped);
 
 
 func effect_pause_eighth(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.0 / 8, skipped);
+	await _effect_await_seconds(1.0 / 8, skipped);
 
 
 func effect_pause_eighth_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.5 / 8, skipped);
+	await _effect_await_seconds(1.5 / 8, skipped);
 
 
 func effect_pause_sixteenth(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.0 / 16, skipped);
+	await _effect_await_seconds(1.0 / 16, skipped);
 
 
 func effect_pause_sixteenth_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-  await _effect_await_seconds(1.5 / 16, skipped);
+	await _effect_await_seconds(1.5 / 16, skipped);
 
 
 func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
