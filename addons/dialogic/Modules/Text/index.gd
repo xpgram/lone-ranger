@@ -25,7 +25,6 @@ func _get_text_effects() -> Array[Dictionary]:
 		{'command':'speed', 'subsystem':'Text', 'method':'effect_speed', 'arg':true},
 		{'command':'sedate', 'subsystem':'Text', 'method':'effect_speed_sedate', 'arg':false},
 		{'command':'slow', 'subsystem':'Text', 'method':'effect_speed_slow', 'arg':false},
-		{'command':'stutter', 'subsystem':'Text', 'method':'effect_speed_slow', 'arg':false},
 		{'command':'steady', 'subsystem':'Text', 'method':'effect_speed_steady', 'arg':false},
 		{'command':'quick', 'subsystem':'Text', 'method':'effect_speed_quick', 'arg':false},
 		{'command':'fast', 'subsystem':'Text', 'method':'effect_speed_fast', 'arg':false},
