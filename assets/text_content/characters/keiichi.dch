@@ -11,10 +11,10 @@
 "suffix": ""
 },
 &"default_portrait": "",
-&"description": "A man.",
-&"display_name": "Harry Hole",
+&"description": "",
+&"display_name": "Keiichi",
 &"mirror": false,
-&"nicknames": ["Hole"],
+&"nicknames": [""],
 &"offset": Vector2(0, 0),
 &"portraits": {},
 &"scale": 1.0
