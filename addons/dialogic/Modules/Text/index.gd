@@ -25,10 +25,10 @@ func _get_text_effects() -> Array[Dictionary]:
 		{'command':'speed', 'subsystem':'Text', 'method':'effect_speed', 'arg':true},
 
 		{'command':'lspeed', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
-		{'command':'stutter', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
-		{'command':'slow', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
-		{'command':'normal', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
-		{'command':'fast', 'subsystem':'Text', 'method':'effect_lspeed', 'arg':true},
+		{'command':'stutter', 'subsystem':'Text', 'method':'effect_lspeed_slow', 'arg':false},
+		{'command':'slow', 'subsystem':'Text', 'method':'effect_lspeed_slow', 'arg':false},
+		{'command':'normal', 'subsystem':'Text', 'method':'effect_lspeed_normal', 'arg':false},
+		{'command':'fast', 'subsystem':'Text', 'method':'effect_lspeed_fast', 'arg':false},
 
 		{'command':'pause', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
 		{'command':'p', 'subsystem':'Text', 'method':'effect_pause', 'arg':true},
