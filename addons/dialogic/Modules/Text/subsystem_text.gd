@@ -784,6 +784,18 @@ func effect_lspeed(_text_node:Control, skipped:bool, argument:String) -> void:
 		update_text_speed()
 
 
+func effect_lspeed_slow(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_lspeed(_text_node, skipped, "0.04");
+
+
+func effect_lspeed_normal(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_lspeed(_text_node, skipped, "0.02");
+
+
+func effect_lspeed_fast(_text_node:Control, skipped:bool, argument:String) -> void:
+	effect_lspeed(_text_node, skipped, "0.01");
+
+
 func effect_signal(_text_node:Control, _skipped:bool, argument:String) -> void:
 	dialogic.text_signal.emit(argument)
 
