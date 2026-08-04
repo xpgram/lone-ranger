@@ -29,7 +29,7 @@ func _get_text_effects() -> Array[Dictionary]:
 		{'command':'pm', 'subsystem':'Text', 'method':'effect_pause_medium', 'arg':false},
 		{'command':'pl', 'subsystem':'Text', 'method':'effect_pause_long', 'arg':false},
 		{'command':'pxl', 'subsystem':'Text', 'method':'effect_pause_extra_long', 'arg':false},
-		{'command':'pdl', 'subsystem':'Text', 'method':'effect_pause_double_long', 'arg':false},
+		{'command':'pxxl', 'subsystem':'Text', 'method':'effect_pause_double_extra_long', 'arg':false},
 		{'command':'signal', 'subsystem':'Text', 'method':'effect_signal', 'arg':true},
 		{'command':'mood', 'subsystem':'Text', 'method':'effect_mood', 'arg':true},
 	]
