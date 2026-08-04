@@ -668,7 +668,7 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 		return
 
 	var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
-	var pause_duration: float = ProjectSettings.get_setting('dialogic/text/letter_speed', 0.01);
+	var pause_duration: float = 0.2;
 	var pause_count := 1;
 	var skip_multipliers := false;
 
@@ -696,15 +696,15 @@ func effect_pause_medium(_text_node:Control, skipped:bool, argument:String) -> v
 
 
 func effect_pause_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "5");
+	await effect_pause(_text_node, skipped, "4");
 
 
 func effect_pause_extra_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "7.5");
+	await effect_pause(_text_node, skipped, "8");
 
 
-func effect_pause_double_long(_text_node:Control, skipped:bool, argument:String) -> void:
-	await effect_pause(_text_node, skipped, "10");
+func effect_pause_double_extra_long(_text_node:Control, skipped:bool, argument:String) -> void:
+	await effect_pause(_text_node, skipped, "12");
 
 
 func effect_speed(_text_node:Control, skipped:bool, argument:String) -> void:
