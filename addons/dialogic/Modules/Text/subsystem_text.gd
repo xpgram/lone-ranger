@@ -712,7 +712,7 @@ func effect_pause_breve(_text_node:Control, skipped:bool, argument:String) -> vo
 
 
 func effect_pause_breve_dot(_text_node:Control, skipped:bool, argument:String) -> void:
-	await _effect_await_seconds(2.5, skipped);
+	await _effect_await_seconds(3.0, skipped);
 
 
 func effect_pause_half(_text_node:Control, skipped:bool, argument:String) -> void:
