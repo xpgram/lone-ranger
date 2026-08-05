@@ -689,10 +689,10 @@ func _effect_await_seconds(time: float, skipped := false, skip_multipliers := fa
 	):
 		return;
 
-  var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
+	var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
 
-  if not skip_multipliers:
-    time *= _speed_multiplier * text_speed;
+	if not skip_multipliers:
+		time *= _speed_multiplier * text_speed;
 
 	await get_tree().create_timer(time).timeout;
 
