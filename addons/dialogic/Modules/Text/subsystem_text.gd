@@ -667,14 +667,9 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 	if skipped or dialogic.Inputs.auto_skip.enabled:
 		return
 
-	var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
 	var pause_duration: float = 0.1;
-	var pause_count := 1;
+	var pause_count := 1.0;
 	var skip_multipliers := false;
-
-	# [TODO] Also, this is elsewhere, but: add slow, normal, fast aliases for lspeed.
-	# [TODO] 'stutter' could be an alias for slow, I guess.
-	# [TODO] What is the different between speed and lspeed?
 
 	if argument:
 		if argument.ends_with('!'):
@@ -683,20 +678,23 @@ func effect_pause(_text_node:Control, skipped:bool, argument:String) -> void:
 		pause_count = float(argument);
 
 	var wait_duration := pause_count * pause_duration;
-
-	if not skip_multipliers:
-		wait_duration *= _speed_multiplier * text_speed;
-
-	_effect_await_seconds(wait_duration, skipped);
+	await _effect_await_seconds(wait_duration, skipped, skip_multipliers);
 
 
-func _effect_await_seconds(time: float, skipped: bool) -> void:
+func _effect_await_seconds(time: float, skipped := false, skip_multipliers := false) -> void:
 	if (
-			not skipped
-			and not dialogic.Inputs.auto_skip.enabled
-			and time != 0
+			skipped
+			or dialogic.Inputs.auto_skip.enabled
+			or time == 0
 	):
-		await get_tree().create_timer(time).timeout;
+		return;
+
+  var text_speed: float = dialogic.Settings.get_setting('text_speed', 1)
+
+  if not skip_multipliers:
+    time *= _speed_multiplier * text_speed;
+
+	await get_tree().create_timer(time).timeout;
 
 
 func effect_pause_whole(_text_node:Control, skipped:bool, argument:String) -> void:
