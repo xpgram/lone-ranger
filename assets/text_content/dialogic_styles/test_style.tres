@@ -31,6 +31,21 @@ scene = ExtResource("5_3vsic")
 [sub_resource type="Resource" id="Resource_xs7l0"]
 script = ExtResource("2_dp2vu")
 scene = ExtResource("6_jopf7")
+overrides = {
+"box_animation_in": "0",
+"box_animation_out": "0",
+"box_margin_bottom": "50.0",
+"box_size": "Vector2(1400, 250)",
+"name_label_box_offset": "Vector2(-100, -20)",
+"name_label_custom_font_size": "40.0",
+"name_label_font": "\"res://assets/fonts/courier_new.ttf\"",
+"name_label_use_global_font": "false",
+"name_label_use_global_font_size": "false",
+"normal_font": "\"res://assets/fonts/courier_new.ttf\"",
+"text_size": "50.0",
+"text_use_global_font": "false",
+"text_use_global_size": "false"
+}
 
 [sub_resource type="Resource" id="Resource_12ewq"]
 script = ExtResource("2_dp2vu")
@@ -39,6 +54,9 @@ scene = ExtResource("7_pe00q")
 [sub_resource type="Resource" id="Resource_hpvb2"]
 script = ExtResource("2_dp2vu")
 scene = ExtResource("8_llmxj")
+overrides = {
+"font_size_custom": "32.0"
+}
 
 [sub_resource type="Resource" id="Resource_glook"]
 script = ExtResource("2_dp2vu")
