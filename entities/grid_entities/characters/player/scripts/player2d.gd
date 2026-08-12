@@ -595,6 +595,10 @@ func _state_idle__input(event: InputEvent) -> void:
     _command_menu.open_from_start();
     focus_node.accept_event();
 
+  elif event is InputEventKey and event.keycode == KEY_Q:
+    Dialogic.start("test_timeline")
+    # Dialogic.start_timeline("test_timeline")
+
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
   if Input.is_action_pressed('brace'):
