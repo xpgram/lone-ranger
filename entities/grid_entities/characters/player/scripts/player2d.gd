@@ -596,8 +596,8 @@ func _state_idle__input(event: InputEvent) -> void:
     focus_node.accept_event();
 
   elif event is InputEventKey and event.keycode == KEY_Q:
-    Dialogic.start("test_timeline")
-    # Dialogic.start_timeline("test_timeline")
+    # Dialogic.start("test_timeline")
+    Dialogic.start_timeline("uid://vdaf8glp6g6c")
 
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
