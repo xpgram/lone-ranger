@@ -34,15 +34,17 @@ scene = ExtResource("6_jopf7")
 overrides = {
 "box_animation_in": "0",
 "box_animation_out": "0",
-"box_margin_bottom": "20.0",
-"box_size": "Vector2(1400, 400)",
-"name_label_box_offset": "Vector2(8, -30)",
+"box_margin_bottom": "0.0",
+"box_size": "Vector2(1400, 300)",
+"name_label_box_offset": "Vector2(0, -30)",
 "name_label_custom_font_size": "60.0",
 "name_label_font": "\"res://assets/fonts/courier_new.ttf\"",
 "name_label_use_global_font": "false",
 "name_label_use_global_font_size": "false",
+"next_indicator_position_offset": "Vector2(-25, -60)",
+"next_indicator_size": "Vector2(40, 40)",
 "normal_font": "\"res://assets/fonts/courier_new.ttf\"",
-"text_size": "60.0",
+"text_size": "72.0",
 "text_use_global_font": "false",
 "text_use_global_size": "false"
 }
