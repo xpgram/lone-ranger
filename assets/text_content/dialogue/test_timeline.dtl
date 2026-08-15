@@ -1,4 +1,8 @@
-[style name="test_style"]
+# The timeline thing doesn't start if I don't have this line——naturally.
+# However, if I had multiple Dialogic nodes in the tree, how does it know which one I want to use?
+# Or, if there should be only one, how does it know _how_ I want to use it?
+[style name="cmd_menu_commentary_box"]
+
 join keiichi left
 join rena right
 keiichi: Hey, Rena...[p1.] Is there something...[p1] that everyone is keeping from me?

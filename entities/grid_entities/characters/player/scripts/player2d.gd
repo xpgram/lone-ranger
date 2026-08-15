@@ -597,7 +597,16 @@ func _state_idle__input(event: InputEvent) -> void:
 
   elif event is InputEventKey and event.keycode == KEY_Q:
     # Dialogic.start("test_timeline")
-    Dialogic.start_timeline("uid://vdaf8glp6g6c")
+    # Dialogic.
+
+    # Plays a dynamically constructed timeline. Ex for inventory and
+    # object inspections.
+    var timeline := DialogicTimeline.new();
+    timeline.from_text('Hello.\nWelcome to...[p1] hell.');
+    Dialogic.start_timeline(timeline);
+
+    # Plays the Higurashi timeline I copied.
+    # Dialogic.start_timeline("uid://vdaf8glp6g6c")
 
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
