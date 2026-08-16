@@ -1,6 +1,16 @@
 class_name DialogicGameHandler
 extends Node
 
+
+# [TODO] Learn
+# [ ] Where is the layout/style stuff actually spawned in?
+#    In effect_set_style, maybe?
+#    [ ] How can I redirect it to a place of my choosing?
+# When I'm ready to (after doing other things):
+# [ ] Create a sub-git for Dialogic
+# [ ] Squash all changes into a commit extending from Dialogic 2 version Alpha-20, I think.
+
+
 ## Class that is used as the Dialogic autoload.
 
 ## Autoload script that allows you to interact with all of Dialogic's systems:[br]
