@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DialogicStyle" format=3 uid="uid://bbulskjn2c445"]
+
+[ext_resource type="Script" uid="uid://bwg6yncmh2cml" path="res://addons/dialogic/Resources/dialogic_style_layer.gd" id="1_enaun"]
+[ext_resource type="Script" uid="uid://dv08k6ljua6fm" path="res://addons/dialogic/Resources/dialogic_style.gd" id="2_kso3r"]
+[ext_resource type="PackedScene" uid="uid://bquja8jyk8kbr" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_layer.tscn" id="2_nlwyc"]
+
+[sub_resource type="Resource" id="Resource_nlwyc"]
+script = ExtResource("1_enaun")
+
+[sub_resource type="Resource" id="Resource_7af5h"]
+script = ExtResource("1_enaun")
+scene = ExtResource("2_nlwyc")
+
+[resource]
+script = ExtResource("2_kso3r")
+name = "cmd_menu_commentary_box"
+layer_list = Array[String](["10"])
+layer_info = {
+"": SubResource("Resource_nlwyc"),
+"10": SubResource("Resource_7af5h")
+}
+metadata/_latest_layer = "10"
