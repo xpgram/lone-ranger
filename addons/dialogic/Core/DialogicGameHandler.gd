@@ -6,6 +6,9 @@ extends Node
 # [ ] Where is the layout/style stuff actually spawned in?
 #    In effect_set_style, maybe?
 #    [ ] How can I redirect it to a place of my choosing?
+# Choosing textboxes:
+#    subsystem_text.get_textboxes() takes an identifier that can filter down
+#    the list of all to a list of one.
 # When I'm ready to (after doing other things):
 # [ ] Create a sub-git for Dialogic
 # [ ] Squash all changes into a commit extending from Dialogic 2 version Alpha-20, I think.
