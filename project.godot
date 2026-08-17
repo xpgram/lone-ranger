@@ -42,6 +42,7 @@ directories/dtl_directory={
 }
 layout/style_directory={
 "": "res://assets/text_content/dialogic_styles/test_style.tres",
+"cmd_menu_commentary_box": "res://assets/text_content/dialogic_styles/cmd_menu_commentary_box.tres",
 "test_style": "res://assets/text_content/dialogic_styles/test_style.tres"
 }
 text/letter_speed=0.02
