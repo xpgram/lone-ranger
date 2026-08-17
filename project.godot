@@ -79,7 +79,7 @@ audio/channel_defaults={
 }
 glossary/default_case_sensitive=true
 variables={}
-layout/style_list=["res://assets/text_content/dialogic_styles/test_style.tres"]
+layout/style_list=["res://assets/text_content/dialogic_styles/test_style.tres", "res://assets/text_content/dialogic_styles/cmd_menu_commentary_box.tres"]
 layout/default_style="res://assets/text_content/dialogic_styles/test_style.tres"
 
 [display]

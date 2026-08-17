@@ -10,7 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
+[ext_resource type="Script" uid="uid://dlrhbqth4gipl" path="res://addons/dialogic/Modules/Style/node_style.gd" id="13_5jpfb"]
+[ext_resource type="FontFile" uid="uid://c2eb1mulsdjef" path="res://assets/fonts/courier_new_bold.ttf" id="13_h7fwu"]
+[ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="13_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
+[ext_resource type="Script" uid="uid://oxcjhq2817c7" path="res://addons/dialogic/Modules/Background/node_background_holder.gd" id="14_yibea"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/screen_space_gradient.gdshader" id="19_5jpfb"]
@@ -123,6 +127,43 @@ offset_top = 55.0
 offset_right = 90.0
 offset_bottom = -65.0
 grow_vertical = 2
+
+[node name="DialogicNode_StyleLayer" type="Control" parent="Camera2D/UIContainer" unique_id=330039341]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_5jpfb")
+layer_name = "cmd_menu_commentary_box"
+metadata/_custom_type_script = "uid://dlrhbqth4gipl"
+
+[node name="DialogicNode_BackgroundHolder" type="ColorRect" parent="Camera2D/UIContainer/DialogicNode_StyleLayer" unique_id=196785217]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.65000004
+anchor_right = 0.633
+anchor_bottom = 0.95000005
+offset_right = 0.08000183
+color = Color(0, 0, 0, 1)
+script = ExtResource("14_yibea")
+metadata/_custom_type_script = "uid://oxcjhq2817c7"
+
+[node name="DialogicNode_DialogText" type="RichTextLabel" parent="Camera2D/UIContainer/DialogicNode_StyleLayer" unique_id=1571192679 node_paths=PackedStringArray("textbox_root")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.033
+anchor_top = 0.70000005
+anchor_right = 0.6
+anchor_bottom = 0.90000004
+offset_left = 0.07999992
+theme_override_fonts/normal_font = ExtResource("13_h7fwu")
+theme_override_font_sizes/normal_font_size = 8
+script = ExtResource("13_l0w8i")
+identifier = "cmd_menu_dialogue_box"
+textbox_root = NodePath("..")
+metadata/_custom_type_script = "uid://drhfq6rmdeuri"
 
 [node name="DebugUI" parent="Camera2D/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
