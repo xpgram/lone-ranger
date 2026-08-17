@@ -603,6 +603,10 @@ func _state_idle__input(event: InputEvent) -> void:
     # object inspections.
     var timeline := DialogicTimeline.new();
     timeline.from_text('Hello.\nWelcome to...[p1] hell.');
+    # This works to choose the right box, but I don't think I like this method.
+    # I kind of wish I had something modeling audio channels so I could have
+    # concurrent event streams playing.
+    Dialogic.Text.active_textbox = "cmd_menu_dialogue_box";
     Dialogic.start_timeline(timeline);
 
     # Plays the Higurashi timeline I copied.
