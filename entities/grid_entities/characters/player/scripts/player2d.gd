@@ -602,7 +602,9 @@ func _state_idle__input(event: InputEvent) -> void:
     # Plays a dynamically constructed timeline. Ex for inventory and
     # object inspections.
     var timeline := DialogicTimeline.new();
-    timeline.from_text('Hello.\nWelcome to...[p1] hell.');
+    timeline.from_text('Hello.\n' +
+      'Welcome to...[p1] my house.' +
+      'And my yard.[p1] Mm, yes.[p4] My big back yard.');
     # This works to choose the right box, but I don't think I like this method.
     # I kind of wish I had something modeling audio channels so I could have
     # concurrent event streams playing.
