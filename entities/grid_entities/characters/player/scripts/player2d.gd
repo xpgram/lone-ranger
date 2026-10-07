@@ -595,16 +595,16 @@ func _state_idle__input(event: InputEvent) -> void:
     _command_menu.open_from_start();
     focus_node.accept_event();
 
-  elif event is InputEventKey and event.keycode == KEY_Q:
+  elif event is InputEventKey and event.is_pressed() and event.keycode == KEY_Q:
     # Dialogic.start("test_timeline")
     # Dialogic.
 
     # Plays a dynamically constructed timeline. Ex for inventory and
     # object inspections.
     var timeline := DialogicTimeline.new();
-    timeline.from_text('Hello.\n' +
-      'Welcome to...[p1] my house.' +
-      'And my yard.[p1] Mm, yes.[p4] My big back yard.');
+    timeline.from_text(
+      "I can hear something in the distance...[p1] I don't want to find out what it is.\n"
+    );
     # This works to choose the right box, but I don't think I like this method.
     # I kind of wish I had something modeling audio channels so I could have
     # concurrent event streams playing.
