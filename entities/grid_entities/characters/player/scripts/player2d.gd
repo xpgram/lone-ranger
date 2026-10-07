@@ -599,6 +599,14 @@ func _state_idle__input(event: InputEvent) -> void:
     # Dialogic.start("test_timeline")
     # Dialogic.
 
+    # [ ] How do I reintroduce textbox features?
+    #    [ ] Typing sounds per letter.
+    #    [ ] Pre-wordwrapping. Long words don't start on one line then teleport.
+    #    [ ] Continue indicator shown when text has finished printing.
+    # [ ] Can I select a dialog box by Event or singleton instead of using Dialogic.active_textbox?
+    #    (Dialogic here is a singleton, but I'm asking about more deliberate pathways than Dialogic offers.)
+    #    [ ] Do I want to? Probably, right?
+
     # Plays a dynamically constructed timeline. Ex for inventory and
     # object inspections.
     var timeline := DialogicTimeline.new();
