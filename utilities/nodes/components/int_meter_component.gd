@@ -1,3 +1,4 @@
+## @tool [br]
 ## Maintains a clamped int value and emits signals as it changes.
 @tool
 @abstract class_name IntMeterComponent
@@ -85,3 +86,31 @@ func set_hp_to_full() -> void:
 ## Returns true if the meter is allowed to emit value-changed event signals.
 func _can_emit_signals() -> bool:
   return not Engine.is_editor_hint() or _emit_signals_in_editor;
+
+
+## Returns the value range between [member minimum] and [member maximum].
+func get_value_range() -> int:
+  return maximum - minimum;
+
+
+## Returns the proportion of the meter filled as a number between 0.0 and 1.0.
+func proportion_filled() -> float:
+  return proportion_from(value);
+
+
+## Returns [param number] as a proportion of the meter: a number between 0.0 and 1.0.
+func proportion_from(number: int) -> float:
+  var normal := float(number - minimum) / get_value_range();
+  return clampf(normal, 0.0, 1.0);
+
+
+## Sets the meter's [member value] to a proportion of the total range.
+func set_by_proportion(normal: float) -> void:
+  value = roundi(normal * get_value_range() + minimum);
+
+
+## Returns an int value of the meter as a proportion of its [member minimum] to
+## [member maximum] range.
+func get_value_from_proportion(normal: float) -> int:
+  var raw_value := roundi(normal * get_value_range() + minimum);
+  return clampi(raw_value, minimum, maximum);
