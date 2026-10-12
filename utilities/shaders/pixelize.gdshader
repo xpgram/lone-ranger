@@ -12,7 +12,7 @@ uniform float pixel_grid_rotation_deg = 0.0;
 
 // The translation offset of the pixelation grid.
 // IMPLEMENT Not yet implemented. This is supposed to smooth out subpixel movement.
-uniform vec2 pixel_grid_offset = vec2(0.0);
+uniform vec2 subpixel_offset = vec2(0.0);
 
 
 //
@@ -34,8 +34,10 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   mat2 rot_ccw = transpose(rot_cw);
 
   // Algorithm:
+  // Translate the subpixel offset to grid space, where an offset of 1.0 shifts one pixel.
+  vec2 pixel_fractional = (subpixel_offset - trunc(subpixel_offset)) / resolution;
   // Project the normalized UV into the resolution space.
-  vec2 resolution_coords = uv * resolution;
+  vec2 resolution_coords = (uv + pixel_fractional) * resolution;
   // Rotate the resolution coordinates into our rotated grid space's frame of reference.
   vec2 rotated_coords = rot_ccw * resolution_coords;
   // Quantize our coordinates, taking the center as our sample point.
