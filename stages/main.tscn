@@ -1,12 +1,20 @@
 [gd_scene format=3 uid="uid://blym4at4ldbp"]
 
+[ext_resource type="Shader" uid="uid://djf87ljm1ucki" path="res://utilities/shaders/pixelize.gdshader" id="1_43f5m"]
 [ext_resource type="PackedScene" uid="uid://5elbiihgljqp" path="res://stages/00-test.tscn" id="1_72s8x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i8c80"]
+shader = ExtResource("1_43f5m")
+shader_parameter/pixel_grid_resolution = Vector2(240, 160)
+shader_parameter/pixel_grid_rotation_deg = 0.0
+shader_parameter/pixel_grid_offset = Vector2(0, 0)
 
 [node name="Main" type="Node2D" unique_id=511087797]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1623571357]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer" unique_id=768149795]
+material = SubResource("ShaderMaterial_i8c80")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
