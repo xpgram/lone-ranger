@@ -12,6 +12,7 @@ const HALF_PAGE_SIZE_WIDTH := PAGE_SIZE_WIDTH * 0.5 - Constants.GRID_SIZE * 0.5;
 const HALF_PAGE_SIZE_HEIGHT := PAGE_SIZE_HEIGHT * 0.5 - Constants.GRID_SIZE * 0.5;
 
 enum FollowType {
+  None,
   Instant,
   Close,
   Paged,
@@ -27,6 +28,10 @@ enum FollowType {
 var _subpixel_position := Vector2();
 
 
+var _position: Vector2 = position;
+var _rotation: float = rotation;
+
+
 func _ready() -> void:
   var new_position := subject.position;
   position = new_position;
@@ -36,6 +41,21 @@ func _process(delta: float) -> void:
   _follow_subject(delta);
 
 
+func _unhandled_input(event: InputEvent) -> void:
+  if not event.is_pressed() or not event is InputEventKey:
+    return;
+
+  var key_event := event as InputEventKey;
+  var move_speed := 0.25;
+
+  if key_event.keycode == KEY_BRACKETLEFT:
+    position.x -= move_speed;
+  if key_event.keycode == KEY_BRACKETRIGHT:
+    position.x += move_speed;
+
+  _notify_transform_changes();
+
+
 func _follow_subject(delta: float) -> void:
   if not subject:
     return;
@@ -43,6 +63,8 @@ func _follow_subject(delta: float) -> void:
   var new_position: Vector2;
 
   match follow_type:
+    FollowType.None:
+      return;
     FollowType.Instant:
       new_position = subject.position;
       _subpixel_position = new_position;
@@ -64,3 +86,15 @@ func _follow_subject(delta: float) -> void:
   # Set to subpixel position or snap to destination.
   var distance := position.distance_to(new_position)
   position = new_position if distance < 0.5 else _subpixel_position;
+
+  _notify_transform_changes();
+
+
+func _notify_transform_changes() -> void:
+  if (position != _position):
+    _position = position;
+    Events.player_camera_position_changed.emit(position);
+
+  if (rotation != _rotation):
+    _rotation = rotation;
+    Events.player_camera_rotation_changed.emit(rotation);
