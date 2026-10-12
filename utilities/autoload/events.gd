@@ -33,6 +33,12 @@ signal player_interacting_with(object: GridObject);
 ## Emitted when the player's held count of [param action] is adjusted to a new quantity.
 signal player_inventory_item_updated(action: FieldAction, new_quantity: int);
 
+##
+signal player_camera_position_changed(position: Vector2);
+
+##
+signal player_camera_rotation_changed(rotation: float);
+
 ## Emitted by entities when shouting messages to a player's event UI.
 signal game_event_message_announced(message: String);
 
