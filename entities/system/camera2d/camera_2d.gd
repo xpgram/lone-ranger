@@ -94,9 +94,13 @@ func _follow_subject(delta: float) -> void:
 
       _subpixel_position = _subpixel_position.move_toward(new_position, delta * paged_follow_speed);
 
-  # Set to subpixel position or snap to destination.
+  # Set the subpixel position to destination when very close.
   var distance := position.distance_to(new_position)
-  position = new_position if distance < 0.5 else _subpixel_position;
+  if distance < 0.5:
+    _subpixel_position = new_position;
+
+  # Set the actual position.
+  position = _subpixel_position;
 
   _notify_transform_changes();
 
