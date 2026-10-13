@@ -17,18 +17,18 @@ uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_ne
 uniform vec2 pixel_grid_resolution = vec2(240, 160);
 
 // The angle in degrees of the pixelation grid.
-uniform float pixel_grid_rotation_deg = 0.0;
+uniform float pixel_grid_rotation = 0.0;
 
 // The translation offset of the pixelation grid.
 // IMPLEMENT Not yet implemented. This is supposed to smooth out subpixel movement.
 uniform vec2 subpixel_offset = vec2(0.0);
 
 
-//
+// Returns a matrix that when multiplied with a vector produces a new vector
+// rotated by [param angle] radians.
 mat2 get_rotation_matrix(float angle){
-  float rad_angle = radians(angle);
-  float cos_r = cos(rad_angle);
-  float sin_r = sin(rad_angle);
+  float cos_r = cos(angle);
+  float sin_r = sin(angle);
 
   return mat2(
     vec2(cos_r ,-sin_r),
@@ -68,6 +68,6 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
 
 
 void fragment() {
-  vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixel_grid_resolution, -pixel_grid_rotation_deg);
+  vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixel_grid_resolution, -pixel_grid_rotation);
   COLOR = texture(TEXTURE, grid_uv);
 }

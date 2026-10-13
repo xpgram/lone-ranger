@@ -15,6 +15,7 @@ func _on_player_camera_position_changed(camera_position: Vector2) -> void:
   );
 
   material.set_shader_parameter('subpixel_offset', subpixel_offset);
+  # [DEBUG]
   prints(
     'Pos:',
     material.get_shader_parameter('subpixel_offset'),
@@ -23,9 +24,9 @@ func _on_player_camera_position_changed(camera_position: Vector2) -> void:
 
 ##
 func _on_player_camera_rotation_changed(camera_rotation: float) -> void:
-  var camera_rotation_deg := rad_to_deg(camera_rotation);
-  material.set_shader_parameter('pixel_grid_rotation_deg', camera_rotation_deg);
+  material.set_shader_parameter('pixel_grid_rotation', camera_rotation);
+  # [DEBUG]
   prints(
     'Rot:',
-    material.get_shader_parameter('pixel_grid_rotation_deg'),
+    material.get_shader_parameter('pixel_grid_rotation'),
   );
