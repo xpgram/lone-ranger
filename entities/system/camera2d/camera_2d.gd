@@ -50,7 +50,7 @@ func _unhandled_input(event: InputEvent) -> void:
   var rot_speed := PI / 180;
 
   if key_event.keycode == KEY_BACKSLASH:
-    follow_type = FollowType.None;
+    follow_type = FollowType.None if follow_type != FollowType.None else FollowType.Close;
 
   if key_event.get_modifiers_mask() == KEY_MASK_SHIFT:
     if key_event.keycode == KEY_BRACKETLEFT:
