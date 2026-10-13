@@ -14,10 +14,10 @@ func _on_player_camera_position_changed(camera_position: Vector2) -> void:
     camera_position.y - int(camera_position.y),
   );
 
-  material.set_shader_parameter('pixel_grid_offset', subpixel_offset);
+  material.set_shader_parameter('subpixel_offset', subpixel_offset);
   prints(
     'Pos:',
-    material.get_shader_parameter('pixel_grid_offset'),
+    material.get_shader_parameter('subpixel_offset'),
   );
 
 
