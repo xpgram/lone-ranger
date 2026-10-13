@@ -40,14 +40,17 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   mat2 rot_ccw = transpose(rot_cw);
 
   // Algorithm:
-  // Translate the subpixel offset to grid space, where an offset of 1.0 shifts one pixel.
-  vec2 pixel_fractional = mod(subpixel_offset - vec2(0.5), 1.0) / resolution;
   // Project the normalized UV into the resolution space.
-  vec2 resolution_coords = (uv + pixel_fractional) * resolution;
+  vec2 resolution_coords = uv * resolution;
   // Rotate the resolution coordinates into our rotated grid space's frame of reference.
   vec2 rotated_coords = rot_ccw * resolution_coords;
+  // Translate the subpixel offset to grid space, where an offset of 1.0 shifts one pixel.
+  vec2 pixel_fractional = mod(subpixel_offset, 1.0) - 0.5;
+  // Snap the subpixel offset to 0.0 at small numbers to help with jitter.
+  pixel_fractional.x = (abs(pixel_fractional.x) < 0.1) ? 0.0 : pixel_fractional.x;
+  pixel_fractional.y = (abs(pixel_fractional.y) < 0.1) ? 0.0 : pixel_fractional.y;
   // Quantize our coordinates, taking the center as our sample point.
-  vec2 rotated_sample_coords = floor(rotated_coords) + vec2(0.5);
+  vec2 rotated_sample_coords = floor(rotated_coords + pixel_fractional + vec2(0.5));
   // Unrotate our coordinates back into the screen's frame of reference.
   vec2 sample_coords = rot_cw * rotated_sample_coords;
   // Project our resolution coordinates back into a normalized UV.
@@ -66,12 +69,12 @@ void fragment() {
   COLOR = texture(TEXTURE, grid_uv);
 
   // [DEBUG] Test for whether subpixel is being applied.
-  if (SCREEN_UV.x < 0.1 && SCREEN_UV.y < 0.1) {
+  if (false && SCREEN_UV.x < 0.1 && SCREEN_UV.y < 0.1) {
     COLOR = vec4(abs(subpixel_offset.x), 0.0, abs(subpixel_offset.y), 1.0);
   }
 
   // [DEBUG] Test for whether rotation is being applied.
-  if (SCREEN_UV.x > 0.9 && SCREEN_UV.y < 0.1) {
+  if (false && SCREEN_UV.x > 0.9 && SCREEN_UV.y < 0.1) {
     float rotation_normal = abs(pixel_grid_rotation_deg / 20.0);
     float rotation_normal_2 = abs(mod(rotation_normal - 0.5, 1.0));
     COLOR = vec4(rotation_normal, rotation_normal_2, 0.0, 1.0);
