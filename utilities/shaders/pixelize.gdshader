@@ -43,7 +43,7 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   // Translate the subpixel offset to grid space, where an offset of 1.0 shifts one pixel.
   vec2 pixel_fractional = mod(subpixel_offset - vec2(0.5), 1.0) / resolution;
   // Project the normalized UV into the resolution space.
-  vec2 resolution_coords = (uv + pixel_fractional) * resolution;
+  vec2 resolution_coords = (uv - pixel_fractional) * resolution;
   // Rotate the resolution coordinates into our rotated grid space's frame of reference.
   vec2 rotated_coords = rot_ccw * resolution_coords;
   // Quantize our coordinates, taking the center as our sample point.
