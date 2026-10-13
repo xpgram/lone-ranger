@@ -47,11 +47,19 @@ func _unhandled_input(event: InputEvent) -> void:
 
   var key_event := event as InputEventKey;
   var move_speed := 0.25;
+  var rot_speed := PI / 180;
 
-  if key_event.keycode == KEY_BRACKETLEFT:
-    position.x -= move_speed;
-  if key_event.keycode == KEY_BRACKETRIGHT:
-    position.x += move_speed;
+  if key_event.get_modifiers_mask() == KEY_MASK_SHIFT:
+    if key_event.keycode == KEY_BRACKETLEFT:
+      rotation += rot_speed;
+    if key_event.keycode == KEY_BRACKETRIGHT:
+      rotation -= rot_speed;
+  else:
+    if key_event.keycode == KEY_BRACKETLEFT:
+      position.x -= move_speed;
+    if key_event.keycode == KEY_BRACKETRIGHT:
+      position.x += move_speed;
+
 
   _notify_transform_changes();
 
