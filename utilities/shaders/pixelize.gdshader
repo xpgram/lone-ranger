@@ -1,10 +1,11 @@
 shader_type canvas_item;
 
-// [TODO] Fix the follow-cam jiggering.
-//     Sometimes when moving horizontall after vertically, the y-value gets stuck
-//     at -0.00015 or similar, but only while the camera is moving. Why isn't the
-//     y-value corrected permanently to 0?
-// [TODO] Turn this shader into an importable that Viewport makes use of.
+// [TODO] Verify the camera no longer jitters when moving.
+//     I think it doesn't, but... hm.
+// [TODO] Turn this shader into an importable that the Viewport shader makes use of.
+// [TODO] Write doc strings for these functions.
+// [TODO] Move the player's UI stuff above the viewport (out of the player module).
+//     This stops the shader from micro-adjusting the UI, or pixelizing it.
 
 uniform bool enable = true;
 
@@ -68,18 +69,5 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
 
 void fragment() {
   vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixel_grid_resolution, -pixel_grid_rotation_deg);
-
   COLOR = texture(TEXTURE, grid_uv);
-
-  // [DEBUG] Test for whether subpixel is being applied.
-  if (false && SCREEN_UV.x < 0.1 && SCREEN_UV.y < 0.1) {
-    COLOR = vec4(abs(subpixel_offset.x), 0.0, abs(subpixel_offset.y), 1.0);
-  }
-
-  // [DEBUG] Test for whether rotation is being applied.
-  if (false && SCREEN_UV.x > 0.9 && SCREEN_UV.y < 0.1) {
-    float rotation_normal = abs(pixel_grid_rotation_deg / 20.0);
-    float rotation_normal_2 = abs(mod(rotation_normal - 0.5, 1.0));
-    COLOR = vec4(rotation_normal, rotation_normal_2, 0.0, 1.0);
-  }
 }
