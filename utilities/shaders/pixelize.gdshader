@@ -64,4 +64,16 @@ void fragment() {
   vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixel_grid_resolution, -pixel_grid_rotation_deg);
 
   COLOR = texture(TEXTURE, grid_uv);
+
+  // [DEBUG] Test for whether subpixel is being applied.
+  if (SCREEN_UV.x < 0.1 && SCREEN_UV.y < 0.1) {
+    COLOR = vec4(abs(subpixel_offset.x), 0.0, abs(subpixel_offset.y), 1.0);
+  }
+
+  // [DEBUG] Test for whether rotation is being applied.
+  if (SCREEN_UV.x > 0.9 && SCREEN_UV.y < 0.1) {
+    float rotation_normal = abs(pixel_grid_rotation_deg / 20.0);
+    float rotation_normal_2 = abs(mod(rotation_normal - 0.5, 1.0));
+    COLOR = vec4(rotation_normal, rotation_normal_2, 0.0, 1.0);
+  }
 }
