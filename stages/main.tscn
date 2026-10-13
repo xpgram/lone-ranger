@@ -2,12 +2,14 @@
 
 [ext_resource type="Shader" uid="uid://djf87ljm1ucki" path="res://utilities/shaders/pixelize.gdshader" id="1_43f5m"]
 [ext_resource type="PackedScene" uid="uid://5elbiihgljqp" path="res://stages/00-test.tscn" id="1_72s8x"]
+[ext_resource type="Script" uid="uid://cw6lddr1evr6v" path="res://stages/sub_viewport_container.gd" id="2_7iyax"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i8c80"]
 shader = ExtResource("1_43f5m")
+shader_parameter/enable = true
 shader_parameter/pixel_grid_resolution = Vector2(240, 160)
 shader_parameter/pixel_grid_rotation_deg = 0.0
-shader_parameter/pixel_grid_offset = Vector2(0, 0)
+shader_parameter/subpixel_offset = Vector2(0, 0)
 
 [node name="Main" type="Node2D" unique_id=511087797]
 
@@ -21,6 +23,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+script = ExtResource("2_7iyax")
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer" unique_id=760992087]
 handle_input_locally = false
