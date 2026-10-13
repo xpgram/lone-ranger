@@ -95,9 +95,11 @@ func _follow_subject(delta: float) -> void:
       _subpixel_position = _subpixel_position.move_toward(new_position, delta * paged_follow_speed);
 
   # Set the subpixel position to destination when very close.
-  var distance := position.distance_to(new_position)
-  if distance < 0.5:
-    _subpixel_position = new_position;
+  var close_distance_threshhold := 0.25;
+  if abs(new_position.x - _subpixel_position.x) < close_distance_threshhold:
+    _subpixel_position.x = new_position.x;
+  if abs(new_position.y - _subpixel_position.y) < close_distance_threshhold:
+    _subpixel_position.y = new_position.y;
 
   # Set the actual position.
   position = _subpixel_position;
