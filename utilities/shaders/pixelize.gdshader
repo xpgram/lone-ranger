@@ -1,5 +1,11 @@
 shader_type canvas_item;
 
+// [TODO] Fix the follow-cam jiggering.
+//     Sometimes when moving horizontall after vertically, the y-value gets stuck
+//     at -0.00015 or similar, but only while the camera is moving. Why isn't the
+//     y-value corrected permanently to 0?
+// [TODO] Turn this shader into an importable that Viewport makes use of.
+
 uniform bool enable = true;
 
 // This uniform auto-captures the screen texture.
