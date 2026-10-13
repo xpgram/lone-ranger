@@ -49,6 +49,9 @@ func _unhandled_input(event: InputEvent) -> void:
   var move_speed := 0.2;
   var rot_speed := PI / 180;
 
+  if key_event.keycode == KEY_BACKSLASH:
+    follow_type = FollowType.None;
+
   if key_event.get_modifiers_mask() == KEY_MASK_SHIFT:
     if key_event.keycode == KEY_BRACKETLEFT:
       rotation += rot_speed;
