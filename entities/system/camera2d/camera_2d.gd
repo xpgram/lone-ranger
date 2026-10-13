@@ -46,7 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
     return;
 
   var key_event := event as InputEventKey;
-  var move_speed := 0.2;
+  var move_speed := 0.1;
   var rot_speed := PI / 180;
 
   if key_event.keycode == KEY_BACKSLASH:
