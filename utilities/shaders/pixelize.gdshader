@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform bool enable = true;
+
 // This uniform auto-captures the screen texture.
 uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
 
@@ -30,6 +32,10 @@ mat2 get_rotation_matrix(float angle){
 
 //
 vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
+  if (!enable) {
+    return uv;
+  }
+
   mat2 rot_cw = get_rotation_matrix(-angle);
   mat2 rot_ccw = transpose(rot_cw);
 
