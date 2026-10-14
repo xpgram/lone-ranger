@@ -105,15 +105,17 @@ func _follow_subject(delta: float) -> void:
     _subpixel_position.y = new_position.y;
 
   # Set the actual position.
-  position = _subpixel_position;
+  # The pixelation shader handles subpixel movement, so the camera's actual
+  # subpixel position is discarded to avoid jittering.
+  position = _subpixel_position.floor();
 
   _notify_transform_changes();
 
 
 func _notify_transform_changes() -> void:
-  if (position != _position):
-    _position = position;
-    Events.player_camera_position_changed.emit(position);
+  if (_subpixel_position != _position):
+    _position = _subpixel_position;
+    Events.player_camera_position_changed.emit(_subpixel_position);
 
   if (rotation != _rotation):
     _rotation = rotation;
