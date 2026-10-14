@@ -57,6 +57,7 @@ func _unhandled_input(event: InputEvent) -> void:
       rotation += rot_speed;
     if key_event.keycode == KEY_BRACKETRIGHT:
       rotation -= rot_speed;
+    rotation = Math.snap_to_interval(rotation, PI / 4.0, PI / 360.0);
   else:
     if key_event.keycode == KEY_BRACKETLEFT:
       position.x -= move_speed;

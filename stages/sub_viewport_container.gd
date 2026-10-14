@@ -29,9 +29,6 @@ func _on_player_camera_position_changed(camera_position: Vector2) -> void:
 
 ## Updates shader parameters when the player camera's rotation changes.
 func _on_player_camera_rotation_changed(camera_rotation: float) -> void:
-  if camera_rotation > -0.2 and camera_rotation < 0.2:
-    camera_rotation = 0;
-
   material.set_shader_parameter('pixel_grid_rotation', camera_rotation);
 
 
