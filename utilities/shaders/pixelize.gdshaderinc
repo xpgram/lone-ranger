@@ -55,7 +55,7 @@ vec2 get_pixelated_UV(vec2 uv){
   vec2 pixel_fractional = subpixel_offset - floor(subpixel_offset);
   pixel_fractional.x = (pixel_fractional.x < 0.0) ? 1.0 - pixel_fractional.x : pixel_fractional.x;
   pixel_fractional.y = (pixel_fractional.y < 0.0) ? 1.0 - pixel_fractional.y : pixel_fractional.y;
-  // Quantize our coordinates, taking the center as our sample point.
+  // Quantize our coordinates, shifting our sample point by the subpixel offset.
   vec2 rotated_sample_coords = floor(rotated_coords + pixel_fractional);
   // Unrotate our coordinates back into the screen's frame of reference.
   vec2 sample_coords = rot_cw * rotated_sample_coords;
@@ -67,5 +67,3 @@ vec2 get_pixelated_UV(vec2 uv){
 
   return sample_uv;
 }
-
-// [TODO] the +vec(0.5) is now implied. ...Isn't it? I don't even know, man.
