@@ -1,6 +1,3 @@
-// [TODO] Verify the camera no longer jitters when moving.
-//     I think it doesn't, but... hm.
-// [TODO] Write doc strings for these functions.
 // [TODO] Move the player's UI stuff above the viewport (out of the player module).
 //     This stops the shader from micro-adjusting the UI, or pixelizing it.
 // [TODO] Is it better to import a gdshaderinc? Or to have a "second pass" shader set?
