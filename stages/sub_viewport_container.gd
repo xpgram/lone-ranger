@@ -14,6 +14,7 @@ func _unhandled_input(event: InputEvent) -> void:
   var key_event := event as InputEventKey;
   var resolution_increment := 20;
 
+  # [DEBUG]
   if key_event.get_modifiers_mask() == KEY_MASK_META:
     if key_event.keycode == KEY_BRACKETLEFT:
       _add_to_resolution(resolution_increment);
