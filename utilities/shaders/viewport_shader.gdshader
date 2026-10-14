@@ -4,6 +4,6 @@ shader_type canvas_item;
 
 
 void fragment() {
-  vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixel_grid_resolution, -pixel_grid_rotation);
+  vec2 grid_uv = get_pixelated_UV(SCREEN_UV);
   COLOR = texture(TEXTURE, grid_uv);
 }
