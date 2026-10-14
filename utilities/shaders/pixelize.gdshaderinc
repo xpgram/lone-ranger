@@ -53,6 +53,8 @@ vec2 get_pixelated_UV(vec2 uv){
   vec2 rotated_coords = rot_ccw * resolution_coords;
   // Translate the subpixel offset to grid space, where an offset of 1.0 shifts one pixel.
   vec2 pixel_fractional = subpixel_offset - floor(subpixel_offset);
+  pixel_fractional.x = (pixel_fractional.x < 0.0) ? 1.0 - pixel_fractional.x : pixel_fractional.x;
+  pixel_fractional.y = (pixel_fractional.y < 0.0) ? 1.0 - pixel_fractional.y : pixel_fractional.y;
   // Quantize our coordinates, taking the center as our sample point.
   vec2 rotated_sample_coords = floor(rotated_coords + pixel_fractional);
   // Unrotate our coordinates back into the screen's frame of reference.
