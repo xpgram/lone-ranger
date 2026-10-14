@@ -63,6 +63,9 @@ func _unhandled_input(event: InputEvent) -> void:
     if key_event.keycode == KEY_BRACKETRIGHT:
       position.x += move_speed;
 
+  if key_event.keycode in [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN]:
+    prints('\nPressed movement key');
+
 
   _notify_transform_changes();
 
@@ -95,7 +98,7 @@ func _follow_subject(delta: float) -> void:
       _subpixel_position = _subpixel_position.move_toward(new_position, delta * paged_follow_speed);
 
   # Set the subpixel position to destination when very close.
-  var close_distance_threshhold := 0.25;
+  var close_distance_threshhold := 0.5;
   if abs(new_position.x - _subpixel_position.x) < close_distance_threshhold:
     _subpixel_position.x = new_position.x;
   if abs(new_position.y - _subpixel_position.y) < close_distance_threshhold:
