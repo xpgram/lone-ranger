@@ -1,11 +1,11 @@
-shader_type canvas_item;
-
 // [TODO] Verify the camera no longer jitters when moving.
 //     I think it doesn't, but... hm.
-// [TODO] Turn this shader into an importable that the Viewport shader makes use of.
 // [TODO] Write doc strings for these functions.
 // [TODO] Move the player's UI stuff above the viewport (out of the player module).
 //     This stops the shader from micro-adjusting the UI, or pixelizing it.
+// [TODO] Is it better to import a gdshaderinc? Or to have a "second pass" shader set?
+//     Is it easy to include a second pass?
+//     Is there any performance overhead for having a second pass instead of an include?
 
 uniform bool enable = true;
 
@@ -37,7 +37,9 @@ mat2 get_rotation_matrix(float angle){
 }
 
 
-//
+// Returns a new UV from [param uv] quantized to a pixel grid of [param resolution].
+// [TODO] Remove resolution as a param, use the uniform directly (only if this script is an include type).
+// [TODO] Remove angle as a param, use the uniform directly (only if this script is an include type).
 vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   if (!enable) {
     return uv;
@@ -64,10 +66,4 @@ vec2 get_pixelated_UV(vec2 uv, vec2 resolution, float angle){
   sample_uv = clamp(sample_uv, vec2(0.0), vec2(1.0));
 
   return sample_uv;
-}
-
-
-void fragment() {
-  vec2 grid_uv = get_pixelated_UV(SCREEN_UV, pixel_grid_resolution, -pixel_grid_rotation);
-  COLOR = texture(TEXTURE, grid_uv);
 }

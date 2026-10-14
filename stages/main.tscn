@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://blym4at4ldbp"]
 
-[ext_resource type="Shader" uid="uid://djf87ljm1ucki" path="res://utilities/shaders/pixelize.gdshader" id="1_43f5m"]
+[ext_resource type="Shader" uid="uid://cba6pmvgo5cs" path="res://utilities/shaders/viewport_shader.gdshader" id="1_7iyax"]
 [ext_resource type="PackedScene" uid="uid://5elbiihgljqp" path="res://stages/00-test.tscn" id="1_72s8x"]
 [ext_resource type="Script" uid="uid://cw6lddr1evr6v" path="res://stages/sub_viewport_container.gd" id="2_7iyax"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i8c80"]
-shader = ExtResource("1_43f5m")
+shader = ExtResource("1_7iyax")
 shader_parameter/enable = true
 shader_parameter/pixel_grid_resolution = Vector2(240, 160)
 shader_parameter/pixel_grid_rotation = 0.0
