@@ -65,3 +65,5 @@ vec2 get_pixelated_UV(vec2 uv){
 
   return sample_uv;
 }
+
+// [TODO] the +vec(0.5) is now implied. ...Isn't it? I don't even know, man.
