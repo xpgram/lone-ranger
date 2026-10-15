@@ -11,10 +11,12 @@
 //     If done right, no, and it should solve the namespace collision problem that shader
 //     includes have naturally.
 
-uniform bool enable = true;
-
 // This uniform auto-captures the screen texture.
 uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
+
+group_uniforms Pixelation;
+
+uniform bool enable = true;
 
 // The resolution of the pixelation grid. This should match the intended resolution of the
 // rendered image with no rotation applied.
