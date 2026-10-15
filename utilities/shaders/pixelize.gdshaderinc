@@ -2,6 +2,11 @@
 //     An angle of (PI / 8) is a good example.
 // [TODO] Move the player's UI stuff above the viewport (out of the player module).
 //     This stops the shader from micro-adjusting the UI, or pixelizing it.
+//     How, uh... how do I do this?
+//     I may want to apply an independent shader set to it. Pixelation at a higher resolution, maybe?
+//     So, do we put them under a different viewport?
+//     Do we just assemble the elements literally above the main viewport? How do we match
+//     the output dimensions?
 // [TODO] Is it better to import a gdshaderinc? Or to have a "second pass" shader set?
 //     Is it easy to include a second pass?
 //     Is there any performance overhead for having a second pass instead of an include?
