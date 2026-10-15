@@ -5,6 +5,8 @@
 // [TODO] Is it better to import a gdshaderinc? Or to have a "second pass" shader set?
 //     Is it easy to include a second pass?
 //     Is there any performance overhead for having a second pass instead of an include?
+//     If done right, no, and it should solve the namespace collision problem that shader
+//     includes have naturally.
 
 uniform bool enable = true;
 
