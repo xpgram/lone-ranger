@@ -67,7 +67,6 @@ func _unhandled_input(event: InputEvent) -> void:
   if key_event.keycode in [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN]:
     prints('\nPressed movement key');
 
-
   _notify_transform_changes();
 
 
