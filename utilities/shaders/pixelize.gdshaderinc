@@ -24,7 +24,7 @@ uniform vec2 grid_resolution = vec2(240, 160);
 // IMPLEMENT Not yet implemented. This is supposed to smooth out subpixel movement.
 uniform vec2 grid_offset = vec2(0.0);
 
-// The angle in degrees of the pixelation grid.
+// The angle in radians of the pixelation grid.
 uniform float grid_rotation = 0.0;
 
 // The point on the texture that the pixel grid is rotated about.
