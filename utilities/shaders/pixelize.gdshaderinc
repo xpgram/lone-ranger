@@ -12,6 +12,11 @@
 //     Is there any performance overhead for having a second pass instead of an include?
 //     If done right, no, and it should solve the namespace collision problem that shader
 //     includes have naturally.
+// [TODO] Is rotation silly at some angles because I'm not accounting for special b values
+//     (of y = mx + b) that matter at those angles? I'm not actually modeling lines, so...
+//     I dunno. Sampling the pixel midpoint doesn't fix the issue, so there's going to be
+//     some kind of bespoke shift happening at special angles, I just don't know how to
+//     caluclate it.
 
 uniform bool enable = true;
 
