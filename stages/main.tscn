@@ -7,9 +7,10 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i8c80"]
 shader = ExtResource("1_7iyax")
 shader_parameter/enable = true
-shader_parameter/pixel_grid_resolution = Vector2(240, 160)
-shader_parameter/pixel_grid_rotation = 0.0
-shader_parameter/subpixel_offset = Vector2(0, 0)
+shader_parameter/grid_resolution = Vector2(240, 160)
+shader_parameter/grid_offset = Vector2(0, 0)
+shader_parameter/grid_rotation = 0.0
+shader_parameter/grid_rotation_origin = Vector2(0.5, 0.5)
 
 [node name="Main" type="Node2D" unique_id=511087797]
 

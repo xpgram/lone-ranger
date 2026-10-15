@@ -24,20 +24,20 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Updates shader paramters when the player camera's position changes.
 func _on_player_camera_position_changed(camera_position: Vector2) -> void:
-  material.set_shader_parameter('subpixel_offset', camera_position);
+  material.set_shader_parameter('grid_offset', camera_position);
 
 
 ## Updates shader parameters when the player camera's rotation changes.
 func _on_player_camera_rotation_changed(camera_rotation: float) -> void:
-  material.set_shader_parameter('pixel_grid_rotation', camera_rotation);
+  material.set_shader_parameter('grid_rotation', camera_rotation);
 
 
 # [DEBUG]
 func _add_to_resolution(increment: int) -> void:
-  var resolution: Vector2 = material.get_shader_parameter('pixel_grid_resolution');
+  var resolution: Vector2 = material.get_shader_parameter('grid_resolution');
 
   resolution.x = max(resolution.x + increment * (240.0 / 160.0), 60);
   resolution.y = max(resolution.y + increment, 40);
   resolution = resolution.round();
 
-  material.set_shader_parameter('pixel_grid_resolution', resolution);
+  material.set_shader_parameter('grid_resolution', resolution);

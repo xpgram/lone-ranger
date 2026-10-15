@@ -25,14 +25,17 @@ uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_ne
 
 // The resolution of the pixelation grid. This should match the intended resolution of the
 // rendered image with no rotation applied.
-uniform vec2 pixel_grid_resolution = vec2(240, 160);
-
-// The angle in degrees of the pixelation grid.
-uniform float pixel_grid_rotation = 0.0;
+uniform vec2 grid_resolution = vec2(240, 160);
 
 // The translation offset of the pixelation grid.
 // IMPLEMENT Not yet implemented. This is supposed to smooth out subpixel movement.
-uniform vec2 subpixel_offset = vec2(0.0);
+uniform vec2 grid_offset = vec2(0.0);
+
+// The angle in degrees of the pixelation grid.
+uniform float grid_rotation = 0.0;
+
+// The point on the texture that the pixel grid is rotated about.
+uniform vec2 grid_rotation_origin = vec2(0.5);
 
 
 // Returns a matrix that when multiplied with a vector produces a new vector
@@ -54,16 +57,16 @@ vec2 get_pixelated_UV(vec2 uv){
     return uv;
   }
 
-  mat2 rot_cw = get_rotation_matrix(pixel_grid_rotation);
+  mat2 rot_cw = get_rotation_matrix(grid_rotation);
   mat2 rot_ccw = transpose(rot_cw);
 
   // Algorithm:
   // Project the normalized UV into the resolution space, originated about the texture's center.
-  vec2 resolution_coords = (uv - vec2(0.5)) * pixel_grid_resolution;
+  vec2 resolution_coords = (uv - grid_rotation_origin) * grid_resolution;
   // Rotate the resolution coordinates into our rotated grid space's frame of reference.
   vec2 rotated_coords = rot_ccw * resolution_coords;
   // Translate the subpixel offset to grid space, where an offset of 1.0 shifts one pixel.
-  vec2 pixel_fractional = subpixel_offset - floor(subpixel_offset);
+  vec2 pixel_fractional = grid_offset - floor(grid_offset);
   pixel_fractional.x = (pixel_fractional.x < 0.0) ? 1.0 - pixel_fractional.x : pixel_fractional.x;
   pixel_fractional.y = (pixel_fractional.y < 0.0) ? 1.0 - pixel_fractional.y : pixel_fractional.y;
   // Quantize our coordinates, sampling the center-point of the resulting pixel coordinate.
@@ -71,7 +74,7 @@ vec2 get_pixelated_UV(vec2 uv){
   // Unrotate our coordinates back into the screen's frame of reference.
   vec2 sample_coords = rot_cw * rotated_sample_coords;
   // Project our resolution coordinates back into a normalized UV, and re-originate about the (0,0) vector.
-  vec2 sample_uv = sample_coords / pixel_grid_resolution + vec2(0.5);
+  vec2 sample_uv = sample_coords / grid_resolution + grid_rotation_origin;
 
   // Make sure our sample UVs are constrained to the texture space.
   sample_uv = clamp(sample_uv, vec2(0.0), vec2(1.0));
