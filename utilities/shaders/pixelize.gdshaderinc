@@ -1,3 +1,5 @@
+// [FIXME] Some rotation angles still look weird and awful. Rotations are imperfect for some reason.
+//     An angle of (PI / 8) is a good example.
 // [TODO] Move the player's UI stuff above the viewport (out of the player module).
 //     This stops the shader from micro-adjusting the UI, or pixelizing it.
 // [TODO] Is it better to import a gdshaderinc? Or to have a "second pass" shader set?
