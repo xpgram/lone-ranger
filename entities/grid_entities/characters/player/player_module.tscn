@@ -41,6 +41,11 @@ shader_parameter/invert_colors = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06ww2"]
 shader = ExtResource("12_yibea")
+shader_parameter/enable = true
+shader_parameter/pixelize__resolution = Vector2(240, 160)
+shader_parameter/pixelize__offset = Vector2(0, 0)
+shader_parameter/pixelize__rotation = 0.0
+shader_parameter/pixelize__rotation_origin = Vector2(0.5, 0.5)
 
 [sub_resource type="Shader" id="Shader_yibea"]
 code = "shader_type canvas_item;

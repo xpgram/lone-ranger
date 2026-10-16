@@ -1,14 +1,15 @@
 shader_type canvas_item;
 
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
+
+#include "res://utilities/shaders/pixelize.gdshaderinc"
+
+
+// This uniform auto-captures the screen texture.
+uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
+
 
 void fragment() {
-	// Called for every pixel the material is visible on.
-}
+	vec2 pixelated_uv = get_pixelated_UV(SCREEN_UV);
 
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
+	COLOR = texture(screen_texture, pixelated_uv);
+}

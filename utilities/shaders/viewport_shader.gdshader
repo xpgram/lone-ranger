@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+// [TODO] Remove this file.
+
 #include "res://utilities/shaders/pixelize.gdshaderinc"
 
 
