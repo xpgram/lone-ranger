@@ -10,6 +10,8 @@
 //     Is there any performance overhead for having a second pass instead of an include?
 //     If done right, no, and it should solve the namespace collision problem that shader
 //     includes have naturally.
+//
+// [TODO] Try out MaterialLayers, see if it makes the shader mashing simple enough.
 
 // This uniform auto-captures the screen texture.
 uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
