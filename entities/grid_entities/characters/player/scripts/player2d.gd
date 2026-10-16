@@ -77,7 +77,7 @@ var _coyote_fall_timer: Timer;
 @onready var _field_cursor: FieldCursor = %FieldCursor;
 
 ##
-@onready var _shader_rect: ScreenSpaceShader = %ScreenSpaceShaderRect
+@onready var _shader_rect: PlayerCameraViewShader = %CamViewShader
 
 ## Where the player spawned in.
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
@@ -363,7 +363,7 @@ func _send_player_back_to_checkpoint() -> void:
 
 
 ## Returns a reference to the player's screen-space shader interface.
-func get_screen_shader() -> ScreenSpaceShader:
+func get_cam_view_shader() -> PlayerCameraViewShader:
   return _shader_rect;
 
 

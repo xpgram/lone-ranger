@@ -40,10 +40,6 @@ shader_parameter/gradient_start = Color(1, 1, 1, 1)
 shader_parameter/gradient_end = Color(1, 1, 1, 1)
 shader_parameter/invert_colors = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5jpfb"]
-shader = ExtResource("20_06ww2")
-shader_parameter/tint_color = Color(1, 0, 0, 0.2509804)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mrt6k"]
 shader = ExtResource("20_06ww2")
 shader_parameter/tint_color = Color(1, 1, 0, 0.2509804)
@@ -102,9 +98,8 @@ subject = NodePath("../Player2D")
 close_follow_lerp_speed = 12
 metadata/_custom_type_script = "uid://bgl6q243ogu5r"
 
-[node name="ScreenSpaceShaderRect" type="ColorRect" parent="Camera2D" unique_id=411488792]
+[node name="CamViewShader" type="ColorRect" parent="Camera2D" unique_id=411488792]
 unique_name_in_owner = true
-visible = false
 material = SubResource("ShaderMaterial_yibea")
 offset_left = -120.0
 offset_top = -80.0
@@ -112,14 +107,6 @@ offset_right = 120.0
 offset_bottom = 80.0
 color = Color(1, 1, 1, 0.25)
 script = ExtResource("20_yibea")
-
-[node name="CamViewShader" type="ColorRect" parent="Camera2D" unique_id=1431444090]
-material = SubResource("ShaderMaterial_5jpfb")
-offset_left = -120.0
-offset_top = -80.0
-offset_right = 120.0
-offset_bottom = 80.0
-color = Color(1, 1, 1, 0.25)
 
 [node name="UICanvasGroup" type="CanvasGroup" parent="Camera2D" unique_id=264260862]
 material = SubResource("ShaderMaterial_mrt6k")

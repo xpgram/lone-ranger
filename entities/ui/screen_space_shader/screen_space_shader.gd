@@ -1,5 +1,5 @@
 ## An object interface for the screen-space shader applied to the player's camera view.
-class_name ScreenSpaceShader
+class_name PlayerCameraViewShader
 extends ColorRect
 
 
