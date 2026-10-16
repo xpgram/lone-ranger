@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]
+[ext_resource type="Shader" uid="uid://d15eumkrg0xfa" path="res://entities/ui/screen_space_shader/ui_shader.gdshader" id="12_yibea"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="Script" uid="uid://dlrhbqth4gipl" path="res://addons/dialogic/Modules/Style/node_style.gd" id="13_5jpfb"]
 [ext_resource type="FontFile" uid="uid://c2eb1mulsdjef" path="res://assets/fonts/courier_new_bold.ttf" id="13_h7fwu"]
@@ -37,6 +38,9 @@ shader_parameter/silhoette_white_threshhold = 1.0
 shader_parameter/gradient_start = Color(1, 1, 1, 1)
 shader_parameter/gradient_end = Color(1, 1, 1, 1)
 shader_parameter/invert_colors = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06ww2"]
+shader = ExtResource("12_yibea")
 
 [sub_resource type="Shader" id="Shader_yibea"]
 code = "shader_type canvas_item;
@@ -123,6 +127,7 @@ color = Color(1, 1, 1, 0.25)
 script = ExtResource("20_yibea")
 
 [node name="UICanvasGroup" type="CanvasGroup" parent="Camera2D" unique_id=264260862]
+material = SubResource("ShaderMaterial_06ww2")
 
 [node name="UIContainer" type="Control" parent="Camera2D/UICanvasGroup" unique_id=447046588]
 material = SubResource("ShaderMaterial_txwd0")
