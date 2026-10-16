@@ -12,14 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="Script" uid="uid://dlrhbqth4gipl" path="res://addons/dialogic/Modules/Style/node_style.gd" id="13_5jpfb"]
-[ext_resource type="Shader" uid="uid://dywsvvu8fbkr6" path="res://entities/grid_entities/characters/player/tint_uv.gdshader" id="13_06ww2"]
 [ext_resource type="FontFile" uid="uid://c2eb1mulsdjef" path="res://assets/fonts/courier_new_bold.ttf" id="13_h7fwu"]
 [ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="13_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="Script" uid="uid://oxcjhq2817c7" path="res://addons/dialogic/Modules/Background/node_background_holder.gd" id="14_yibea"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
-[ext_resource type="Shader" uid="uid://bwi03g63ea406" path="res://entities/grid_entities/characters/player/tint.gdshader" id="20_06ww2"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
@@ -40,12 +38,55 @@ shader_parameter/gradient_start = Color(1, 1, 1, 1)
 shader_parameter/gradient_end = Color(1, 1, 1, 1)
 shader_parameter/invert_colors = false
 
+[sub_resource type="Shader" id="Shader_5jpfb"]
+code = "shader_type canvas_item;
+
+// This uniform auto-captures the screen texture.
+uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
+
+uniform vec4 tint_color: source_color = vec4(1.0);
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	COLOR = texture(screen_texture, SCREEN_UV);
+	COLOR = vec4(mix(COLOR.rgb, tint_color.rgb, tint_color.a), COLOR.a);
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mrt6k"]
-shader = ExtResource("20_06ww2")
+shader = SubResource("Shader_5jpfb")
 shader_parameter/tint_color = Color(1, 1, 0, 0.2509804)
 
+[sub_resource type="Shader" id="Shader_yibea"]
+code = "shader_type canvas_item;
+
+uniform vec4 tint_color: source_color = vec4(1.0);
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	COLOR = texture(TEXTURE, UV);
+	COLOR = vec4(mix(COLOR.rgb, tint_color.rgb, tint_color.a), COLOR.a);
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_txwd0"]
-shader = ExtResource("13_06ww2")
+shader = SubResource("Shader_yibea")
 shader_parameter/tint_color = Color(0, 0.6666665, 1, 0.2509804)
 
 [node name="PlayerModule" type="Node2D" unique_id=2050721029]
