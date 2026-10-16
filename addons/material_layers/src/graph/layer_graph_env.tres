@@ -1,0 +1,20 @@
+[gd_resource type="Environment" format=3 uid="uid://bwr6616wqscjh"]
+
+[ext_resource type="Texture2D" uid="uid://duunkrbe4umnl" path="res://addons/material_layers/src/graph/hdri/layer_graph_hdri.hdr" id="1_ytcg0"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ok7db"]
+panorama = ExtResource("1_ytcg0")
+
+[sub_resource type="Sky" id="Sky_kqfh0"]
+sky_material = SubResource("PanoramaSkyMaterial_ok7db")
+process_mode = 3
+radiance_size = 0
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_kqfh0")
+sky_rotation = Vector3(0, 1.0471976, 0)
+tonemap_mode = 4
+tonemap_agx_contrast = 1.5
+fog_enabled = true
+fog_light_color = Color(0.015686275, 0.023529412, 0.02745098, 1)
