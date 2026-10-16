@@ -12,6 +12,8 @@
 //     includes have naturally.
 //
 // [TODO] Try out MaterialLayers, see if it makes the shader mashing simple enough.
+// [TODO] Fix project on-load error that MaterialLayers causes.
+//     It tries to access settings that don't exist or something.
 
 // This uniform auto-captures the screen texture.
 uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
