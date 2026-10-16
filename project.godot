@@ -91,7 +91,7 @@ mouse_cursor/tooltip_position_offset=Vector2(256, -16)
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/InstanceDock/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/material_layers/plugin.cfg")
+enabled=PackedStringArray("res://addons/InstanceDock/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg")
 
 [file_customization]
 
