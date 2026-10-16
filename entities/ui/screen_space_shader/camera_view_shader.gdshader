@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 #include "res://utilities/shaders/pixelate.gdshaderinc"
+#include "res://utilities/shaders/quantize_colors.gdshaderinc"
 
 
 // This uniform auto-captures the screen texture.
@@ -30,24 +31,6 @@ uniform bool invert_colors = false;
 // An 'infinitesimal' amount to adjust float limits by to account for rounding errors.
 const float FLOAT_ERROR_MARGIN = 0.005;
 
-
-float quantize_color_channel(float color) {
-  float new_color = ceil(color * 5.0 - 1.0) / 4.0;
-  if (new_color < 0.5) {
-    new_color = 0.0;
-  }
-  return new_color;
-}
-
-
-vec4 quantize_colors(vec4 color) {
-  return vec4(
-    quantize_color_channel(color.r),
-    quantize_color_channel(color.g),
-    quantize_color_channel(color.b),
-    color.a
-  );
-}
 
 
 vec4 apply_fade_in(vec4 color, float progress) {

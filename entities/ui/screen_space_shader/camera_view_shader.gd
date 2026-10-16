@@ -34,7 +34,8 @@ func _ready() -> void:
   _saved_gradient_end = material.get_shader_parameter('gradient_end') as Color;
 
 
-func _unhandled_input(event: InputEvent) -> void:
+# func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input__extend(event: InputEvent) -> void:
   if not event.is_pressed() or not event is InputEventKey:
     return;
 
@@ -240,3 +241,5 @@ func _unhandled_input(event: InputEvent) -> void:
   if event.keycode == KEY_PERIOD:
     pulse_color(Color.PURPLE, Color.MAROON);
     accept_event();
+
+  _unhandled_input__extend(event);
