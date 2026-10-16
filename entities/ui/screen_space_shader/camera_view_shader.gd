@@ -27,16 +27,47 @@ var pulse_progress: float:
 
 
 func _ready() -> void:
+  Events.player_camera_position_changed.connect(_on_player_camera_position_changed);
+  Events.player_camera_rotation_changed.connect(_on_player_camera_rotation_changed);
+
   _saved_gradient_start = material.get_shader_parameter('gradient_start') as Color;
   _saved_gradient_end = material.get_shader_parameter('gradient_end') as Color;
 
 
-func _process(_delta: float) -> void:
-  var camera := get_parent() as Camera2D;
-  # var mantissa := camera.global_position - Vector2(Vector2i(camera.global_position));
-  # material.set_shader_parameter('pixelizer_subpixel_offset', mantissa);
+func _unhandled_input(event: InputEvent) -> void:
+  if not event.is_pressed() or not event is InputEventKey:
+    return;
 
-  material.set_shader_parameter('pixelate_rotation_deg', camera.rotation_degrees);
+  var key_event := event as InputEventKey;
+  var resolution_increment := 20;
+
+  # [DEBUG]
+  if key_event.get_modifiers_mask() == KEY_MASK_META:
+    if key_event.keycode == KEY_BRACKETLEFT:
+      _add_to_resolution(resolution_increment);
+    if key_event.keycode == KEY_BRACKETRIGHT:
+      _add_to_resolution(-resolution_increment);
+
+
+## Updates shader paramters when the player camera's position changes.
+func _on_player_camera_position_changed(camera_position: Vector2) -> void:
+  material.set_shader_parameter('grid_offset', camera_position);
+
+
+## Updates shader parameters when the player camera's rotation changes.
+func _on_player_camera_rotation_changed(camera_rotation: float) -> void:
+  material.set_shader_parameter('grid_rotation', camera_rotation);
+
+
+# [DEBUG]
+func _add_to_resolution(increment: int) -> void:
+  var resolution: Vector2 = material.get_shader_parameter('grid_resolution');
+
+  resolution.x = max(resolution.x + increment * (240.0 / 160.0), 60);
+  resolution.y = max(resolution.y + increment, 40);
+  resolution = resolution.round();
+
+  material.set_shader_parameter('grid_resolution', resolution);
 
 
 func set_color_gradient_start(start_color: Color) -> void:

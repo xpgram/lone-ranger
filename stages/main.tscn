@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://blym4at4ldbp"]
 
 [ext_resource type="PackedScene" uid="uid://5elbiihgljqp" path="res://stages/00-test.tscn" id="1_72s8x"]
-[ext_resource type="Script" uid="uid://cw6lddr1evr6v" path="res://stages/sub_viewport_container.gd" id="2_7iyax"]
 
 [node name="Main" type="Node2D" unique_id=511087797]
 
@@ -14,7 +13,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-script = ExtResource("2_7iyax")
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer" unique_id=760992087]
 handle_input_locally = false
