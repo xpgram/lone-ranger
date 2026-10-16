@@ -10,7 +10,7 @@ void vertex() {
 }
 
 void fragment() {
-	COLOR = texture(screen_texture, UV);
+	COLOR = texture(screen_texture, SCREEN_UV);
 	COLOR = vec4(mix(COLOR.rgb, tint_color.rgb, tint_color.a), COLOR.a);
 }
 
