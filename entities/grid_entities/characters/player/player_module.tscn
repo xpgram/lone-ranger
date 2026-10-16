@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
 [ext_resource type="Resource" uid="uid://d3abxrfst60nr" path="res://utilities/actions/field_actions/resources/rest_action.tres" id="5_p4sl8"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://common/input_focus/focusable_control.gd" id="10_jru4w"]
-[ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/screen_space_gradient.gdshader" id="10_yibea"]
+[ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/camera_view_shader.gdshader" id="10_yibea"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]
@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://oxcjhq2817c7" path="res://addons/dialogic/Modules/Background/node_background_holder.gd" id="14_yibea"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
-[ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
+[ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
 script = ExtResource("4_sg284")
@@ -27,7 +27,7 @@ metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
 shader = ExtResource("10_yibea")
-shader_parameter/pixelate = true
+shader_parameter/pixelate = false
 shader_parameter/pixelate_resolution = Vector2(240, 160)
 shader_parameter/pixelate_rotation_deg = 0.0
 shader_parameter/pixelate_offset = Vector2(0, 0)
