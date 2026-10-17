@@ -147,6 +147,7 @@ offset_left = -120.0
 offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0.25)
 script = ExtResource("20_yibea")
 
@@ -240,4 +241,5 @@ offset_left = -120.0
 offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0.25)
