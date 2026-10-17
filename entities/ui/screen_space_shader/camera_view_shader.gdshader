@@ -33,13 +33,6 @@ uniform bool invert_colors = false;
 const float FLOAT_ERROR_MARGIN = 0.005;
 
 
-
-vec4 apply_fade_in(vec4 color, float progress) {
-  color.rgb *= progress;
-  return color;
-}
-
-
 float apply_white_black_thresshold(float n, float black_threshhold, float white_threshhold) {
   if (n <= black_threshhold) {
     n = 0.0;
@@ -94,6 +87,5 @@ void fragment() {
 
   // [TODO] Move these to the full-screen shader.
   //COLOR = apply_silhoette(COLOR, silhoette_threshhold, silhoette_white_threshhold);
-  //COLOR = apply_fade_in(COLOR, fade_in_progress);
   //COLOR = apply_gradient_to_blacks(COLOR, UV);
 }

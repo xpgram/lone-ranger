@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
+[ext_resource type="Texture2D" uid="uid://dxg4mqbra7i5j" path="res://utilities/shaders/quantize_colors__default_lightness_map.tres" id="22_txwd0"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
 script = ExtResource("4_sg284")
@@ -73,20 +74,13 @@ void fragment() {
 shader = SubResource("Shader_yibea")
 shader_parameter/tint_color = Color(0, 0.6666665, 1, 0.2509804)
 
-[sub_resource type="Gradient" id="Gradient_yibea"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.375, 0.625, 0.875)
-colors = PackedColorArray(0, 0, 0, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1, 1, 1, 1, 1)
-metadata/_snap_enabled = true
-metadata/_snap_count = 8
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_i3hfr"]
-gradient = SubResource("Gradient_yibea")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ol17"]
 shader = ExtResource("21_06ww2")
 shader_parameter/quantize_colors__enable = true
-shader_parameter/quantize_colors__lightness_map = SubResource("GradientTexture1D_i3hfr")
+shader_parameter/quantize_colors__lightness_map = ExtResource("22_txwd0")
+shader_parameter/adjust_brightness__enable = true
+shader_parameter/adjust_brightness__coefficient = 1.0
+shader_parameter/adjust_brightness__levels = 5
 
 [node name="PlayerModule" type="Node2D" unique_id=2050721029]
 script = ExtResource("1_g13rh")
