@@ -151,10 +151,10 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0.25)
 script = ExtResource("20_yibea")
 
-[node name="UICanvasGroup" type="CanvasGroup" parent="Camera2D" unique_id=264260862]
+[node name="UIShaderCanvasGroup" type="CanvasGroup" parent="Camera2D" unique_id=264260862]
 material = SubResource("ShaderMaterial_06ww2")
 
-[node name="UIContainer" type="Control" parent="Camera2D/UICanvasGroup" unique_id=447046588]
+[node name="UIContainer" type="Control" parent="Camera2D/UIShaderCanvasGroup" unique_id=447046588]
 material = SubResource("ShaderMaterial_txwd0")
 layout_mode = 3
 anchors_preset = 0
@@ -163,7 +163,7 @@ offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
 
-[node name="HealthBar" parent="Camera2D/UICanvasGroup/UIContainer" unique_id=1229683616 node_paths=PackedStringArray("player2d") instance=ExtResource("15_l0w8i")]
+[node name="HealthBar" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1229683616 node_paths=PackedStringArray("player2d") instance=ExtResource("15_l0w8i")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -173,7 +173,7 @@ offset_bottom = 0.0
 grow_vertical = 0
 player2d = NodePath("../../../../Player2D")
 
-[node name="CommandMenu" parent="Camera2D/UICanvasGroup/UIContainer" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
+[node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 11
@@ -184,7 +184,7 @@ offset_bottom = -8.0
 grow_horizontal = 0
 _inventory = NodePath("../../../../Inventory")
 
-[node name="MessageQueue" parent="Camera2D/UICanvasGroup/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
+[node name="MessageQueue" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
 layout_mode = 1
 anchors_preset = 9
 anchor_top = 0.0
@@ -195,7 +195,7 @@ offset_right = 90.0
 offset_bottom = -65.0
 grow_vertical = 2
 
-[node name="DialogicNode_StyleLayer" type="Control" parent="Camera2D/UICanvasGroup/UIContainer" unique_id=330039341]
+[node name="DialogicNode_StyleLayer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=330039341]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -206,7 +206,7 @@ script = ExtResource("13_5jpfb")
 layer_name = "cmd_menu_commentary_box"
 metadata/_custom_type_script = "uid://dlrhbqth4gipl"
 
-[node name="DialogicNode_BackgroundHolder" type="ColorRect" parent="Camera2D/UICanvasGroup/UIContainer/DialogicNode_StyleLayer" unique_id=196785217]
+[node name="DialogicNode_BackgroundHolder" type="ColorRect" parent="Camera2D/UIShaderCanvasGroup/UIContainer/DialogicNode_StyleLayer" unique_id=196785217]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.65000004
@@ -217,7 +217,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("14_yibea")
 metadata/_custom_type_script = "uid://oxcjhq2817c7"
 
-[node name="DialogicNode_DialogText" type="RichTextLabel" parent="Camera2D/UICanvasGroup/UIContainer/DialogicNode_StyleLayer" unique_id=1571192679 node_paths=PackedStringArray("textbox_root")]
+[node name="DialogicNode_DialogText" type="RichTextLabel" parent="Camera2D/UIShaderCanvasGroup/UIContainer/DialogicNode_StyleLayer" unique_id=1571192679 node_paths=PackedStringArray("textbox_root")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.033
@@ -232,10 +232,14 @@ identifier = "cmd_menu_dialogue_box"
 textbox_root = NodePath("..")
 metadata/_custom_type_script = "uid://drhfq6rmdeuri"
 
-[node name="DebugUI" parent="Camera2D/UICanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
+[node name="DebugUI" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
 
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Camera2D" unique_id=956503604]
+copy_mode = 2
+
 [node name="ScreenSpaceShader" type="ColorRect" parent="Camera2D" unique_id=1454266606]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_1ol17")
 offset_left = -120.0
 offset_top = -80.0
