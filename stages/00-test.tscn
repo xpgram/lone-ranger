@@ -648,6 +648,18 @@ region = Rect2(208, 48, 16, 32)
 atlas = ExtResource("8_r4137")
 region = Rect2(208, 48, 16, 16)
 
+[sub_resource type="Gradient" id="Gradient_i3hfr"]
+offsets = PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0.79999995, 1, 0, 1, 0, 1, 0.4000001, 1, 0, 0.39999986, 1, 1, 0.8000002, 0, 1, 1, 1, 0, 0.016666412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i8c80"]
+gradient = SubResource("Gradient_i3hfr")
+
+[sub_resource type="Gradient" id="Gradient_hdlvt"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ubj5x"]
+gradient = SubResource("Gradient_hdlvt")
+
 [sub_resource type="LabelSettings" id="LabelSettings_hwv0m"]
 line_spacing = 1.0
 font_size = 6
@@ -846,6 +858,16 @@ texture = SubResource("AtlasTexture_snb1o")
 [node name="DragTrail2" type="Sprite2D" parent="MapDetails" unique_id=98453761]
 position = Vector2(-256, -96)
 texture = SubResource("AtlasTexture_r4137")
+
+[node name="GradientColors" type="Sprite2D" parent="MapDetails" unique_id=536678583]
+position = Vector2(128, -60)
+scale = Vector2(1.25, 0.1)
+texture = SubResource("GradientTexture2D_i8c80")
+
+[node name="GradientGrays" type="Sprite2D" parent="MapDetails" unique_id=596950442]
+position = Vector2(128, -51)
+scale = Vector2(1.25, 0.1)
+texture = SubResource("GradientTexture2D_ubj5x")
 
 [node name="TurnManager" parent="." unique_id=1977583383 instance=ExtResource("35_u8t85")]
 
