@@ -10,13 +10,9 @@ uniform sampler2D quantize_colors__lightness_map;
 
 
 float _quantize_colors__quantize_color_channel(float color) {
-  // [TODO] Get color's lightness value.
-  vec4 lightness_sample = texture(quantize_colors__lightness_map, vec2(color, 0.0));
-  float lightness = lightness_sample.r;
-
-  color = lightness;
-
-  return color;
+  vec2 sample_point = vec2(color, 0.0);
+  vec4 sample = texture(quantize_colors__lightness_map, sample_point);
+  return sample.r;
 }
 
 

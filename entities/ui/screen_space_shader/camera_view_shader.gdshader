@@ -91,11 +91,11 @@ vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
 void fragment() {
   vec2 grid_uv = pixelate(SCREEN_UV);
 
-  // Load screen-texture color for this fragment.
   COLOR = texture(screen_texture, grid_uv);
 
-  COLOR = apply_silhoette(COLOR, silhoette_threshhold, silhoette_white_threshhold);
-  COLOR = apply_fade_in(COLOR, fade_in_progress);
+  // [TODO] Move these to the full-screen shader.
+  //COLOR = apply_silhoette(COLOR, silhoette_threshhold, silhoette_white_threshhold);
+  //COLOR = apply_fade_in(COLOR, fade_in_progress);
   COLOR = quantize_colors(COLOR);
-  COLOR = apply_gradient_to_blacks(COLOR, UV);
+  //COLOR = apply_gradient_to_blacks(COLOR, UV);
 }
