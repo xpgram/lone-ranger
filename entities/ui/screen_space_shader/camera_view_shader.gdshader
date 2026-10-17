@@ -1,7 +1,6 @@
 shader_type canvas_item;
 
 #include "res://utilities/shaders/pixelate.gdshaderinc"
-#include "res://utilities/shaders/quantize_colors.gdshaderinc"
 
 
 group_uniforms Unsorted;
@@ -96,6 +95,5 @@ void fragment() {
   // [TODO] Move these to the full-screen shader.
   //COLOR = apply_silhoette(COLOR, silhoette_threshhold, silhoette_white_threshhold);
   //COLOR = apply_fade_in(COLOR, fade_in_progress);
-  COLOR = quantize_colors(COLOR);
   //COLOR = apply_gradient_to_blacks(COLOR, UV);
 }

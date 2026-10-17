@@ -1,8 +1,14 @@
 shader_type canvas_item;
 
+#include "res://utilities/shaders/quantize_colors.gdshaderinc"
+
+
 uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
 
 
 void fragment() {
-	COLOR = texture(screen_texture, SCREEN_UV);
+	vec4 color = texture(screen_texture, SCREEN_UV);
+	color = quantize_colors(color);
+	
+	COLOR = color;
 }
