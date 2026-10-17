@@ -235,11 +235,9 @@ metadata/_custom_type_script = "uid://drhfq6rmdeuri"
 layout_mode = 0
 
 [node name="ScreenSpaceShader" type="ColorRect" parent="Camera2D" unique_id=1454266606]
-unique_name_in_owner = true
 material = SubResource("ShaderMaterial_1ol17")
 offset_left = -120.0
 offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
 color = Color(1, 1, 1, 0.25)
-script = ExtResource("20_yibea")
