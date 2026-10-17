@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
+[ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
 script = ExtResource("4_sg284")
@@ -85,6 +86,9 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_txwd0"]
 shader = SubResource("Shader_yibea")
 shader_parameter/tint_color = Color(0, 0.6666665, 1, 0.2509804)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ol17"]
+shader = ExtResource("21_06ww2")
 
 [node name="PlayerModule" type="Node2D" unique_id=2050721029]
 script = ExtResource("1_g13rh")
@@ -229,3 +233,13 @@ metadata/_custom_type_script = "uid://drhfq6rmdeuri"
 
 [node name="DebugUI" parent="Camera2D/UICanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
+
+[node name="ScreenSpaceShader" type="ColorRect" parent="Camera2D" unique_id=1454266606]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_1ol17")
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
+color = Color(1, 1, 1, 0.25)
+script = ExtResource("20_yibea")
