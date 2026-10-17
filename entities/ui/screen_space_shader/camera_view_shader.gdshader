@@ -1,7 +1,10 @@
 shader_type canvas_item;
 
-#include "res://utilities/shaders/gameboy.gdshaderinc"
+#include "res://utilities/shaders/pixelate.gdshaderinc"
+#include "res://utilities/shaders/quantize_colors.gdshaderinc"
 
+
+group_uniforms Unsorted;
 
 // This uniform auto-captures the screen texture.
 uniform sampler2D screen_texture: hint_screen_texture, repeat_disable, filter_nearest;
@@ -86,13 +89,13 @@ vec4 apply_gradient_to_blacks(vec4 color, vec2 uv) {
 
 
 void fragment() {
-  vec2 grid_uv = gameboy_coord(SCREEN_UV);
+  vec2 grid_uv = pixelate(SCREEN_UV);
 
   // Load screen-texture color for this fragment.
   COLOR = texture(screen_texture, grid_uv);
 
   COLOR = apply_silhoette(COLOR, silhoette_threshhold, silhoette_white_threshhold);
   COLOR = apply_fade_in(COLOR, fade_in_progress);
-  COLOR = gameboy_color(COLOR);
+  COLOR = quantize_colors(COLOR);
   COLOR = apply_gradient_to_blacks(COLOR, UV);
 }

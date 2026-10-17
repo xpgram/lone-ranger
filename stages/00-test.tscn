@@ -660,6 +660,15 @@ gradient = SubResource("Gradient_i3hfr")
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ubj5x"]
 gradient = SubResource("Gradient_hdlvt")
 
+[sub_resource type="Gradient" id="Gradient_ubj5x"]
+offsets = PackedFloat32Array(0, 0.33333334, 0.6666667, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 3
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kgk2j"]
+gradient = SubResource("Gradient_ubj5x")
+
 [sub_resource type="LabelSettings" id="LabelSettings_hwv0m"]
 line_spacing = 1.0
 font_size = 6
@@ -860,14 +869,19 @@ position = Vector2(-256, -96)
 texture = SubResource("AtlasTexture_r4137")
 
 [node name="GradientColors" type="Sprite2D" parent="MapDetails" unique_id=536678583]
-position = Vector2(128, -60)
-scale = Vector2(1.25, 0.1)
+position = Vector2(120, -60)
+scale = Vector2(1, 0.1)
 texture = SubResource("GradientTexture2D_i8c80")
 
 [node name="GradientGrays" type="Sprite2D" parent="MapDetails" unique_id=596950442]
-position = Vector2(128, -51)
-scale = Vector2(1.25, 0.1)
+position = Vector2(120, -51)
+scale = Vector2(1, 0.1)
 texture = SubResource("GradientTexture2D_ubj5x")
+
+[node name="GradientRGB" type="Sprite2D" parent="MapDetails" unique_id=1763344323]
+position = Vector2(120, -18)
+scale = Vector2(1, 0.1)
+texture = SubResource("GradientTexture2D_kgk2j")
 
 [node name="TurnManager" parent="." unique_id=1977583383 instance=ExtResource("35_u8t85")]
 
@@ -1778,7 +1792,7 @@ position = Vector2(128, 64)
 position = Vector2(144, 64)
 
 [node name="PlayerModule" parent="." unique_id=439747867 instance=ExtResource("41_p22wk")]
-position = Vector2(128, 160)
+position = Vector2(128, -32)
 
 [node name="AudioStreamSwitch" type="Node" parent="." unique_id=713162866]
 script = ExtResource("32_4ouhr")
