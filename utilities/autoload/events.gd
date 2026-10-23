@@ -4,6 +4,9 @@ extends Node
 @warning_ignore_start('UNUSED_SIGNAL')
 
 
+## Emitted when the viewport's last-frame-rendered has been captured.
+signal previous_frame_captured(texture: Texture2D);
+
 ## Emitted when the turn system's real-time count changes.
 signal real_time_updated(time_remaining: float);
 
@@ -32,6 +35,12 @@ signal player_interacting_with(object: GridObject);
 
 ## Emitted when the player's held count of [param action] is adjusted to a new quantity.
 signal player_inventory_item_updated(action: FieldAction, new_quantity: int);
+
+## Emitted when the player camera's transform position has changed.
+signal player_camera_position_changed(position: Vector2);
+
+## Emitted when the player camera's transform rotation has changed.
+signal player_camera_rotation_changed(rotation: float);
 
 ## Emitted by entities when shouting messages to a player's event UI.
 signal game_event_message_announced(message: String);

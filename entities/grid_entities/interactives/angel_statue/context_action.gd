@@ -29,5 +29,5 @@ func perform_interaction_async(actor: GridEntity) -> void:
   await screen_shader.white_out_async(whiteout_phase_time);
 
   Events.board_reset_declared.emit();
-  
+
   await screen_shader.white_in_async(whiteout_phase_time, whiteout_phase_time);

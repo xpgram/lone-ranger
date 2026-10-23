@@ -6,33 +6,168 @@
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
 [ext_resource type="Resource" uid="uid://d3abxrfst60nr" path="res://utilities/actions/field_actions/resources/rest_action.tres" id="5_p4sl8"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://common/input_focus/focusable_control.gd" id="10_jru4w"]
+[ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/camera_view_shader.gdshader" id="10_yibea"]
 [ext_resource type="Script" uid="uid://bgl6q243ogu5r" path="res://entities/system/camera2d/camera_2d.gd" id="10_yid0f"]
 [ext_resource type="PackedScene" uid="uid://dcydrh78pwl4" path="res://entities/ui/field_cursor/field_cursor.tscn" id="12_5jpfb"]
 [ext_resource type="PackedScene" uid="uid://cq4boqtraxqe0" path="res://entities/ui/message_queue/message_queue.tscn" id="12_p4sl8"]
+[ext_resource type="Shader" uid="uid://d15eumkrg0xfa" path="res://entities/ui/screen_space_shader/ui_shader.gdshader" id="12_yibea"]
+[ext_resource type="Script" uid="uid://md7o8pyaq8ej" path="res://entities/ui/screen_space_shader/player_hud_shader.gd" id="13_1ol17"]
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
-[ext_resource type="Shader" uid="uid://dy2pd31eee1bo" path="res://entities/ui/screen_space_shader/screen_space_gradient.gdshader" id="19_5jpfb"]
-[ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="20_yibea"]
+[ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
+[ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
+[ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
 script = ExtResource("4_sg284")
 action = ExtResource("5_p4sl8")
 metadata/_custom_type_script = "uid://ue6jqko73xxa"
 
+[sub_resource type="Gradient" id="Gradient_5beel"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7n3ao"]
+gradient = SubResource("Gradient_5beel")
+
+[sub_resource type="Curve" id="Curve_3verx"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mrt6k"]
+curve = SubResource("Curve_3verx")
+
+[sub_resource type="Curve" id="Curve_f5ans"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.35329342, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1ol17"]
+curve = SubResource("Curve_f5ans")
+
+[sub_resource type="Gradient" id="Gradient_1ol17"]
+offsets = PackedFloat32Array(0.1)
+colors = PackedColorArray(1, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5beel"]
+gradient = SubResource("Gradient_1ol17")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_mrt6k"]
+offsets = PackedFloat32Array(0.3, 1)
+colors = PackedColorArray(0, 0.6666665, 1, 1, 0.16666675, 1, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qdihw"]
+gradient = SubResource("Gradient_mrt6k")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_txwd0"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.375, 0.625, 0.875)
+colors = PackedColorArray(0, 0, 0, 1, 0.5, 0.5, 0.5, 1, 0.75, 0.75, 0.75, 1, 1, 1, 1, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 8
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kdjjn"]
+gradient = SubResource("Gradient_txwd0")
+width = 16
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yibea"]
-shader = ExtResource("19_5jpfb")
-shader_parameter/pixelate = false
-shader_parameter/pixelate_resolution = Vector2(240, 160)
-shader_parameter/pixelate_rotation_deg = 0.0
-shader_parameter/pixelate_offset = Vector2(0, 0)
-shader_parameter/fade_in_progress = 1.0
-shader_parameter/silhoette_threshhold = 0.0
-shader_parameter/silhoette_white_threshhold = 1.0
-shader_parameter/gradient_start = Color(1, 1, 1, 1)
-shader_parameter/gradient_end = Color(1, 1, 1, 1)
-shader_parameter/invert_colors = false
+shader = ExtResource("10_yibea")
+shader_parameter/enable = true
+shader_parameter/pixelate__resolution = Vector2(240, 160)
+shader_parameter/pixelate__offset = Vector2(0, 0)
+shader_parameter/pixelate__rotation = 0.0
+shader_parameter/pixelate__rotation_origin = Vector2(0.5, 0.5)
+shader_parameter/adjust_brightness__enable = true
+shader_parameter/adjust_brightness__coefficient = 1.0
+shader_parameter/adjust_brightness__levels = 5
+shader_parameter/quantize_colors__enable = true
+shader_parameter/quantize_colors__lightness_map = SubResource("GradientTexture1D_kdjjn")
+shader_parameter/cutoff_filter__enable = true
+shader_parameter/cutoff_filter__black_crush_range = 0.0
+shader_parameter/cutoff_filter__white_crush_range = 0.0
+shader_parameter/color_invert__enable = false
+shader_parameter/color_invert__inversion_map = SubResource("GradientTexture2D_7n3ao")
+shader_parameter/gradient_color_replace__enable = true
+shader_parameter/gradient_color_replace__fast_luminance = true
+shader_parameter/gradient_color_replace__saturation_curve = SubResource("CurveTexture_1ol17")
+shader_parameter/gradient_color_replace__ab_mix_curve = SubResource("CurveTexture_mrt6k")
+shader_parameter/gradient_color_replace__texture_a = SubResource("GradientTexture2D_5beel")
+shader_parameter/gradient_color_replace__texture_b = SubResource("GradientTexture2D_qdihw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06ww2"]
+shader = ExtResource("12_yibea")
+shader_parameter/enable = true
+shader_parameter/pixelate__resolution = Vector2(480, 320)
+shader_parameter/pixelate__offset = Vector2(0, 0)
+shader_parameter/pixelate__rotation = 0.0
+shader_parameter/pixelate__rotation_origin = Vector2(0.5, 0.5)
+shader_parameter/adjust_brightness__enable = true
+shader_parameter/adjust_brightness__coefficient = 1.0
+shader_parameter/adjust_brightness__levels = 5
+shader_parameter/quantize_colors__enable = true
+shader_parameter/quantize_colors__lightness_map = SubResource("GradientTexture1D_kdjjn")
+
+[sub_resource type="Gradient" id="Gradient_qdihw"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nkq0a"]
+gradient = SubResource("Gradient_qdihw")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Curve" id="Curve_xfn40"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sv1c5"]
+curve = SubResource("Curve_xfn40")
+
+[sub_resource type="Curve" id="Curve_egehf"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vpijh"]
+curve = SubResource("Curve_egehf")
+
+[sub_resource type="Gradient" id="Gradient_f5ans"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d0ho7"]
+gradient = SubResource("Gradient_f5ans")
+
+[sub_resource type="Gradient" id="Gradient_3verx"]
+offsets = PackedFloat32Array(0.2, 0.9)
+colors = PackedColorArray(0.666667, 0, 1, 1, 1, 0, 0.6666665, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ew6pf"]
+gradient = SubResource("Gradient_3verx")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ol17"]
+shader = ExtResource("21_06ww2")
+shader_parameter/cutoff_filter__enable = true
+shader_parameter/cutoff_filter__black_crush_range = 0.0
+shader_parameter/cutoff_filter__white_crush_range = 0.0
+shader_parameter/color_invert__enable = false
+shader_parameter/color_invert__inversion_map = SubResource("GradientTexture2D_nkq0a")
+shader_parameter/gradient_color_replace__enable = true
+shader_parameter/gradient_color_replace__fast_luminance = true
+shader_parameter/gradient_color_replace__saturation_curve = SubResource("CurveTexture_vpijh")
+shader_parameter/gradient_color_replace__ab_mix_curve = SubResource("CurveTexture_sv1c5")
+shader_parameter/gradient_color_replace__texture_a = SubResource("GradientTexture2D_d0ho7")
+shader_parameter/gradient_color_replace__texture_b = SubResource("GradientTexture2D_ew6pf")
+shader_parameter/accumulative_blur__enable = true
+shader_parameter/accumulative_blur__mix_ratio = 0.2
+shader_parameter/accumulative_blur__sampler_is_valid = false
+shader_parameter/accumulative_blur__frame_delta = 0.0
 
 [node name="PlayerModule" type="Node2D" unique_id=2050721029]
 script = ExtResource("1_g13rh")
@@ -84,7 +219,23 @@ subject = NodePath("../Player2D")
 close_follow_lerp_speed = 12
 metadata/_custom_type_script = "uid://bgl6q243ogu5r"
 
-[node name="UIContainer" type="Control" parent="Camera2D" unique_id=447046588]
+[node name="CamViewShader" type="ColorRect" parent="Camera2D" unique_id=411488792]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yibea")
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.25)
+script = ExtResource("20_yibea")
+
+[node name="UIShaderCanvasGroup" type="CanvasGroup" parent="Camera2D" unique_id=264260862]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_06ww2")
+script = ExtResource("13_1ol17")
+
+[node name="UIContainer" type="Control" parent="Camera2D/UIShaderCanvasGroup" unique_id=447046588]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -120.0
@@ -92,7 +243,7 @@ offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
 
-[node name="HealthBar" parent="Camera2D/UIContainer" unique_id=1229683616 node_paths=PackedStringArray("player2d") instance=ExtResource("15_l0w8i")]
+[node name="HealthBar" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1229683616 node_paths=PackedStringArray("player2d") instance=ExtResource("15_l0w8i")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -100,9 +251,9 @@ anchor_bottom = 1.0
 offset_top = -16.0
 offset_bottom = 0.0
 grow_vertical = 0
-player2d = NodePath("../../../Player2D")
+player2d = NodePath("../../../../Player2D")
 
-[node name="CommandMenu" parent="Camera2D/UIContainer" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
+[node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 11
@@ -111,9 +262,9 @@ offset_left = -120.0
 offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 0
-_inventory = NodePath("../../../Inventory")
+_inventory = NodePath("../../../../Inventory")
 
-[node name="MessageQueue" parent="Camera2D/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
+[node name="MessageQueue" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
 layout_mode = 1
 anchors_preset = 9
 anchor_top = 0.0
@@ -124,15 +275,19 @@ offset_right = 90.0
 offset_bottom = -65.0
 grow_vertical = 2
 
-[node name="DebugUI" parent="Camera2D/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
+[node name="DebugUI" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
 
-[node name="ScreenSpaceShaderRect" type="ColorRect" parent="Camera2D" unique_id=411488792]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Camera2D" unique_id=956503604]
+copy_mode = 2
+
+[node name="ScreenSpaceShader" type="ColorRect" parent="Camera2D" unique_id=1454266606]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_yibea")
+material = SubResource("ShaderMaterial_1ol17")
 offset_left = -120.0
 offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0.25)
-script = ExtResource("20_yibea")
+script = ExtResource("23_1ol17")
