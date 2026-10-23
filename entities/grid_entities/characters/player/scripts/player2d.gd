@@ -76,8 +76,14 @@ var _coyote_fall_timer: Timer;
 ## The player's unique [FieldCursor] instance.
 @onready var _field_cursor: FieldCursor = %FieldCursor;
 
-##
-@onready var _shader_rect: ScreenSpaceShader = %ScreenSpaceShaderRect
+## A reference to the Rect that handles the game world, screen space shader effects.
+@onready var _world_shader_rect: PlayerCameraViewShader = %CamViewShader;
+
+## A reference to the Rect that handles HUD-only screen space shader effects.
+@onready var _hud_shader_rect: PlayerHUDShader = %UIShaderCanvasGroup;
+
+## A reference to the Rect that handles wholistic screen space shader effects.
+@onready var _screen_shader_rect: PlayerScreenSpaceShader = %ScreenSpaceShader;
 
 ## Where the player spawned in.
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
@@ -362,9 +368,19 @@ func _send_player_back_to_checkpoint() -> void:
   trigger_idle_animation_state();
 
 
+## Returns a reference to the player's camera-view shader interface.
+func get_cam_view_shader() -> PlayerCameraViewShader:
+  return _world_shader_rect;
+
+
+## Returns a reference to the player's HUD shader interface.
+func get_hud_shader() -> PlayerHUDShader:
+  return _hud_shader_rect;
+
+
 ## Returns a reference to the player's screen-space shader interface.
-func get_screen_shader() -> ScreenSpaceShader:
-  return _shader_rect;
+func get_screen_shader() -> PlayerScreenSpaceShader:
+  return _screen_shader_rect;
 
 
 ## Sets the animation state to `param state_key`.
@@ -689,11 +705,18 @@ func _state_death() -> void:
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
 
-  await _shader_rect.fade_out_async(1.5, 0.5);
+  # [TODO] Add a shader coordinator node to manage effect like this.
+  #    "Brightness" must be applied to the world and the HUD separately, but
+  #    we often want them to work together. Calling both like we're doing
+  #    here is fine, but should be handled by an intermediary for effects
+  #    coordination.
+  _hud_shader_rect.fade_out_async(1.5, 0.5);
+  await _world_shader_rect.fade_out_async(1.5, 0.5);
 
   _send_player_back_to_checkpoint();
 
-  await _shader_rect.fade_in_async(1.0, 2.0);
+  _hud_shader_rect.fade_in_async(1.0, 2.0);
+  await _world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
   _settle_affairs();
@@ -711,11 +734,13 @@ func _state_sleep() -> void:
   # [TODO] Play a sleeping animation.
   # set_animation_state('falling_asleep');
 
-  await _shader_rect.fade_out_async(1.5, 0.5);
+  _hud_shader_rect.fade_out_async(1.5, 0.5);
+  await _world_shader_rect.fade_out_async(1.5, 0.5);
 
   _send_player_back_to_checkpoint();
 
-  await _shader_rect.fade_in_async(1.0, 2.0);
+  _hud_shader_rect.fade_in_async(1.0, 2.0);
+  await _world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
   _settle_affairs();

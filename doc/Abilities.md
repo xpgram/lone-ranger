@@ -34,6 +34,12 @@ Can only target hookable materials.
 
 Light enemies / objects may be pulled toward you instead.
 
+Holding the extend button leaves the hookshot hitched. Then you have two options:
+
+- Release the button to pull it or yourself together, as normal.
+
+- Use the away arrowkey to Pull the object one space toward you.
+
 ### Shield?
 
 Active while bracing.
