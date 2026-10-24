@@ -611,6 +611,30 @@ func _state_idle__input(event: InputEvent) -> void:
     _command_menu.open_from_start();
     focus_node.accept_event();
 
+  # [DEBUG] Controls for testing out dialogue boxes in-game.
+  elif event is InputEventKey and event.is_pressed() and event.keycode == KEY_Q:
+    # Dialogic.start("test_timeline")
+    # Dialogic.
+
+    # Plays a dynamically constructed timeline. Ex for inventory and
+    # object inspections.
+    var timeline := DialogicTimeline.new();
+    timeline.from_text(
+      "I can hear something in the distance...[p1] I don't want to find out what it is.\n"
+    );
+    # This works to choose the right box, but I don't think I like this method.
+    # I kind of wish I had something modeling audio channels so I could have
+    # concurrent event streams playing.
+    # [TODO] I don't have a style called cmd_menu_dialogue_box anymore.
+    # [TODO] Also, this doesn't work anymore, and I'm not sure why.
+    #    There's some connective tissue I'm missing...
+    #    It may just be that I don't have a default style.tres saved anywhere.
+    Dialogic.Text.active_textbox = "cmd_menu_dialogue_box";
+    Dialogic.start_timeline(timeline);
+
+    # Plays the Higurashi timeline I copied.
+    # Dialogic.start_timeline("uid://b0lpywv8ovs5c");
+
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
   if Input.is_action_pressed('brace'):
