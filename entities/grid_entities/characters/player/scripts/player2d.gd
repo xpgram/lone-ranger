@@ -635,6 +635,9 @@ func _state_idle__input(event: InputEvent) -> void:
     # Plays the Higurashi timeline I copied.
     # Dialogic.start_timeline("uid://b0lpywv8ovs5c");
 
+    # [TODO] In Dialogic repo: Add Dialogic 2's license and other stuff.
+    # [TODO] In Dialogic repo: Add a readme?
+
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
   if Input.is_action_pressed('brace'):
