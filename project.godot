@@ -33,8 +33,13 @@ Dialogic="*uid://ds2q0uclmolvu"
 
 [dialogic]
 
-directories/dch_directory={}
-directories/dtl_directory={}
+directories/dch_directory={
+"keiichi": "res://assets/text_content/characters/keiichi.dch",
+"rena": "res://assets/text_content/characters/rena.dch"
+}
+directories/dtl_directory={
+"test_timeline": "res://assets/text_content/dialogue_scripts/test_timeline.dtl"
+}
 layout/style_directory={}
 
 [display]
