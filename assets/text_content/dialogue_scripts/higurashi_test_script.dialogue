@@ -1,8 +1,16 @@
-# [TODO] Dialogic 2 has not been deleted yet.
 # [TODO] Commented lines are not yet ported over.
 # [TODO] Pauses aren't correct.
-# [TODO] Newlines are not correct.
-# [TODO] Continued lines are not correct.
+# [TODO] Newlines aren't correct.
+# [TODO] Continued lines aren't correct.
+# [TODO] [wait=N] converted to musical notation: p1 through p16, pb breve, pl longa, and dotted equivalents.
+# [TODO] [wait="ui_accept"] to [w="ui_accept"] and even [break]
+# [TODO] [wait=["ui_accept","ui_cancel"]] to [break] or [w="ui_text_advance"] but shorter.
+# [TODO] [speed=N] converted to keywords: sedate, slow, steady, quick, fast, hyper (near instant).
+# [TODO] Any use for tags? [#mood=happy] or [#surprised]
+#     Do these trigger effects? Change typing sounds or something?
+# [TODO] Use _preprocess_line to change [p2] into [wait=0.5] ?
+#     Or, do I want to do it more legitimately so it taps into the syntax highlighter? Prolly, yeah.
+
 ~ Higurashi
 #join keiichi left
 #join rena right
