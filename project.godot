@@ -59,6 +59,11 @@ choices/reveal_by_input=false
 save/autosave_delay=60.0
 save/encryption_on_exports_only=true
 
+[dialogue_manager]
+
+editor/advanced/custom_test_scene_path="uid://ugd552efvil0"
+runtime/balloon_path="res://entities/ui/inner_thoughts_box/balloon.tscn"
+
 [display]
 
 window/size/viewport_width=1920
