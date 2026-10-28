@@ -77,6 +77,7 @@ var mutation_cooldown: Timer = Timer.new()
 
 
 func _ready() -> void:
+  # [TODO] Reenable. Also, rename.
 	# balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
