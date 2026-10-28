@@ -100,9 +100,12 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_input(_event: InputEvent) -> void:
+	pass
+  # [TODO] This had to be disabled because it breaks the game's other controls.
+  #   Obviously, we want the dialogue box to subsume player input while active, though.
 	# Only the balloon is allowed to handle input while it's showing
-	if will_block_other_input:
-		get_viewport().set_input_as_handled()
+	# if will_block_other_input:
+		# get_viewport().set_input_as_handled()
 
 
 func _notification(what: int) -> void:
