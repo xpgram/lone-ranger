@@ -3,7 +3,7 @@
 ##
 ## Sourced from the default Dialogue Manager text balloon.
 class_name InnerThoughtsDialogueBox
-extends CanvasLayer
+extends Control
 ## A basic dialogue balloon for use with Dialogue Manager.
 
 
