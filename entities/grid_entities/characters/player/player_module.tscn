@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
-[ext_resource type="PackedScene" uid="uid://doyo6tceosf4u" path="res://entities/ui/inner_thoughts_box/inner_thoughts_dialogue_box.tscn" id="17_yibea"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
 [ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
@@ -254,17 +253,6 @@ offset_bottom = 0.0
 grow_vertical = 0
 player2d = NodePath("../../../../Player2D")
 
-[node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-offset_left = -120.0
-offset_right = -8.0
-offset_bottom = -8.0
-grow_horizontal = 0
-_inventory = NodePath("../../../../Inventory")
-
 [node name="MessageQueue" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
 layout_mode = 1
 anchors_preset = 9
@@ -276,9 +264,33 @@ offset_right = 90.0
 offset_bottom = -65.0
 grow_vertical = 2
 
-[node name="InnerThoughtsDialogueBox" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=38036521 instance=ExtResource("17_yibea")]
-visible = false
+[node name="CommandMenu_HBox" type="HBoxContainer" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1067131190]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="ThoughtsDialogueBubble" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=336658439]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=766190910]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+
+[node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+_inventory = NodePath("../../../../../Inventory")
 
 [node name="DebugUI" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
