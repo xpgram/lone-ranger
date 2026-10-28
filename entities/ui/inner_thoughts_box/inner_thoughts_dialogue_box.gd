@@ -77,7 +77,7 @@ var mutation_cooldown: Timer = Timer.new()
 
 
 func _ready() -> void:
-	balloon.hide()
+	# balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
 	# If the responses menu doesn't have a next action set, use this one

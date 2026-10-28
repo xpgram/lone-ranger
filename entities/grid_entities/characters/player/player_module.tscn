@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
+[ext_resource type="PackedScene" uid="uid://doyo6tceosf4u" path="res://entities/ui/inner_thoughts_box/inner_thoughts_dialogue_box.tscn" id="17_yibea"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
 [ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
@@ -274,6 +275,8 @@ offset_top = 55.0
 offset_right = 90.0
 offset_bottom = -65.0
 grow_vertical = 2
+
+[node name="InnerThoughtsDialogueBox" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=38036521 instance=ExtResource("17_yibea")]
 
 [node name="DebugUI" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
