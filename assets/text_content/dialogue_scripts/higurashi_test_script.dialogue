@@ -10,6 +10,7 @@
 #     Do these trigger effects? Change typing sounds or something?
 # [TODO] Use _preprocess_line to change [p2] into [wait=0.5] ?
 #     Or, do I want to do it more legitimately so it taps into the syntax highlighter? Prolly, yeah.
+# [TODO] Remove default pauses placed after punctuation.
 
 ~ Higurashi
 #join keiichi left
