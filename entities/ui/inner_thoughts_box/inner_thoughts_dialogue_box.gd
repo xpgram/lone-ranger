@@ -1,3 +1,8 @@
+## A dialogue box for player thoughts, often used while the command menu is
+## open. [br]
+##
+## Sourced from the default Dialogue Manager text balloon.
+class_name InnerThoughtsDialogueBox
 extends CanvasLayer
 ## A basic dialogue balloon for use with Dialogue Manager.
 
