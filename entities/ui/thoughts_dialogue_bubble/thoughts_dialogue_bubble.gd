@@ -90,12 +90,20 @@ func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
 
-  if event.is_action_pressed("interact"):
-    prints('Interacting with the dialogue bubble...');
+  var advance_button_was_pressed: bool = (
+    event.is_action_pressed("interact")
+    or event.is_action_pressed("cancel")
+    or event.is_action_pressed("inspect")
+  );
+
+  # [TODO] Could I rewrite this as a match?
+  if _dialogue_label.is_typing and advance_button_was_pressed:
+    _dialogue_label.skip_typing();
     focus_node.accept_event();
 
-  # [TODO] DialogueManager handles input itself, right? Is there anything to do here?
-  #     I don't mind setting advance and skip (and cancel) up manually. I may even prefer it.
+  elif advance_button_was_pressed:
+    _load_line_id_async(dialogue_line.next_id);
+    focus_node.accept_event();
 
 
 func _notification(what: int) -> void:
