@@ -114,6 +114,7 @@ layout_mode = 2
 theme_override_constants/separation = 2
 
 [node name="DialogueLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=911072715]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -146,6 +147,7 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="AdvanceIcon" type="Polygon2D" parent="PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1151557164]
+unique_name_in_owner = true
 polygon = PackedVector2Array(0, 0, 6, 0, 3, 3)
 uv = PackedVector2Array(0, 0, 6, 0, 3, 3)
 
