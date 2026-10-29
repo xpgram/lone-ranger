@@ -95,7 +95,22 @@ func _ready() -> void:
   _connect_to_item_lists();
   _configure_item_lists();
 
+  # [FIXME] Feature test thing I'll need to properly implement.
+  #     Not least of which because I can't connect to *all* dialogue
+  #     boxes ending.
+  DialogueManager.dialogue_ended.connect(_on_dialogue_ended);
+
   close();
+
+
+# [FIXME] Feature test to regrab focus. I'll need some version of this later.
+# [FIXME] This appears not to mean "dialogue is done and closed"; it doesn't capture everything.
+func _on_dialogue_ended(_res: DialogueResource) -> void:
+  match active_menu:
+    Submenu.Main:
+      _main_list.grab_focus();
+    _:
+      _options_list.grab_focus();
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -108,6 +123,26 @@ func _unhandled_input(event: InputEvent) -> void:
     ui_canceled.emit();
     sound_menu_close.play();
     accept_event();
+
+  # [FIXME] Feature test controls.
+  elif event is InputEventKey and event.is_pressed() and (event as InputEventKey).keycode == KEY_Q:
+    var thoughts: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
+
+    # [FIXME] is_waiting_for_input is true during [wait=n] effects?
+    var dialogue := DialogueManager.create_resource_from_text(
+"""
+~ start
+[wait=0.25]Hello!
+It's [wave]so good[/wave] to see you again.
+I'm afraid I'll have to leave you, though. [wait=1.0]\
+I have [color=red]shit myself[/color].
+"""
+    );
+
+
+    thoughts.start(dialogue);
+    # [TODO] Doesn't this... Shouldn't it be doing this when showing itself?
+    thoughts.focus_node.grab_focus();
 
 
 ## Opens the menu in whatever state it was in when it was closed.

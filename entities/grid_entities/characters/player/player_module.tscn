@@ -287,6 +287,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="ThoughtsDialogueBubble" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer" unique_id=984665687 instance=ExtResource("16_yibea")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
