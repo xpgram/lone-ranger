@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" format=3 uid="uid://oolkpndh7jtf"]
+
+[ext_resource type="FontFile" uid="uid://pafxe724h1i6" path="res://assets/fonts/CourierPrime/CourierPrime-Regular.ttf" id="1_56a7i"]
+
+[resource]
+base_font = ExtResource("1_56a7i")
+variation_transform = Transform2D(1, 0, 0, 0.85, 0, 0)
