@@ -146,6 +146,7 @@ text = "Dialogue...
 scroll_active = false
 scroll_following = true
 scroll_following_visible_characters = true
+visible_characters_behavior = 1
 script = ExtResource("5_2ipu2")
 skip_action = &"cancel"
 pause_at_characters = ""
