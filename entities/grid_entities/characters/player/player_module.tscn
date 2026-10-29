@@ -15,10 +15,12 @@
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
-[ext_resource type="FontFile" uid="uid://d0fu6m6umjqnw" path="res://assets/fonts/courier_new.ttf" id="16_txwd0"]
+[ext_resource type="FontFile" uid="uid://pafxe724h1i6" path="res://assets/fonts/CourierPrime-Regular.ttf" id="16_mrt6k"]
 [ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/nodes/dialogue_label/dialogue_label.gd" id="16_yibea"]
-[ext_resource type="FontFile" uid="uid://c2eb1mulsdjef" path="res://assets/fonts/courier_new_bold.ttf" id="17_1ol17"]
+[ext_resource type="FontFile" uid="uid://cun6ufnpo6x8o" path="res://assets/fonts/CourierPrime-Bold.ttf" id="17_5beel"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
+[ext_resource type="FontFile" uid="uid://quya4d02tteo" path="res://assets/fonts/CourierPrime-BoldItalic.ttf" id="18_qdihw"]
+[ext_resource type="FontFile" uid="uid://dx3yrbhorn58x" path="res://assets/fonts/CourierPrime-Italic.ttf" id="19_f5ans"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
 [ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
@@ -357,15 +359,16 @@ theme_override_constants/separation = 2
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_fonts/normal_font = ExtResource("16_txwd0")
-theme_override_fonts/bold_font = ExtResource("17_1ol17")
-theme_override_fonts/bold_italics_font = ExtResource("17_1ol17")
-theme_override_fonts/italics_font = ExtResource("16_txwd0")
+theme_override_fonts/normal_font = ExtResource("16_mrt6k")
+theme_override_fonts/bold_font = ExtResource("17_5beel")
+theme_override_fonts/bold_italics_font = ExtResource("18_qdihw")
+theme_override_fonts/italics_font = ExtResource("19_f5ans")
+theme_override_fonts/mono_font = ExtResource("16_mrt6k")
 theme_override_font_sizes/normal_font_size = 9
 theme_override_font_sizes/bold_font_size = 9
 theme_override_font_sizes/bold_italics_font_size = 9
 theme_override_font_sizes/italics_font_size = 9
-theme_override_font_sizes/mono_font_size = 6
+theme_override_font_sizes/mono_font_size = 9
 bbcode_enabled = true
 text = "Dialogue...
 [wave]Welcome[/wave] to my home. [i]I am sorry[/i] you are [b]unaware[/b] of how [color=red]things work around here."
