@@ -8,9 +8,13 @@ extends Control
 # [TODO] Skip dialogue (the cancel event)
 # [TODO] Understand the mutation thing?
 #     I think I get it, actually. But I still need to see how it's being applied.
+# [FIXME] Re-evaluate some of these public vars, make sure they actually should be.
 
 ## The dialogue script to play.
 @export var dialogue_resource: DialogueResource;
+
+## Start from a particular cue in a [DialogueResource].
+@export var start_from_cue := "";
 
 ## The current line being displayed. Text readout may still be in progress.
 var dialogue_line: DialogueLine:
@@ -36,6 +40,12 @@ var locals: Dictionary = {};
 
 ## The language setting for the game session.
 var _locale: String = TranslationServer.get_locale();
+
+# [FIXME] Array[GameState], whatever that is.
+# [FIXME] Find out what a Game State is so that I can write this doc string.
+# Worth noting, DialogueManager does require it. Or, it seems important enough.
+##
+var _temporary_game_states := [] as Array;
 
 ## Whether this dialogue bubble will hide after the mutation timer has resolved.
 var _will_hide_text_bubble: bool = false;
@@ -90,6 +100,28 @@ func _unhandled_input(event: InputEvent) -> void:
 func _notification(what: int) -> void:
   if what == NOTIFICATION_TRANSLATION_CHANGED:
     _on_translation_changed();
+
+
+## Start playing the currently held [DialogueResource]. [br]
+##
+## If given, [param with_dialogue_resource] will be used, starting from
+## [param cue]. I don't know what [param extra_game_states] are.
+func start(
+    with_dialogue_resource: DialogueResource = null,
+    cue: String = "",
+    extra_game_states: Array = []
+) -> void:
+  _temporary_game_states = [self] + extra_game_states
+  is_waiting_for_input = false
+
+  if is_instance_valid(with_dialogue_resource):
+    dialogue_resource = with_dialogue_resource
+
+  if not cue.is_empty():
+    start_from_cue = cue
+
+  dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_cue, _temporary_game_states)
+  show()
 
 
 ##
