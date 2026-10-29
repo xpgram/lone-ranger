@@ -7,6 +7,9 @@ extends Control
 # [TODO] Skip dialogue (the cancel event)
 # [TODO] Understand the mutation thing?
 #     I think I get it, actually. But I still need to see how it's being applied.
+# [TODO] I _think_ a mutation may be text effects like [wait=0.5].
+#     A problem: .skip_typing() is never called during a mutation, then.
+#     If the mutation timer is going, it should skip and then the text should skip.
 # [FIXME] Re-evaluate some of these public vars, make sure they actually should be.
 
 ## The dialogue script to play.
