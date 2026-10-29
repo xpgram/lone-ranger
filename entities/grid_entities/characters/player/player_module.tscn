@@ -149,6 +149,45 @@ corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 corner_detail = 3
 
+[sub_resource type="Animation" id="Animation_mrt6k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AdvanceIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5beel"]
+resource_name = "bob_vertically"
+length = 1.5
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AdvanceIcon:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 2), Vector2(0, 0), Vector2(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qdihw"]
+_data = {
+&"RESET": SubResource("Animation_mrt6k"),
+&"bob_vertically": SubResource("Animation_5beel")
+}
+
 [sub_resource type="Gradient" id="Gradient_qdihw"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(1, 1, 1, 1)
@@ -383,13 +422,17 @@ skip_pause_at_abbreviations = PackedStringArray()
 metadata/_custom_type_script = "uid://g32um0mltv5d"
 
 [node name="Control" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer/HBoxContainer" unique_id=591514597]
-custom_minimum_size = Vector2(6, 4)
+custom_minimum_size = Vector2(7, 5)
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="Polygon2D" type="Polygon2D" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1751737153]
+[node name="AdvanceIcon" type="Polygon2D" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1751737153]
 polygon = PackedVector2Array(0, 0, 6, 0, 3, 3)
 uv = PackedVector2Array(0, 0, 6, 0, 3, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1539504964]
+libraries/ = SubResource("AnimationLibrary_qdihw")
+autoplay = &"bob_vertically"
 
 [node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
 unique_name_in_owner = true
