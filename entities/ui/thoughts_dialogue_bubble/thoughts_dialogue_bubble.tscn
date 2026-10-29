@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://48kvr2gdye3o"]
 
+[ext_resource type="Script" uid="uid://bmgd5q4oj57js" path="res://entities/ui/thoughts_dialogue_bubble/thoughts_dialogue_bubble.gd" id="1_bi05r"]
 [ext_resource type="Script" uid="uid://dx2don6d2tt38" path="res://common/input_focus/focusable_control.gd" id="1_h53ua"]
 [ext_resource type="FontFile" uid="uid://pafxe724h1i6" path="res://assets/fonts/CourierPrime/CourierPrime-Regular.ttf" id="1_w0qrk"]
 [ext_resource type="FontFile" uid="uid://cun6ufnpo6x8o" path="res://assets/fonts/CourierPrime/CourierPrime-Bold.ttf" id="2_h53ua"]
@@ -84,6 +85,7 @@ offset_right = 192.0
 offset_bottom = 64.0
 grow_vertical = 2
 size_flags_horizontal = 3
+script = ExtResource("1_bi05r")
 
 [node name="FocusableControl" type="Control" parent="." unique_id=936471877]
 unique_name_in_owner = true

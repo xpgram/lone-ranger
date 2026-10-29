@@ -1,0 +1,94 @@
+## A dialogue box for player thoughts while the command menu is open. [br]
+##
+## Adapted from the default Dialogue Manager 4 text balloon.
+class_name ThoughtsDialogueBubble
+extends Control
+
+# [TODO] Advance dialogue (the interact event)
+# [TODO] Skip dialogue (the cancel event)
+# [TODO] Understand the mutation thing?
+#     I think I get it, actually. But I still need to see how it's being applied.
+
+## The dialogue script to play.
+@export var dialogue_resource: DialogueResource;
+
+## The current line being displayed. Text readout may still be in progress.
+var dialogue_line: DialogueLine:
+  set(value):
+    if value:
+      dialogue_line = value;
+      _apply_dialogue_line();
+    else:
+      # The dialogue has finished, so close the bubble.
+      if owner == null:
+        queue_free();
+      else:
+        hide();
+  get():
+    return dialogue_line;
+
+## Whether the dialogue system is awaiting player input.
+var is_waiting_for_input: bool = false;
+
+## A dictionary to store any ephemeral variables used by the dialogue script.
+var locals: Dictionary = {};
+
+## The language setting for the game session.
+var _locale: String = TranslationServer.get_locale();
+
+## Whether this dialogue bubble will hide after the mutation timer has resolved.
+var _will_hide_text_bubble: bool = false;
+
+# [TODO] Make the entire scene a FocusableNode?
+## A node for managing player input.
+@onready var focus_node: FocusableControl = %FocusableControl;
+
+## An audio player for typing sounds and other dialogue sfx.
+@onready var _audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer;
+
+## The node that displays the dialogue text.
+@onready var _dialogue_label: DialogueLabel = %DialogueLabel;
+
+## A timer for delaying text-bubble behavior when encountering a Dialogue
+## Manager mutation.
+@onready var _mutation_timer: Timer = %MutationTimer;
+
+## The "awaiting player input" icon indicating text readout has finished.
+@onready var _text_advance_icon: Node2D = %AdvanceIcon;
+
+
+func _ready() -> void:
+  _connect_to_signals();
+
+  # Hide the dialogue bubble until needed.
+  hide();
+
+
+func _connect_to_signals() -> void:
+  Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated);
+  _mutation_timer.timeout.connect(_on_mutation_timer_timeout);
+
+
+##
+func _apply_dialogue_line() -> void:
+  # [FIXME]
+  pass
+
+
+#region Signals
+
+##
+func _on_mutation_timer_timeout() -> void:
+  if _will_hide_text_bubble:
+    _will_hide_text_bubble = false;
+    hide();
+
+
+##
+func _on_mutated(mutation: Dictionary) -> void:
+  if not mutation.is_inline:
+    is_waiting_for_input = false;
+    _will_hide_text_bubble = true;
+    _mutation_timer.start(0.1);
+
+#endregion Signals
