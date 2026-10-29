@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bfa5twja8kg5b" path="res://assets/textures_unused/system/command-menu.png" id="2_jcfl5"]
 [ext_resource type="Theme" uid="uid://di0dru5ym242e" path="res://utilities/resources/text_themes/default_text.tres" id="2_kdjjn"]
 [ext_resource type="Texture2D" uid="uid://bogdmfl1vf1uv" path="res://assets/textures_unused/system/icons/icon-skill.png" id="3_8tcxm"]
+[ext_resource type="FontVariation" uid="uid://dihhgbamhe2yt" path="res://assets/fonts/Iosevka_Charon_Mono/iosevka_charon_mono.tres" id="4_gi5kj"]
 [ext_resource type="Texture2D" uid="uid://ctu86c82jsblf" path="res://assets/textures_unused/system/icons/icon-magic.png" id="4_y4i8d"]
 [ext_resource type="Texture2D" uid="uid://c8hl7pwsr04fi" path="res://assets/textures_unused/system/icons/icon-items.png" id="5_1rpdr"]
 [ext_resource type="Script" uid="uid://372k1qqga746" path="res://entities/ui/command_menu/item_list.gd" id="6_u6tlb"]
@@ -100,6 +101,8 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("4_gi5kj")
+theme_override_font_sizes/font_size = 8
 allow_search = false
 item_count = 3
 item_0/text = "Skills"
@@ -125,6 +128,7 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("4_gi5kj")
 allow_search = false
 script = ExtResource("6_u6tlb")
 remember_cursor_position = true
@@ -132,11 +136,12 @@ remember_cursor_position = true
 [node name="Label" type="Label" parent="NinePatchRect/OptionsList" unique_id=1195975880]
 visible = false
 layout_mode = 0
-offset_left = 46.0
-offset_right = 56.0
+offset_left = 48.0
+offset_right = 58.0
 offset_bottom = 10.0
 theme = ExtResource("2_kdjjn")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gi5kj")
 text = "2"
 horizontal_alignment = 2
 
