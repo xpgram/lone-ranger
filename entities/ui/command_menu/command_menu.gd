@@ -128,7 +128,6 @@ func _unhandled_input(event: InputEvent) -> void:
   elif event is InputEventKey and event.is_pressed() and (event as InputEventKey).keycode == KEY_Q:
     var thoughts: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
 
-    # [FIXME] is_waiting_for_input is true during [wait=n] effects?
     var dialogue := DialogueManager.create_resource_from_text(
 """
 ~ start
@@ -139,9 +138,8 @@ I have [color=red]shit myself[/color].
 """
     );
 
-
     thoughts.start(dialogue);
-    # [TODO] Doesn't this... Shouldn't it be doing this when showing itself?
+    # [FIXME] Doesn't this... Shouldn't it be doing this when showing itself?
     thoughts.focus_node.grab_focus();
 
 

@@ -31,10 +31,10 @@ var dialogue_line: DialogueLine:
     return dialogue_line;
 
 ## Whether the dialogue system is awaiting player input.
-var _is_waiting_for_input: bool = false:
+var _is_awaiting_input: bool = false:
   set(value):
-    _is_waiting_for_input = value;
-    _text_advance_icon.visible = _is_waiting_for_input;
+    _is_awaiting_input = value;
+    _text_advance_icon.visible = _is_awaiting_input;
 
 ## The language setting for the game session.
 var _locale: String = TranslationServer.get_locale();
@@ -87,18 +87,18 @@ func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
 
-  var advance_button_was_pressed: bool = (
+  var advance_button_pressed: bool = (
     event.is_action_pressed("interact")
     or event.is_action_pressed("cancel")
     or event.is_action_pressed("inspect")
   );
 
   # [TODO] Could I rewrite this as a match?
-  if _dialogue_label.is_typing and advance_button_was_pressed:
+  if _dialogue_label.is_typing and advance_button_pressed:
     _dialogue_label.skip_typing();
     focus_node.accept_event();
 
-  elif advance_button_was_pressed:
+  elif _is_awaiting_input and advance_button_pressed:
     _load_line_id_async(dialogue_line.next_id);
     focus_node.accept_event();
 
@@ -118,7 +118,7 @@ func start(
     extra_game_states: Array = []
 ) -> void:
   _temporary_game_states = [self] + extra_game_states;
-  _is_waiting_for_input = false;
+  _is_awaiting_input = false;
 
   if is_instance_valid(with_dialogue_resource):
     dialogue_resource = with_dialogue_resource;
@@ -136,7 +136,7 @@ func _apply_dialogue_line_async() -> void:
   _mutation_timer.stop();
 
   _text_advance_icon.hide();
-  _is_waiting_for_input = false;
+  _is_awaiting_input = false;
   focus_node.grab_focus();
   # [TODO] Pause game events?
 
@@ -170,7 +170,7 @@ func _apply_dialogue_line_async() -> void:
     await get_tree().create_timer(time).timeout;
     _load_line_id_async(dialogue_line.next_id);
   else:
-    _is_waiting_for_input = true;
+    _is_awaiting_input = true;
     focus_node.grab_focus();
 
 
@@ -193,7 +193,7 @@ func _on_mutation_timer_timeout() -> void:
 ## [FIXME] What does this actually do?
 func _on_mutated(mutation: Dictionary) -> void:
   if not mutation.is_inline:
-    _is_waiting_for_input = false;
+    _is_awaiting_input = false;
     _will_hide_text_bubble = true;
     _mutation_timer.start(0.1);
 
