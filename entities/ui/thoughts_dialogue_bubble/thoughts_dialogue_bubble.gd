@@ -28,6 +28,7 @@ var dialogue_line: DialogueLine:
     return dialogue_line;
 
 ## Whether the dialogue system is awaiting player input.
+## [FIXME] To outsiders, this should be read only.
 var is_waiting_for_input: bool = false;
 
 ## A dictionary to store any ephemeral variables used by the dialogue script.
@@ -86,6 +87,11 @@ func _unhandled_input(event: InputEvent) -> void:
   #     I don't mind setting advance and skip (and cancel) up manually. I may even prefer it.
 
 
+func _notification(what: int) -> void:
+  if what == NOTIFICATION_TRANSLATION_CHANGED:
+    _on_translation_changed();
+
+
 ##
 func _apply_dialogue_line() -> void:
   # [FIXME]
@@ -105,18 +111,33 @@ func _autoset_advance_icon_visibility() -> void:
 
 #region Signals
 
-##
+## Responds to the mutation timer's timeout signal.
 func _on_mutation_timer_timeout() -> void:
   if _will_hide_text_bubble:
     _will_hide_text_bubble = false;
     hide();
 
 
-##
+## Responds to a Dialogue Manager mutation signal.
+## [FIXME] What does this actually do?
 func _on_mutated(mutation: Dictionary) -> void:
   if not mutation.is_inline:
     is_waiting_for_input = false;
     _will_hide_text_bubble = true;
     _mutation_timer.start(0.1);
+
+
+## Responds to an updated language preference signal.
+## Updates the current line to show the new language.
+func _on_translation_changed() -> void:
+  if (
+      _locale != TranslationServer.get_locale()
+      and is_instance_valid(_dialogue_label)
+  ):
+    _locale = TranslationServer.get_locale();
+    await dialogue_line.refresh();
+
+    if _dialogue_label.visible_ratio < 1:
+      _dialogue_label.skip_typing();
 
 #endregion Signals
