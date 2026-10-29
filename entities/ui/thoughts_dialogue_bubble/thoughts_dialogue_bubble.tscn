@@ -93,6 +93,9 @@ anchors_preset = 0
 script = ExtResource("1_h53ua")
 metadata/_custom_type_script = "uid://dx2don6d2tt38"
 
+[node name="MutationTimer" type="Timer" parent="." unique_id=600091341]
+unique_name_in_owner = true
+
 [node name="PanelOutline" type="Panel" parent="." unique_id=124316131]
 layout_mode = 1
 anchors_preset = 15

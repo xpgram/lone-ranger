@@ -69,6 +69,16 @@ func _connect_to_signals() -> void:
   _mutation_timer.timeout.connect(_on_mutation_timer_timeout);
 
 
+func _process(_delta: float) -> void:
+  # [FIXME] We're doing this in the process step??
+  if is_instance_valid(dialogue_line):
+    _text_advance_icon.visible = (
+      not _dialogue_label.is_typing
+      and dialogue_line.responses.size() == 0
+      and not dialogue_line.has_tag("voice")
+    );
+
+
 ##
 func _apply_dialogue_line() -> void:
   # [FIXME]
