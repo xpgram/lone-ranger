@@ -4,7 +4,6 @@
 class_name ThoughtsDialogueBubble
 extends Control
 
-# [TODO] Advance dialogue (the interact event)
 # [TODO] Skip dialogue (the cancel event)
 # [TODO] Understand the mutation thing?
 #     I think I get it, actually. But I still need to see how it's being applied.
@@ -32,14 +31,17 @@ var dialogue_line: DialogueLine:
     return dialogue_line;
 
 ## Whether the dialogue system is awaiting player input.
-## [FIXME] To outsiders, this should be read only.
-var is_waiting_for_input: bool = false;
-
-## A dictionary to store any ephemeral variables used by the dialogue script.
-var locals: Dictionary = {};
+var _is_waiting_for_input: bool = false:
+  set(value):
+    _is_waiting_for_input = value;
+    _text_advance_icon.visible = _is_waiting_for_input;
 
 ## The language setting for the game session.
 var _locale: String = TranslationServer.get_locale();
+
+## A dictionary to store any ephemeral variables used by the dialogue script.
+# [FIXME] Not used?
+var _locals: Dictionary = {};
 
 # [FIXME] Array[GameState], whatever that is.
 # [FIXME] Find out what a Game State is so that I can write this doc string.
@@ -81,11 +83,6 @@ func _connect_to_signals() -> void:
   _mutation_timer.timeout.connect(_on_mutation_timer_timeout);
 
 
-func _process(_delta: float) -> void:
-  # [FIXME] Call this elsewhere.
-  _autoset_advance_icon_visibility();
-
-
 func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
@@ -120,17 +117,17 @@ func start(
     cue: String = "",
     extra_game_states: Array = []
 ) -> void:
-  _temporary_game_states = [self] + extra_game_states
-  is_waiting_for_input = false
+  _temporary_game_states = [self] + extra_game_states;
+  _is_waiting_for_input = false;
 
   if is_instance_valid(with_dialogue_resource):
-    dialogue_resource = with_dialogue_resource
+    dialogue_resource = with_dialogue_resource;
 
-  if not cue.is_empty():
-    start_from_cue = cue
+  if cue != "":
+    start_from_cue = cue;
 
-  dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_cue, _temporary_game_states)
-  show()
+  dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_cue, _temporary_game_states);
+  show();
 
 
 ## Applies changes described by the current [member dialogue_line] to the
@@ -139,7 +136,7 @@ func _apply_dialogue_line_async() -> void:
   _mutation_timer.stop();
 
   _text_advance_icon.hide();
-  is_waiting_for_input = false;
+  _is_waiting_for_input = false;
   focus_node.grab_focus();
   # [TODO] Pause game events?
 
@@ -173,7 +170,7 @@ func _apply_dialogue_line_async() -> void:
     await get_tree().create_timer(time).timeout;
     _load_line_id_async(dialogue_line.next_id);
   else:
-    is_waiting_for_input = true;
+    _is_waiting_for_input = true;
     focus_node.grab_focus();
 
 
@@ -181,17 +178,6 @@ func _apply_dialogue_line_async() -> void:
 ## and sets it as the new [member dialogue_line] to display.
 func _load_line_id_async(line_id: String) -> void:
   dialogue_line = await dialogue_resource.get_next_dialogue_line(line_id, _temporary_game_states);
-
-
-## Sets the visibility of the text-advance icon in accordance with certain
-## dialogue bubble conditions.
-func _autoset_advance_icon_visibility() -> void:
-  if is_instance_valid(dialogue_line):
-    _text_advance_icon.visible = (
-      not _dialogue_label.is_typing
-      and dialogue_line.responses.size() == 0
-      and not dialogue_line.has_tag("voice")
-    );
 
 
 #region Signals
@@ -207,7 +193,7 @@ func _on_mutation_timer_timeout() -> void:
 ## [FIXME] What does this actually do?
 func _on_mutated(mutation: Dictionary) -> void:
   if not mutation.is_inline:
-    is_waiting_for_input = false;
+    _is_waiting_for_input = false;
     _will_hide_text_bubble = true;
     _mutation_timer.start(0.1);
 
