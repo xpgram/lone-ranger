@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://48kvr2gdye3o"]
+
+[ext_resource type="FontFile" uid="uid://pafxe724h1i6" path="res://assets/fonts/CourierPrime/CourierPrime-Regular.ttf" id="1_w0qrk"]
+[ext_resource type="FontFile" uid="uid://cun6ufnpo6x8o" path="res://assets/fonts/CourierPrime/CourierPrime-Bold.ttf" id="2_h53ua"]
+[ext_resource type="FontFile" uid="uid://quya4d02tteo" path="res://assets/fonts/CourierPrime/CourierPrime-BoldItalic.ttf" id="3_bi05r"]
+[ext_resource type="FontFile" uid="uid://dx3yrbhorn58x" path="res://assets/fonts/CourierPrime/CourierPrime-Italic.ttf" id="4_mxja3"]
+[ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/nodes/dialogue_label/dialogue_label.gd" id="5_2ipu2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvq7a"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5jpfb"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 3
+
+[sub_resource type="Animation" id="Animation_mrt6k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AdvanceIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5beel"]
+resource_name = "bob_vertically"
+length = 1.5
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AdvanceIcon:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 2), Vector2(0, 0), Vector2(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qdihw"]
+_data = {
+&"RESET": SubResource("Animation_mrt6k"),
+&"bob_vertically": SubResource("Animation_5beel")
+}
+
+[node name="ThoughtsDialogueBubble" type="Control" unique_id=984665687]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+
+[node name="PanelOutline" type="Panel" parent="." unique_id=124316131]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvq7a")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1979314387]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5jpfb")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=13001733]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1528736512]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="DialogueLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=911072715]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("1_w0qrk")
+theme_override_fonts/bold_font = ExtResource("2_h53ua")
+theme_override_fonts/bold_italics_font = ExtResource("3_bi05r")
+theme_override_fonts/italics_font = ExtResource("4_mxja3")
+theme_override_fonts/mono_font = ExtResource("1_w0qrk")
+theme_override_font_sizes/normal_font_size = 9
+theme_override_font_sizes/bold_font_size = 9
+theme_override_font_sizes/bold_italics_font_size = 9
+theme_override_font_sizes/italics_font_size = 9
+theme_override_font_sizes/mono_font_size = 9
+bbcode_enabled = true
+text = "Dialogue...
+[wave]Welcome[/wave] to my home. [i]I am sorry[/i] you are [b]unaware[/b] of how [color=red]things work around here."
+scroll_active = false
+scroll_following = true
+scroll_following_visible_characters = true
+script = ExtResource("5_2ipu2")
+skip_action = &"cancel"
+pause_at_characters = ""
+skip_pause_at_character_if_followed_by = ""
+skip_pause_at_abbreviations = PackedStringArray()
+metadata/_custom_type_script = "uid://g32um0mltv5d"
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=244984692]
+custom_minimum_size = Vector2(7, 5)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="AdvanceIcon" type="Polygon2D" parent="PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1151557164]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(0, 0, 6, 0, 3, 3)
+uv = PackedVector2Array(0, 0, 6, 0, 3, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1667602978]
+libraries/ = SubResource("AnimationLibrary_qdihw")
+autoplay = &"bob_vertically"
