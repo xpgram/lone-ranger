@@ -79,7 +79,9 @@ _data = {
 [node name="ThoughtsDialogueBubble" type="Control" unique_id=984665687]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 3
-anchors_preset = 0
+offset_right = 192.0
+offset_bottom = 64.0
+grow_vertical = 2
 size_flags_horizontal = 3
 
 [node name="PanelOutline" type="Panel" parent="." unique_id=124316131]
@@ -144,7 +146,6 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="AdvanceIcon" type="Polygon2D" parent="PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1151557164]
-position = Vector2(0, 1)
 polygon = PackedVector2Array(0, 0, 6, 0, 3, 3)
 uv = PackedVector2Array(0, 0, 6, 0, 3, 3)
 
