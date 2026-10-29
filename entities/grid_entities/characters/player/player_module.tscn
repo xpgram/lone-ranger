@@ -15,6 +15,9 @@
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
+[ext_resource type="FontFile" uid="uid://d0fu6m6umjqnw" path="res://assets/fonts/courier_new.ttf" id="16_txwd0"]
+[ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/nodes/dialogue_label/dialogue_label.gd" id="16_yibea"]
+[ext_resource type="FontFile" uid="uid://c2eb1mulsdjef" path="res://assets/fonts/courier_new_bold.ttf" id="17_1ol17"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
@@ -313,8 +316,8 @@ alignment = 2
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="ThoughtsDialogueBubble" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer" unique_id=336658439]
 custom_minimum_size = Vector2(64, 0)
@@ -338,6 +341,52 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5jpfb")
+
+[node name="MarginContainer" type="MarginContainer" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer" unique_id=939633971]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer" unique_id=355193632]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="DialogueLabel" type="RichTextLabel" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer/HBoxContainer" unique_id=251223656]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("16_txwd0")
+theme_override_fonts/bold_font = ExtResource("17_1ol17")
+theme_override_fonts/bold_italics_font = ExtResource("17_1ol17")
+theme_override_fonts/italics_font = ExtResource("16_txwd0")
+theme_override_font_sizes/normal_font_size = 9
+theme_override_font_sizes/bold_font_size = 9
+theme_override_font_sizes/bold_italics_font_size = 9
+theme_override_font_sizes/italics_font_size = 9
+theme_override_font_sizes/mono_font_size = 6
+bbcode_enabled = true
+text = "Dialogue...
+[wave]Welcome[/wave] to my home. [i]I am sorry[/i] you are [b]unaware[/b] of how [color=red]things work around here."
+scroll_active = false
+scroll_following = true
+scroll_following_visible_characters = true
+script = ExtResource("16_yibea")
+skip_action = &"cancel"
+pause_at_characters = ""
+skip_pause_at_character_if_followed_by = ""
+skip_pause_at_abbreviations = PackedStringArray()
+metadata/_custom_type_script = "uid://g32um0mltv5d"
+
+[node name="Control" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer/HBoxContainer" unique_id=591514597]
+custom_minimum_size = Vector2(6, 4)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Polygon2D" type="Polygon2D" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble/PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1751737153]
+polygon = PackedVector2Array(0, 0, 6, 0, 3, 3)
+uv = PackedVector2Array(0, 0, 6, 0, 3, 3)
 
 [node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
 unique_name_in_owner = true
