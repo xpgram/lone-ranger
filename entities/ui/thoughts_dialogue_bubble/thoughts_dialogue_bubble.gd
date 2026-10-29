@@ -21,7 +21,7 @@ var dialogue_line: DialogueLine:
   set(value):
     if value:
       dialogue_line = value;
-      _apply_dialogue_line();
+      _apply_dialogue_line_async();
     else:
       # The dialogue has finished, so close the bubble.
       if owner == null:
@@ -47,6 +47,7 @@ var _locale: String = TranslationServer.get_locale();
 ##
 var _temporary_game_states := [] as Array;
 
+# [TODO] This thing is all over the script. Simplify its implementation.
 ## Whether this dialogue bubble will hide after the mutation timer has resolved.
 var _will_hide_text_bubble: bool = false;
 
@@ -124,10 +125,54 @@ func start(
   show()
 
 
-##
-func _apply_dialogue_line() -> void:
-  # [FIXME]
-  pass
+## Applies changes described by the current [member dialogue_line] to the
+## text bubble.
+func _apply_dialogue_line_async() -> void:
+  _mutation_timer.stop();
+
+  _text_advance_icon.hide();
+  is_waiting_for_input = false;
+  focus_node.grab_focus();
+  # [TODO] Pause game events?
+
+  _dialogue_label.hide();
+  _dialogue_label.dialogue_line = dialogue_line;
+
+  # [FIXME] If there are responses, just raise an error. Unless...?
+
+  show();
+  _will_hide_text_bubble = false;
+  _dialogue_label.show();
+
+  if not _dialogue_label.text.is_empty():
+    _dialogue_label.type_out();
+    await _dialogue_label.finished_typing;
+
+  # Wait for _load_line_id_async line
+  # [TODO] Can this be broken off into a separate function?
+  if dialogue_line.has_tag("voice"):
+    _audio_stream_player.stream = load(dialogue_line.get_tag_value("voice"));
+    _audio_stream_player.play();
+    await _audio_stream_player.finished;
+    # [TODO] Wait, this just skips to _load_line_id_async if there's voice? What if I want to wait?
+    _load_line_id_async(dialogue_line.next_id);
+  elif dialogue_line.time != "":
+    # [TODO] This 'time' should be a function call.
+    var time: float = (
+      dialogue_line.text.length() + 0.02 if dialogue_line.time == "auto"
+      else dialogue_line.time.to_float()
+    );
+    await get_tree().create_timer(time).timeout;
+    _load_line_id_async(dialogue_line.next_id);
+  else:
+    is_waiting_for_input = true;
+    focus_node.grab_focus();
+
+
+## Requests the line with [param line_id] from the [member dialogue_resource]
+## and sets it as the new [member dialogue_line] to display.
+func _load_line_id_async(line_id: String) -> void:
+  dialogue_line = await dialogue_resource.get_next_dialogue_line(line_id, _temporary_game_states);
 
 
 ## Sets the visibility of the text-advance icon in accordance with certain
