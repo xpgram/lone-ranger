@@ -74,6 +74,18 @@ func _process(_delta: float) -> void:
   _autoset_advance_icon_visibility();
 
 
+func _unhandled_input(event: InputEvent) -> void:
+  if not focus_node.has_focus():
+    return;
+
+  if event.is_action_pressed("interact"):
+    prints('Interacting with the dialogue bubble...');
+    focus_node.accept_event();
+
+  # [TODO] DialogueManager handles input itself, right? Is there anything to do here?
+  #     I don't mind setting advance and skip (and cancel) up manually. I may even prefer it.
+
+
 ##
 func _apply_dialogue_line() -> void:
   # [FIXME]
