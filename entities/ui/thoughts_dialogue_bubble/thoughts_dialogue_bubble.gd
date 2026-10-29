@@ -70,19 +70,25 @@ func _connect_to_signals() -> void:
 
 
 func _process(_delta: float) -> void:
-  # [FIXME] We're doing this in the process step??
-  if is_instance_valid(dialogue_line):
-    _text_advance_icon.visible = (
-      not _dialogue_label.is_typing
-      and dialogue_line.responses.size() == 0
-      and not dialogue_line.has_tag("voice")
-    );
+  # [FIXME] Call this elsewhere.
+  _autoset_advance_icon_visibility();
 
 
 ##
 func _apply_dialogue_line() -> void:
   # [FIXME]
   pass
+
+
+## Sets the visibility of the text-advance icon in accordance with certain
+## dialogue bubble conditions.
+func _autoset_advance_icon_visibility() -> void:
+  if is_instance_valid(dialogue_line):
+    _text_advance_icon.visible = (
+      not _dialogue_label.is_typing
+      and dialogue_line.responses.size() == 0
+      and not dialogue_line.has_tag("voice")
+    );
 
 
 #region Signals
