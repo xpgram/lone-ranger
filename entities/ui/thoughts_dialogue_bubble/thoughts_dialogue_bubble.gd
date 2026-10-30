@@ -98,6 +98,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
   # [TODO] Could I rewrite this as a match?
   if _dialogue_label.is_typing and advance_button_pressed:
+    # [TODO] Does not skip effects like [wait]
     _dialogue_label.skip_typing();
     focus_node.accept_event();
 
