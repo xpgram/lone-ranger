@@ -33,6 +33,10 @@ var dialogue_line: DialogueLine:
   get():
     return dialogue_line;
 
+## A dictionary to store any ephemeral variables used by the dialogue script.
+## Accessed by dialogue scripts directly.
+var locals: Dictionary = {};
+
 ## Whether the dialogue system is awaiting player input.
 var _is_awaiting_input: bool = false:
   set(value):
@@ -41,10 +45,6 @@ var _is_awaiting_input: bool = false:
 
 ## The language setting for the game session.
 var _locale: String = TranslationServer.get_locale();
-
-## A dictionary to store any ephemeral variables used by the dialogue script.
-# [FIXME] Not used?
-var _locals: Dictionary = {};
 
 # [FIXME] Array[GameState], whatever that is.
 # [FIXME] Find out what a Game State is so that I can write this doc string.
@@ -99,7 +99,6 @@ func _unhandled_input(event: InputEvent) -> void:
     or event.is_action_pressed("inspect")
   );
 
-  # [TODO] Could I rewrite this as a match?
   if _dialogue_label.is_typing and advance_button_pressed:
     # [TODO] Does not skip effects like [wait]
     _dialogue_label.skip_typing();
