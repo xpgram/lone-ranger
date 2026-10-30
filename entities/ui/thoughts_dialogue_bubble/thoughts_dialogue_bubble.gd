@@ -49,6 +49,9 @@ var _locals: Dictionary = {};
 # [FIXME] Array[GameState], whatever that is.
 # [FIXME] Find out what a Game State is so that I can write this doc string.
 # Worth noting, DialogueManager does require it. Or, it seems important enough.
+# [INFO] These provide additional object space for calling methods and storing values.
+#     Uh, temporary... I'm not sure what's meant by temporary, but this _is_ what the
+#     game states thing is about.
 ##
 var _temporary_game_states := [] as Array;
 
