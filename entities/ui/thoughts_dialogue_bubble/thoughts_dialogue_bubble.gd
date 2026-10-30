@@ -18,6 +18,14 @@ extends Control
 ## Start from a particular cue in a [DialogueResource].
 @export var start_from_cue := "";
 
+## Whether to automatically advance to the next line after a line has ended.
+@export var auto_advance_lines := false;
+
+## How long in seconds to wait after a line has ended before advancing to the
+## next line.
+@export_custom(PROPERTY_HINT_NONE, "suffix:s")
+var default_auto_advance_delay := 3.0;
+
 ## The current line being displayed. Text readout may still be in progress.
 var dialogue_line: DialogueLine:
   set(value):
@@ -64,7 +72,7 @@ var _will_hide_text_bubble: bool = false;
 @onready var focus_node: FocusableControl = %FocusableControl;
 
 ## An audio player for typing sounds and other dialogue sfx.
-@onready var _audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer;
+@onready var _voice_audio_player: AudioStreamPlayer = %VoiceAudioPlayer;
 
 ## The node that displays the dialogue text.
 @onready var _dialogue_label: DialogueLabel = %DialogueLabel;
@@ -72,6 +80,11 @@ var _will_hide_text_bubble: bool = false;
 ## A timer for delaying text-bubble behavior when encountering a Dialogue
 ## Manager mutation.
 @onready var _mutation_timer: Timer = %MutationTimer;
+
+## A timer for delaying the auto-advance trigger at the end of a line readout.
+## This allows readers time to catch up to the end of the line before the text
+## they're reading is taken away from them.
+@onready var _auto_advance_timer: Timer = %AutoAdvanceTimer;
 
 ## The "awaiting player input" icon indicating text readout has finished.
 @onready var _text_advance_icon: Node2D = %AdvanceIcon;
@@ -86,6 +99,7 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
   Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated);
+  _dialogue_label.finished_typing.connect(_on_dialogue_finished_typing);
   _mutation_timer.timeout.connect(_on_mutation_timer_timeout);
 
 
@@ -117,7 +131,9 @@ func _notification(what: int) -> void:
 ## Start playing the currently held [DialogueResource]. [br]
 ##
 ## If given, [param with_dialogue_resource] will be used, starting from
-## [param cue]. I don't know what [param extra_game_states] are.
+## [param cue]. [param extra_game_states] are additional script contexts
+## that variables and methods may be accessed from (note that these states
+## must be instantiated objects, even if they are static classes).
 func start(
     with_dialogue_resource: DialogueResource = null,
     cue: String = "",
@@ -141,7 +157,6 @@ func start(
 func _apply_dialogue_line_async() -> void:
   _mutation_timer.stop();
 
-  _text_advance_icon.hide();
   _is_awaiting_input = false;
   focus_node.grab_focus();
   # [TODO] Pause game events?
@@ -149,35 +164,48 @@ func _apply_dialogue_line_async() -> void:
   _dialogue_label.hide();
   _dialogue_label.dialogue_line = dialogue_line;
 
-  # [FIXME] If there are responses, just raise an error. Unless...?
+  # [TODO] Add responses back in so this bubble may be generally useable.
 
-  show();
   _will_hide_text_bubble = false;
   _dialogue_label.show();
+  show();
 
-  if not _dialogue_label.text.is_empty():
+  var dialogue_has_text: bool = (not _dialogue_label.text.is_empty());
+
+  if dialogue_has_text:
+    _play_voice_line();
     _dialogue_label.type_out();
-    await _dialogue_label.finished_typing;
-
-  # Wait for _load_line_id_async line
-  # [TODO] Can this be broken off into a separate function?
-  if dialogue_line.has_tag("voice"):
-    _audio_stream_player.stream = load(dialogue_line.get_tag_value("voice"));
-    _audio_stream_player.play();
-    await _audio_stream_player.finished;
-    # [TODO] Wait, this just skips to _load_line_id_async if there's voice? What if I want to wait?
-    _load_line_id_async(dialogue_line.next_id);
-  elif dialogue_line.time != "":
-    # [TODO] This 'time' should be a function call.
-    var time: float = (
-      dialogue_line.text.length() + 0.02 if dialogue_line.time == "auto"
-      else dialogue_line.time.to_float()
-    );
-    await get_tree().create_timer(time).timeout;
-    _load_line_id_async(dialogue_line.next_id);
   else:
-    _is_awaiting_input = true;
-    focus_node.grab_focus();
+    # If there is no text to readout, "finish" immediately.
+    _dialogue_label.finished_typing.emit();
+
+
+## Starts and waits for auto-advance async triggers, then advances to the next
+## line. [br]
+##
+## Will [b]not[/b] advance if the system requires player input or if the
+## auto-advance flag has been switched off during the length of the delay timer.
+func _start_auto_advance_timer() -> void:
+  # Do not auto-advance when awaiting player input.
+  if dialogue_line.responses.size() > 0:
+    return;
+
+  # Wait for audio playback to end.
+  if dialogue_line.has_tag("voice"):
+    if _voice_audio_player.playing:
+      await _voice_audio_player.finished;
+
+  # Wait for the line-timer to finish.
+  elif dialogue_line.time != "":
+    var to_wait := _get_dialogue_line_auto_advance_time_delay();
+    _auto_advance_timer.start(to_wait);
+    await _auto_advance_timer.timeout;
+
+  # Verify after await that auto-advance is still enabled.
+  if not auto_advance_lines:
+    return;
+
+  _load_line_id_async(dialogue_line.next_id);
 
 
 ## Requests the line with [param line_id] from the [member dialogue_resource]
@@ -186,7 +214,39 @@ func _load_line_id_async(line_id: String) -> void:
   dialogue_line = await dialogue_resource.get_next_dialogue_line(line_id, _temporary_game_states);
 
 
+## Returns the auto-advance delay time in seconds for this line of dialogue.
+func _get_dialogue_line_auto_advance_time_delay() -> float:
+  var delay := (
+    dialogue_line.text.length() * 0.15 if dialogue_line.time == "auto"
+    else dialogue_line.time.to_float() if dialogue_line.time != ""
+    else default_auto_advance_delay
+  );
+
+  delay = delay if delay >= 0.0 else 0.0;
+
+  return delay;
+
+
+## If the dialogue line has a voice clip, plays it.
+func _play_voice_line() -> void:
+  if not dialogue_line.has_tag("voice"):
+    return;
+  _voice_audio_player.stream = load(dialogue_line.get_tag_value("voice"));
+  _voice_audio_player.play();
+
+
 #region Signals
+
+## Responds to the dialogue label finishing its text readout.
+func _on_dialogue_finished_typing() -> void:
+  if auto_advance_lines:
+    _start_auto_advance_timer();
+
+  # [TODO] If responses, let the response buttons grab focus.
+
+  _is_awaiting_input = true;
+  focus_node.grab_focus();
+
 
 ## Responds to the mutation timer's timeout signal.
 func _on_mutation_timer_timeout() -> void:

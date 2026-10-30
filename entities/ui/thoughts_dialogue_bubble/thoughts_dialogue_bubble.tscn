@@ -168,5 +168,8 @@ autoplay = &"bob_vertically"
 [node name="MutationTimer" type="Timer" parent="." unique_id=600091341]
 unique_name_in_owner = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1357455328]
+[node name="AutoAdvanceTimer" type="Timer" parent="." unique_id=105003026]
+unique_name_in_owner = true
+
+[node name="VoiceAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1357455328]
 unique_name_in_owner = true
