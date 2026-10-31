@@ -4,6 +4,14 @@
 class_name ThoughtsDialogueBubble
 extends Control
 
+
+## The length in seconds that the fade in/out transition lasts.
+const DIALOGUE_FADE_IN_TIME := 0.2;
+
+## The easing-style of the open/close fade transition.
+const DIALOGUE_FADE_IN_TRANSITION := Tween.TRANS_SINE;
+
+
 # [TODO] Skip conversation button? Skip only if conversation seen before? Hm.
 # [TODO] Understand the mutation thing?
 #     I think I get it, actually. But I still need to see how it's being applied.
@@ -57,7 +65,7 @@ var dialogue_line: DialogueLine:
       if owner == null:
         queue_free();
       else:
-        hide();
+        _try_close_dialogue_bubble_async()
   get():
     return dialogue_line;
 
@@ -111,10 +119,8 @@ var _will_hide_text_bubble: bool = false;
 
 
 func _ready() -> void:
-  _connect_to_signals();
-
-  # Hide the dialogue bubble until needed.
   hide();
+  _connect_to_signals();
 
 
 func _connect_to_signals() -> void:
@@ -173,7 +179,43 @@ func start(
   # [TODO] Structural issue: apply_dialogue_line already calls show(), so this is redundant.
   #     However, depending on apply_dialogue_line to show() feels like depending on a side effect.
   #     apply_dialogue_line probably shouldn't be responsible for the showing/hiding of the entire bubble.
+  # show();
+
+
+## If not open, runs the dialogue bubble's open animation.
+func _try_open_dialogue_bubble_async() -> void:
+  if visible:
+    return;
+
+  modulate.a = 0.0;
   show();
+
+  var alpha_tween := create_tween();
+  alpha_tween.set_ease(Tween.EASE_IN);
+  alpha_tween.set_trans(DIALOGUE_FADE_IN_TRANSITION);
+  alpha_tween.tween_property(self, "modulate:a", 1.0, DIALOGUE_FADE_IN_TIME);
+
+  alpha_tween.play();
+  await alpha_tween.finished;
+  await get_tree().create_timer(0.2).timeout;
+
+
+## If open, runs the dialogue bubble's close animation.
+func _try_close_dialogue_bubble_async() -> void:
+  if not visible:
+    return;
+
+  modulate.a = 1.0;
+
+  var alpha_tween := create_tween();
+  alpha_tween.set_ease(Tween.EASE_OUT);
+  alpha_tween.set_trans(DIALOGUE_FADE_IN_TRANSITION);
+  alpha_tween.tween_property(self, "modulate:a", 0.0, DIALOGUE_FADE_IN_TIME);
+
+  alpha_tween.play();
+  await alpha_tween.finished;
+
+  hide();
 
 
 ## Applies changes described by the current [member dialogue_line] to the
@@ -189,10 +231,10 @@ func _apply_dialogue_line_async() -> void:
   _dialogue_label.dialogue_line = dialogue_line;
 
   # [TODO] Add responses back in so this bubble may be generally useable.
+  await _try_open_dialogue_bubble_async();
 
   _will_hide_text_bubble = false;
   _dialogue_label.show();
-  show();
 
   var dialogue_has_text: bool = (not _dialogue_label.text.is_empty());
 
@@ -298,7 +340,7 @@ func _on_dialogue_finished_typing() -> void:
 func _on_mutation_timer_timeout() -> void:
   if _will_hide_text_bubble:
     _will_hide_text_bubble = false;
-    hide();
+    await _try_close_dialogue_bubble_async();
 
 
 ## Responds to a Dialogue Manager mutation signal.

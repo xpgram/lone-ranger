@@ -154,6 +154,8 @@ fill_to = Vector2(0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ol17"]
 shader = ExtResource("21_06ww2")
+shader_parameter/quantize_colors__enable = true
+shader_parameter/quantize_colors__lightness_map = SubResource("GradientTexture1D_kdjjn")
 shader_parameter/cutoff_filter__enable = true
 shader_parameter/cutoff_filter__black_crush_range = 0.0
 shader_parameter/cutoff_filter__white_crush_range = 0.0
