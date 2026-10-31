@@ -130,8 +130,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
     var dialogue := DialogueManager.create_resource_from_text(
 """
-~ start
-[wait=0.25]Hello!
+Hello!
 It's [wave]so good[/wave] to see you again.
 I'm afraid I'll have to leave you, though. [wait=1.0]\
 I have [color=red]shit myself[/color].
