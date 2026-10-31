@@ -21,10 +21,30 @@ extends Control
 ## Whether to automatically advance to the next line after a line has ended.
 @export var auto_advance_lines := false;
 
+@export_group('Auto-Advance Settings', 'auto_advance')
+
 ## How long in seconds to wait after a line has ended before advancing to the
-## next line.
+## next line. [br]
+##
+## A negative value will be treated as "auto".
 @export_custom(PROPERTY_HINT_NONE, "suffix:s")
-var default_auto_advance_delay := 3.0;
+var auto_advance_default_delay := 2.5;
+
+## The maximum time that a calculated auto-advance delay will wait for.
+## How quickly a line of dialogue approaches this limit is determined by
+## [member auto_advance_full_line_length].
+@export_custom(PROPERTY_HINT_NONE, "suffix:s")
+var auto_advance_maximum_auto_delay := 2.5;
+
+## The minimum time that a calculated auto-advance delay will wait for.
+## A line of dialogue that contains no text will wait exactly this long.
+@export_custom(PROPERTY_HINT_NONE, "suffix:s")
+var auto_advance_minimum_auto_delay := 1.0;
+
+## How long a line of dialogue is allowed to be before it is considered
+## "maximally full" for the purposes of calculating the auto-delay time.
+@export_custom(PROPERTY_HINT_NONE, "suffix:ch")
+var auto_advance_full_line_length := 80;
 
 ## The current line being displayed. Text readout may still be in progress.
 var dialogue_line: DialogueLine:
@@ -196,8 +216,8 @@ func _start_auto_advance_timer() -> void:
       await _voice_audio_player.finished;
 
   # Wait for the line-timer to finish.
-  elif dialogue_line.time != "":
-    var to_wait := _get_dialogue_line_auto_advance_time_delay();
+  else:
+    var to_wait := _get_auto_advance_delay();
     _auto_advance_timer.start(to_wait);
     await _auto_advance_timer.timeout;
 
@@ -214,17 +234,39 @@ func _load_line_id_async(line_id: String) -> void:
   dialogue_line = await dialogue_resource.get_next_dialogue_line(line_id, _temporary_game_states);
 
 
-## Returns the auto-advance delay time in seconds for this line of dialogue.
-func _get_dialogue_line_auto_advance_time_delay() -> float:
-  var delay := (
-    dialogue_line.text.length() * 0.15 if dialogue_line.time == "auto"
-    else dialogue_line.time.to_float() if dialogue_line.time != ""
-    else default_auto_advance_delay
-  );
+## Returns the delay time in seconds for this line of dialogue.
+func _get_auto_advance_delay() -> float:
+  var auto_time := _get_auto_advance_auto_delay();
 
+  var delay := (
+    auto_time if dialogue_line.time == "auto"
+    else dialogue_line.time.to_float() if dialogue_line.time != ""
+    else auto_time if auto_advance_default_delay < 0.0
+    else auto_advance_default_delay
+  );
   delay = delay if delay >= 0.0 else 0.0;
 
   return delay;
+
+
+## Returns the calculated auto-delay time in seconds for this line of dialogue. [br]
+##
+## Short dialogue lines will wait for less time than longer ones, but the time
+## waited is eased toward the full wait time somewhat to avoid near-zero wait
+## times for really short lines. [br]
+##
+## Note that this is a helper function to [method _get_auto_advance_delay] and
+## is not necessarily meant to be used on its own.
+func _get_auto_advance_auto_delay() -> float:
+  var length := dialogue_line.text.length();
+
+  var proportion := length / float(auto_advance_full_line_length);
+  proportion = ease(proportion, 0.4);
+
+  var time_delay := proportion * auto_advance_maximum_auto_delay;
+  time_delay = clampf(time_delay, auto_advance_minimum_auto_delay, auto_advance_maximum_auto_delay);
+
+  return time_delay;
 
 
 ## If the dialogue line has a voice clip, plays it.
