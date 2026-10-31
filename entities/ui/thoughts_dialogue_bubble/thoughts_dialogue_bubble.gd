@@ -6,7 +6,7 @@ extends Control
 
 
 ## The length in seconds that the fade in/out transition lasts.
-const DIALOGUE_FADE_IN_TIME := 0.2;
+const DIALOGUE_FADE_IN_TIME := 0.15;
 
 ## The easing-style of the open/close fade transition.
 const DIALOGUE_FADE_IN_TRANSITION := Tween.TRANS_SINE;
