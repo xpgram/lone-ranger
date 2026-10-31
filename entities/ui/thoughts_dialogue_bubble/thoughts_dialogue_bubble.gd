@@ -4,7 +4,7 @@
 class_name ThoughtsDialogueBubble
 extends Control
 
-# [TODO] Skip dialogue (the cancel event)
+# [TODO] Skip conversation button? Skip only if conversation seen before? Hm.
 # [TODO] Understand the mutation thing?
 #     I think I get it, actually. But I still need to see how it's being applied.
 # [TODO] I _think_ a mutation may be text effects like [wait=0.5].
