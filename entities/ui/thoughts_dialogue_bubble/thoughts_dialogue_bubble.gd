@@ -169,6 +169,10 @@ func start(
     start_from_cue = cue;
 
   dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_cue, _temporary_game_states);
+
+  # [TODO] Structural issue: apply_dialogue_line already calls show(), so this is redundant.
+  #     However, depending on apply_dialogue_line to show() feels like depending on a side effect.
+  #     apply_dialogue_line probably shouldn't be responsible for the showing/hiding of the entire bubble.
   show();
 
 
