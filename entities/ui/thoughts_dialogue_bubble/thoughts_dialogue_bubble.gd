@@ -54,6 +54,14 @@ var auto_advance_minimum_auto_delay := 1.0;
 @export_custom(PROPERTY_HINT_NONE, "suffix:ch")
 var auto_advance_full_line_length := 80;
 
+@export_group('Input Settings', 'input')
+
+## The time in seconds since starting a dialogue line that text-advance input
+## should be ignored. This helps mitigate the accidental skipping of short
+## dialogue lines when trying to trigger the skip-typing functionality.
+@export_custom(PROPERTY_HINT_NONE, "suffix:s")
+var input_fast_tap_suppression_time := 0.3;
+
 ## The current line being displayed. Text readout may still be in progress.
 var dialogue_line: DialogueLine:
   set(value):
@@ -114,6 +122,10 @@ var _will_hide_text_bubble: bool = false;
 ## they're reading is taken away from them.
 @onready var _auto_advance_timer: Timer = %AutoAdvanceTimer;
 
+## Used to inhibit quick-taps of the advance button that might skip dialogue by
+## mistake.
+@onready var _fast_tap_timer: Timer = %FastTapTimer;
+
 ## The "awaiting player input" icon indicating text readout has finished.
 @onready var _text_advance_icon: Node2D = %AdvanceIcon;
 
@@ -139,12 +151,15 @@ func _unhandled_input(event: InputEvent) -> void:
     or event.is_action_pressed("inspect")
   );
 
-  if _dialogue_label.is_typing and advance_button_pressed:
-    # [TODO] Does not skip effects like [wait]
+  if not advance_button_pressed:
+    return;
+
+  if _dialogue_label.is_typing:
+    # [TODO] Does not skip effects like [wait] if the [wait] has already been triggered.
     _dialogue_label.skip_typing();
     focus_node.accept_event();
 
-  elif _is_awaiting_input and advance_button_pressed:
+  elif _is_awaiting_input and _fast_tap_timer.is_stopped():
     _load_line_id_async(dialogue_line.next_id);
     focus_node.accept_event();
 
@@ -222,6 +237,7 @@ func _try_close_dialogue_bubble_async() -> void:
 ## text bubble.
 func _apply_dialogue_line_async() -> void:
   _mutation_timer.stop();
+  _fast_tap_timer.start(input_fast_tap_suppression_time);
 
   _is_awaiting_input = false;
   focus_node.grab_focus();

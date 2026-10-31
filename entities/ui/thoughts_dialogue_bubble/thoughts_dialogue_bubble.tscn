@@ -171,5 +171,9 @@ unique_name_in_owner = true
 [node name="AutoAdvanceTimer" type="Timer" parent="." unique_id=105003026]
 unique_name_in_owner = true
 
+[node name="FastTapTimer" type="Timer" parent="." unique_id=1826508542]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="VoiceAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1357455328]
 unique_name_in_owner = true
