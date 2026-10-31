@@ -361,8 +361,16 @@ func _on_mutation_timer_timeout() -> void:
     await _try_close_dialogue_bubble_async();
 
 
+# [TODO] What does this actually do?
+#  - A mutation is something like [wait] or [color=red].
+#  - Not all mutations need to be responded to. See how this method says "is_inline"?
+#  - It sounds like: mutations that are their own thing, not really part of a dialogue
+#    line per se, may trigger a temporary closing of the text bubble. The bubble would
+#    be shown again after _apply_dialogue_line is called on the *next* line.
+#  - I do not know any mutations which trigger this effect. The docs have no list.
+# [TODO] When I understand this better, MutationTimer ought to be renamed to something
+#    more informative. Not all mutations are timed, after all.
 ## Responds to a Dialogue Manager mutation signal.
-## [FIXME] What does this actually do?
 func _on_mutated(mutation: Dictionary) -> void:
   if not mutation.is_inline:
     _is_awaiting_input = false;
