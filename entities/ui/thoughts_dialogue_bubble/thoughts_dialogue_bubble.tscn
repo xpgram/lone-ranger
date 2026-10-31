@@ -151,17 +151,17 @@ skip_pause_at_character_if_followed_by = ""
 skip_pause_at_abbreviations = PackedStringArray()
 metadata/_custom_type_script = "uid://g32um0mltv5d"
 
-[node name="Control" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=244984692]
+[node name="AdvanceIconBox" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=244984692]
 custom_minimum_size = Vector2(7, 5)
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="AdvanceIcon" type="Polygon2D" parent="PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1151557164]
+[node name="AdvanceIcon" type="Polygon2D" parent="PanelContainer/MarginContainer/HBoxContainer/AdvanceIconBox" unique_id=1151557164]
 unique_name_in_owner = true
 polygon = PackedVector2Array(0, 0, 6, 0, 3, 3)
 uv = PackedVector2Array(0, 0, 6, 0, 3, 3)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PanelContainer/MarginContainer/HBoxContainer/Control" unique_id=1667602978]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PanelContainer/MarginContainer/HBoxContainer/AdvanceIconBox" unique_id=1667602978]
 libraries/ = SubResource("AnimationLibrary_qdihw")
 autoplay = &"bob_vertically"
 
