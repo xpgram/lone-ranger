@@ -14,10 +14,9 @@ const DIALOGUE_FADE_IN_TRANSITION := Tween.TRANS_SINE;
 
 # [TODO] Skip conversation button? Skip only if conversation seen before? Hm.
 # [TODO] Understand the mutation thing?
-#     I think I get it, actually. But I still need to see how it's being applied.
-# [TODO] I _think_ a mutation may be text effects like [wait=0.5].
-#     A problem: .skip_typing() is never called during a mutation, then.
-#     If the mutation timer is going, it should skip and then the text should skip.
+#     A mutation is something like [wait=1.0], among other things I'm sure.
+#     However, this script has a signal responder that sets will_close_bubble to true
+#     even though [wait] does not close it. I still need to understand that part.
 # [FIXME] Re-evaluate some of these public vars, make sure they actually should be.
 
 ## The dialogue script to play.
@@ -154,8 +153,11 @@ func _unhandled_input(event: InputEvent) -> void:
   if not advance_button_pressed:
     return;
 
-  if _dialogue_label.is_typing:
-    # [TODO] Does not skip effects like [wait] if the [wait] has already been triggered.
+  # [FIXME] _is_awaiting_mutation needs to be checked, but there is no public method I'm aware of.
+  #     I need to modify the plugin for unique tags anyway, so just add this to the list, I guess.
+  var dialogue_is_playing: bool = (_dialogue_label.is_typing or _dialogue_label._is_awaiting_mutation);
+
+  if dialogue_is_playing:
     _dialogue_label.skip_typing();
     focus_node.accept_event();
 
