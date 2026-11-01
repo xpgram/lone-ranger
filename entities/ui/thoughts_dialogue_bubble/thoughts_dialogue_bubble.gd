@@ -111,6 +111,12 @@ var _will_hide_text_bubble: bool = false;
 ## An audio player for typing sounds played as individual characters are read out.
 @onready var _typewriter_audio_player: AudioStreamPlayer = %TypewriterAudioPlayer;
 
+## An audio player for typing sounds played as individual characters are read out.
+@onready var _open_audio_player: AudioStreamPlayer = %DialogueOpenPlayer;
+
+## An audio player for typing sounds played as individual characters are read out.
+@onready var _close_audio_player: AudioStreamPlayer = %DialogueClosePlayer;
+
 ## The node that displays the dialogue text.
 @onready var _dialogue_label: DialogueLabel = %DialogueLabel;
 
@@ -162,6 +168,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
   if dialogue_is_playing:
     _dialogue_label.skip_typing();
+    _typewriter_audio_player.play();
     focus_node.accept_event();
 
   elif _is_awaiting_input and _fast_tap_timer.is_stopped():
@@ -216,6 +223,8 @@ func _try_open_dialogue_bubble_async() -> void:
   alpha_tween.tween_property(self, "modulate:a", 1.0, DIALOGUE_FADE_IN_TIME);
 
   alpha_tween.play();
+  _open_audio_player.play();
+
   await alpha_tween.finished;
   await get_tree().create_timer(0.2).timeout;
 
@@ -233,6 +242,8 @@ func _try_close_dialogue_bubble_async() -> void:
   alpha_tween.tween_property(self, "modulate:a", 0.0, DIALOGUE_FADE_IN_TIME);
 
   alpha_tween.play();
+  _close_audio_player.play();
+
   await alpha_tween.finished;
 
   hide();

@@ -8,6 +8,8 @@
 [ext_resource type="FontFile" uid="uid://dx3yrbhorn58x" path="res://assets/fonts/CourierPrime/CourierPrime-Italic.ttf" id="4_mxja3"]
 [ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/nodes/dialogue_label/dialogue_label.gd" id="5_2ipu2"]
 [ext_resource type="AudioStream" uid="uid://dmx8o8ystyf0q" path="res://assets/audio/sounds/DialogueBubble/SpeakDeep.wav" id="8_mxja3"]
+[ext_resource type="AudioStream" uid="uid://dqwr70ko5rnbt" path="res://assets/audio/sounds/DialogueBubble/OpenDialogue.wav" id="9_opoi0"]
+[ext_resource type="AudioStream" uid="uid://caup4wilasuw7" path="res://assets/audio/sounds/DialogueBubble/CloseDialogue.wav" id="10_ru8oq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvq7a"]
 draw_center = false
@@ -183,5 +185,17 @@ bus = &"Voice"
 [node name="TypewriterAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1680927349]
 unique_name_in_owner = true
 stream = ExtResource("8_mxja3")
+volume_db = 2.0
+bus = &"SoundEffects"
+
+[node name="DialogueOpenPlayer" type="AudioStreamPlayer" parent="." unique_id=1901992400]
+unique_name_in_owner = true
+stream = ExtResource("9_opoi0")
+volume_db = 2.0
+bus = &"SoundEffects"
+
+[node name="DialogueClosePlayer" type="AudioStreamPlayer" parent="." unique_id=2079706463]
+unique_name_in_owner = true
+stream = ExtResource("10_ru8oq")
 volume_db = 2.0
 bus = &"SoundEffects"
