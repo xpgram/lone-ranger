@@ -102,12 +102,14 @@ var _temporary_game_states := [] as Array;
 ## Whether this dialogue bubble will hide after the mutation timer has resolved.
 var _will_hide_text_bubble: bool = false;
 
-# [TODO] Make the entire scene a FocusableNode?
 ## A node for managing player input.
 @onready var focus_node: FocusableControl = %FocusableControl;
 
-## An audio player for typing sounds and other dialogue sfx.
+## An audio player for voice-acted clips that play with the text readout.
 @onready var _voice_audio_player: AudioStreamPlayer = %VoiceAudioPlayer;
+
+## An audio player for typing sounds played as individual characters are read out.
+@onready var _typewriter_audio_player: AudioStreamPlayer = %TypewriterAudioPlayer;
 
 ## The node that displays the dialogue text.
 @onready var _dialogue_label: DialogueLabel = %DialogueLabel;
@@ -136,6 +138,7 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
   Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated);
+  _dialogue_label.spoke.connect(_on_dialogue_typewriter_sfx_triggered);
   _dialogue_label.finished_typing.connect(_on_dialogue_finished_typing);
   _mutation_timer.timeout.connect(_on_mutation_timer_timeout);
 
@@ -352,6 +355,20 @@ func _on_dialogue_finished_typing() -> void:
 
   _is_awaiting_input = true;
   focus_node.grab_focus();
+
+
+## Responds to individual letters being typed into the [DialogueLabel].
+## Used for playing typewriter or faux-voice sounds as text is read out.
+func _on_dialogue_typewriter_sfx_triggered(_letter: String, _index: int, speed: float) -> void:
+  if not _typewriter_audio_player.stream:
+    return;
+
+  # [TODO] Vary pitch by letter instead of randf()? Could be fun, idk.
+  # [TODO] Technically, with a polyphony of two, tweaking these number could
+  #     change the pitch and volume for a sound already playing.
+  _typewriter_audio_player.pitch_scale = 0.75 + (0.5 * randf()) + (0.125 * speed);
+  _typewriter_audio_player.volume_linear = 1.0 - (0.1 * randf());
+  _typewriter_audio_player.play();
 
 
 ## Responds to the mutation timer's timeout signal.
