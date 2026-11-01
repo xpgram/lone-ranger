@@ -11,7 +11,6 @@ const DIALOGUE_FADE_IN_TIME := 0.15;
 ## The easing-style of the open/close fade transition.
 const DIALOGUE_FADE_IN_TRANSITION := Tween.TRANS_SINE;
 
-# [TODO] Typewriter sounds / typewriter voices.
 # [TODO] Skip conversation button? Skip only if conversation seen before? Hm.
 # [TODO] Understand the mutation thing?
 #     A mutation is something like [wait=1.0], among other things I'm sure.
