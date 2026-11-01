@@ -157,6 +157,7 @@ position = Vector2(-2, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="NinePatchRect/MenuCursorBox/MenuCursor" unique_id=1396889380]
 texture = ExtResource("7_kdjjn")
+offset = Vector2(-0.5, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="NinePatchRect/MenuCursorBox/MenuCursor" unique_id=63520471]
 root_node = NodePath("../..")
