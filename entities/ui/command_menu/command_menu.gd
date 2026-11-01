@@ -124,7 +124,7 @@ func _unhandled_input(event: InputEvent) -> void:
     accept_event();
 
   # [FIXME] Feature test controls.
-  elif event is InputEventKey and event.is_pressed() and (event as InputEventKey).keycode == KEY_Q:
+  elif event.is_action_pressed("inspect"):
     var thoughts: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
 
     var dialogue := DialogueManager.create_resource_from_text(
