@@ -366,11 +366,15 @@ func _on_dialogue_typewriter_sfx_triggered(_letter: String, _index: int, speed: 
   ):
     return;
 
-  # [TODO] Vary pitch by letter instead of randf()? Could be fun, idk.
-  # [TODO] Technically, with a polyphony of two, tweaking these number could
-  #     change the pitch and volume for a sound already playing.
-  _typewriter_audio_player.pitch_scale = 0.95 + (0.15 * randf()) + (0.1 * speed);
-  _typewriter_audio_player.volume_linear = 1.0 - (0.05 * randf());
+  # [TODO] This doesn't work for other languages.
+  #    Just do randf(), 1 in 3 sounds are high?
+  var vowels := "aeiouyAEIOUY";
+  var is_high_pitch: bool = _letter in vowels;
+
+  var base_pitch := (1.0 + speed) / 2.0;
+  var up_pitch := base_pitch + 0.05;
+
+  _typewriter_audio_player.pitch_scale = up_pitch if is_high_pitch else base_pitch;
   _typewriter_audio_player.play();
 
 
