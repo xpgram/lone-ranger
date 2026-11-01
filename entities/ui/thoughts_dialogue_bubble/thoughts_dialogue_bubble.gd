@@ -360,14 +360,17 @@ func _on_dialogue_finished_typing() -> void:
 ## Responds to individual letters being typed into the [DialogueLabel].
 ## Used for playing typewriter or faux-voice sounds as text is read out.
 func _on_dialogue_typewriter_sfx_triggered(_letter: String, _index: int, speed: float) -> void:
-  if not _typewriter_audio_player.stream:
+  if (
+      not _typewriter_audio_player.stream
+      or _typewriter_audio_player.playing
+  ):
     return;
 
   # [TODO] Vary pitch by letter instead of randf()? Could be fun, idk.
   # [TODO] Technically, with a polyphony of two, tweaking these number could
   #     change the pitch and volume for a sound already playing.
-  _typewriter_audio_player.pitch_scale = 0.75 + (0.5 * randf()) + (0.125 * speed);
-  _typewriter_audio_player.volume_linear = 1.0 - (0.1 * randf());
+  _typewriter_audio_player.pitch_scale = 0.95 + (0.15 * randf()) + (0.1 * speed);
+  _typewriter_audio_player.volume_linear = 1.0 - (0.05 * randf());
   _typewriter_audio_player.play();
 
 

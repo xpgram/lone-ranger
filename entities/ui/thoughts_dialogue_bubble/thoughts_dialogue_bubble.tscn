@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://quya4d02tteo" path="res://assets/fonts/CourierPrime/CourierPrime-BoldItalic.ttf" id="3_bi05r"]
 [ext_resource type="FontFile" uid="uid://dx3yrbhorn58x" path="res://assets/fonts/CourierPrime/CourierPrime-Italic.ttf" id="4_mxja3"]
 [ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/nodes/dialogue_label/dialogue_label.gd" id="5_2ipu2"]
+[ext_resource type="AudioStream" uid="uid://bq4t6cs8lxn2e" path="res://assets/audio/sounds/typewriter-04.wav" id="8_mxja3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvq7a"]
 draw_center = false
@@ -181,5 +182,6 @@ bus = &"Voice"
 
 [node name="TypewriterAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1680927349]
 unique_name_in_owner = true
+stream = ExtResource("8_mxja3")
 max_polyphony = 2
 bus = &"SoundEffects"
