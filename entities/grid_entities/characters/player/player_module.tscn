@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
+[ext_resource type="Script" uid="uid://bjmblhtdmpb1k" path="res://entities/grid_entities/characters/player/scripts/command_menu_h_box.gd" id="16_06ww2"]
 [ext_resource type="PackedScene" uid="uid://48kvr2gdye3o" path="res://entities/ui/thoughts_dialogue_bubble/thoughts_dialogue_bubble.tscn" id="16_yibea"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
@@ -278,8 +279,15 @@ offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 14
+offset_transform_enabled = true
+theme_override_constants/separation = 0
 alignment = 2
+script = ExtResource("16_06ww2")
+
+[node name="LeftSpacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=2076035773]
+visible = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=828331628]
 custom_minimum_size = Vector2(64, 0)
@@ -292,11 +300,20 @@ theme_override_constants/margin_bottom = 9
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="CmdMenuSpacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1247845413]
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+
 [node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 _inventory = NodePath("../../../../../Inventory")
+
+[node name="RightSpacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=497475716]
+visible = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
 
 [node name="DebugUI" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
