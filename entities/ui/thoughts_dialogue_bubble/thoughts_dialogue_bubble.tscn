@@ -183,4 +183,5 @@ bus = &"Voice"
 [node name="TypewriterAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1680927349]
 unique_name_in_owner = true
 stream = ExtResource("8_mxja3")
+volume_db = 2.0
 bus = &"SoundEffects"
