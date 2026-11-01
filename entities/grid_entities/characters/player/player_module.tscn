@@ -286,7 +286,7 @@ custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 9
 
 [node name="ThoughtsDialogueBubble" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer" unique_id=984665687 instance=ExtResource("16_yibea")]
 unique_name_in_owner = true
