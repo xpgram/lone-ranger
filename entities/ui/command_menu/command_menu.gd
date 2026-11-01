@@ -104,7 +104,6 @@ func _ready() -> void:
 
 
 # [FIXME] Feature test to regrab focus. I'll need some version of this later.
-# [FIXME] This appears not to mean "dialogue is done and closed"; it doesn't capture everything.
 func _on_dialogue_ended(_res: DialogueResource) -> void:
   match active_menu:
     Submenu.Main:
