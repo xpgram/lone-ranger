@@ -177,3 +177,9 @@ one_shot = true
 
 [node name="VoiceAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1357455328]
 unique_name_in_owner = true
+bus = &"Voice"
+
+[node name="TypewriterAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1680927349]
+unique_name_in_owner = true
+max_polyphony = 2
+bus = &"SoundEffects"
