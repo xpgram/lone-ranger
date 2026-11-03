@@ -23,25 +23,24 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
     return true;
 
   var inspect_entity := entities[inspect_idx];
-
-  var dialogue_string := inspect_entity.inspection_dialogue;
+  var dialogue_resource := inspect_entity.get_inspection_dialogue();
 
   # Find a useful default message.
-  if dialogue_string == "":
+  if not dialogue_resource:
     # [TODO] Pick a good default should a message not be found.
     #    (Though, can_perform ought to block those occurrences, anyway.)
     var first_letter := String(inspect_entity.name)[0].to_lower();
     var first_vowel: bool = first_letter in "aeiou";
     var name_article := 'an' if first_vowel else 'a';
 
-    var message_lines := [
+    var lines := [
       "I see something.[wait=0.4][br]",
       "It's %s %s." % [name_article, inspect_entity.name],
     ];
 
-    dialogue_string = " ".join(message_lines);
+    var dialogue_string := " ".join(lines);
+    dialogue_resource = DialogueManager.create_resource_from_text(dialogue_string);
 
-  var dialogue := DialogueManager.create_resource_from_text(dialogue_string);
-  player.start_dialogue(dialogue);
+  player.start_dialogue(dialogue_resource);
 
   return true;

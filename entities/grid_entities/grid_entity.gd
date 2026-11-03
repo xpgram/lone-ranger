@@ -36,7 +36,14 @@ const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 @export var is_inspectable := true;
 
 ## The inner-thoughts dialogue the player character has when inspecting this object.
-@export_multiline() var inspection_dialogue := "";
+@export var _inspection_dialogue_resource: DialogueResource;
+
+## A quick-use field for the inner-thoughts dialogue the player character has when
+## inspecting this object. [br]
+##
+## [b]Note:[/b] When [member _inspection_dialogue_resource] is not `null`, this
+## field is usually ignored.
+@export_multiline() var _inspection_dialogue_string := "";
 
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
@@ -59,6 +66,20 @@ func _ready() -> void:
 
   super._ready();
   _bind_grid_object_signals();
+
+
+## @nullable [br]
+## Returns a [DialogueResource] containing the inspection dialogue for this
+## entity. Returns null if no such dialogue exists. [br]
+##
+## This method is made to be overridable. [GridEntity] objects return
+## [member _inspection_dialogue_resource] by default.
+func get_inspection_dialogue() -> DialogueResource:
+  return (
+    _inspection_dialogue_resource if _inspection_dialogue_resource
+    else DialogueManager.create_resource_from_text(_inspection_dialogue_string) if _inspection_dialogue_string
+    else null
+  );
 
 
 # [FIXME] This attribute system is hard to use via the editor: loading a .tres requires
