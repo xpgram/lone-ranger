@@ -29,6 +29,15 @@ const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 ## A dictionary of applied effects and qualities.
 @export var _attributes: Dictionary[StringName, GridEntityAttribute];
 
+@export_group("Inspection Fields")
+
+## Whether this object is inspectable by the player. Useful for modulating
+## inspectibility when an object is activated/deactivated.
+@export var is_inspectable := true;
+
+## The inner-thoughts dialogue the player character has when inspecting this object.
+@export_multiline() var inspection_dialogue := "";
+
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
 var faced_direction := Vector2i.DOWN:

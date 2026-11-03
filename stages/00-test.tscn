@@ -999,62 +999,92 @@ position = Vector2(128, 240)
 [node name="Chest2" parent="Interactives Container" unique_id=1427558143 instance=ExtResource("36_pqjox")]
 position = Vector2(-304, -224)
 contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_6ge87")])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest11" parent="Interactives Container" unique_id=2132616411 instance=ExtResource("36_pqjox")]
 position = Vector2(-96, 16)
 contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_l5wv4")])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest4" parent="Interactives Container" unique_id=746519622 instance=ExtResource("36_pqjox")]
 position = Vector2(336, -240)
 contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_dar42")])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest5" parent="Interactives Container" unique_id=1295511240 instance=ExtResource("36_pqjox")]
 position = Vector2(80, -208)
 equipment_contents = Array[StringName]([&"heart_piece"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest7" parent="Interactives Container" unique_id=496387458 instance=ExtResource("36_pqjox")]
 position = Vector2(-80, 80)
 equipment_contents = Array[StringName]([&"heart_piece"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest15" parent="Interactives Container" unique_id=1967242197 instance=ExtResource("36_pqjox")]
 position = Vector2(-384, 48)
 equipment_contents = Array[StringName]([&"heart_piece"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest17" parent="Interactives Container" unique_id=1834259272 instance=ExtResource("36_pqjox")]
 position = Vector2(-656, 48)
 contents = Array[ExtResource("9_7oan8")]([SubResource("Resource_0mqgx")])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest16" parent="Interactives Container" unique_id=1740159882 instance=ExtResource("36_pqjox")]
 position = Vector2(-816, 16)
 equipment_contents = Array[StringName]([&"heart_piece"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest8" parent="Interactives Container" unique_id=1801639471 instance=ExtResource("36_pqjox")]
 position = Vector2(432, -240)
 equipment_contents = Array[StringName]([&"heart_piece"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest6" parent="Interactives Container" unique_id=1770403711 instance=ExtResource("36_pqjox")]
 position = Vector2(576, 112)
 equipment_contents = Array[StringName]([&"heart_piece"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="Chest14" parent="Interactives Container" unique_id=78962433 instance=ExtResource("36_pqjox")]
 position = Vector2(-320, -368)
 equipment_contents = Array[StringName]([&"heart_piece"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="SpecialChest" parent="Interactives Container" unique_id=2016218541 instance=ExtResource("8_ycanp")]
 position = Vector2(496, 0)
 equipment_contents = Array[StringName]([&"shove"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="SpecialChest2" parent="Interactives Container" unique_id=1870125049 instance=ExtResource("8_ycanp")]
 position = Vector2(-176, 80)
 equipment_contents = Array[StringName]([&"hookshot"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="SpecialChest4" parent="Interactives Container" unique_id=1214827534 instance=ExtResource("8_ycanp")]
 position = Vector2(-224, -224)
 equipment_contents = Array[StringName]([&"wings"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="SpecialChest3" parent="Interactives Container" unique_id=282702299 instance=ExtResource("8_ycanp")]
 position = Vector2(-560, -96)
 equipment_contents = Array[StringName]([&"sword"])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="BoardRespawner" type="Node2D" parent="Interactives Container" unique_id=978362828 node_paths=PackedStringArray("_default_container")]
 script = ExtResource("18_r4137")
@@ -1573,14 +1603,20 @@ pushable = false
 [node name="GrowableTwig" parent="Interactives Container" unique_id=232660030 instance=ExtResource("19_0lxvj")]
 position = Vector2(48, -64)
 _platform_points = Array[Vector2i]([Vector2i(0, -1), Vector2i(0, -2), Vector2i(0, -3), Vector2i(0, -4), Vector2i(1, -4), Vector2i(2, -4), Vector2i(2, -5), Vector2i(2, -6)])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="GrowableTwig3" parent="Interactives Container" unique_id=1023615892 instance=ExtResource("19_0lxvj")]
 position = Vector2(-80, -304)
 _platform_points = Array[Vector2i]([Vector2i(0, -1), Vector2i(0, -2), Vector2i(-1, -2), Vector2i(1, -2), Vector2i(-2, -2), Vector2i(2, -2), Vector2i(-2, -3), Vector2i(2, -3), Vector2i(-2, -4), Vector2i(2, -4), Vector2i(-2, -5), Vector2i(2, -5), Vector2i(-1, -5), Vector2i(1, -5), Vector2i(0, -5)])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="GrowableTwig2" parent="Interactives Container" unique_id=292453622 instance=ExtResource("19_0lxvj")]
 position = Vector2(640, 32)
 _platform_points = Array[Vector2i]([Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3), Vector2i(0, 4), Vector2i(-1, 4), Vector2i(-1, 5), Vector2i(-2, 5)])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="DiggableSpot" parent="Interactives Container" unique_id=542264633 instance=ExtResource("21_x57cp")]
 position = Vector2(256, 0)
@@ -1732,6 +1768,8 @@ metadata/_custom_type_script = "uid://dj3d0k5yxrtac"
 [node name="ExtendableBridgeEntity" parent="NPC Container" unique_id=1557784400 instance=ExtResource("44_qavmn")]
 position = Vector2(112, 192)
 _piece_locations = Array[Vector2i]([Vector2i(1, 0), Vector2i(1, 1), Vector2i(2, 1), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3)])
+is_inspectable = null
+inspection_dialogue = null
 
 [node name="ButtonEntity" parent="NPC Container" unique_id=206165091 node_paths=PackedStringArray("_powerable_targets") instance=ExtResource("47_ekj6j")]
 position = Vector2(112, 160)
@@ -1743,6 +1781,7 @@ _powerable_targets = [NodePath("../PowerableDoorEntity"), NodePath("../Powerable
 
 [node name="BoulderEntity" parent="NPC Container" unique_id=1130051096 instance=ExtResource("10_jadfo")]
 position = Vector2(112, 144)
+inspection_dialogue = "What is this...?"
 
 [node name="BoulderEntity2" parent="NPC Container" unique_id=1734515166 instance=ExtResource("10_jadfo")]
 position = Vector2(144, 112)
