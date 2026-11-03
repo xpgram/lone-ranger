@@ -8,8 +8,11 @@ class_name CommandMenu
 extends Control
 
 
-## Emitted when the player selects a **FieldAction** option.
+## Emitted when the player selects a [FieldAction] option.
 signal action_selected(action: FieldAction);
+
+## Emitted when the player inspects a [FieldAction] option.
+signal action_inspected(action: FieldAction);
 
 ## Emitted when the Command Menu system rejects UI control, e.g., when the player backs
 ## out until the menu closes.
@@ -105,6 +108,9 @@ func _ready() -> void:
 
 # [FIXME] Feature test to regrab focus. I'll need some version of this later.
 func _on_dialogue_ended(_res: DialogueResource) -> void:
+  if not visible:
+    return;
+
   match active_menu:
     Submenu.Main:
       _main_list.grab_focus();
@@ -122,23 +128,6 @@ func _unhandled_input(event: InputEvent) -> void:
     ui_canceled.emit();
     sound_menu_close.play();
     accept_event();
-
-  # [FIXME] Feature test controls.
-  elif event.is_action_pressed("inspect"):
-    var thoughts: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
-
-    var dialogue := DialogueManager.create_resource_from_text(
-"""
-Hello!
-It's [wave]so good[/wave] to see you again.
-I'm afraid I'll have to leave you, though. [wait=1.0]\
-I have [color=red]shit myself[/color].
-"""
-    );
-
-    thoughts.start(dialogue);
-    # [FIXME] Doesn't this... Shouldn't it be doing this when showing itself?
-    thoughts.focus_node.grab_focus();
 
 
 ## Opens the menu in whatever state it was in when it was closed.
@@ -200,6 +189,8 @@ func _connect_to_item_lists() -> void:
   # Options -> emit action_selected
   _options_list.item_chosen.connect(func (item: PlayerInventoryItem): action_selected.emit(item.action));
   _options_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
+
+  _options_list.item_inspected.connect(func (item: PlayerInventoryItem): action_inspected.emit(item.action));
 
   _options_list.cursor_moved.connect(func (): sound_menu_select.play());
 

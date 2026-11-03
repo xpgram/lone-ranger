@@ -469,6 +469,7 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
 func _connect_to_ui_subsystems() -> void:
   _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
   _command_menu.action_selected.connect(_on_command_menu_action_selected);
+  _command_menu.action_inspected.connect(_on_command_menu_action_inspected);
 
   _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
@@ -521,6 +522,12 @@ func _on_command_menu_action_selected(action: FieldAction) -> void:
   _selected_command_menu_action = action;
   _command_menu.close();
   _field_cursor.open_from_start(action);
+
+
+## Responds to 'inspect' inputs signaled by the command menu.
+func _on_command_menu_action_inspected(action: FieldAction) -> void:
+  var dialogue = DialogueManager.create_resource_from_text(action.action_hint);
+  _dialogue_bubble.start(dialogue);
 
 
 ## Event handler for [signal FieldCursor.ui_canceled]. [br]

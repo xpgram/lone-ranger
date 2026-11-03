@@ -33,6 +33,10 @@ signal player_interacted_with(object: GridObject);
 ## before the interaction has started.
 signal player_interacting_with(object: GridObject);
 
+## Emitted when the player is interrupted by something important, like being
+## attacked while in a menu.
+signal player_ui_interrupt();
+
 ## Emitted when the player's held count of [param action] is adjusted to a new quantity.
 signal player_inventory_item_updated(action: FieldAction, new_quantity: int);
 
