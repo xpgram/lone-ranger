@@ -116,6 +116,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Opens the menu in whatever state it was in when it was closed.
 func open() -> void:
   visible = true;
+  _tween_opacity_async(0.0, 1.0);
 
   if active_menu == Submenu.Main:
     _switch_to_main_list();
@@ -133,6 +134,8 @@ func open_from_start() -> void:
 
 ## Closes the menu and releases input focus.
 func close() -> void:
+  await _tween_opacity_async(1.0, 0.0);
+
   # Setting visibility here implicitly releases focus on children.
   visible = false;
 
@@ -241,3 +244,16 @@ func _switch_to_options_list(submenu: Submenu) -> void:
 
   _main_list.close();
   _options_list.open();
+
+
+## Tweens the command menu's opacity between [param from] and [param to].
+func _tween_opacity_async(from: float, to: float) -> void:
+  modulate.a = from;
+
+  var alpha_tween := create_tween();
+  alpha_tween.set_ease(Tween.EASE_IN);
+  alpha_tween.set_trans(Tween.TRANS_SINE);
+  alpha_tween.tween_property(self, "modulate:a", to, 0.08);
+
+  alpha_tween.play();
+  await alpha_tween.finished;
