@@ -669,6 +669,8 @@ func _state_injured() -> void:
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
 
+  Events.player_ui_interrupt.emit();
+
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);
 
