@@ -35,7 +35,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
     var name_article := 'an' if first_vowel else 'a';
 
     var message_lines := [
-      "I see something.[wait=0.3][br]",
+      "I see something.[wait=0.4][br]",
       "It's %s %s." % [name_article, inspect_entity.name],
     ];
 
