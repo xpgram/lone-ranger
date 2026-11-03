@@ -335,8 +335,6 @@ func start_coyote_fall() -> void:
 ## Starts a dialogue bubble to read out the scene described by [param resource].
 ## If [param resource] is `null`, does nothing.
 func start_dialogue(resource: DialogueResource) -> void:
-  if not resource:
-    return;
   _dialogue_bubble.start(resource);
 
 

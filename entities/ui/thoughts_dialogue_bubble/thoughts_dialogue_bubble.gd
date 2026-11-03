@@ -199,11 +199,13 @@ func start(
     cue: String = "",
     extra_game_states: Array = []
 ) -> void:
+  if not is_instance_valid(with_dialogue_resource):
+    return;
+
   _temporary_game_states = [self] + extra_game_states;
   _is_awaiting_input = false;
 
-  if is_instance_valid(with_dialogue_resource):
-    dialogue_resource = with_dialogue_resource;
+  dialogue_resource = with_dialogue_resource;
 
   if cue != "":
     start_from_cue = cue;
