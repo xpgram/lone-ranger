@@ -11,6 +11,13 @@ const DIALOGUE_FADE_IN_TIME := 0.15;
 ## The easing-style of the open/close fade transition.
 const DIALOGUE_FADE_IN_TRANSITION := Tween.TRANS_SINE;
 
+## Emitted when the dialogue bubble becomes visible.
+signal dialogue_opened();
+
+## Emitted when the dialogue bubble becomes hidden.
+signal dialogue_closed();
+
+
 # [TODO] Skip conversation button? Skip only if conversation seen before? Hm.
 # [TODO] Understand the mutation thing?
 #     A mutation is something like [wait=1.0], among other things I'm sure.
@@ -143,6 +150,7 @@ func _ready() -> void:
 
 func _connect_to_signals() -> void:
   Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated);
+  Events.player_ui_interrupt.connect(_on_dialogue_interrupted);
   _dialogue_label.spoke.connect(_on_dialogue_typewriter_sfx_triggered);
   _dialogue_label.finished_typing.connect(_on_dialogue_finished_typing);
   _mutation_timer.timeout.connect(_on_mutation_timer_timeout);
@@ -214,6 +222,7 @@ func _try_open_dialogue_bubble_async() -> void:
     return;
 
   modulate.a = 0.0;
+  dialogue_opened.emit();
   show();
 
   var alpha_tween := create_tween();
@@ -234,6 +243,8 @@ func _try_close_dialogue_bubble_async() -> void:
     return;
 
   modulate.a = 1.0;
+  focus_node.release_focus();
+  dialogue_closed.emit();
 
   var alpha_tween := create_tween();
   alpha_tween.set_ease(Tween.EASE_OUT);
@@ -365,6 +376,14 @@ func _on_dialogue_finished_typing() -> void:
 
   _is_awaiting_input = true;
   focus_node.grab_focus();
+
+
+## Responds to dialogue scene interrupt signals. Shuts the dialog system down
+## and returns input focus to the previous holder.
+func _on_dialogue_interrupted() -> void:
+  _dialogue_label.skip_typing();
+  _dialogue_label.dialogue_line = null;
+  _try_close_dialogue_bubble_async();
 
 
 ## Responds to individual letters being typed into the [DialogueLabel].
