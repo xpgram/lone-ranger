@@ -216,6 +216,11 @@ func start(
   # show();
 
 
+## Forcibly closes the dialogue bubble.
+func close() -> void:
+  _try_close_dialogue_bubble_async();
+
+
 ## If not open, runs the dialogue bubble's open animation.
 func _try_open_dialogue_bubble_async() -> void:
   if visible:
@@ -225,6 +230,8 @@ func _try_open_dialogue_bubble_async() -> void:
   dialogue_opened.emit();
   show();
 
+  # [FIXME] Opening and closing in rapid succession should cause some wacky behavior
+  #     since the previous tween is never stopped or dealt with.
   var alpha_tween := create_tween();
   alpha_tween.set_ease(Tween.EASE_IN);
   alpha_tween.set_trans(DIALOGUE_FADE_IN_TRANSITION);

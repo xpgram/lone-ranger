@@ -134,7 +134,7 @@ func _assemble_machine_states() -> void:
     PlayerState.new([
       _state_idle,
       _state_idle__input,
-      _state_idle__move_input
+      _state_idle__move_input,
     ]),
     PlayerState.new([
       _state_injured,
@@ -142,7 +142,7 @@ func _assemble_machine_states() -> void:
     PlayerState.new([
       _state_coyote_fall,
       _state_coyote_fall__exit,
-      _state_coyote_fall__move_input
+      _state_coyote_fall__move_input,
     ]),
     PlayerState.new([
       _state_fall,
@@ -474,6 +474,8 @@ func _connect_to_ui_subsystems() -> void:
   _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
 
+  _dialogue_bubble.dialogue_closed.connect(_on_dialogue_bubble_closed);
+
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.value_changed.connect(_on_health_changed);
   health.empty.connect(_on_health_empty);
@@ -553,12 +555,26 @@ func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
     _field_cursor.play_error();
 
 
+## Responds to the dialogue bubble being closed and releasing input focus.
+func _on_dialogue_bubble_closed() -> void:
+  if _command_menu.visible:
+    _command_menu.regrab_focus();
+
+
 ## Closes the player's UI subsystems and forces input focus back into the primary
 ## character controller.
 func _interrupt_ui_subsystems() -> void:
   _field_cursor.close();
   _command_menu.close();
+  _dialogue_bubble.close();
   focus_node.grab_focus();
+
+
+## Closes player UI subsystems that are unrelated to combat and other essential
+## game mechanics.
+func _interrupt_nonemergency_ui_subsystems() -> void:
+  _dialogue_bubble.close();
+  # [FIXME] Improve input focus management.
 
 
 ## Handler for when the player's HP changes value.
@@ -623,10 +639,6 @@ func _state_idle() -> void:
   trigger_idle_animation_state();
 
 
-func _state_idle__exit() -> void:
-  _interrupt_ui_subsystems();
-
-
 func _state_idle__input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
@@ -669,7 +681,7 @@ func _state_injured() -> void:
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
 
-  Events.player_ui_interrupt.emit();
+  _interrupt_nonemergency_ui_subsystems();
 
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);

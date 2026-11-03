@@ -98,24 +98,7 @@ func _ready() -> void:
   _connect_to_item_lists();
   _configure_item_lists();
 
-  # [FIXME] Feature test thing I'll need to properly implement.
-  #     Not least of which because I can't connect to *all* dialogue
-  #     boxes ending.
-  DialogueManager.dialogue_ended.connect(_on_dialogue_ended);
-
   close();
-
-
-# [FIXME] Feature test to regrab focus. I'll need some version of this later.
-func _on_dialogue_ended(_res: DialogueResource) -> void:
-  if not visible:
-    return;
-
-  match active_menu:
-    Submenu.Main:
-      _main_list.grab_focus();
-    _:
-      _options_list.grab_focus();
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -152,6 +135,19 @@ func open_from_start() -> void:
 func close() -> void:
   # Setting visibility here implicitly releases focus on children.
   visible = false;
+
+
+## Makes whichever submenu is open grab input focus, unless the menu is not
+## open at all.
+func regrab_focus() -> void:
+  if not visible:
+    return;
+
+  match active_menu:
+    Submenu.Main:
+      _main_list.grab_focus();
+    _:
+      _options_list.grab_focus();
 
 
 ## Bind listeners to inventory signals.
