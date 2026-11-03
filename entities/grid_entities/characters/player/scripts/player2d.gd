@@ -73,6 +73,9 @@ var _coyote_fall_timer: Timer;
 ## The player's unique [CommandMenu] instance.
 @onready var _command_menu: CommandMenu = %CommandMenu;
 
+## The player's unique [CommandMenu] instance.
+@onready var _dialogue_bubble: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
+
 ## The player's unique [FieldCursor] instance.
 @onready var _field_cursor: FieldCursor = %FieldCursor;
 
@@ -269,6 +272,28 @@ func get_action_from_brace_interact_input() -> FieldActionSchedule:
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns a [FieldActionSchedule] for some action resulting from an inspect input.
+func get_action_from_inspect_input() -> FieldActionSchedule:
+  var chosen_action: FieldAction = FieldActionList.null_action;
+
+  var playbill := FieldActionPlaybill.new(
+    self,
+    faced_position,
+    faced_direction,
+  );
+
+  var actions := [
+    FieldActionList.inspect,
+  ];
+
+  for action in actions:
+    if action and action.can_perform(playbill):
+      chosen_action = action;
+      break;
+
+  return FieldActionSchedule.new(chosen_action, playbill);
+
+
 ## Returns the last grid position the player inhabited.
 func get_last_position() -> Vector2i:
   return _last_position;
@@ -305,6 +330,11 @@ func reset_air_steps_remaining() -> void:
 ## of this QTE.
 func start_coyote_fall() -> void:
   _state_machine.switch_to(_state_coyote_fall);
+
+
+## Starts a dialogue bubble to read out the scene described by [param resource].
+func start_dialogue(resource: DialogueResource) -> void:
+  _dialogue_bubble.start(resource);
 
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
@@ -609,6 +639,12 @@ func _state_idle__input(event: InputEvent) -> void:
 
   elif event.is_action_pressed('open_action_menu'):
     _command_menu.open_from_start();
+    focus_node.accept_event();
+
+  elif event.is_action_pressed('inspect'):
+    var action_schedule := get_action_from_inspect_input();
+    if action_schedule.action != FieldActionList.null_action:
+      action_declared.emit(action_schedule, false);
     focus_node.accept_event();
 
 
