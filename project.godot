@@ -67,6 +67,7 @@ save/encryption_on_exports_only=true
 
 editor/advanced/custom_test_scene_path="uid://ugd552efvil0"
 runtime/balloon_path="res://entities/ui/inner_thoughts_box/inner_thoughts_dialogue_box.tscn"
+editor/advanced/dialogue_processor_path="uid://chxqa8q88ebuk"
 
 [display]
 
