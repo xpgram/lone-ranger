@@ -352,7 +352,7 @@ func start_dialogue(
 
 
 # [TODO] Finish writing / implementing
-# [TODO] ^ Afterward, merge this branch with main finally?
+# [TODO] ^ Afterward, merge this branch with main finally? Read the branch diff.
 ## ...
 func start_dialogue_scene(
     scene: DialogueScene,
