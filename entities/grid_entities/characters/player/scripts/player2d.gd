@@ -351,6 +351,15 @@ func start_dialogue(
   _dialogue_bubble.start(resource, cue, extra_game_states);
 
 
+# [TODO] Finish writing / implementing
+## ...
+func start_dialogue_scene(
+    scene: DialogueScene,
+    cue := "",
+) -> void:
+  _dialogue_bubble.start(scene.dialogue_resource, cue, scene.game_states);
+
+
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
 ## player is sent back to their last checkpoint and the world's state is reset. [br]
 func trigger_sleep() -> void:
