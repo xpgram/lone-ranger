@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
+[ext_resource type="Script" uid="uid://cd3222nx3y3k5" path="res://addons/dialogue_manager/nodes/context/dialogue_state_context.gd" id="22_txwd0"]
 [ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
@@ -331,3 +332,17 @@ offset_bottom = 80.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0.25)
 script = ExtResource("23_1ol17")
+
+[node name="DialogueContextNodes" type="Node" parent="." unique_id=905069829]
+
+[node name="DialogueStateContext_Player" type="Node" parent="DialogueContextNodes" unique_id=217050548 node_paths=PackedStringArray("target")]
+script = ExtResource("22_txwd0")
+alias = "player"
+target = NodePath("../../Player2D")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"
+
+[node name="DialogueStateContext_Inventory" type="Node" parent="DialogueContextNodes" unique_id=724799587 node_paths=PackedStringArray("target")]
+script = ExtResource("22_txwd0")
+alias = "player_inventory"
+target = NodePath("../../Inventory")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"
