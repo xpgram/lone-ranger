@@ -75,12 +75,17 @@ func _ready() -> void:
 ## This method is made to be overridable. [GridEntity] objects return
 ## [member _inspection_dialogue_resource] by default.
 func get_inspect_dialogue() -> InspectObject_DialogueScene:
-  var scene := InspectObject_DialogueScene.new();
-  scene.dialogue_resource = (
+  var dialogue_resource := (
     _inspection_dialogue_resource if _inspection_dialogue_resource
     else DialogueManager.create_resource_from_text(_inspection_dialogue_string) if _inspection_dialogue_string
     else null
   );
+
+  if not dialogue_resource:
+    return null;
+
+  var scene := InspectObject_DialogueScene.new();
+  scene.dialogue_resource = dialogue_resource;
   scene.inspection_subject = self;
   return scene;
 
