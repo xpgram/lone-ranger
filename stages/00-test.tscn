@@ -1745,8 +1745,9 @@ _powerable_targets = [NodePath("../PowerableDoorEntity"), NodePath("../Powerable
 
 [node name="BoulderEntity" parent="NPC Container" unique_id=1130051096 instance=ExtResource("10_jadfo")]
 position = Vector2(112, 144)
-_inspection_dialogue_string = "What is this...?[p1]
-  It's sticky."
+_inspection_dialogue_string = "What is this...?[p2]
+  It's sticky.
+I guess it's called {{inspect.target.name}}."
 
 [node name="BoulderEntity2" parent="NPC Container" unique_id=1734515166 instance=ExtResource("10_jadfo")]
 position = Vector2(144, 112)

@@ -89,7 +89,7 @@ var _coyote_fall_timer: Timer;
 @onready var _screen_shader_rect: PlayerScreenSpaceShader = %ScreenSpaceShader;
 
 ## A reference to the dialogue context object for inspect-object scenes.
-@onready var _dialogue_context__inspect_subject: DialogueStateContext = %DialogueContext_InspectSubject;
+@onready var _dialogue_inspection_target: NodeRetargeter = %DialogueInspectionTarget;
 
 ## Where the player spawned in.
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
@@ -353,7 +353,7 @@ func start_dialogue(
 
 ## Starts a dialogue bubble to read out the scene described by [param scene].
 func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
-  _dialogue_context__inspect_subject.target = scene.inspection_subject;
+  _dialogue_inspection_target.target = scene.inspection_subject;
   _dialogue_bubble.start(scene.dialogue_resource, "", scene.extra_game_states);
 
 

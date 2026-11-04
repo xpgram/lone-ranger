@@ -22,6 +22,7 @@
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
 [ext_resource type="Script" uid="uid://cd3222nx3y3k5" path="res://addons/dialogue_manager/nodes/context/dialogue_state_context.gd" id="22_txwd0"]
 [ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
+[ext_resource type="Script" uid="uid://d0d00edwopbqy" path="res://utilities/nodes/node_retargeter.gd" id="23_mrt6k"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
 script = ExtResource("4_sg284")
@@ -348,10 +349,11 @@ target = NodePath("../../Inventory")
 metadata/_custom_type_script = "uid://cd3222nx3y3k5"
 
 [node name="DialogueContext_InspectSubject" type="Node" parent="DialogueContextNodes" unique_id=506728732 node_paths=PackedStringArray("target")]
-unique_name_in_owner = true
 script = ExtResource("22_txwd0")
-alias = "inspect_subject"
-target = NodePath("NullTarget")
+alias = "inspect"
+target = NodePath("DialogueInspectionTarget")
 metadata/_custom_type_script = "uid://cd3222nx3y3k5"
 
-[node name="NullTarget" type="Node" parent="DialogueContextNodes/DialogueContext_InspectSubject" unique_id=131318386]
+[node name="DialogueInspectionTarget" type="Node" parent="DialogueContextNodes/DialogueContext_InspectSubject" unique_id=131318386]
+unique_name_in_owner = true
+script = ExtResource("23_mrt6k")
