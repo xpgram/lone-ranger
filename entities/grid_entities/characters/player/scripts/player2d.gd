@@ -333,9 +333,22 @@ func start_coyote_fall() -> void:
 
 
 ## Starts a dialogue bubble to read out the scene described by [param resource].
-## If [param resource] is `null`, does nothing.
-func start_dialogue(resource: DialogueResource) -> void:
-  _dialogue_bubble.start(resource);
+## If [param resource] is `null`, does nothing. [br]
+##
+## [param cue] is the script-cue to start from. Otherwise, the script will start
+## from line 0. [br]
+##
+## [param extra_game_states] is a list of node contexts, in order, that the
+## script may check for game state values.
+func start_dialogue(
+    resource: DialogueResource,
+    cue := "",
+    extra_game_states := [],
+) -> void:
+  # [TODO] The global persistence keys, or some version thereof, are always included at the
+  #     end of game states.
+  # [TODO] Add DialogueScene to package a script with some game-state context.
+  _dialogue_bubble.start(resource, cue, extra_game_states);
 
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
