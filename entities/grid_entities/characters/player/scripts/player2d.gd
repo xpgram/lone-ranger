@@ -88,6 +88,9 @@ var _coyote_fall_timer: Timer;
 ## A reference to the Rect that handles wholistic screen space shader effects.
 @onready var _screen_shader_rect: PlayerScreenSpaceShader = %ScreenSpaceShader;
 
+## A reference to the dialogue context object for inspect-object scenes.
+@onready var _dialogue_context__inspect_subject: DialogueStateContext = %DialogueContext_InspectSubject;
+
 ## Where the player spawned in.
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
 
@@ -345,20 +348,13 @@ func start_dialogue(
     cue := "",
     extra_game_states := [],
 ) -> void:
-  # [TODO] The global persistence keys, or some version thereof, are always included at the
-  #     end of game states.
-  # [TODO] Add DialogueScene to package a script with some game-state context.
   _dialogue_bubble.start(resource, cue, extra_game_states);
 
 
-# [TODO] Finish writing / implementing
-# [TODO] ^ Afterward, merge this branch with main finally? Read the branch diff.
-## ...
-func start_dialogue_scene(
-    scene: DialogueScene,
-    cue := "",
-) -> void:
-  _dialogue_bubble.start(scene.dialogue_resource, cue, scene.game_states);
+## Starts a dialogue bubble to read out the scene described by [param scene].
+func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
+  _dialogue_context__inspect_subject.target = scene.inspection_subject;
+  _dialogue_bubble.start(scene.dialogue_resource, "", scene.game_states);
 
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the

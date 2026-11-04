@@ -23,10 +23,10 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
     return true;
 
   var inspect_entity := entities[inspect_idx];
-  var dialogue_resource := inspect_entity.get_inspection_dialogue();
+  var dialogue_scene := inspect_entity.get_inspect_dialogue();
 
   # Find a useful default message.
-  if not dialogue_resource:
+  if not dialogue_scene:
     # [TODO] Pick a good default should a message not be found.
     #    (Though, can_perform ought to block those occurrences, anyway.)
     var first_letter := String(inspect_entity.name)[0].to_lower();
@@ -38,9 +38,12 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
       "It's %s %s." % [name_article, inspect_entity.name],
     ];
 
-    var dialogue_string := " ".join(lines);
-    dialogue_resource = DialogueManager.create_resource_from_text(dialogue_string);
+    dialogue_scene = InspectObject_DialogueScene.new();
 
-  player.start_dialogue(dialogue_resource);
+    var dialogue_string := " ".join(lines);
+    dialogue_scene.dialogue_resource = DialogueManager.create_resource_from_text(dialogue_string);
+    dialogue_scene.inspection_subject = inspect_entity;
+
+  player.start_inspect_dialogue(dialogue_scene);
 
   return true;

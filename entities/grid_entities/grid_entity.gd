@@ -69,17 +69,20 @@ func _ready() -> void:
 
 
 ## @nullable [br]
-## Returns a [DialogueResource] containing the inspection dialogue for this
-## entity. Returns null if no such dialogue exists. [br]
+## Returns a dialogue scene package containing the inspection dialogue and
+## dialogue context for this entity. Returns null if no such dialogue exists. [br]
 ##
 ## This method is made to be overridable. [GridEntity] objects return
 ## [member _inspection_dialogue_resource] by default.
-func get_inspection_dialogue() -> DialogueResource:
-  return (
+func get_inspect_dialogue() -> InspectObject_DialogueScene:
+  var scene := InspectObject_DialogueScene.new();
+  scene.dialogue_resource = (
     _inspection_dialogue_resource if _inspection_dialogue_resource
     else DialogueManager.create_resource_from_text(_inspection_dialogue_string) if _inspection_dialogue_string
     else null
   );
+  scene.inspection_subject = self;
+  return scene;
 
 
 # [FIXME] This attribute system is hard to use via the editor: loading a .tres requires

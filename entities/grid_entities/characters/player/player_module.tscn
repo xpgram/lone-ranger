@@ -335,14 +335,23 @@ script = ExtResource("23_1ol17")
 
 [node name="DialogueContextNodes" type="Node" parent="." unique_id=905069829]
 
-[node name="DialogueStateContext_Player" type="Node" parent="DialogueContextNodes" unique_id=217050548 node_paths=PackedStringArray("target")]
+[node name="DialogueContext_Player" type="Node" parent="DialogueContextNodes" unique_id=217050548 node_paths=PackedStringArray("target")]
 script = ExtResource("22_txwd0")
 alias = "player"
 target = NodePath("../../Player2D")
 metadata/_custom_type_script = "uid://cd3222nx3y3k5"
 
-[node name="DialogueStateContext_Inventory" type="Node" parent="DialogueContextNodes" unique_id=724799587 node_paths=PackedStringArray("target")]
+[node name="DialogueContext_Inventory" type="Node" parent="DialogueContextNodes" unique_id=724799587 node_paths=PackedStringArray("target")]
 script = ExtResource("22_txwd0")
 alias = "player_inventory"
 target = NodePath("../../Inventory")
 metadata/_custom_type_script = "uid://cd3222nx3y3k5"
+
+[node name="DialogueContext_InspectSubject" type="Node" parent="DialogueContextNodes" unique_id=506728732 node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+script = ExtResource("22_txwd0")
+alias = "inspect_subject"
+target = NodePath("NullTarget")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"
+
+[node name="NullTarget" type="Node" parent="DialogueContextNodes/DialogueContext_InspectSubject" unique_id=131318386]
