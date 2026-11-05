@@ -15,6 +15,7 @@ standable = true
 _attributes = Dictionary[StringName, ExtResource("2_y3g3p")]({
 &"floating": ExtResource("3_ambi3")
 })
+is_inspectable = false
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1289246418]
