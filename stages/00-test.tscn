@@ -35,7 +35,9 @@
 [ext_resource type="Script" uid="uid://bchkts4e674ww" path="res://utilities/nodes/components/grid_entity_components/grid_message_component.gd" id="29_ekj6j"]
 [ext_resource type="Script" uid="uid://6h4h3dk0p6g1" path="res://utilities/nodes/interaction_trigger.gd" id="30_ekj6j"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
+[ext_resource type="Script" uid="uid://dqipxyhdm6046" path="res://entities/grid_entities/utility/inspect_box.gd" id="32_ubj5x"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
+[ext_resource type="Resource" uid="uid://mf2ibbuxfsov" path="res://assets/text_content/dialogue_scripts/inspection_zones.dialogue" id="33_kgk2j"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
 [ext_resource type="Script" uid="uid://db2b6araio8t2" path="res://stages/scary_growl_trigger_box.gd" id="34_xa6am"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
@@ -1558,6 +1560,14 @@ position = Vector2(-32, 48)
 [node name="GlassTile13" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1414079713 instance=ExtResource("25_mmv8l")]
 position = Vector2(-32, 32)
 
+[node name="InspectBox" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=579028848]
+position = Vector2(-128, 48)
+script = ExtResource("32_ubj5x")
+_area_box_rect = Rect2i(0, 0, 1, 2)
+_area_box_color = Color(1, 1, 0, 0.5019608)
+_inspection_dialogue_resource = ExtResource("33_kgk2j")
+_inspection_dialogue_cue = "first_glass_bridge"
+
 [node name="BoulderEntity71" parent="Interactives Container" unique_id=135309042 instance=ExtResource("10_jadfo")]
 modulate = Color(1, 1, 1, 0.42352942)
 position = Vector2(-272, 80)
@@ -1625,6 +1635,15 @@ position = Vector2(-512, -208)
 
 [node name="HeartPiecePickup3" parent="Interactives Container" unique_id=1443787865 instance=ExtResource("22_1sjut")]
 position = Vector2(-80, -368)
+
+[node name="InspectBox" type="Node2D" parent="Interactives Container" unique_id=13313912]
+position = Vector2(-384, 0)
+script = ExtResource("32_ubj5x")
+_area_box_rect = Rect2i(0, 0, 2, 1)
+_area_box_color = Color(1, 1, 0, 0.5019608)
+_inspection_dialogue_resource = ExtResource("33_kgk2j")
+_inspection_dialogue_cue = "long_thin_hallway_to_the_west"
+metadata/_custom_type_script = "uid://dqipxyhdm6046"
 
 [node name="Enemy Container" type="Node2D" parent="." unique_id=253658292]
 

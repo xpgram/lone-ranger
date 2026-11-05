@@ -1,3 +1,7 @@
+## @tool [br]
+## Used to block out areas of the Grid where events may trigger when objects step onto
+## them. Useful for triggering cutscenes, oneshot sound effects, etc., as the player moves
+## around the level.
 @tool
 class_name TriggerBox
 extends GridObject
