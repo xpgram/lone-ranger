@@ -47,12 +47,14 @@ func _on_player_inventory_item_updated(field_action: FieldAction, new_quantity: 
 func activate() -> void:
   _particles.emitting = true;
   _is_drawable = true;
+  is_inspectable = true;
 
 
 ## Hides the draw point's visuals and flags it as empty of magic.
 func deactivate() -> void:
   _particles.emitting = false;
   _is_drawable = false;
+  is_inspectable = false;
 
 
 ## Returns true if the draw point has mana to be extracted.
