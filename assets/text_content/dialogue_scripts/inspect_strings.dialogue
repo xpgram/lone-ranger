@@ -5,12 +5,12 @@
 
 
 ~ boulder
-It's a big rock.[p4] Pretty heavy, too.
+A large boulder.
 => END!
 
 
 ~ button_floor
-It's pressable.[p4]
+A button.[p4]
 	Something heavy could hold it down.
 => END!
 
@@ -47,7 +47,7 @@ This is...[p3] sand?
 
 
 ~ stone_door
-It won't budge,[p8] but it looks like it can be lowered.
+It won't budge,[p8] but it looks like it could be lowered.
 => END!
 
 
