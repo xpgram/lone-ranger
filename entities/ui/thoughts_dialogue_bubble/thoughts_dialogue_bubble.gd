@@ -241,7 +241,7 @@ func _try_open_dialogue_bubble_async() -> void:
   _open_audio_player.play();
 
   await alpha_tween.finished;
-  await get_tree().create_timer(0.2).timeout;
+  await get_tree().create_timer(0.3).timeout;
 
 
 ## If open, runs the dialogue bubble's close animation.
