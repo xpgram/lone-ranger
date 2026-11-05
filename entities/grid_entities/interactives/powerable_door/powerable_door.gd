@@ -27,6 +27,8 @@ func _set_powered(value: bool, skip_animation := false) -> void:
     value = !value;
 
   if value:
+    is_inspectable = true;
+
     if skip_animation:
       _anim.pause();
       _anim.frame = _anim.sprite_frames.get_frame_count('raise') - 1;
@@ -34,6 +36,8 @@ func _set_powered(value: bool, skip_animation := false) -> void:
       _anim.play("raise");
       AudioBus.play_audio_scene(_audio_gate_rise);
   else:
+    is_inspectable = false;
+
     if skip_animation:
       _anim.pause();
       _anim.frame = 0;

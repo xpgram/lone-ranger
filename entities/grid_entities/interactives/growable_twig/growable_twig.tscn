@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://j6hgjbapt2qy" path="res://entities/grid_entities/interactives/growable_twig/growable_twig.gd" id="1_xtm8q"]
 [ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="2_e6pwd"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_lskyr"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="3_e6pwd"]
 
 [sub_resource type="Resource" id="Resource_2oido"]
 script = ExtResource("2_e6pwd")
@@ -42,6 +43,8 @@ script = ExtResource("1_xtm8q")
 _attributes = Dictionary[StringName, ExtResource("2_e6pwd")]({
 &"is_growable": SubResource("Resource_2oido")
 })
+_inspection_dialogue_resource = ExtResource("3_e6pwd")
+_inspection_dialogue_cue = "little_plant"
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1684289296]

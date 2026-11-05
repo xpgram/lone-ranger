@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://f8wof0bqh7u6" path="res://entities/grid_entities/interactives/interactive2d.gd" id="1_ge1so"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_1hbqi"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_xa2cf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xa2cf"]
 atlas = ExtResource("2_1hbqi")
@@ -22,6 +23,8 @@ animations = [{
 script = ExtResource("1_ge1so")
 solid = true
 pushable = true
+_inspection_dialogue_resource = ExtResource("2_xa2cf")
+_inspection_dialogue_cue = "boulder"
 metadata/_custom_type_script = "uid://f8wof0bqh7u6"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1504852370]

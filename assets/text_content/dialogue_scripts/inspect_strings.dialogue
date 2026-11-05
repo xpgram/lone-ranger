@@ -1,0 +1,67 @@
+
+~ angel_statue
+...[p3] It looks so kind.
+=> END!
+
+
+~ boulder
+It's a big rock.[p4] Pretty heavy, too.
+=> END!
+
+
+~ button_floor
+It's pressable.[p4]
+	Something heavy could hold it down.
+=> END!
+
+
+~ diggable_spot
+...[p3] There's something in the ground here.
+=> END!
+
+
+~ little_plant
+...[p3] It's so delicate.[p3]
+	How is it growing here?
+=> END!
+
+
+~ dust_cloud
+This is...[p3] sand?
+=> END!
+
+
+~ heart_piece_pickup
+...[p3] What is this?
+=> END!
+
+
+~ mana_spot
+...[p3] It doesn't seem dangerous.
+=> END!
+
+
+~ snake_statue
+...[p3] It's staring at me.
+=> END!
+
+
+~ stone_door
+It won't budge,[p8] but it looks like it can be lowered.
+=> END!
+
+
+~ chest
+if inspect.target.is_open:
+	It's empty.
+else:
+	Is something in here...?
+=> END!
+
+
+~ chest_special
+if inspect.target.is_open:
+	It's empty.
+else:
+	This seems important.
+=> END!

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://og6pitcncbhr"]
 
 [ext_resource type="Script" uid="uid://dnbd50aclwvjm" path="res://entities/grid_entities/interactives/pickups/heart_piece_pickup/heart_piece_pickup.gd" id="1_kir3p"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_b4jk8"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_mfxvk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l5wv4"]
@@ -48,6 +49,8 @@ _data = {
 
 [node name="HeartPiecePickup" type="Node2D" unique_id=1561367840]
 script = ExtResource("1_kir3p")
+_inspection_dialogue_resource = ExtResource("2_b4jk8")
+_inspection_dialogue_cue = "heart_piece_pickup"
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1154724053]
