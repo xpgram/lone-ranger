@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://6o2q1po4ybjk" path="res://entities/grid_entities/interactives/raised_block/raised_block.gd" id="1_f7fts"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_l7v4b"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_tuxcf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f7fts"]
 atlas = ExtResource("2_l7v4b")
@@ -42,6 +43,8 @@ animations = [{
 [node name="RaisedBlock" type="Node2D" unique_id=1297079094]
 script = ExtResource("1_f7fts")
 solid = true
+_inspection_dialogue_resource = ExtResource("2_tuxcf")
+_inspection_dialogue_cue = "raised_block"
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=281258930]
