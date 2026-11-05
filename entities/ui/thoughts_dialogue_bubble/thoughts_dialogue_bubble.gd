@@ -206,9 +206,7 @@ func start(
   _is_awaiting_input = false;
 
   dialogue_resource = with_dialogue_resource;
-
-  if cue != "":
-    start_from_cue = cue;
+  start_from_cue = cue;
 
   dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_cue, _temporary_game_states);
 

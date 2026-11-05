@@ -38,6 +38,9 @@ const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 ## The inner-thoughts dialogue the player character has when inspecting this object.
 @export var _inspection_dialogue_resource: DialogueResource;
 
+## The cue to start from when reading [member _inspection_dialogue_resource].
+@export var _inspection_dialogue_cue := "";
+
 ## A quick-use field for the inner-thoughts dialogue the player character has when
 ## inspecting this object. [br]
 ##
@@ -86,6 +89,7 @@ func get_inspect_dialogue() -> InspectObject_DialogueScene:
 
   var scene := InspectObject_DialogueScene.new();
   scene.dialogue_resource = dialogue_resource;
+  scene.dialogue_cue = _inspection_dialogue_cue;
   scene.inspection_subject = self;
   return scene;
 

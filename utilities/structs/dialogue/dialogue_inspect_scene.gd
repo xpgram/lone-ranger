@@ -6,6 +6,9 @@ extends RefCounted
 ## The dialogue script to play for this scene.
 var dialogue_resource: DialogueResource;
 
+## The cue to start from in the dialogue script.
+var dialogue_cue := "";
+
 ## The dialogue context for the object being inspected.
 var inspection_subject: GridEntity;
 

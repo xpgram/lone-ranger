@@ -354,7 +354,7 @@ func start_dialogue(
 ## Starts a dialogue bubble to read out the scene described by [param scene].
 func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
   _dialogue_inspection_target.target = scene.inspection_subject;
-  _dialogue_bubble.start(scene.dialogue_resource, "", scene.extra_game_states);
+  _dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
 
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
