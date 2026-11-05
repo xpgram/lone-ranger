@@ -41,16 +41,6 @@ const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 ## The cue to start from when reading [member _inspection_dialogue_resource].
 @export var _inspection_dialogue_cue := "";
 
-# [FIXME] This field is unusable in production because it lacks any localization infrastructure.
-#     Do we get rid of it, or is it still useful for development/debugging purposes?
-## @deprecated [br]
-## A quick-use field for the inner-thoughts dialogue the player character has when
-## inspecting this object. [br]
-##
-## [b]Note:[/b] When [member _inspection_dialogue_resource] is not `null`, this
-## field is usually ignored.
-@export_multiline() var _inspection_dialogue_string := "";
-
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
 var faced_direction := Vector2i.DOWN:
@@ -81,17 +71,11 @@ func _ready() -> void:
 ## This method is made to be overridable. [GridEntity] objects return
 ## [member _inspection_dialogue_resource] by default.
 func get_inspect_dialogue() -> InspectObject_DialogueScene:
-  var dialogue_resource := (
-    _inspection_dialogue_resource if _inspection_dialogue_resource
-    else DialogueManager.create_resource_from_text(_inspection_dialogue_string) if _inspection_dialogue_string
-    else null
-  );
-
-  if not dialogue_resource:
+  if not _inspection_dialogue_resource:
     return null;
 
   var scene := InspectObject_DialogueScene.new();
-  scene.dialogue_resource = dialogue_resource;
+  scene.dialogue_resource = _inspection_dialogue_resource;
   scene.dialogue_cue = _inspection_dialogue_cue;
   scene.inspection_subject = self;
   return scene;
