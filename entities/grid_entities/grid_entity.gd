@@ -41,6 +41,9 @@ const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 ## The cue to start from when reading [member _inspection_dialogue_resource].
 @export var _inspection_dialogue_cue := "";
 
+# [FIXME] This field is unusable in production because it lacks any localization infrastructure.
+#     Do we get rid of it, or is it still useful for development/debugging purposes?
+## @deprecated [br]
 ## A quick-use field for the inner-thoughts dialogue the player character has when
 ## inspecting this object. [br]
 ##
