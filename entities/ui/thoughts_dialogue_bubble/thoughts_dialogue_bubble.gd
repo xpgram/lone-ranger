@@ -67,6 +67,16 @@ var auto_advance_full_line_length := 80;
 @export_custom(PROPERTY_HINT_NONE, "suffix:s")
 var input_fast_tap_suppression_time := 0.3;
 
+## The time in seconds since pressing the skip-line button that the skip-line
+## feature should take to skip its first line.
+@export_custom(PROPERTY_HINT_NONE, "suffix:s")
+var input_skip_line_start_delay := 0.3;
+
+## The time in seconds since starting a dialogue line that the skip-line
+## input should be ignored.
+@export_custom(PROPERTY_HINT_NONE, "suffix:s")
+var input_skip_line_interval_time := 0.18;
+
 ## The current line being displayed. Text readout may still be in progress.
 var dialogue_line: DialogueLine:
   set(value):
@@ -139,6 +149,9 @@ var _will_hide_text_bubble: bool = false;
 ## mistake.
 @onready var _fast_tap_timer: Timer = %FastTapTimer;
 
+## Used to measure the interval between skipped lines when holding the skip button.
+@onready var _skip_line_timer: Timer = %SkipLineTimer;
+
 ## The "awaiting player input" icon indicating text readout has finished.
 @onready var _text_advance_icon: Node2D = %AdvanceIcon;
 
@@ -151,36 +164,53 @@ func _ready() -> void:
 func _connect_to_signals() -> void:
   Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated);
   Events.player_ui_interrupt.connect(_on_dialogue_interrupted);
+  focus_node.focus_exited.connect(_on_focus_lost);
   _dialogue_label.spoke.connect(_on_dialogue_typewriter_sfx_triggered);
   _dialogue_label.finished_typing.connect(_on_dialogue_finished_typing);
+  _dialogue_label.skipped_typing.connect(_on_dialogue_skipped_typing);
   _mutation_timer.timeout.connect(_on_mutation_timer_timeout);
+  _skip_line_timer.timeout.connect(_on_skip_line_timer_timeout);
 
 
 func _unhandled_input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
 
-  var advance_button_pressed: bool = (
-    event.is_action_pressed("interact")
-    or event.is_action_pressed("cancel")
-    or event.is_action_pressed("inspect")
-  );
+  if event.is_action_pressed("cancel"):
+    _on_skip_line_button_pressed();
+  elif event.is_action_released("cancel"):
+    _on_skip_line_button_released();
 
-  if not advance_button_pressed:
-    return;
+  if (
+      event.is_action_pressed("interact")
+      or event.is_action_pressed("inspect")
+  ):
+    _on_advance_text_button_pressed();
 
-  # [FIXME] _is_awaiting_mutation needs to be checked, but there is no public method I'm aware of.
-  #     I need to modify the plugin for unique tags anyway, so just add this to the list, I guess.
-  var dialogue_is_playing: bool = (_dialogue_label.is_typing or _dialogue_label._is_awaiting_mutation);
 
-  if dialogue_is_playing:
+## Responds to advance-line inputs.
+func _on_advance_text_button_pressed() -> void:
+  if _dialogue_is_playing():
     _dialogue_label.skip_typing();
-    _typewriter_audio_player.play();
     focus_node.accept_event();
 
   elif _is_awaiting_input and _fast_tap_timer.is_stopped():
     _load_line_id_async(dialogue_line.next_id);
     focus_node.accept_event();
+
+
+## Responds to skip-line inputs.
+func _on_skip_line_button_pressed() -> void:
+  if not _dialogue_is_playing():
+    await _load_line_id_async(dialogue_line.next_id);
+
+  _dialogue_label.skip_typing();
+  _skip_line_timer.start(input_skip_line_start_delay);
+
+
+## Responds to skip-line-stop inputs.
+func _on_skip_line_button_released() -> void:
+  _skip_line_timer.stop();
 
 
 func _notification(what: int) -> void:
@@ -372,6 +402,16 @@ func _play_voice_line() -> void:
   _voice_audio_player.play();
 
 
+## Returns true if the text bubble is currently reading out text.
+func _dialogue_is_playing() -> bool:
+  # [FIXME] _is_awaiting_mutation needs to be checked, but there is no public method I'm aware of.
+  #     I need to modify the plugin for unique tags anyway, so just add this to the list, I guess.
+  return (
+    _dialogue_label.is_typing
+    or _dialogue_label._is_awaiting_mutation
+  );
+
+
 #region Signals
 
 ## Responds to the dialogue label finishing its text readout.
@@ -383,6 +423,11 @@ func _on_dialogue_finished_typing() -> void:
 
   _is_awaiting_input = true;
   focus_node.grab_focus();
+
+
+## Responds to the dialogue label skipping the rest of its text readout.
+func _on_dialogue_skipped_typing() -> void:
+  _typewriter_audio_player.play();
 
 
 ## Responds to dialogue scene interrupt signals. Shuts the dialog system down
@@ -414,6 +459,11 @@ func _on_dialogue_typewriter_sfx_triggered(_letter: String, _index: int, speed: 
   _typewriter_audio_player.play();
 
 
+## Responds to the [member focus_node] losing input focus.
+func _on_focus_lost() -> void:
+  _skip_line_timer.stop();
+
+
 ## Responds to the mutation timer's timeout signal.
 func _on_mutation_timer_timeout() -> void:
   if _will_hide_text_bubble:
@@ -436,6 +486,19 @@ func _on_mutated(mutation: Dictionary) -> void:
     _is_awaiting_input = false;
     _will_hide_text_bubble = true;
     _mutation_timer.start(0.1);
+
+
+## Responds to the skip-line interval timing out.
+func _on_skip_line_timer_timeout() -> void:
+  if (
+      not Input.is_action_pressed("cancel")
+      or not focus_node.has_focus()
+  ):
+    return;
+
+  await _load_line_id_async(dialogue_line.next_id);
+  _dialogue_label.skip_typing();
+  _skip_line_timer.start(input_skip_line_interval_time);
 
 
 ## Responds to an updated language preference signal.

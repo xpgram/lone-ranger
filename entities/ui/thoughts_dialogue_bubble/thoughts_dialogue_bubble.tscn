@@ -178,6 +178,10 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 one_shot = true
 
+[node name="SkipLineTimer" type="Timer" parent="." unique_id=2133861133]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="VoiceAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1357455328]
 unique_name_in_owner = true
 bus = &"Voice"
