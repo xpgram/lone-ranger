@@ -2,7 +2,7 @@ extends DMDialogueProcessor
 
 const BEATS_PER_MEASURE := 4.0;
 
-const BEATS_PER_MINUTE := 120.0;
+const BEATS_PER_MINUTE := 160.0;
 
 ## A value measuring beats-per-minute as a raw time value in seconds.
 const BASE_PAUSE := 60.0 / BEATS_PER_MINUTE * BEATS_PER_MEASURE;
