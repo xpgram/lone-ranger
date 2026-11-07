@@ -404,12 +404,7 @@ func _play_voice_line() -> void:
 
 ## Returns true if the text bubble is currently reading out text.
 func _dialogue_is_playing() -> bool:
-  # [FIXME] _is_awaiting_mutation needs to be checked, but there is no public method I'm aware of.
-  #     I need to modify the plugin for unique tags anyway, so just add this to the list, I guess.
-  return (
-    _dialogue_label.is_typing
-    or _dialogue_label._is_awaiting_mutation
-  );
+  return _dialogue_label.visible_ratio < 1.0;
 
 
 #region Signals
