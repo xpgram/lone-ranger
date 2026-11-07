@@ -96,6 +96,9 @@ var dialogue_line: DialogueLine:
 ## Accessed by dialogue scripts directly.
 var locals: Dictionary = {};
 
+## Whether the bubble is currently listening to any player inputs.
+var _controls_locked := false;
+
 ## Whether the dialogue system is awaiting player input.
 var _is_awaiting_input: bool = false:
   set(value):
@@ -173,7 +176,7 @@ func _connect_to_signals() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  if not focus_node.has_focus():
+  if not focus_node.has_focus() or _controls_locked:
     return;
 
   if event.is_action_pressed("cancel"):
@@ -256,6 +259,8 @@ func _try_open_dialogue_bubble_async() -> void:
   if visible:
     return;
 
+  _controls_locked = true;
+
   modulate.a = 0.0;
   dialogue_opened.emit();
   show();
@@ -273,11 +278,15 @@ func _try_open_dialogue_bubble_async() -> void:
   await alpha_tween.finished;
   await get_tree().create_timer(0.3).timeout;
 
+  _controls_locked = false;
+
 
 ## If open, runs the dialogue bubble's close animation.
 func _try_close_dialogue_bubble_async() -> void:
   if not visible:
     return;
+
+  _controls_locked = true;
 
   modulate.a = 1.0;
   focus_node.release_focus();
@@ -294,6 +303,8 @@ func _try_close_dialogue_bubble_async() -> void:
   await alpha_tween.finished;
 
   hide();
+
+  _controls_locked = false;
 
 
 ## Applies changes described by the current [member dialogue_line] to the
