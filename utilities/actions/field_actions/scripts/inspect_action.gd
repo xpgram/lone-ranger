@@ -29,6 +29,8 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   if not dialogue_scene:
     # [TODO] Pick a good default should a message not be found.
     #    (Though, can_perform ought to block those occurrences, anyway.)
+    # [FIXME] A good default would actually be nothing. I'm still using this for
+    #    demo purposes, though.
     var first_letter := String(inspect_entity.name)[0].to_lower();
     var first_vowel: bool = first_letter in "aeiou";
     var name_article := 'an' if first_vowel else 'a';
