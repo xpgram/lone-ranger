@@ -18,13 +18,6 @@ signal dialogue_opened();
 signal dialogue_closed();
 
 
-# [TODO] Skip conversation button? Skip only if conversation seen before? Hm.
-# [TODO] Understand the mutation thing?
-#     A mutation is something like [wait=1.0], among other things I'm sure.
-#     However, this script has a signal responder that sets will_close_bubble to true
-#     even though [wait] does not close it. I still need to understand that part.
-# [FIXME] Re-evaluate some of these public vars, make sure they actually should be.
-
 ## The dialogue script to play.
 @export var dialogue_resource: DialogueResource;
 
@@ -108,13 +101,8 @@ var _is_awaiting_input: bool = false:
 ## The language setting for the game session.
 var _locale: String = TranslationServer.get_locale();
 
-# [FIXME] Array[GameState], whatever that is.
-# [FIXME] Find out what a Game State is so that I can write this doc string.
-# Worth noting, DialogueManager does require it. Or, it seems important enough.
-# [INFO] These provide additional object space for calling methods and storing values.
-#     Uh, temporary... I'm not sure what's meant by temporary, but this _is_ what the
-#     game states thing is about.
-##
+## Extra variable and callable method contexts to be useable from within the
+## dialogue script.
 var _temporary_game_states := [] as Array;
 
 # [TODO] This thing is all over the script. Simplify its implementation.
@@ -246,6 +234,7 @@ func start(
   # [TODO] Structural issue: apply_dialogue_line already calls show(), so this is redundant.
   #     However, depending on apply_dialogue_line to show() feels like depending on a side effect.
   #     apply_dialogue_line probably shouldn't be responsible for the showing/hiding of the entire bubble.
+  #     Caveat: sometimes mutations close the dialogue box, so apply_dialogue_line() needs to reopen it.
   # show();
 
 
@@ -453,7 +442,7 @@ func _on_dialogue_typewriter_sfx_triggered(_letter: String, _index: int, speed: 
   ):
     return;
 
-  # [TODO] This doesn't work for other languages.
+  # [FIXME] This doesn't work for other languages.
   #    Just do randf(), 1 in 3 sounds are high?
   var vowels := "aeiouyAEIOUY";
   var is_high_pitch: bool = _letter in vowels;
@@ -477,16 +466,9 @@ func _on_mutation_timer_timeout() -> void:
     await _try_close_dialogue_bubble_async();
 
 
-# [TODO] What does this actually do?
-#  - A mutation is something like [wait] or [color=red].
-#  - Not all mutations need to be responded to. See how this method says "is_inline"?
-#  - It sounds like: mutations that are their own thing, not really part of a dialogue
-#    line per se, may trigger a temporary closing of the text bubble. The bubble would
-#    be shown again after _apply_dialogue_line is called on the *next* line.
-#  - I do not know any mutations which trigger this effect. The docs have no list.
-# [TODO] When I understand this better, MutationTimer ought to be renamed to something
-#    more informative. Not all mutations are timed, after all.
 ## Responds to a Dialogue Manager mutation signal.
+## If the mutation is one that closes the dialogue bubble, sets a short delay
+## timer to settle affairs, then closes the bubble.
 func _on_mutated(mutation: Dictionary) -> void:
   if not mutation.is_inline:
     _is_awaiting_input = false;
