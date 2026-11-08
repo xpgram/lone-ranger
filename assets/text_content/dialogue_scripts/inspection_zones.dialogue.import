@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://mf2ibbuxfsov"
+path="res://.godot/imported/inspection_zones.dialogue-c1e5c6089879e5b60cdb2eea0498b659.tres"
+
+[deps]
+
+source_file="res://assets/text_content/dialogue_scripts/inspection_zones.dialogue"
+dest_files=["res://.godot/imported/inspection_zones.dialogue-c1e5c6089879e5b60cdb2eea0498b659.tres"]
+
+[params]
+
+defaults=true

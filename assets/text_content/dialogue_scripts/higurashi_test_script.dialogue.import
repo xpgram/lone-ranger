@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://djti55vlb1vxe"
+path="res://.godot/imported/higurashi_test_script.dialogue-9de2e094d47b5fb5eba19212fa5ddea8.tres"
+
+[deps]
+
+source_file="res://assets/text_content/dialogue_scripts/higurashi_test_script.dialogue"
+dest_files=["res://.godot/imported/higurashi_test_script.dialogue-9de2e094d47b5fb5eba19212fa5ddea8.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Inspect_FieldAction" format=3 uid="uid://cqggyjg0dup0w"]
+
+[ext_resource type="Script" uid="uid://cfahhkcc0qada" path="res://utilities/actions/field_actions/scripts/inspect_action.gd" id="1_1pjbr"]
+
+[resource]
+script = ExtResource("1_1pjbr")
+action_uid = &"inspect"
+action_name = "Inspect"
+action_description = "Examine an object in front of the user.	"
+action_hint = "Examine an object in front of the user."
+action_time_cost = 0.0
+metadata/_custom_type_script = "uid://cfahhkcc0qada"

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://kfekvnl8dv3f" path="res://entities/system/debug/inaction_timer_clock/inaction_timer_clock.tscn" id="2_pfcia"]
 [ext_resource type="Script" uid="uid://cxd7e70k4ct58" path="res://entities/system/debug/debug_background.gd" id="2_q0256"]
 [ext_resource type="Script" uid="uid://wsalbkul4nwa" path="res://entities/system/debug/command_line_edit.gd" id="4_q0256"]
+[ext_resource type="FontVariation" uid="uid://dihhgbamhe2yt" path="res://assets/fonts/Iosevka_Charon_Mono/iosevka_charon_mono.tres" id="4_qxlt8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqfm4"]
 content_margin_left = 4.0
@@ -48,7 +49,8 @@ theme_override_colors/caret_color = Color(1, 1, 0.99215686, 1)
 theme_override_colors/selection_color = Color(0.5, 0.66666675, 1, 1)
 theme_override_colors/clear_button_color = Color(1, 1, 1, 1)
 theme_override_colors/clear_button_color_pressed = Color(0.8745098, 0.8745098, 0.8745098, 1)
-theme_override_font_sizes/font_size = 6
+theme_override_fonts/font = ExtResource("4_qxlt8")
+theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxEmpty_nqfm4")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_nqfm4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_nqfm4")

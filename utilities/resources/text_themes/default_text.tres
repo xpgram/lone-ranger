@@ -1,6 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://di0dru5ym242e"]
 
-[ext_resource type="FontFile" uid="uid://c2eb1mulsdjef" path="res://assets/fonts/courier_new_bold.ttf" id="1_l8jlu"]
+[ext_resource type="FontFile" uid="uid://pafxe724h1i6" path="res://assets/fonts/CourierPrime/CourierPrime-Regular.ttf" id="1_l8jlu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k7uxw"]
 

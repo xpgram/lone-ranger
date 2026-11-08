@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://f8wof0bqh7u6" path="res://entities/grid_entities/interactives/interactive2d.gd" id="1_4oody"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_mle5y"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_vc71r"]
 [ext_resource type="Script" uid="uid://b0hnuus52jfdx" path="res://entities/grid_entities/interactives/angel_statue/context_action.gd" id="3_mle5y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vc71r"]
@@ -11,6 +12,8 @@ region = Rect2(144, 48, 16, 16)
 [node name="AngelStatue" type="Node2D" unique_id=512330202]
 script = ExtResource("1_4oody")
 solid = true
+_inspection_dialogue_resource = ExtResource("2_vc71r")
+_inspection_dialogue_cue = "angel_statue"
 metadata/_custom_type_script = "uid://f8wof0bqh7u6"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1919042448]

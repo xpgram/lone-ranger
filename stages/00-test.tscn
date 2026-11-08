@@ -35,7 +35,9 @@
 [ext_resource type="Script" uid="uid://bchkts4e674ww" path="res://utilities/nodes/components/grid_entity_components/grid_message_component.gd" id="29_ekj6j"]
 [ext_resource type="Script" uid="uid://6h4h3dk0p6g1" path="res://utilities/nodes/interaction_trigger.gd" id="30_ekj6j"]
 [ext_resource type="Script" uid="uid://dtvydddq5cwbl" path="res://utilities/nodes/audio/dynamic_audio_stream.gd" id="32_4ouhr"]
+[ext_resource type="Script" uid="uid://dqipxyhdm6046" path="res://entities/grid_entities/utility/inspect_box.gd" id="32_ubj5x"]
 [ext_resource type="PackedScene" uid="uid://c0mts7k084505" path="res://entities/audio/music/exploration_track.tscn" id="33_6ge87"]
+[ext_resource type="Resource" uid="uid://mf2ibbuxfsov" path="res://assets/text_content/dialogue_scripts/inspection_zones.dialogue" id="33_kgk2j"]
 [ext_resource type="PackedScene" uid="uid://buak42ny2ymxl" path="res://entities/audio/music/battle_track.tscn" id="34_mmv8l"]
 [ext_resource type="Script" uid="uid://db2b6araio8t2" path="res://stages/scary_growl_trigger_box.gd" id="34_xa6am"]
 [ext_resource type="Texture2D" uid="uid://clpxjld1o76ti" path="res://assets/00 - source/labyrinth_sheet.png" id="35_r4137"]
@@ -48,6 +50,7 @@
 [ext_resource type="PackedScene" uid="uid://eyhskerhpe2y" path="res://entities/grid_entities/characters/player/player_module.tscn" id="41_p22wk"]
 [ext_resource type="Script" uid="uid://42c85n34qcju" path="res://common/persistence_key/typed_variants/persistence_key_bool.gd" id="42_52iru"]
 [ext_resource type="PackedScene" uid="uid://dbdkkmlrv5se" path="res://entities/grid_entities/interactives/extendable_bridge/extendable_bridge.tscn" id="44_qavmn"]
+[ext_resource type="Resource" uid="uid://djti55vlb1vxe" path="res://assets/text_content/dialogue_scripts/higurashi_test_script.dialogue" id="46_hdlvt"]
 [ext_resource type="PackedScene" uid="uid://p61f0u1v7qqg" path="res://entities/grid_entities/interactives/button/button_entity.tscn" id="47_ekj6j"]
 [ext_resource type="PackedScene" uid="uid://xoteepm328de" path="res://entities/grid_entities/interactives/powerable_door/powerable_door.tscn" id="47_hdlvt"]
 
@@ -1527,9 +1530,11 @@ metadata/_custom_type_script = "uid://6h4h3dk0p6g1"
 
 [node name="GlassTile3" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1256093412 instance=ExtResource("25_mmv8l")]
 position = Vector2(-128, 48)
+is_inspectable = true
 
 [node name="GlassTile4" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1216978493 instance=ExtResource("25_mmv8l")]
 position = Vector2(-128, 64)
+is_inspectable = true
 
 [node name="GlassTile5" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1576006134 instance=ExtResource("25_mmv8l")]
 position = Vector2(-112, 64)
@@ -1554,6 +1559,14 @@ position = Vector2(-32, 48)
 
 [node name="GlassTile13" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=1414079713 instance=ExtResource("25_mmv8l")]
 position = Vector2(-32, 32)
+
+[node name="InspectBox" type="Node2D" parent="Interactives Container/Spawner_HookshotObtained/FalseContainer" unique_id=579028848]
+position = Vector2(-128, 48)
+script = ExtResource("32_ubj5x")
+_area_box_rect = Rect2i(0, 0, 1, 2)
+_area_box_color = Color(1, 1, 0, 0.5019608)
+_inspection_dialogue_resource = ExtResource("33_kgk2j")
+_inspection_dialogue_cue = "first_glass_bridge"
 
 [node name="BoulderEntity71" parent="Interactives Container" unique_id=135309042 instance=ExtResource("10_jadfo")]
 modulate = Color(1, 1, 1, 0.42352942)
@@ -1622,6 +1635,15 @@ position = Vector2(-512, -208)
 
 [node name="HeartPiecePickup3" parent="Interactives Container" unique_id=1443787865 instance=ExtResource("22_1sjut")]
 position = Vector2(-80, -368)
+
+[node name="InspectBox" type="Node2D" parent="Interactives Container" unique_id=13313912]
+position = Vector2(-384, 0)
+script = ExtResource("32_ubj5x")
+_area_box_rect = Rect2i(0, 0, 2, 1)
+_area_box_color = Color(1, 1, 0, 0.5019608)
+_inspection_dialogue_resource = ExtResource("33_kgk2j")
+_inspection_dialogue_cue = "long_thin_hallway_to_the_west"
+metadata/_custom_type_script = "uid://dqipxyhdm6046"
 
 [node name="Enemy Container" type="Node2D" parent="." unique_id=253658292]
 
@@ -1736,6 +1758,8 @@ _piece_locations = Array[Vector2i]([Vector2i(1, 0), Vector2i(1, 1), Vector2i(2, 
 [node name="ButtonEntity" parent="NPC Container" unique_id=206165091 node_paths=PackedStringArray("_powerable_targets") instance=ExtResource("47_ekj6j")]
 position = Vector2(112, 160)
 _powerable_targets = [NodePath("../ExtendableBridgeEntity")]
+_inspection_dialogue_resource = ExtResource("46_hdlvt")
+_inspection_dialogue_cue = "Higurashi"
 
 [node name="ButtonEntity2" parent="NPC Container" unique_id=1970979698 node_paths=PackedStringArray("_powerable_targets") instance=ExtResource("47_ekj6j")]
 position = Vector2(144, 96)

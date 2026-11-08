@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://vxbbyaiao3gu" path="res://entities/grid_entities/interactives/magic_draw_point/images/mana_dingles.png" id="2_v0hlf"]
 [ext_resource type="Resource" uid="uid://b5llv7jn0oamk" path="res://entities/grid_entities/attributes/floating_attribute.tres" id="3_pvddd"]
 [ext_resource type="Script" uid="uid://d30bcybt1e6fy" path="res://entities/grid_entities/interactives/magic_draw_point/context_action.gd" id="3_v0hlf"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="4_pvddd"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0mqgx"]
 particles_animation = true
@@ -61,6 +62,8 @@ script = ExtResource("1_v0hlf")
 _attributes = Dictionary[StringName, ExtResource("2_7nyc6")]({
 &"floating": ExtResource("3_pvddd")
 })
+_inspection_dialogue_resource = ExtResource("4_pvddd")
+_inspection_dialogue_cue = "mana_spot"
 metadata/_custom_type_script = "uid://cyk1qn1cjdhk2"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=750045673]

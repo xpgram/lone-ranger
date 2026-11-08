@@ -73,6 +73,9 @@ var _coyote_fall_timer: Timer;
 ## The player's unique [CommandMenu] instance.
 @onready var _command_menu: CommandMenu = %CommandMenu;
 
+## The player's unique [CommandMenu] instance.
+@onready var _dialogue_bubble: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
+
 ## The player's unique [FieldCursor] instance.
 @onready var _field_cursor: FieldCursor = %FieldCursor;
 
@@ -84,6 +87,9 @@ var _coyote_fall_timer: Timer;
 
 ## A reference to the Rect that handles wholistic screen space shader effects.
 @onready var _screen_shader_rect: PlayerScreenSpaceShader = %ScreenSpaceShader;
+
+## A reference to the dialogue context object for inspect-object scenes.
+@onready var _dialogue_inspection_target: NodeRetargeter = %DialogueInspectionTarget;
 
 ## Where the player spawned in.
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
@@ -131,7 +137,7 @@ func _assemble_machine_states() -> void:
     PlayerState.new([
       _state_idle,
       _state_idle__input,
-      _state_idle__move_input
+      _state_idle__move_input,
     ]),
     PlayerState.new([
       _state_injured,
@@ -139,7 +145,7 @@ func _assemble_machine_states() -> void:
     PlayerState.new([
       _state_coyote_fall,
       _state_coyote_fall__exit,
-      _state_coyote_fall__move_input
+      _state_coyote_fall__move_input,
     ]),
     PlayerState.new([
       _state_fall,
@@ -269,6 +275,28 @@ func get_action_from_brace_interact_input() -> FieldActionSchedule:
   return FieldActionSchedule.new(chosen_action, playbill);
 
 
+## Returns a [FieldActionSchedule] for some action resulting from an inspect input.
+func get_action_from_inspect_input() -> FieldActionSchedule:
+  var chosen_action: FieldAction = FieldActionList.null_action;
+
+  var playbill := FieldActionPlaybill.new(
+    self,
+    faced_position,
+    faced_direction,
+  );
+
+  var actions := [
+    FieldActionList.inspect,
+  ];
+
+  for action in actions:
+    if action and action.can_perform(playbill):
+      chosen_action = action;
+      break;
+
+  return FieldActionSchedule.new(chosen_action, playbill);
+
+
 ## Returns the last grid position the player inhabited.
 func get_last_position() -> Vector2i:
   return _last_position;
@@ -305,6 +333,28 @@ func reset_air_steps_remaining() -> void:
 ## of this QTE.
 func start_coyote_fall() -> void:
   _state_machine.switch_to(_state_coyote_fall);
+
+
+## Starts a dialogue bubble to read out the scene described by [param resource].
+## If [param resource] is `null`, does nothing. [br]
+##
+## [param cue] is the script-cue to start from. Otherwise, the script will start
+## from line 0. [br]
+##
+## [param extra_game_states] is a list of node contexts, in order, that the
+## script may check for game state values.
+func start_dialogue(
+    resource: DialogueResource,
+    cue := "",
+    extra_game_states := [],
+) -> void:
+  _dialogue_bubble.start(resource, cue, extra_game_states);
+
+
+## Starts a dialogue bubble to read out the scene described by [param scene].
+func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
+  _dialogue_inspection_target.target = scene.inspection_subject;
+  _dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
 
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
@@ -439,9 +489,12 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
 func _connect_to_ui_subsystems() -> void:
   _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
   _command_menu.action_selected.connect(_on_command_menu_action_selected);
+  _command_menu.action_inspected.connect(_on_command_menu_action_inspected);
 
   _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
   _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
+
+  _dialogue_bubble.dialogue_closed.connect(_on_dialogue_bubble_closed);
 
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.value_changed.connect(_on_health_changed);
@@ -493,6 +546,12 @@ func _on_command_menu_action_selected(action: FieldAction) -> void:
   _field_cursor.open_from_start(action);
 
 
+## Responds to 'inspect' inputs signaled by the command menu.
+func _on_command_menu_action_inspected(action: FieldAction) -> void:
+  var dialogue = DialogueManager.create_resource_from_text(action.action_hint);
+  _dialogue_bubble.start(dialogue);
+
+
 ## Event handler for [signal FieldCursor.ui_canceled]. [br]
 ## Yields input focus back to the [CommandMenu].
 func _on_field_cursor_canceled() -> void:
@@ -516,12 +575,26 @@ func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
     _field_cursor.play_error();
 
 
+## Responds to the dialogue bubble being closed and releasing input focus.
+func _on_dialogue_bubble_closed() -> void:
+  if _command_menu.visible:
+    _command_menu.regrab_focus();
+
+
 ## Closes the player's UI subsystems and forces input focus back into the primary
 ## character controller.
 func _interrupt_ui_subsystems() -> void:
   _field_cursor.close();
   _command_menu.close();
+  _dialogue_bubble.close();
   focus_node.grab_focus();
+
+
+## Closes player UI subsystems that are unrelated to combat and other essential
+## game mechanics.
+func _interrupt_nonemergency_ui_subsystems() -> void:
+  _dialogue_bubble.close();
+  # [FIXME] Improve input focus management.
 
 
 ## Handler for when the player's HP changes value.
@@ -586,10 +659,6 @@ func _state_idle() -> void:
   trigger_idle_animation_state();
 
 
-func _state_idle__exit() -> void:
-  _interrupt_ui_subsystems();
-
-
 func _state_idle__input(event: InputEvent) -> void:
   if not focus_node.has_focus():
     return;
@@ -611,6 +680,12 @@ func _state_idle__input(event: InputEvent) -> void:
     _command_menu.open_from_start();
     focus_node.accept_event();
 
+  elif event.is_action_pressed('inspect'):
+    var action_schedule := get_action_from_inspect_input();
+    if action_schedule.action != FieldActionList.null_action:
+      action_declared.emit(action_schedule, false);
+    focus_node.accept_event();
+
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
   if Input.is_action_pressed('brace'):
@@ -625,6 +700,8 @@ func _state_injured() -> void:
 
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
+
+  _interrupt_nonemergency_ui_subsystems();
 
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);

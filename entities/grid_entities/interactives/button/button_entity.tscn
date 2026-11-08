@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://p61f0u1v7qqg"]
 
 [ext_resource type="Script" uid="uid://bkdsqe4ebs213" path="res://entities/grid_entities/interactives/button/button_entity.gd" id="1_njlay"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_0qyyl"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_dtvtk"]
 [ext_resource type="Script" uid="uid://b2sj7ahf7rwd3" path="res://common/nodes/multisprite_2d.gd" id="3_0qyyl"]
 
@@ -21,6 +22,8 @@ region = Rect2(48, 16, 16, 16)
 
 [node name="ButtonEntity" type="Node2D" unique_id=189323873]
 script = ExtResource("1_njlay")
+_inspection_dialogue_resource = ExtResource("2_0qyyl")
+_inspection_dialogue_cue = "button_floor"
 metadata/_custom_type_script = "uid://bkdsqe4ebs213"
 
 [node name="MultiSprite2D" type="Sprite2D" parent="." unique_id=529447215]

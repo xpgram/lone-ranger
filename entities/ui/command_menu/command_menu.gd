@@ -8,8 +8,11 @@ class_name CommandMenu
 extends Control
 
 
-## Emitted when the player selects a **FieldAction** option.
+## Emitted when the player selects a [FieldAction] option.
 signal action_selected(action: FieldAction);
+
+## Emitted when the player inspects a [FieldAction] option.
+signal action_inspected(action: FieldAction);
 
 ## Emitted when the Command Menu system rejects UI control, e.g., when the player backs
 ## out until the menu closes.
@@ -113,6 +116,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Opens the menu in whatever state it was in when it was closed.
 func open() -> void:
   visible = true;
+  _tween_opacity_async(0.0, 1.0);
 
   if active_menu == Submenu.Main:
     _switch_to_main_list();
@@ -130,8 +134,23 @@ func open_from_start() -> void:
 
 ## Closes the menu and releases input focus.
 func close() -> void:
+  await _tween_opacity_async(1.0, 0.0);
+
   # Setting visibility here implicitly releases focus on children.
   visible = false;
+
+
+## Makes whichever submenu is open grab input focus, unless the menu is not
+## open at all.
+func regrab_focus() -> void:
+  if not visible:
+    return;
+
+  match active_menu:
+    Submenu.Main:
+      _main_list.grab_focus();
+    _:
+      _options_list.grab_focus();
 
 
 ## Bind listeners to inventory signals.
@@ -169,6 +188,8 @@ func _connect_to_item_lists() -> void:
   # Options -> emit action_selected
   _options_list.item_chosen.connect(func (item: PlayerInventoryItem): action_selected.emit(item.action));
   _options_list.item_chosen.connect(func (_item): sound_menu_confirm.play());
+
+  _options_list.item_inspected.connect(func (item: PlayerInventoryItem): action_inspected.emit(item.action));
 
   _options_list.cursor_moved.connect(func (): sound_menu_select.play());
 
@@ -223,3 +244,16 @@ func _switch_to_options_list(submenu: Submenu) -> void:
 
   _main_list.close();
   _options_list.open();
+
+
+## Tweens the command menu's opacity between [param from] and [param to].
+func _tween_opacity_async(from: float, to: float) -> void:
+  modulate.a = from;
+
+  var alpha_tween := create_tween();
+  alpha_tween.set_ease(Tween.EASE_IN);
+  alpha_tween.set_trans(Tween.TRANS_SINE);
+  alpha_tween.tween_property(self, "modulate:a", to, 0.08);
+
+  alpha_tween.play();
+  await alpha_tween.finished;

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://lsr7genvbh8u" path="res://entities/grid_entities/interactives/statue_platform/statue_platform_entity.gd" id="1_mseox"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_3fkyb"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_iq0eh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mseox"]
 atlas = ExtResource("2_3fkyb")
@@ -22,6 +23,8 @@ animations = [{
 script = ExtResource("1_mseox")
 solid = true
 pushable = true
+_inspection_dialogue_resource = ExtResource("2_iq0eh")
+_inspection_dialogue_cue = "snake_statue"
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=481763753]

@@ -1,0 +1,10 @@
+[gd_resource type="FontVariation" format=3 uid="uid://dihhgbamhe2yt"]
+
+[ext_resource type="FontFile" uid="uid://bo5hgdkqsp2j1" path="res://assets/fonts/Iosevka_Charon_Mono/IosevkaCharonMono-Regular.ttf" id="1_yfhvs"]
+
+[resource]
+base_font = ExtResource("1_yfhvs")
+variation_transform = Transform2D(1.1, 0, 0, 0.9, 0, 0)
+spacing_space = -1
+spacing_top = -2
+baseline_offset = 0.05

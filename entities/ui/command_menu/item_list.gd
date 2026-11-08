@@ -5,6 +5,9 @@ extends ItemList
 ## Emitted when an item has been activated. Contains the activated item.
 signal item_chosen(item: Variant);
 
+## Emitted when an item has been inspected. Contains the activated item.
+signal item_inspected(item: Variant);
+
 ## Emitted when the menu wishes to close or yield focus back to some other context.
 signal go_back();
 
@@ -67,6 +70,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
   elif event.is_action_pressed('interact'):
     _emit_item_chosen();
+    accept_event();
+
+  elif event.is_action_pressed('inspect'):
+    _emit_item_inspected();
     accept_event();
 
   elif event.is_action_pressed('cancel'):
@@ -254,13 +261,22 @@ func _move_page_cursor(direction: int) -> void:
   cursor_moved.emit();
 
 
-## If the current selected index is avlid, emits [signal item_chosen] with the data of the
+## If the current selected index is valid, emits [signal item_chosen] with the data of the
 ## list-item that was activated.
 func _emit_item_chosen() -> void:
   var item_index := get_content_selection_index();
   if item_index >= _menu_content.size():
     return;
   item_chosen.emit(_menu_content[item_index]);
+
+
+## If the current selected index is valid, emits [signal item_inspected] with the data of the
+## list-item that was activated.
+func _emit_item_inspected() -> void:
+  var item_index := get_content_selection_index();
+  if item_index >= _menu_content.size():
+    return;
+  item_inspected.emit(_menu_content[item_index]);
 
 
 ## Emits the 'go back' signal.

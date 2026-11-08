@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://xoteepm328de"]
 
 [ext_resource type="Script" uid="uid://r24lu5fkkwpq" path="res://entities/grid_entities/interactives/powerable_door/powerable_door.gd" id="1_wl8kq"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_cq7c1"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_fp0g0"]
 [ext_resource type="Script" uid="uid://cow3h3cdimw8l" path="res://utilities/nodes/components/powerable_component.gd" id="3_wl8kq"]
 
@@ -43,6 +44,8 @@ animations = [{
 [node name="PowerableDoorEntity" type="Node2D" unique_id=828120137]
 script = ExtResource("1_wl8kq")
 solid = true
+_inspection_dialogue_resource = ExtResource("2_cq7c1")
+_inspection_dialogue_cue = "stone_door"
 metadata/_custom_type_script = "uid://r24lu5fkkwpq"
 metadata/PowerableComponent = NodePath("PowerableComponent")
 

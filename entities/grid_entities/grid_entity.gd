@@ -29,6 +29,18 @@ const _scene_object_fall := preload('uid://c3dfb7ml0p2ln');
 ## A dictionary of applied effects and qualities.
 @export var _attributes: Dictionary[StringName, GridEntityAttribute];
 
+@export_group("Inspection Fields")
+
+## Whether this object is inspectable by the player. Useful for modulating
+## inspectibility when an object is activated/deactivated.
+@export var is_inspectable := true;
+
+## The inner-thoughts dialogue the player character has when inspecting this object.
+@export var _inspection_dialogue_resource: DialogueResource;
+
+## The cue to start from when reading [member _inspection_dialogue_resource].
+@export var _inspection_dialogue_cue := "";
+
 
 ## The orientation of this entity, or which cardinal direction it is looking in.
 var faced_direction := Vector2i.DOWN:
@@ -50,6 +62,23 @@ func _ready() -> void:
 
   super._ready();
   _bind_grid_object_signals();
+
+
+## @nullable [br]
+## Returns a dialogue scene package containing the inspection dialogue and
+## dialogue context for this entity. Returns null if no such dialogue exists. [br]
+##
+## This method is made to be overridable. [GridEntity] objects return
+## [member _inspection_dialogue_resource] by default.
+func get_inspect_dialogue() -> InspectObject_DialogueScene:
+  if not _inspection_dialogue_resource:
+    return null;
+
+  var scene := InspectObject_DialogueScene.new();
+  scene.dialogue_resource = _inspection_dialogue_resource;
+  scene.dialogue_cue = _inspection_dialogue_cue;
+  scene.inspection_subject = self;
+  return scene;
 
 
 # [FIXME] This attribute system is hard to use via the editor: loading a .tres requires

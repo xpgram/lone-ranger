@@ -1,3 +1,4 @@
-[submodule "addons/dialogic"]
-	path = addons/dialogic
-	url = https://github.com/xpgram/custom-dialogic-2.git
+[submodule "addons/dialogue_manager"]
+	path = addons/dialogue_manager
+	url = https://github.com/xpgram/custom-dialogue-manager-godot.git
+	ignore = untracked

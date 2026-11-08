@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dqm128gxj3t0x"]
 
 [ext_resource type="Script" uid="uid://dmoehlft5laxr" path="res://entities/grid_entities/interactives/chest/chest.gd" id="1_ask4u"]
+[ext_resource type="Resource" uid="uid://dkek3fh5n6osv" path="res://assets/text_content/dialogue_scripts/inspect_strings.dialogue" id="2_s4qmw"]
 [ext_resource type="Texture2D" uid="uid://0cv6gneiwasq" path="res://assets/00 - source/objects_traps_sheet.png" id="2_yr0pa"]
 [ext_resource type="Script" uid="uid://dct8xv6bwi7al" path="res://utilities/actions/context_actions/open_chest.gd" id="4_4ml27"]
 
@@ -34,6 +35,8 @@ animations = [{
 [node name="Chest" type="Node2D" unique_id=955762130]
 script = ExtResource("1_ask4u")
 solid = true
+_inspection_dialogue_resource = ExtResource("2_s4qmw")
+_inspection_dialogue_cue = "chest"
 metadata/_custom_type_script = "uid://ci7sxoat2gqia"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1381639026]

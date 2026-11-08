@@ -33,6 +33,7 @@ const move_fast: FieldAction = preload('uid://xqdq20a70cev');
 const push: FieldAction = preload('uid://cremxf5c4fv6w');
 const shove: FieldAction = preload('uid://dp3a2pno7lxyr');
 const interact: FieldAction = preload('uid://qj4qft4xcnx6');
+const inspect: FieldAction = preload('uid://cqggyjg0dup0w');
 const sword_strike: FieldAction = preload('uid://cpg5b65k3mqjt');
 const hookshot: FieldAction = preload('uid://dsu74k4p2n1x');
 

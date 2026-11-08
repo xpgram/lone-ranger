@@ -1,0 +1,12 @@
+
+~ first_glass_bridge
+It doesn't look very stable...
+=> END!
+
+
+~ long_thin_hallway_to_the_west
+if player_inventory.has_equipment('hookshot') and player_inventory.has_equipment('wings'):
+	Is this reachable...?
+else:
+	That rock is too far away.
+=> END!

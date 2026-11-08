@@ -15,10 +15,14 @@
 [ext_resource type="Script" uid="uid://bq7ia3l6n5kbw" path="res://common/nodes/input_observer/input_axis_repeater.gd" id="13_3dwjy"]
 [ext_resource type="PackedScene" uid="uid://du02pajmhvinl" path="res://entities/ui/command_menu/command_menu.tscn" id="14_sg284"]
 [ext_resource type="PackedScene" uid="uid://dotya4jwgghk0" path="res://entities/ui/health_bar/health_bar.tscn" id="15_l0w8i"]
+[ext_resource type="Script" uid="uid://bjmblhtdmpb1k" path="res://entities/grid_entities/characters/player/scripts/command_menu_h_box.gd" id="16_06ww2"]
+[ext_resource type="PackedScene" uid="uid://48kvr2gdye3o" path="res://entities/ui/thoughts_dialogue_bubble/thoughts_dialogue_bubble.tscn" id="16_yibea"]
 [ext_resource type="PackedScene" uid="uid://c1vkhg2m7ctim" path="res://entities/system/debug/debug_ui.tscn" id="17_h7fwu"]
 [ext_resource type="Script" uid="uid://dh0xxwsxkgxv3" path="res://entities/ui/screen_space_shader/camera_view_shader.gd" id="20_yibea"]
 [ext_resource type="Shader" uid="uid://cd28ri0cupi8j" path="res://entities/ui/screen_space_shader/screen_space_shader.gdshader" id="21_06ww2"]
+[ext_resource type="Script" uid="uid://cd3222nx3y3k5" path="res://addons/dialogue_manager/nodes/context/dialogue_state_context.gd" id="22_txwd0"]
 [ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
+[ext_resource type="Script" uid="uid://d0d00edwopbqy" path="res://utilities/nodes/node_retargeter.gd" id="23_mrt6k"]
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
 script = ExtResource("4_sg284")
@@ -153,6 +157,8 @@ fill_to = Vector2(0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ol17"]
 shader = ExtResource("21_06ww2")
+shader_parameter/quantize_colors__enable = true
+shader_parameter/quantize_colors__lightness_map = SubResource("GradientTexture1D_kdjjn")
 shader_parameter/cutoff_filter__enable = true
 shader_parameter/cutoff_filter__black_crush_range = 0.0
 shader_parameter/cutoff_filter__white_crush_range = 0.0
@@ -253,17 +259,6 @@ offset_bottom = 0.0
 grow_vertical = 0
 player2d = NodePath("../../../../Player2D")
 
-[node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-offset_left = -120.0
-offset_right = -8.0
-offset_bottom = -8.0
-grow_horizontal = 0
-_inventory = NodePath("../../../../Inventory")
-
 [node name="MessageQueue" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
 layout_mode = 1
 anchors_preset = 9
@@ -274,6 +269,53 @@ offset_top = 55.0
 offset_right = 90.0
 offset_bottom = -65.0
 grow_vertical = 2
+
+[node name="CommandMenu_HBox" type="HBoxContainer" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=1067131190]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_constants/separation = 0
+alignment = 2
+script = ExtResource("16_06ww2")
+
+[node name="LeftSpacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=2076035773]
+visible = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=828331628]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 9
+
+[node name="ThoughtsDialogueBubble" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer" unique_id=984665687 instance=ExtResource("16_yibea")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CmdMenuSpacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1247845413]
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+
+[node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+_inventory = NodePath("../../../../../Inventory")
+
+[node name="RightSpacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=497475716]
+visible = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
 
 [node name="DebugUI" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=807181677 instance=ExtResource("17_h7fwu")]
 layout_mode = 0
@@ -291,3 +333,27 @@ offset_bottom = 80.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0.25)
 script = ExtResource("23_1ol17")
+
+[node name="DialogueContextNodes" type="Node" parent="." unique_id=905069829]
+
+[node name="DialogueContext_Player" type="Node" parent="DialogueContextNodes" unique_id=217050548 node_paths=PackedStringArray("target")]
+script = ExtResource("22_txwd0")
+alias = "player"
+target = NodePath("../../Player2D")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"
+
+[node name="DialogueContext_Inventory" type="Node" parent="DialogueContextNodes" unique_id=724799587 node_paths=PackedStringArray("target")]
+script = ExtResource("22_txwd0")
+alias = "player_inventory"
+target = NodePath("../../Inventory")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"
+
+[node name="DialogueContext_InspectSubject" type="Node" parent="DialogueContextNodes" unique_id=506728732 node_paths=PackedStringArray("target")]
+script = ExtResource("22_txwd0")
+alias = "inspect"
+target = NodePath("DialogueInspectionTarget")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"
+
+[node name="DialogueInspectionTarget" type="Node" parent="DialogueContextNodes/DialogueContext_InspectSubject" unique_id=131318386]
+unique_name_in_owner = true
+script = ExtResource("23_mrt6k")
