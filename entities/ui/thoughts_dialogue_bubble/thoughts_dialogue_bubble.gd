@@ -476,10 +476,7 @@ func _on_dialogue_typewriter_sfx_triggered(_letter: String, _index: int, speed: 
   ):
     return;
 
-  # [FIXME] This doesn't work for other languages.
-  #    Just do randf(), 1 in 3 sounds are high?
-  var vowels := "aeiouyAEIOUY";
-  var is_high_pitch: bool = _letter in vowels;
+  var is_high_pitch: bool = randf() <= 0.3;
 
   var base_pitch := (1.0 + speed) / 2.0;
   var up_pitch := base_pitch + 0.05;
