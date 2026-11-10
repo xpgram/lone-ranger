@@ -24,6 +24,9 @@ signal dialogue_closed();
 ## Start from a particular cue in a [DialogueResource].
 @export var start_from_cue := "";
 
+## Whether to allow the player to immediately end dialogue.
+@export var force_close_allowed := true;
+
 ## Whether to automatically advance to the next line after a line has ended.
 @export var auto_advance_lines := false;
 
@@ -178,6 +181,9 @@ func _unhandled_input(event: InputEvent) -> void:
   ):
     _on_advance_text_button_pressed();
 
+  if force_close_allowed and event.is_action_pressed("open_action_menu"):
+    _on_text_bubble_abort();
+
 
 ## Responds to advance-line inputs.
 func _on_advance_text_button_pressed() -> void:
@@ -202,6 +208,11 @@ func _on_skip_line_button_pressed() -> void:
 ## Responds to skip-line-stop inputs.
 func _on_skip_line_button_released() -> void:
   _skip_line_timer.stop();
+
+
+## Responds to force-close events to skip all remaining dialogue lines.
+func _on_text_bubble_abort() -> void:
+  _try_close_dialogue_bubble_async();
 
 
 func _notification(what: int) -> void:
@@ -229,6 +240,8 @@ func start(
   dialogue_resource = with_dialogue_resource;
   start_from_cue = cue;
 
+  reset_parameters();
+
   dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_cue, _temporary_game_states);
 
   # [TODO] Structural issue: apply_dialogue_line already calls show(), so this is redundant.
@@ -241,6 +254,11 @@ func start(
 ## Forcibly closes the dialogue bubble.
 func close() -> void:
   _try_close_dialogue_bubble_async();
+
+
+## Resets to default common text bubble settings.
+func reset_parameters() -> void:
+  force_close_allowed = true;
 
 
 ## If not open, runs the dialogue bubble's open animation.
@@ -318,11 +336,27 @@ func _apply_dialogue_line_async() -> void:
   var dialogue_has_text: bool = (not _dialogue_label.text.is_empty());
 
   if dialogue_has_text:
+    _process_tags_in_current_line();
     _play_voice_line();
     _dialogue_label.type_out();
   else:
     # If there is no text to readout, "finish" immediately.
     _dialogue_label.finished_typing.emit();
+
+
+## Applies tag effects for the current [member dialogue_line].
+func _process_tags_in_current_line() -> void:
+  prints('tags', dialogue_line.tags)
+  for tag in dialogue_line.tags:
+    tag = tag.to_lower();
+
+    # [FIXME] Tags are not properly recognized when they exist on their own line, so they must
+    #     awkwardly preceed other lines with to-be-read text.
+    match tag:
+      "abortable":
+        force_close_allowed = true;
+      "nonabortable":
+        force_close_allowed = false;
 
 
 ## Starts and waits for auto-advance async triggers, then advances to the next
