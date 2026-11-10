@@ -1,0 +1,49 @@
+# If this script is invoked without a cue, end immediately.
+~ first_line
+=> END!
+
+
+~ collect__hookshot
+A strange artifact.
+# [TODO] If I indent a send, does it merge with the previous line?
+#     I may need to use snippets. Or vars, rather.
+=> info__hookshot
+
+
+~ info__hookshot
+It has a latch and a long chain.[p2]
+  I can use this while bracing.
+=> END!
+
+
+~ collect__shove
+A strange artefact.
+=> info__shove
+
+
+~ info__shove
+I feel stronger holding it.
+=> END!
+
+
+~ collect__sword
+A strange sword.
+=> info__sword
+
+
+~ info__sword
+It's easy to wield.[p4] Doesn't seem to have seen much use, however.
+=> END!
+
+
+~ collect__wings
+A strange pair of wings.
+=> info__wings
+
+
+~ info__wings
+# if have flown once:
+#   These let me float over short gaps in the floor.
+# else:
+They feel extremely brittle.
+=> END!
