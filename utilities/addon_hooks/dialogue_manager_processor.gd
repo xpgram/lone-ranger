@@ -41,8 +41,7 @@ const replacements := [
   ["[p16.]", "[wait=%s]" % (BASE_PAUSE / 16.0 * 1.5)],
 
   # Text speed keywords.
-  # [TODO] Can't this be done by asking each line for its tags? Or... hm. Maybe not.
-  # ["[instant]",  "[speed=%s]" % (BASE_SPEED * 2.5)], # [TODO] Implement 'instant' speed.
+  ["[instant]", "[speed=%s]" % -1.0],
   ["[hyper]",  "[speed=%s]" % (BASE_SPEED * 2.5)],
   ["[fast]",   "[speed=%s]" % (BASE_SPEED * 1.5)],
   ["[steady]", "[speed=%s]" % (BASE_SPEED)],
