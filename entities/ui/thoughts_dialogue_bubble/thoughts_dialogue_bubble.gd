@@ -478,7 +478,10 @@ func _on_dialogue_typewriter_sfx_triggered(_letter: String, _index: int, speed: 
 
   var is_high_pitch: bool = randf() <= 0.3;
 
-  var base_pitch := (1.0 + speed) / 2.0;
+  var base_pitch := (
+    lerpf(1.0, speed, 0.25) if speed >= 0
+    else 2.0
+  );
   var up_pitch := base_pitch + 0.05;
 
   _typewriter_audio_player.pitch_scale = up_pitch if is_high_pitch else base_pitch;
