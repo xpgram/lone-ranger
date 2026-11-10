@@ -10,6 +10,8 @@ class_name InspectBox
 extends GridEntity
 
 
+# [TODO] A priority system so that some inspectable objects take precedence over
+#     others in the same location.
 # [TODO] Factor out common elements between this and trigger_box.gd
 
 
