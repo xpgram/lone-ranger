@@ -12,6 +12,11 @@ const BASE_PAUSE := 60.0 / BEATS_PER_MINUTE * BEATS_PER_MEASURE;
 const BASE_SPEED := 1.0;
 
 
+# [TODO] [speed] does not affect the passage of [wait]
+#     [p1] => [do relative_wait(1.0)]
+# [TODO] [wait] or [wait="text_advance"].
+
+
 const replacements := [
   # Pauses as expressed in musical notation in 4/4 time.
   # p1 is a whole note. p4 is a quarter. pb is a breve. And pl is a longa.
