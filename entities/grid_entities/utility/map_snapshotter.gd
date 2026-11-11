@@ -101,7 +101,7 @@
 #     In other words, if I gave the player a multiline textbox, how will they
 #     use it?
 #
-# Fix compactible particles:
+# Fix compactible particles (the dust tile):
 # [ ] Particles exist in board spawner.
 # [-] Some are permanent (just set a flag).
 #     Presently, all are permanent, there is no flag to set.
