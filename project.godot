@@ -483,7 +483,7 @@ inspect={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://assets/text_content/dialogue_scripts/higurashi_test_script.dialogue", "res://assets/text_content/dialogue_scripts/inspect_strings.dialogue", "res://assets/text_content/dialogue_scripts/inspection_zones.dialogue")
+locale/translations_pot_files=PackedStringArray("res://assets/text_content/dialogue_scripts/higurashi_test_script.dialogue", "res://assets/text_content/dialogue_scripts/inspect_strings.dialogue", "res://assets/text_content/dialogue_scripts/inspection_zones.dialogue", "res://assets/text_content/dialogue_scripts/item_collection.dialogue")
 
 [rendering]
 
