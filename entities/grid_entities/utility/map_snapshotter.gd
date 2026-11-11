@@ -92,8 +92,10 @@
 #   [x] give shove -> grants shove equipment
 #   [x] LineEdit -> DebugUI -> Debug.interpreter -> signal Events.debug_give_item
 #       -> player.inventory
-# [-] LineEdit is clickable to focus
+# [x] LineEdit is clickable to focus
 #     (I think the Viewport stuff is getting in the way?)
+#     (I did something to the viewport a while ago that stops blocking clicks, I think.
+#      In any case, this is fixed.)
 # [x] Project settings has no caret_up/down binding, but adding such blocks the
 #     history traversal buttons from receiving input.
 #     In other words, if I gave the player a multiline textbox, how will they
