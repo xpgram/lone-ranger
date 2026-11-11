@@ -135,3 +135,7 @@
 #     easier previewing of the true/false states? This benefit is vague enough
 #     that I think it's worth choosing idea 1 such that we can learn what it is
 #     we want.
+#
+# Duplicate spell:
+# [ ] Refactor Player2D to be a controller that operates the Player2D avatar.
+#    [ ] This allows controlling multiple Player2D's at once.
