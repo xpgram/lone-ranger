@@ -5,6 +5,10 @@
 extends BaseComponent
 
 
+# [FIXME] How do I bridge the overlap between IntMeterComponent and IntMeter?
+#     (IntMeter is the newer script, fyi.)
+
+
 ## Emitted whenever the meter is set to its maximum value from some value that is not its
 ## maximum.
 signal full();
