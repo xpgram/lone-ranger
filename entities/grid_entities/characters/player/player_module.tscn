@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
+[ext_resource type="Script" uid="uid://xk2ibcn118v3" path="res://entities/grid_entities/characters/player/scripts/player_controller.gd" id="2_mrt6k"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
 [ext_resource type="Resource" uid="uid://d3abxrfst60nr" path="res://utilities/actions/field_actions/resources/rest_action.tres" id="5_p4sl8"]
@@ -177,12 +178,17 @@ shader_parameter/accumulative_blur__frame_delta = 0.0
 
 [node name="PlayerModule" type="Node2D" unique_id=2050721029]
 script = ExtResource("1_g13rh")
-_entity = NodePath("Player2D")
+_entity = NodePath("Player2DNodes/Player2D")
 _camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://kreg7knmfr1j"
 
-[node name="Player2D" parent="." unique_id=389025421 node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
-inventory = NodePath("../Inventory")
+[node name="PlayerController" type="Node" parent="." unique_id=1887527491]
+script = ExtResource("2_mrt6k")
+
+[node name="Player2DNodes" type="Node2D" parent="." unique_id=973660402]
+
+[node name="Player2D" parent="Player2DNodes" unique_id=389025421 node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
+inventory = NodePath("../../Inventory")
 pushable = true
 
 [node name="Inventory" type="Node2D" parent="." unique_id=1352607858]
@@ -215,13 +221,13 @@ metadata/_custom_type_script = "uid://bq7ia3l6n5kbw"
 
 [node name="FieldCursor" parent="." unique_id=1544867713 node_paths=PackedStringArray("_origin_object") instance=ExtResource("12_5jpfb")]
 unique_name_in_owner = true
-_origin_object = NodePath("../Player2D")
+_origin_object = NodePath("../Player2DNodes/Player2D")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1507849671 node_paths=PackedStringArray("subject")]
 ignore_rotation = false
 zoom = Vector2(4, 4)
 script = ExtResource("10_yid0f")
-subject = NodePath("../Player2D")
+subject = NodePath("../Player2DNodes/Player2D")
 close_follow_lerp_speed = 12
 metadata/_custom_type_script = "uid://bgl6q243ogu5r"
 
@@ -257,7 +263,7 @@ anchor_bottom = 1.0
 offset_top = -16.0
 offset_bottom = 0.0
 grow_vertical = 0
-player2d = NodePath("../../../../Player2D")
+player2d = NodePath("../../../../Player2DNodes/Player2D")
 
 [node name="MessageQueue" parent="Camera2D/UIShaderCanvasGroup/UIContainer" unique_id=778559934 instance=ExtResource("12_p4sl8")]
 layout_mode = 1
@@ -339,7 +345,7 @@ script = ExtResource("23_1ol17")
 [node name="DialogueContext_Player" type="Node" parent="DialogueContextNodes" unique_id=217050548 node_paths=PackedStringArray("target")]
 script = ExtResource("22_txwd0")
 alias = "player"
-target = NodePath("../../Player2D")
+target = NodePath("../../Player2DNodes/Player2D")
 metadata/_custom_type_script = "uid://cd3222nx3y3k5"
 
 [node name="DialogueContext_Inventory" type="Node" parent="DialogueContextNodes" unique_id=724799587 node_paths=PackedStringArray("target")]
