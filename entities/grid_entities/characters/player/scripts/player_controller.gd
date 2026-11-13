@@ -183,3 +183,17 @@ func _connect_ui_subsystem_signals() -> void:
 func _catch_input_focus_when_focus_lost() -> void:
   if not get_viewport().gui_get_focus_owner():
     focus_node.grab_focus();
+
+
+
+
+## A [CallableState] that provides additional state methods for Player2D objects.
+class PlayerState extends CallableState:
+
+  func _get_role_keywords() -> Array[StringName]:
+    return super._get_role_keywords() + ([
+    &'move_input'
+    ] as Array[StringName]);
+
+  func move_input(vector: Vector2i) -> void:
+    _call_role_func(&'move_input', [vector]);
