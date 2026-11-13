@@ -1,22 +1,58 @@
 ## A ledger class for keeping track of recent Grid locations.
 class_name GridPositionLedger
-extends RefCounted
+extends Resource
 
 
-const MAX_RECENT_POSITIONS := 16;
+## How many recent Grid locations will be tracked. [br]
+##
+## The "recent locations" list is a historical record of the last `n` Grid
+## locations logged. These are contiguous, and so allow duplicate locations.
+@export var max_recent_locations := 16;
 
-const MAX_RECENT_STURDY_POSITIONS := 5;
+## How many recovery Grid locations will be tracked. [br]
+##
+## The "recovery locations" list is a historical record of the last `n` valid
+## recovery locations logged. This generally includes any non-brittle tile. [br]
+##
+## Duplicate locations serve no purpose here, so same-value additions are simply
+## lifted to the top of the stack. This means the list is not guaranteed to be
+## contiguous.
+@export var max_recovery_locations := 16;
+
+## How many stable-recovery locations will be tracked. [br]
+##
+## The "stable recovery locations" list is a historical record of the last `n`
+## fallback-recovery locations logged. Fallback recovery locations have
+## stricter terms for what counts as a recovery location, such as not including
+## toggleable bridge tiles, so represents locations that are more likely to be
+## valid for recovery. [br]
+##
+## Duplicate locations serve no purpose here, so same-value additions are simply
+## lifted to the top of the stack. This means the list is not guaranteed to be
+## contiguous.
+@export var max_stable_recovery_locations := 8;
 
 
-## On death, where an entity may respawn.
+## The greatest recovery fallback location. Usually represents a save-point.
 var _respawn_point := Vector2i.ZERO;
 
-## A list of recently inhabited Grid locations.
-var _recent_positions := [] as Array[Vector2i];
+## A list of recently visited Grid locations. [br]
+##
+## This list is organized by exclusively by recency, so may contain duplicates.
+var _recent_locations := [] as Array[Vector2i];
 
-## A list of recently inhabited, stable-flooring Grid locations. This excludes
-## unstable tiles like breakable-glass flooring.
-var _recent_sturdy_positions := [] as Array[Vector2i];
+## A list of recently visited recovery locations. A recovery location includes
+## any tile that is non-brittle (e.g. GlassTiles). [br]
+##
+## This list is organized by recency and contains no duplicates.
+var _recent_recovery_locations := [] as Array[Vector2i];
+
+## A list of recently visited, very-stable recovery locations. This list has
+## stricter terms for what counts as a recovery location, so tracks places
+## that are more likely to be valid for recovery. [br]
+##
+## This list is organized by recency and contains no duplicates.
+var _recent_stable_recovery_locations := [] as Array[Vector2i];
 
 
 ## Sets the respawn point, usually reserved for Save Idols.
@@ -31,20 +67,33 @@ func log_position(place: Vector2i, entity: GridEntity) -> void:
   if not ActionUtils.place_is_standable(place):
     return;
 
-  _recent_positions.erase(place);
-  _recent_positions.append(place);
+  _recent_locations.append(place);
+
+  _recent_recovery_locations.erase(place);
+  _recent_recovery_locations.append(place);
 
   if ActionUtils.place_is_idleable_and_sturdy(place, entity):
-    _recent_sturdy_positions.erase(place);
-    _recent_sturdy_positions.append(place);
+    _recent_stable_recovery_locations.erase(place);
+    _recent_stable_recovery_locations.append(place);
 
   # [TODO] Make sure [-MAX - 1] is the correct math. -1 for end as well, I guess.
   # [TODO] Factor out to a helper function?
-  if _recent_positions.size() > MAX_RECENT_POSITIONS:
-    _recent_positions = _recent_positions.slice(-MAX_RECENT_POSITIONS - 1, -1);
 
-  if _recent_sturdy_positions.size() > MAX_RECENT_STURDY_POSITIONS:
-    _recent_sturdy_positions = _recent_sturdy_positions.slice(-MAX_RECENT_STURDY_POSITIONS - 1, -1);
+  # Enforce list size limits.
+  if _recent_locations.size() > max_recent_locations:
+    _recent_locations = _recent_locations.slice(-max_recent_locations - 1, -1);
+
+  if _recent_recovery_locations.size() > max_recovery_locations:
+    _recent_recovery_locations = _recent_recovery_locations.slice(-max_recovery_locations - 1, -1);
+
+  if _recent_stable_recovery_locations.size() > max_stable_recovery_locations:
+    _recent_stable_recovery_locations = _recent_stable_recovery_locations.slice(-max_stable_recovery_locations - 1, -1);
+
+
+## Returns the list of most-recently logged Grid locations. This list represents
+## a strict history, so may contain duplicates.
+func get_recent_positions() -> Array[Vector2i]:
+  return _recent_locations;
 
 
 ## Returns a point on the Grid that is a viable recovery point (free of obstructions, etc.)
@@ -55,13 +104,13 @@ func log_position(place: Vector2i, entity: GridEntity) -> void:
 ## respawn point usually reserved for save spots.
 func get_recover_point(entity: GridEntity) -> Vector2i:
   # Check recent positions for a safe recovery point.
-  for place in _recent_positions:
+  for place in _recent_recovery_locations:
     if ActionUtils.place_is_idleable(place, entity):
       return place;
 
   # Check recent safe tiles, which may reach farther back in play time, for a
   # safe recovery point.
-  for place in _recent_sturdy_positions:
+  for place in _recent_stable_recovery_locations:
     if ActionUtils.place_is_idleable(place, entity):
       return place;
 

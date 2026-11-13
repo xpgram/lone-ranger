@@ -50,3 +50,8 @@ var _state_machine := CallableStateMachine.new();
 ## A blackboard variable to retain a reference to the player's chosen command menu action.
 # [TODO] Shouldn't this be elsewhere? It seems structureless here.
 var _selected_command_menu_action: FieldAction;
+
+## Keeps track of coordinates on the Grid previously inhabited by the player.
+## Used for trailing or for finding places to teleport the player after a fall
+## or death.
+var _grid_position_ledger := GridPositionLedger.new();
