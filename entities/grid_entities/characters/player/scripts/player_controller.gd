@@ -30,6 +30,7 @@ signal coyote_fall_recovered_result(recovered: bool);
 
 ##
 # [TODO] A child node should be in charge of this, right?
+# [TODO] An enum instead of strings?
 var current_animation_state: StringName = 'idle';
 
 ## A lock representing whether the player object is internally busy and should
