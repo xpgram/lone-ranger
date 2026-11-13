@@ -5,17 +5,35 @@ class_name Padlock
 extends RefCounted
 
 
-## Whether this symbolic lock is currently locked.
-var _locked := false;
+## Emitted [i]when[/i] the [Padlock] is is_locked.
+signal locked();
+
+## Emitted [i]when[/i] the [Padlock] is unlocked.
+signal unlocked();
+
+
+## Whether this symbolic lock is currently is_locked.
+var _locked := false:
+  set(value):
+    if _locked == value:
+      return;
+
+    _locked = value;
+
+    if _locked:
+      locked.emit();
+    else:
+      unlocked.emit();
 
 
 ## Returns true if this symbolic lock is currently engaged. [br]
-## To lock a function call, it is preferable to use [method thread_locked].
-func locked() -> bool:
+## To lock a function call simultaneously, it is preferable to use
+## [method thread_locked].
+func is_locked() -> bool:
   return _locked;
 
 
-## Returns true if the lock is already locked, otherwise **locks this padlock** and
+## Returns true if the lock is already is_locked, otherwise **locks this padlock** and
 ## returns false. This eases somewhat the burden of locking a process at the top of its
 ## function call. [br]
 ##
@@ -31,19 +49,19 @@ func locked() -> bool:
 ##     padlock.unlock();
 ## [/codeblock]
 func thread_locked() -> bool:
-  if locked():
+  if is_locked():
     return true;
   lock();
   return false;
 
 
 ## Engages this symbolic lock. [br]
-## To be useful, the lock state must be observed with [method locked].
+## To be useful, the lock state must be observed with [method is_locked].
 func lock() -> void:
   _locked = true;
 
 
 ## Disengages this symbolic lock. [br]
-## To be useful, the lock state must be observed with [method locked].
+## To be useful, the lock state must be observed with [method is_locked].
 func unlock() -> void:
   _locked = false;

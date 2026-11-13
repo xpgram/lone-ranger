@@ -38,7 +38,7 @@ signal maximum_changed(maximum: int, old_maximum: int);
     if _can_emit_signals() and old_minimum != minimum:
       minimum_changed.emit(minimum, old_minimum);
 
-    if _setters_lock.thread_locked():
+    if not _setters_lock.thread_locked():
       value = clampi(value, minimum, maximum);
       _setters_lock.unlock();
 
@@ -52,7 +52,7 @@ signal maximum_changed(maximum: int, old_maximum: int);
     if _can_emit_signals() and old_maximum != maximum:
       maximum_changed.emit(maximum, old_maximum);
 
-    if _setters_lock.thread_locked():
+    if not _setters_lock.thread_locked():
       value = clampi(value, minimum, maximum);
       _setters_lock.unlock();
 
