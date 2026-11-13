@@ -13,6 +13,7 @@ class_name PlayerEquipment
 static var all_artefacts: Dictionary[String, StringName]:
   get():
     return {
+      'fast_move': fast_move,
       'shove': shove,
       'wings': wings,
       'sword': sword,
@@ -20,6 +21,10 @@ static var all_artefacts: Dictionary[String, StringName]:
     };
   set(value):
     pass
+
+
+## Allows the player to move at half the normal time cost.
+const fast_move := &'fast_move';
 
 ## Allows the player to push more objects at once.
 const shove := &'shove';
