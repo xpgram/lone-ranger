@@ -5,6 +5,8 @@ class_name IntMeter
 extends Resource
 
 
+# [TODO] This class depends on Padlock, but also, Padlock should be a ./common
+#     anyway, so this script should be a ./common
 # [FIXME] How do I bridge the overlap between IntMeter and IntMeterComponent?
 
 
