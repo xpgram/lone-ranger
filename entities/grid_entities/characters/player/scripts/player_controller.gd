@@ -19,10 +19,6 @@ signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 ##
 signal coyote_fall_recovered_result(recovered: bool);
 
-##
-# [TODO] Why did I make this private?
-# [TODO] Would this be better phrased as a padlock object?
-signal _affairs_settled();
 
 
 ##
@@ -35,6 +31,15 @@ signal _affairs_settled();
 ##
 # [TODO] A child node should be in charge of this, right?
 var current_animation_state: StringName = 'idle';
+
+## A lock representing whether the player object is internally busy and should
+## ignore interrupting behavior like from player input. [br]
+##
+## Generally used when the player object is preoccupied with animations or mini-
+## game-like activities that make the current board state unknowable or erratic,
+## or that make it unable to participate in the normal procession of board game
+## mechanics where it would be unfair to proceed without it.
+var _busy_lock := Padlock.new();
 
 ##
 var _state_machine := CallableStateMachine.new();
