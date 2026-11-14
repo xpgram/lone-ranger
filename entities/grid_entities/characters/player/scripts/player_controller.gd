@@ -17,7 +17,7 @@ signal coyote_fall_recovered_result(recovered: bool);
 @export var stats: PlayerStats;
 
 ## A reference to the player avatar object.
-@export var _player: Player2D;
+@export var player: Player2D;
 
 
 ##
@@ -91,7 +91,7 @@ var _grid_position_ledger := GridPositionLedger.new();
 
 # [TODO] This should be given to the position ledger in _ready().
 ## Where the player spawned in.
-@onready var _revive_position: Vector2i = Grid.get_grid_coords(_player.global_position);
+@onready var _revive_position: Vector2i = Grid.get_grid_coords(player.global_position);
 
 
 func _init() -> void:
@@ -151,10 +151,10 @@ func _assemble_machine_states() -> void:
 
 
 func _set_starting_values() -> void:
-  _grid_position_ledger.set_respawn_point(_player.grid_position);
+  _grid_position_ledger.set_respawn_point(player.grid_position);
 
-  # [TODO] This should definitely be a member call, like _player.set_animation('idle') or something.
-  animation_state_switch.play(current_animation_state, _player.faced_direction);
+  # [TODO] This should definitely be a member call, like player.set_animation('idle') or something.
+  animation_state_switch.play(current_animation_state, player.faced_direction);
 
 
 func _connect_component_signals() -> void:
