@@ -124,22 +124,6 @@ func _connect_member_object_signals() -> void:
 
 #### #### #### #### #### #### #### #### #### ####
 
-
-## Returns the last player-inhabited grid position that was safe to stand on.
-func get_last_safe_position() -> Vector2i:
-  return _last_safe_position;
-
-
-## Sets the player's reset position, where they respawn on death or sleep, to [param pos].
-func set_revive_point(pos: Vector2i) -> void:
-  _revive_position = pos;
-
-
-## Returns the number of steps the player can take over pits before falling.
-func get_air_steps_remaining() -> int:
-  return _air_steps_remaining;
-
-
 ## Resets to full the [Player2D]'s air steps.
 func reset_air_steps_remaining() -> void:
   _air_steps_remaining = (
