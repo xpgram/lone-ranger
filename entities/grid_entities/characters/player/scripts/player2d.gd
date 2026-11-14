@@ -114,6 +114,8 @@ func _set_starting_values() -> void:
 
 ## Attaches callbacks to signals emitted by owned components.
 func _connect_component_signals() -> void:
+  inventory.equipment_changed.connect(_on_equipment_changed__recalc_stats);
+
   # [TODO] Which one, player or controller, should be responsible for this?
   inventory.heart_container_completed.connect(_on_heart_container_completed);
 
@@ -122,16 +124,8 @@ func _connect_member_object_signals() -> void:
   animation_player.animation_finished.connect(_on_animation_finished);
 
 
+
 #### #### #### #### #### #### #### #### #### ####
-
-## Resets to full the [Player2D]'s air steps.
-func reset_air_steps_remaining() -> void:
-  _air_steps_remaining = (
-    # [FIXME] Get these numbers from a constants file somewhere.
-    1 if inventory.has_equipment(PlayerEquipment.wings)
-    else 0
-  );
-
 
 ## Starts the Coyote Fall minigame, where the [Player2D] animates themselves falling into
 ## the tile it's facing, and the player has an opportunity to save themselves with a QTE. [br]
@@ -386,6 +380,14 @@ func _on_health_empty() -> void:
   _state_machine.switch_to(_state_death);
 
 
+## Reassess the player's equipment and modify their stats accordingly.
+func _on_equipment_changed__recalc_stats(items: Array[StringName]) -> void:
+  stats.air_steps_remaining.maximum = (
+    1 if items.has(PlayerEquipment.wings)
+    else 0
+  );
+
+
 ## Handler for when the player's inventory has a new number of fully complete heart
 ## containers.
 func _on_heart_container_completed() -> void:
@@ -405,11 +407,10 @@ func _on_heart_container_completed() -> void:
 func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
   super._on_grid_position_changed(to_pos, from_pos);
 
-  _last_position = from_pos;
+  grid_position_ledger.log_position(to_pos, self);
 
   if ActionUtils.place_is_idleable_and_sturdy(to_pos, self):
-    _last_safe_position = to_pos;
-    reset_air_steps_remaining();
+    stats.air_steps_remaining.set_to_full();
 
   # [FIXME] Consider that this is a side-effect. Are we sure this won't interfere with
   #   FieldAction scripted animations? They set an animation, then move the actor, not

@@ -11,6 +11,9 @@ signal magic_updated(items: Array[PlayerInventoryItem]);
 ## Emitted when the list of possessed items is changed.
 signal items_updated(items: Array[PlayerInventoryItem]);
 
+## Emitted when the list of possessed equipment is changed.
+signal equipment_changed(items: Array[StringName]);
+
 # [FIXME] This is a better implementation than before, but it's still not
 #   very thought out. I don't like this signal being here.
 ## Emitted when the player collects enough heart pieces.
@@ -63,10 +66,10 @@ func _bind_global_signals() -> void:
 ## Broadcasts the entire inventory contents to any nodes who might be listening.
 ## Useful for resyncing after a node has made connections to the Inventory's signals.
 func emit_full_inventory() -> void:
-  # [TODO] Emit equipment?
   abilities_updated.emit(_get_sorted_array(_abilities));
   magic_updated.emit(_get_sorted_array(_magic));
   items_updated.emit(_get_sorted_array(_items));
+  equipment_changed.emit(_equipment);
 
 
 ## Broadcasts the magic inventory contents and quantities to any nodes who might be
@@ -112,6 +115,7 @@ func add_equipment(item: StringName) -> void:
       _equipment.append(item);
       var event_message := "Got %s artefact" % [item.capitalize()];
       Events.game_event_message_announced.emit(event_message);
+      equipment_changed.emit(_equipment);
 
 
 ## Returns true if `param action_uid` is held somewhere in this inventory.
