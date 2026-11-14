@@ -95,6 +95,8 @@ var _coyote_fall_timer: Timer;
 @onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
 
 
+#### #### #### #### #### #### #### #### #### ####
+
 func _init() -> void:
   add_to_group(Group.Player);
 
@@ -176,125 +178,7 @@ func _bind_input_signals() -> void:
   _move_input_repeater.input_triggered.connect(_on_move_input);
 
 
-## Returns the [FieldActionSchedule] for a Wait action respective to this player.
-func get_wait_action() -> FieldActionSchedule:
-  return FieldActionSchedule.new(
-    FieldActionList.wait,
-    FieldActionPlaybill.new(
-      self,
-      grid_position,
-      faced_direction,
-    )
-  );
-
-
-## Returns a [FieldActionSchedule] for some action resulting from directional input.
-func get_action_from_move_input(direction: Vector2i) -> FieldActionSchedule:
-  var chosen_action: FieldAction = FieldActionList.wait;
-
-  var playbill := FieldActionPlaybill.new(
-    self,
-    grid_position + direction,
-    direction,
-  );
-
-  var actions := [
-    _get_move_action(),
-    _get_push_action(),
-    FieldActionList.spin,
-  ] as Array[FieldAction];
-
-  for action in actions:
-    if action.can_perform(playbill):
-      chosen_action = action;
-      break;
-
-  return FieldActionSchedule.new(chosen_action, playbill);
-
-
-## Returns a [FieldActionSchedule] for some action resulting from directional input while
-## the brace input is also active.
-func get_action_from_brace_move_input(direction: Vector2i) -> FieldActionSchedule:
-  var chosen_action: FieldAction = FieldActionList.wait;
-  var playbill := FieldActionPlaybill.new(
-    self,
-    grid_position + direction,
-    direction,
-  );
-
-  if FieldActionList.spin.can_perform(playbill):
-    chosen_action = FieldActionList.spin;
-
-  return FieldActionSchedule.new(chosen_action, playbill);
-
-
-## Returns the [FieldActionSchedule] for some action resulting from an interact input.
-func get_action_from_interact_input() -> FieldActionSchedule:
-  var chosen_action: FieldAction = FieldActionList.null_action;
-
-  var playbill := FieldActionPlaybill.new(
-    self,
-    faced_position,
-    faced_direction,
-  );
-
-  var actions := [
-    FieldActionList.interact,
-    _get_sword_action(),
-  ];
-
-  for action in actions:
-    if action and action.can_perform(playbill):
-      chosen_action = action;
-      break;
-
-  return FieldActionSchedule.new(chosen_action, playbill);
-
-
-## Returns a [FieldActionSchedule] for some action resulting from an interact input while
-## the brace input is also active.
-func get_action_from_brace_interact_input() -> FieldActionSchedule:
-  var chosen_action: FieldAction = FieldActionList.null_action;
-
-  var playbill := FieldActionPlaybill.new(
-    self,
-    faced_position,
-    faced_direction,
-  );
-
-  var actions := [
-    _get_sword_action(),
-    _get_hookshot_action(),
-  ];
-
-  for action in actions:
-    if action and action.can_perform(playbill):
-      chosen_action = action;
-      break;
-
-  return FieldActionSchedule.new(chosen_action, playbill);
-
-
-## Returns a [FieldActionSchedule] for some action resulting from an inspect input.
-func get_action_from_inspect_input() -> FieldActionSchedule:
-  var chosen_action: FieldAction = FieldActionList.null_action;
-
-  var playbill := FieldActionPlaybill.new(
-    self,
-    faced_position,
-    faced_direction,
-  );
-
-  var actions := [
-    FieldActionList.inspect,
-  ];
-
-  for action in actions:
-    if action and action.can_perform(playbill):
-      chosen_action = action;
-      break;
-
-  return FieldActionSchedule.new(chosen_action, playbill);
+#### #### #### #### #### #### #### #### #### ####
 
 
 ## Returns the last grid position the player inhabited.
