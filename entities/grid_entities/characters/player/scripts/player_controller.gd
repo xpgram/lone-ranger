@@ -4,13 +4,7 @@ extends Node
 
 
 # [TODO] Player2D Wishlist:
-# - A "location_logger" that takes in a new grid position and either saves or rejects it.
-#   - If saved, it's appended to a list of viable respawn locations.
-#   - Acceptance includes: save point, hard flooring, stable mechanical flooring, unstable flooring.
-#   - When Player2D falls into a pit, it can ask location_logger for the most recent, still-valid location.
-#     - still-valid means it's checked again on request.
-#     - This also makes previous location management easier: if the hard-flooring spot is occupied by a monster,
-#       we can pick a different hard-flooring spot because we'll save multiple.
+# - None. Yay~
 
 
 ## Emitted when an action the player would like to perform has been chosen.
