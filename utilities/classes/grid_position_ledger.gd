@@ -90,6 +90,17 @@ func log_position(place: Vector2i, entity: GridEntity) -> void:
     _recent_stable_recovery_locations = _recent_stable_recovery_locations.slice(-max_stable_recovery_locations - 1, -1);
 
 
+## Returns the most recently logged Grid location, previous to the current one.
+func get_last_position() -> Vector2i:
+  # [TODO] This needs to return list[-2], not list[-1]: -1 is where the current location is, probably.
+  return (
+    _recent_locations.back() if _recent_locations.size() == 0
+    # [TODO] The entity's current position would be a better value, but we don't have a
+    #     reference to such here.
+    else Vector2i.ZERO
+  );
+
+
 ## Returns the list of most-recently logged Grid locations. This list represents
 ## a strict history, so may contain duplicates.
 func get_recent_positions() -> Array[Vector2i]:
