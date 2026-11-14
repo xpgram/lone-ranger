@@ -56,16 +56,15 @@ func _ready() -> void:
   _connect_to_ui_subsystems();
 
 
-#### #### #### #### #### #### #### #### #### ####
-
-func _unhandled_input(event: InputEvent) -> void:
+## Delegates an [InputEvent] to the object's current state handler for inputs.
+func handle_input(event: InputEvent) -> void:
   var state := _state_machine.get_state() as PlayerState;
   state.input(event);
 
 
-## Responds to movement input events, where [param input_vector] is the direction to move
-## in.
-func _on_move_input(input_vector: Vector2i) -> void:
+## Delegates an input [Vector2i] to the object's current state handler for movement
+## inputs.
+func handle_move_input(input_vector: Vector2i) -> void:
   var state := _state_machine.get_state() as PlayerState;
   state.move_input(input_vector);
 
@@ -81,6 +80,8 @@ func _assemble_machine_states() -> void:
     PlayerState.new([
       _state_injured,
     ]),
+    # [TODO] Coyote fall should be a feature of PlayerController, or at least should be
+    #     some conversation betweeen the controller and Player2D.
     PlayerState.new([
       _state_coyote_fall,
       _state_coyote_fall__exit,
@@ -89,6 +90,8 @@ func _assemble_machine_states() -> void:
     PlayerState.new([
       _state_fall,
     ]),
+    # [TODO] Death and sleep have different effects when you're a copy. How do we do that?
+    #     I guess they need to know whether they're "main" or not.
     PlayerState.new([
       _state_death,
     ]),
@@ -118,7 +121,6 @@ func _connect_member_object_signals() -> void:
 
 
 #### #### #### #### #### #### #### #### #### ####
-
 
 ## Returns the last grid position the player inhabited.
 func get_last_position() -> Vector2i:

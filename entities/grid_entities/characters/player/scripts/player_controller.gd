@@ -71,8 +71,6 @@ var _selected_command_menu_action: FieldAction;
 
 
 func _ready() -> void:
-  _assemble_machine_states();
-
   _connect_component_signals();
   _connect_input_signals();
   _connect_ui_subsystem_signals();
@@ -83,42 +81,11 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  var state := _state_machine.get_state() as PlayerState;
-  state.input(event);
+  player.handle_input(event);
 
 
 func _on_move_input(input_vector: Vector2i) -> void:
-  var state := _state_machine.get_state() as PlayerState;
-  state.move_input(input_vector);
-
-
-func _assemble_machine_states() -> void:
-  _state_machine.add_states([
-    PlayerState.new([
-      _state_idle,
-      _state_idle__input,
-      _state_idle__move_input,
-    ]),
-    PlayerState.new([
-      _state_injured,
-    ]),
-    PlayerState.new([
-      _state_coyote_fall,
-      _state_coyote_fall__exit,
-      _state_coyote_fall__move_input,
-    ]),
-    PlayerState.new([
-      _state_fall,
-    ]),
-    PlayerState.new([
-      _state_death,
-    ]),
-    PlayerState.new([
-      _state_sleep,
-    ]),
-  ]);
-
-  _state_machine.switch_to(_state_idle);
+  player.handle_move_input(input_vector);
 
 
 func _connect_component_signals() -> void:
@@ -137,17 +104,3 @@ func _connect_ui_subsystem_signals() -> void:
 func _catch_input_focus_when_focus_lost() -> void:
   if not get_viewport().gui_get_focus_owner():
     focus_node.grab_focus();
-
-
-
-
-## A [CallableState] that provides additional state methods for Player2D objects.
-class PlayerState extends CallableState:
-
-  func _get_role_keywords() -> Array[StringName]:
-    return super._get_role_keywords() + ([
-    &'move_input'
-    ] as Array[StringName]);
-
-  func move_input(vector: Vector2i) -> void:
-    _call_role_func(&'move_input', [vector]);
