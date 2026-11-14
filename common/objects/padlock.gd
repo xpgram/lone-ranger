@@ -55,6 +55,20 @@ func thread_locked() -> bool:
   return false;
 
 
+## Returns when this [Padlock] is locked. If already locked, returns immediately.
+func until_locked_async() -> void:
+  if not _locked:
+    await locked;
+  return;
+
+
+## Returns when this [Padlock] is unlocked. If already unlocked, returns immediately.
+func until_unlocked_async() -> void:
+  if _locked:
+    await unlocked;
+  return;
+
+
 ## Engages this symbolic lock. [br]
 ## To be useful, the lock state must be observed with [method is_locked].
 func lock() -> void:
