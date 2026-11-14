@@ -4,58 +4,35 @@ extends GridEntity
 
 
 ## Emitted when an action the player would like to perform has been chosen.
-signal action_declared(action: FieldActionSchedule, buffer: bool);
-
-## Emitted when a player leaves a 'busy' state, one which suspends their participation
-## in the game proper. [br]
-##
-## External features that depend on [Player2D] being stable and ready to participate
-## should await [method wait_until_affairs_settled_async] as this signal is only emitted
-## after some affair has been assumed.
-signal _affairs_settled();
-
-## Emitted after a Coyote Fall minigame, indicating whether the recovery QTE was
-## successfully performed or not.
-signal coyote_fall_recovered_result(recovered: bool);
+signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 
 
 ## The player's collection of bits and bobs.
 @export var inventory: PlayerInventory;
 
+## A reference to the player stats object.
+@export var stats: PlayerStats;
 
 ## Manages [Player2D] state.
 var _state_machine := CallableStateMachine.new();
 
+# [TODO] An enum instead of strings?
 ## The [StringName] of this player's current animation.
 var current_animation_state: StringName = 'idle';
 
-## A blackboard variable to retain a reference to the player's chosen command menu action.
-var _selected_command_menu_action: FieldAction;
-
-## The grid position that the player last inhabited.
-var _last_position: Vector2i;
-
-## A grid position that is safe to teleport the player to when they get stuck or lost
-## (such as after falling into a pit).
-var _last_safe_position: Vector2i;
-
-# [TODO] Question: Player2D is bound to have tons of little metric numbers like this, do I
-#   really want to list them all in this script right here? I could put this in a big
-#   numbers repository resource, I guess.
-## How many steps the player can take over pits before falling.
-var _air_steps_remaining: int = 0;
-
-## [b]Note:[/b] Use [method _unsettle_affairs] instead of setting this value directly. [br]
+## A lock representing whether the player object is internally busy and should ignore
+## interrupting behavior like from player input. [br]
 ##
-## Whether the player controller is free of preoccupations with animations or minigame-
-## like activities that make their current board state unknowable or erratic, or that make
-## them unable to participate in the normal procession of board game mechanics where it
-## would be unfair to proceed without them.
-var _affairs_are_settled := true;
+## Generally used when the player object is preoccupied with animations or states that
+## make the current board state unknowable or erratic, or that make it unable to
+## participate in the normal procession of game mechanics where it would be unfair to
+## proceed without it.
+var _busy_lock := Padlock.new();
 
-## @nullable [br]
-## A reference to the last-created coyote fall timer.
-var _coyote_fall_timer: Timer;
+## Keeps track of coordinates on the Grid previously inhabited by the player.
+## Used for trailing or for finding places to teleport the player after a fall
+## or death.
+var _grid_position_ledger := GridPositionLedger.new();
 
 
 ##

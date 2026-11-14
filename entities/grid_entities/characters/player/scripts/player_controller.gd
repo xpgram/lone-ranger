@@ -7,23 +7,14 @@ extends Node
 # - None. Yay~
 
 
-## Emitted when an action the player would like to perform has been chosen.
-signal action_declared(action: FieldActionSchedule, buffer_this: bool);
-
 ##
 signal coyote_fall_recovered_result(recovered: bool);
 
-## A reference to the player stats object.
-@export var stats: PlayerStats;
-
+# [TODO] The players container, not just one player.
+#     Or maybe we'll have a main one and also a separate container for the copies?
 ## A reference to the player avatar object.
 @export var player: Player2D;
 
-
-##
-# [TODO] A child node should be in charge of this, right?
-# [TODO] An enum instead of strings?
-var current_animation_state: StringName = 'idle';
 
 ## A lock representing whether the player object is internally busy and should
 ## ignore interrupting behavior like from player input. [br]
@@ -40,17 +31,14 @@ var _busy_lock := Padlock.new();
 ## A reference to the last-created coyote fall timer.
 var _coyote_fall_timer: Timer;
 
-##
+# [FIXME] Some state, like Injured, actually _is_ unique to each Player2D.
+#     What do we wanna do?
+## A reference to the player-controller state machine.
 var _state_machine := CallableStateMachine.new();
 
 ## A blackboard variable to retain a reference to the player's chosen command menu action.
 # [TODO] Shouldn't this be elsewhere? It seems structureless here.
 var _selected_command_menu_action: FieldAction;
-
-## Keeps track of coordinates on the Grid previously inhabited by the player.
-## Used for trailing or for finding places to teleport the player after a fall
-## or death.
-var _grid_position_ledger := GridPositionLedger.new();
 
 
 # [TODO] Wait, I can't have this. I have to access this through Player2D, don't I?
