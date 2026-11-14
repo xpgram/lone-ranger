@@ -78,7 +78,7 @@ signal maximum_changed(maximum: int, old_maximum: int);
 
 ## Sets the meter's value to its maximum.
 @warning_ignore("unused_private_class_variable")
-@export_tool_button('Set Full') var _tool_button_set_hp_to_full = set_hp_to_full;
+@export_tool_button('Set Full') var _tool_button_set_hp_to_full = set_to_full;
 
 
 ## A lock to prevent infinite recursion when properties set other properties in
@@ -121,8 +121,13 @@ func set_by_proportion(normal: float) -> void:
 
 
 ## Sets the meter's value to its maximum.
-func set_hp_to_full() -> void:
+func set_to_full() -> void:
   value = maximum;
+
+
+## Sets the meter's value to its minimum.
+func set_to_empty() -> void:
+  value = minimum;
 
 
 ## Returns true if the meter is allowed to emit value-changed event signals.
