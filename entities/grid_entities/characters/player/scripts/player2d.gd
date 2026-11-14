@@ -19,6 +19,11 @@ signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 ## The [StringName] of this player's current animation.
 var current_animation_state: StringName = 'idle';
 
+## Keeps track of coordinates on the Grid previously inhabited by the player.
+## Used for trailing or for finding places to teleport the player after a fall
+## or death.
+var grid_position_ledger := GridPositionLedger.new();
+
 ## A lock representing whether the player object is internally busy and should ignore
 ## interrupting behavior like from player input. [br]
 ##
@@ -27,11 +32,6 @@ var current_animation_state: StringName = 'idle';
 ## participate in the normal procession of game mechanics where it would be unfair to
 ## proceed without it.
 var _busy_lock := Padlock.new();
-
-## Keeps track of coordinates on the Grid previously inhabited by the player.
-## Used for trailing or for finding places to teleport the player after a fall
-## or death.
-var _grid_position_ledger := GridPositionLedger.new();
 
 ## Manages [Player2D] state.
 var _state_machine := CallableStateMachine.new();
@@ -106,8 +106,8 @@ func _assemble_machine_states() -> void:
 
 
 func _set_starting_values() -> void:
-  _grid_position_ledger.set_respawn_point(grid_position);
-  _grid_position_ledger.log_position(grid_position, self);
+  grid_position_ledger.set_respawn_point(grid_position);
+  grid_position_ledger.log_position(grid_position, self);
 
   animation_state_switch.play(current_animation_state, faced_direction);
 
@@ -123,10 +123,6 @@ func _connect_member_object_signals() -> void:
 
 
 #### #### #### #### #### #### #### #### #### ####
-
-## Returns the last grid position the player inhabited.
-func get_last_position() -> Vector2i:
-  return _last_position;
 
 
 ## Returns the last player-inhabited grid position that was safe to stand on.

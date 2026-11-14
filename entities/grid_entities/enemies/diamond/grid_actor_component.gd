@@ -46,7 +46,7 @@ func act_async() -> void:
 
   # When close, prefer to move toward wherever the player just was.
   if (inter_distance == 1 and is_last_pos_adjacent):
-    move_direction = player.get_last_position() - self_entity.grid_position;
+    move_direction = player.grid_position_ledger.get_previous_position() - self_entity.grid_position;
 
   var playbill := FieldActionPlaybill.new(
     self_entity,

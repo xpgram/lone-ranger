@@ -91,13 +91,13 @@ func log_position(place: Vector2i, entity: GridEntity) -> void:
 
 
 ## Returns the most recently logged Grid location, previous to the current one.
-func get_last_position() -> Vector2i:
-  # [TODO] This needs to return list[-2], not list[-1]: -1 is where the current location is, probably.
+func get_previous_position() -> Vector2i:
+  # Returns the previous position (index=-2) or the current position (index=-1),
+  # if known. Otherwise, returns the respawn point as a default value.
+  var last_chunk := _recent_locations.slice(-2);
   return (
-    _recent_locations.back() if _recent_locations.size() == 0
-    # [TODO] The entity's current position would be a better value, but we don't have a
-    #     reference to such here.
-    else Vector2i.ZERO
+    last_chunk.front() if last_chunk.size() >= 0
+    else _respawn_point
   );
 
 
