@@ -13,9 +13,6 @@ signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 ## A reference to the player stats object.
 @export var stats: PlayerStats;
 
-## Manages [Player2D] state.
-var _state_machine := CallableStateMachine.new();
-
 # [TODO] An enum instead of strings?
 ## The [StringName] of this player's current animation.
 var current_animation_state: StringName = 'idle';
@@ -33,6 +30,9 @@ var _busy_lock := Padlock.new();
 ## Used for trailing or for finding places to teleport the player after a fall
 ## or death.
 var _grid_position_ledger := GridPositionLedger.new();
+
+## Manages [Player2D] state.
+var _state_machine := CallableStateMachine.new();
 
 
 ##
