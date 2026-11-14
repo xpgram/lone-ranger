@@ -385,35 +385,6 @@ func _connect_to_ui_subsystems() -> void:
   health.empty.connect(_on_health_empty);
 
 
-## Returns the [FieldAction] variant the [Player2D] will use for movement.
-func _get_move_action() -> FieldAction:
-  return FieldActionList.move;
-
-
-## Returns the [FieldAction] variant the [Player2D] will use for pushing objects.
-func _get_push_action() -> FieldAction:
-  return (
-    FieldActionList.shove if inventory.has_equipment(PlayerEquipment.shove)
-    else FieldActionList.push
-  );
-
-
-## Returns the [FieldAction] variant the [Player2D] will use for melee attacks.
-func _get_sword_action() -> FieldAction:
-  return (
-    FieldActionList.sword_strike if inventory.has_equipment(PlayerEquipment.sword)
-    else FieldActionList.null_action
-  );
-
-
-## Returns the [FieldAction] variant the [Player2D] will use for hookshot actions.
-func _get_hookshot_action() -> FieldAction:
-  return (
-    FieldActionList.hookshot if inventory.has_equipment(PlayerEquipment.hookshot)
-    else FieldActionList.null_action
-  )
-
-
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
 ## Reacquires player input focus from sub-UI systems.
 func _on_command_menu_cancelled() -> void:
