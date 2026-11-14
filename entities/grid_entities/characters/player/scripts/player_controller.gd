@@ -13,10 +13,6 @@ signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 ##
 signal coyote_fall_recovered_result(recovered: bool);
 
-
-## A reference to the player inventory node.
-@export var inventory: PlayerInventory;
-
 ## A reference to the player stats object.
 @export var stats: PlayerStats;
 
