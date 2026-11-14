@@ -34,7 +34,7 @@ extends Resource
 
 
 ## The greatest recovery fallback location. Usually represents a save-point.
-var _respawn_point := Vector2i.ZERO;
+var _revive_point := Vector2i.ZERO;
 
 ## A list of recently visited Grid locations. [br]
 ##
@@ -56,8 +56,8 @@ var _recent_stable_recovery_locations := [] as Array[Vector2i];
 
 
 ## Sets the respawn point, usually reserved for Save Idols.
-func set_respawn_point(place: Vector2i) -> void:
-  _respawn_point = place;
+func set_revive_point(place: Vector2i) -> void:
+  _revive_point = place;
 
 
 ## Logs a [param place] on the Grid in the list of recent locations. If the
@@ -97,7 +97,7 @@ func get_previous_position() -> Vector2i:
   var last_chunk := _recent_locations.slice(-2);
   return (
     last_chunk.front() if last_chunk.size() >= 0
-    else _respawn_point
+    else _revive_point
   );
 
 
@@ -126,10 +126,10 @@ func get_recover_point(entity: GridEntity) -> Vector2i:
       return place;
 
   # Default to the save point or some equivalent failing all else.
-  return _respawn_point;
+  return _revive_point;
 
 
 ## Returns the saved respawn point.
 # [TODO] Or a place close to it. Or maybe obstructions near your save point just get demolished.
-func get_respawn_point() -> Vector2i:
-  return _respawn_point;
+func get_revive_point() -> Vector2i:
+  return _revive_point;

@@ -106,7 +106,7 @@ func _assemble_machine_states() -> void:
 
 
 func _set_starting_values() -> void:
-  grid_position_ledger.set_respawn_point(grid_position);
+  grid_position_ledger.set_revive_point(grid_position);
   grid_position_ledger.log_position(grid_position, self);
 
   animation_state_switch.play(current_animation_state, faced_direction);
