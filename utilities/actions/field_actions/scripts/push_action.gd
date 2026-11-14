@@ -8,8 +8,6 @@ const scene_bump_audio := preload('uid://cvkl4d3g51ocn');
 const scene_scrape_audio := preload('uid://ckshk52e1bn74');
 const scene_cast_audio := preload('uid://dje6ncwpv7kxg');
 
-const stun_attribute_resource := preload('uid://jnysha6rnoxl');
-
 
 ## How many objects in sequence may be pushed at once.
 @export var _push_length := 1;
@@ -164,7 +162,7 @@ func _try_push_cell(place: Vector2i, direction: Vector2i, push_power: int) -> bo
     entity.grid_position = next_place;
 
     if entity is Enemy2D:
-      entity.apply_attribute('stun', stun_attribute_resource.duplicate());
+      entity.apply_attribute(GridEntityAttributes.stun.duplicate());
 
   return true;
 

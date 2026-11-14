@@ -84,24 +84,37 @@ func get_inspect_dialogue() -> InspectObject_DialogueScene:
 # [FIXME] This attribute system is hard to use via the editor: loading a .tres requires
 #   the developer also manually write-in the same attribute key to the dictionary.
 ## Returns true if `param attribute_name` is among the _attributes applied to this entity.
-func has_attribute(attribute_name: StringName) -> bool:
-  return _attributes.has(attribute_name);
+func has_attribute(attribute: GridEntityAttribute) -> bool:
+  return _attributes.has(attribute.attribute_key);
 
 
+func has_attribute_key(attribute_key: StringName) -> bool:
+  return _attributes.has(attribute_key);
+
+
+## @nullable [br]
+## Returns the Attribute object for an attribute applied to this entity. [br]
+##
+## See [GridEntityAttributes] for constants suitable for [param attribute].
+func get_attribute(attribute: GridEntityAttribute) -> GridEntityAttribute:
+  return _attributes.get(attribute.attribute_key, null);
+
+
+## @nullable [br]
 ## Returns the Attribute object for an attribute applied to this entity.
-func get_attribute(attribute_name: StringName) -> GridEntityAttribute:
-  # This may be refactor to .get(key, default) if I can think of what a useful default
-  # might be.
-  return _attributes[attribute_name];
+func get_attribute_by_key(attribute_key: StringName) -> GridEntityAttribute:
+  return _attributes.get(attribute_key, null);
 
 
 ## Applies an attribute to this entity. If this attribute was already applied, then the
 ## given attribute will merge with the existing one.
-func apply_attribute(attribute_name: StringName, data: GridEntityAttribute) -> void:
-  if _attributes.has(attribute_name):
-    _attributes[attribute_name] = _attributes[attribute_name].merge(data);
+func apply_attribute(attribute: GridEntityAttribute) -> void:
+  var key := attribute.attribute_key;
+
+  if _attributes.has(key):
+    _attributes[key] = _attributes[key].merge(attribute);
   else:
-    _attributes[attribute_name] = data;
+    _attributes[key] = attribute;
 
 
 ## Iterates over the entity's collection of _attributes, updating their metrics, and
@@ -149,7 +162,7 @@ func _facing_changed() -> void:
 ## By default, this function waits a small amount of time and then queues self for
 ## deletion.
 func _on_free_fall() -> void:
-  if has_attribute('floating'):
+  if has_attribute(GridEntityAttributes.floating):
     return;
 
   await get_tree().create_timer(0.5).timeout;

@@ -8,7 +8,7 @@ const _scene_cast_audio := preload('uid://dfnf8ej8gvnk6');
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var entities := Grid.get_entities(playbill.target_position);
   return entities \
-    .any(func (entity: GridEntity): return entity.has_attribute('compactible_to_floor'));
+    .any(func (entity: GridEntity): return entity.has_attribute_key('compactible_to_floor'));
 
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:

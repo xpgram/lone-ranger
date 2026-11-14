@@ -78,7 +78,7 @@ func can_act() -> bool:
   return (
     _enabled
     and not has_acted()
-    and not grid_entity.has_attribute('stun')
+    and not grid_entity.has_attribute(GridEntityAttributes.stun)
   );
 
 

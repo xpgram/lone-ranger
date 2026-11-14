@@ -8,7 +8,7 @@ const _scene_cast_audio := preload('uid://dje6ncwpv7kxg');
 func can_perform(playbill: FieldActionPlaybill) -> bool:
   var entities := Grid.get_entities(playbill.target_position);
   return entities \
-    .any(func (entity: GridEntity): return entity.has_attribute('is_growable'));
+    .any(func (entity: GridEntity): return entity.has_attribute_key('is_growable'));
 
 
 func perform_async(playbill: FieldActionPlaybill) -> bool:
@@ -20,7 +20,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
   #   beyond path creation.
 
   var entities := Grid.get_entities(playbill.target_position);
-  
+
   for entity in entities:
     if entity is GrowableTwigEntity:
       entity.activate_growth_async();
