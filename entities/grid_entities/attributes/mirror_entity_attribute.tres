@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GridEntityAttribute" format=3 uid="uid://bmv8jxlayrkaf"]
+
+[ext_resource type="Script" uid="uid://dn1ef7gb6cvg3" path="res://entities/grid_entities/grid_entity_attribute.gd" id="1_g0mna"]
+
+[resource]
+script = ExtResource("1_g0mna")
+attribute_key = &"mirror_entity"
+self_remedying = false
+metadata/_custom_type_script = "uid://dn1ef7gb6cvg3"
