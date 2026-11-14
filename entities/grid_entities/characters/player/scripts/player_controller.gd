@@ -41,14 +41,6 @@ var _state_machine := CallableStateMachine.new();
 var _selected_command_menu_action: FieldAction;
 
 
-# [TODO] Wait, I can't have this. I have to access this through Player2D, don't I?
-## A reference to the animation player.
-@onready var animation_player: AnimationPlayer = %AnimationPlayer;
-
-# [TODO] This... may need to stay in Player2D. I'm not sure.
-##
-@onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
-
 ##
 @onready var focus_node: FocusableControl = %FocusableControl;
 
@@ -77,18 +69,9 @@ var _selected_command_menu_action: FieldAction;
 ## A reference to the dialogue context object for inspect-object scenes.
 @onready var _dialogue_inspection_target: NodeRetargeter = %DialogueInspectionTarget;
 
-# [TODO] This should be given to the position ledger in _ready().
-## Where the player spawned in.
-@onready var _revive_position: Vector2i = Grid.get_grid_coords(player.global_position);
-
-
-func _init() -> void:
-  add_to_group(Group.Player);
-
 
 func _ready() -> void:
   _assemble_machine_states();
-  _set_starting_values();
 
   _connect_component_signals();
   _connect_input_signals();
@@ -136,13 +119,6 @@ func _assemble_machine_states() -> void:
   ]);
 
   _state_machine.switch_to(_state_idle);
-
-
-func _set_starting_values() -> void:
-  _grid_position_ledger.set_respawn_point(player.grid_position);
-
-  # [TODO] This should definitely be a member call, like player.set_animation('idle') or something.
-  animation_state_switch.play(current_animation_state, player.faced_direction);
 
 
 func _connect_component_signals() -> void:

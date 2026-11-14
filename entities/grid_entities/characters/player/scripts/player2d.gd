@@ -41,38 +41,6 @@ var _state_machine := CallableStateMachine.new();
 ##
 @onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
 
-##
-@onready var focus_node: FocusableControl = %FocusableControl;
-
-##
-@onready var _move_input_repeater: InputAxisRepeater = %MoveInputRepeater;
-
-## The player's unique [CommandMenu] instance.
-@onready var _command_menu: CommandMenu = %CommandMenu;
-
-## The player's unique [CommandMenu] instance.
-@onready var _dialogue_bubble: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
-
-## The player's unique [FieldCursor] instance.
-@onready var _field_cursor: FieldCursor = %FieldCursor;
-
-## A reference to the Rect that handles the game world, screen space shader effects.
-@onready var _world_shader_rect: PlayerCameraViewShader = %CamViewShader;
-
-## A reference to the Rect that handles HUD-only screen space shader effects.
-@onready var _hud_shader_rect: PlayerHUDShader = %UIShaderCanvasGroup;
-
-## A reference to the Rect that handles wholistic screen space shader effects.
-@onready var _screen_shader_rect: PlayerScreenSpaceShader = %ScreenSpaceShader;
-
-## A reference to the dialogue context object for inspect-object scenes.
-@onready var _dialogue_inspection_target: NodeRetargeter = %DialogueInspectionTarget;
-
-## Where the player spawned in.
-@onready var _revive_position: Vector2i = Grid.get_grid_coords(global_position);
-
-
-#### #### #### #### #### #### #### #### #### ####
 
 func _init() -> void:
   add_to_group(Group.Player);
@@ -81,22 +49,14 @@ func _init() -> void:
 func _ready() -> void:
   super._ready();
 
-  animation_state_switch.play(current_animation_state, faced_direction);
-  animation_player.animation_finished.connect(_on_animation_finished);
-
   _assemble_machine_states();
-  _bind_inherited_signals();
-  _bind_component_signals();
-  _bind_input_signals();
-
+  _set_starting_values();
+  _connect_component_signals();
+  _connect_member_object_signals();
   _connect_to_ui_subsystems();
-  focus_node.grab_focus();
 
 
-func _process(_delta: float) -> void:
-  if not get_viewport().gui_get_focus_owner():
-    focus_node.grab_focus();
-
+#### #### #### #### #### #### #### #### #### ####
 
 func _unhandled_input(event: InputEvent) -> void:
   var state := _state_machine.get_state() as PlayerState;
@@ -140,19 +100,21 @@ func _assemble_machine_states() -> void:
   _state_machine.switch_to(_state_idle);
 
 
-## Attaches callbacks to signals emitted by the extended script.
-func _bind_inherited_signals() -> void:
-  pass
+func _set_starting_values() -> void:
+  _grid_position_ledger.set_respawn_point(grid_position);
+  _grid_position_ledger.log_position(grid_position, self);
+
+  animation_state_switch.play(current_animation_state, faced_direction);
 
 
 ## Attaches callbacks to signals emitted by owned components.
-func _bind_component_signals() -> void:
+func _connect_component_signals() -> void:
+  # [TODO] Which one, player or controller, should be responsible for this?
   inventory.heart_container_completed.connect(_on_heart_container_completed);
 
 
-## Attaches callbacks to input monitor signals.
-func _bind_input_signals() -> void:
-  _move_input_repeater.input_triggered.connect(_on_move_input);
+func _connect_member_object_signals() -> void:
+  animation_player.animation_finished.connect(_on_animation_finished);
 
 
 #### #### #### #### #### #### #### #### #### ####
