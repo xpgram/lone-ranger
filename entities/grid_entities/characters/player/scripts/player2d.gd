@@ -10,7 +10,9 @@ signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 ## The player's collection of bits and bobs.
 @export var inventory: PlayerInventory;
 
-## A reference to the player stats object.
+## An object for tracking player values, typically ones that change with further gameplay.
+## Not all values are kept here, however: health is measured by HealthComponent, a system
+## to make it more accessible to other nodes.
 @export var stats: PlayerStats;
 
 # [TODO] An enum instead of strings?
