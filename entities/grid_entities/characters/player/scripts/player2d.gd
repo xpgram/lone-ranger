@@ -127,6 +127,9 @@ func _connect_member_object_signals() -> void:
 
 #### #### #### #### #### #### #### #### #### ####
 
+# [TODO] I think it makes sense to let Player2D keep this, in part because it still
+#    manages animation states and such, but we'll need Controller or the Move script
+#    to manage "multiple" coyote falls at once, even if it really only manages the main one.
 ## Starts the Coyote Fall minigame, where the [Player2D] animates themselves falling into
 ## the tile it's facing, and the player has an opportunity to save themselves with a QTE. [br]
 ##
@@ -136,27 +139,7 @@ func start_coyote_fall() -> void:
   _state_machine.switch_to(_state_coyote_fall);
 
 
-## Starts a dialogue bubble to read out the scene described by [param resource].
-## If [param resource] is `null`, does nothing. [br]
-##
-## [param cue] is the script-cue to start from. Otherwise, the script will start
-## from line 0. [br]
-##
-## [param extra_game_states] is a list of node contexts, in order, that the
-## script may check for game state values.
-func start_dialogue(
-    resource: DialogueResource,
-    cue := "",
-    extra_game_states := [],
-) -> void:
-  _dialogue_bubble.start(resource, cue, extra_game_states);
-
-
-## Starts a dialogue bubble to read out the scene described by [param scene].
-func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
-  _dialogue_inspection_target.target = scene.inspection_subject;
-  _dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
-
+#### #### #### #### #### #### #### #### #### ####
 
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
 ## player is sent back to their last checkpoint and the world's state is reset. [br]
