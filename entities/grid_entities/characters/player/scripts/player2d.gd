@@ -139,48 +139,12 @@ func start_coyote_fall() -> void:
   _state_machine.switch_to(_state_coyote_fall);
 
 
-#### #### #### #### #### #### #### #### #### ####
-
+# [TODO] I think this should be here and not Controller, but I haven't really
+#     thought through it.
 ## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
 ## player is sent back to their last checkpoint and the world's state is reset. [br]
 func trigger_sleep() -> void:
   _state_machine.switch_to(_state_sleep);
-
-
-## Indicates the [Player2D] is preoccupied with something that prevents it from
-## participating in the game proper. [br]
-##
-## This is a useful flag for game mechanics that depend on the player state being stable,
-## predictable, and "ready to respond."
-func _unsettle_affairs() -> void:
-  _affairs_are_settled = false;
-
-
-## Indicates the [Player2D] is free of preoccupations that would prevent it from
-## participating in the game proper. [br]
-##
-## This is a useful flag for game mechanics that depend on the player state being stable,
-## predictable, and "ready to respond."
-func _settle_affairs() -> void:
-  if _affairs_are_settled == false:
-      _affairs_settled.emit();
-  _affairs_are_settled = true;
-
-
-## A coroutine that yields when the [Player2D] is not 'busy'. [br]
-##
-## To be 'busy' means that the [Player2D] is locked in some animation or minigame-like
-## activity that makes certain aspects of itself not entirely knowable, or to which it
-## would be unfair for a game mechanic to proceed without it. [br]
-##
-## An example of unsettled affairs: The recovery QTE played when a player is falling.
-## During this activity, the player may fall into a pit tile they've moved to, or they may
-## retreat quickly to the tile they moved from. In a sense, the player occupies [i]both[/i]
-## of these tiles until the QTE has finished, which makes it difficult for other mechanics
-## like enemy movement to know which tiles they are allowed to move to.
-func wait_until_affairs_settled_async():
-  if not _affairs_are_settled:
-    await _affairs_settled;
 
 
 ## Resets to full all player stats that represent exhaustion, such as HP.
@@ -192,7 +156,7 @@ func replenish_all() -> void:
 ## Moves the player to the last checkpoint position, resets their health and animation
 ## state.
 func _send_player_back_to_checkpoint() -> void:
-  grid_position = _revive_position;
+  grid_position = grid_position_ledger.get_revive_point();
   faced_direction = Vector2i.DOWN;
 
   replenish_all();
@@ -201,6 +165,8 @@ func _send_player_back_to_checkpoint() -> void:
   # [TODO] This should be a 'wake up' animation.
   trigger_idle_animation_state();
 
+
+#### #### #### #### #### #### #### #### #### ####
 
 ## Returns a reference to the player's camera-view shader interface.
 func get_cam_view_shader() -> PlayerCameraViewShader:
