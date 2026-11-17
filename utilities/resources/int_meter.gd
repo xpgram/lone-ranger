@@ -63,7 +63,7 @@ signal maximum_changed(maximum: int, old_maximum: int);
 @export var value := 0:
   set(number):
     var old_value = value;
-    value = clampi(value, minimum, maximum);
+    value = clampi(number, minimum, maximum);
 
     if _can_emit_signals() and old_value != value:
       value_changed.emit(value, old_value);
