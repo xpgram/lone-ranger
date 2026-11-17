@@ -104,6 +104,16 @@ func get_value_from_proportion(normal: float) -> int:
   return clampi(raw_value, minimum, maximum);
 
 
+## Returns true if the meter is currently empty.
+func is_empty() -> bool:
+  return value == minimum;
+
+
+## Returns true if the meter is currently full.
+func is_full() -> bool:
+  return value == maximum;
+
+
 ## Returns the proportion of the meter filled as a number between 0.0 and 1.0.
 func proportion_filled() -> float:
   return proportion_from(value);

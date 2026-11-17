@@ -268,7 +268,7 @@ func trigger_idle_animation_state() -> void:
   if (
       not ActionUtils.place_is_standable(grid_position)
       and inventory.has_equipment(PlayerEquipment.wings)
-      and _air_steps_remaining >= 0
+      and stats.air_steps_remaining.value >= 0
   ):
     set_animation_state('flying');
   else:
@@ -447,10 +447,10 @@ func _facing_changed() -> void:
 
 
 func _on_free_fall() -> void:
-  if _air_steps_remaining <= 0:
+  if stats.air_steps_remaining.is_empty():
     _state_machine.switch_to(_state_fall);
 
-  _air_steps_remaining -= 1;
+  stats.air_steps_remaining.value -= 1;
 
 
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be
@@ -465,13 +465,13 @@ func _state_idle__input(event: InputEvent) -> void:
 
   elif Input.is_action_pressed('brace'):
     if event.is_action_pressed('interact'):
-      var action_schedule := get_action_from_brace_interact_input();
+      var action_schedule := PlayerInputUtils.get_brace_interact_action(self);
       if action_schedule.action != FieldActionList.null_action:
         action_declared.emit(action_schedule, false);
       focus_node.accept_event();
 
   elif event.is_action_pressed('interact'):
-    var action_schedule := get_action_from_interact_input();
+    var action_schedule := PlayerInputUtils.get_interact_action(self);
     if action_schedule.action != FieldActionList.null_action:
       action_declared.emit(action_schedule, false);
     focus_node.accept_event();
@@ -481,7 +481,7 @@ func _state_idle__input(event: InputEvent) -> void:
     focus_node.accept_event();
 
   elif event.is_action_pressed('inspect'):
-    var action_schedule := get_action_from_inspect_input();
+    var action_schedule := PlayerInputUtils.get_inspect_action(self);
     if action_schedule.action != FieldActionList.null_action:
       action_declared.emit(action_schedule, false);
     focus_node.accept_event();
@@ -489,9 +489,9 @@ func _state_idle__input(event: InputEvent) -> void:
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
   if Input.is_action_pressed('brace'):
-    action_declared.emit(get_action_from_brace_move_input(input_vector), false);
+    action_declared.emit(PlayerInputUtils.get_brace_dpad_action(self, input_vector), false);
   else:
-    action_declared.emit(get_action_from_move_input(input_vector), false);
+    action_declared.emit(PlayerInputUtils.get_dpad_action(self, input_vector), false);
 
 
 ## The injured state handles player flinch animations and input suspension after losing HP.

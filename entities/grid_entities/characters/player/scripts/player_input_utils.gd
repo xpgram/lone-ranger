@@ -6,7 +6,7 @@
 ## contextual conclusions. It may mean "Read", or "Talk", or "Open Chest", or "Use Sword",
 ## or even "Nothing" when there are no objects to interact with. This class provides
 ## methods to help resolve these ambiguities.
-class_name PlayerInputSwitch
+class_name PlayerInputUtils
 
 
 ## Returns the [FieldActionSchedule] for a Wait action respective to [param player].
