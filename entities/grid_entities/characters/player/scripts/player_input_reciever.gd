@@ -1,5 +1,5 @@
-##
-class_name PlayerController
+## Recieves and delegates user input to any controlled [Player2D] objects.
+class_name PlayerInputReciever
 extends Node
 
 
