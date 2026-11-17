@@ -6,6 +6,10 @@ extends GridEntity
 ## Emitted when an action the player would like to perform has been chosen.
 signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 
+## Emitted when the coyote fall minigame has concluded. Carries the result of the QTE
+## event.
+signal coyote_fall_recovered_result(recovered: bool);
+
 
 ## The player's collection of bits and bobs.
 @export var inventory: PlayerInventory;
