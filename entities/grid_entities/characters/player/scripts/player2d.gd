@@ -580,6 +580,7 @@ func _state_fall() -> void:
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.value -= 1;
 
+  _state_machine.switch_to(_state_idle);
   _busy_lock.unlock();
 
 
