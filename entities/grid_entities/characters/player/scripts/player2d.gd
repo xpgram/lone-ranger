@@ -531,8 +531,7 @@ func _state_injured() -> void:
 ## state runs a QTE minigame that succeeds or fails, and reports this result via
 ## [signal coyote_fall_recovered_result].
 func _state_coyote_fall() -> void:
-  if _busy_lock.thread_locked():
-    return;
+  _busy_lock.lock();
 
   set_animation_state('coyote_fall');
 
@@ -570,8 +569,7 @@ func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
 ## The fall state is a transition state that handles the animation and effects of falling
 ## into a pit or hole.
 func _state_fall() -> void:
-  if _busy_lock.thread_locked():
-    return;
+  _busy_lock.lock();
 
   await get_tree().create_timer(0.25).timeout;
 
@@ -605,8 +603,7 @@ func _state_fall() -> void:
 ## The death state handles death animations and resets some player systems before
 ## triggering a revive at the last checkpoint.
 func _state_death() -> void:
-  if _busy_lock.thread_locked():
-    return;
+  _busy_lock.lock();
 
   _interrupt_ui_subsystems();
   set_animation_state('injured');
@@ -635,8 +632,7 @@ func _state_death() -> void:
 ## This state transition is similar to [method _state_death], but uses different
 ## animations.
 func _state_sleep() -> void:
-  if _busy_lock.thread_locked():
-    return;
+  _busy_lock.lock();
 
   _interrupt_ui_subsystems();
   # [TODO] Play a sleeping animation.
