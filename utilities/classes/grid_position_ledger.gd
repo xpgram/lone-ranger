@@ -76,18 +76,17 @@ func log_position(place: Vector2i, entity: GridEntity) -> void:
     _recent_stable_recovery_locations.erase(place);
     _recent_stable_recovery_locations.append(place);
 
-  # [TODO] Make sure [-MAX - 1] is the correct math. -1 for end as well, I guess.
   # [TODO] Factor out to a helper function?
 
   # Enforce list size limits.
   if _recent_locations.size() > max_recent_locations:
-    _recent_locations = _recent_locations.slice(-max_recent_locations - 1, -1);
+    _recent_locations = _recent_locations.slice(-max_recent_locations);
 
   if _recent_recovery_locations.size() > max_recovery_locations:
-    _recent_recovery_locations = _recent_recovery_locations.slice(-max_recovery_locations - 1, -1);
+    _recent_recovery_locations = _recent_recovery_locations.slice(-max_recovery_locations);
 
   if _recent_stable_recovery_locations.size() > max_stable_recovery_locations:
-    _recent_stable_recovery_locations = _recent_stable_recovery_locations.slice(-max_stable_recovery_locations - 1, -1);
+    _recent_stable_recovery_locations = _recent_stable_recovery_locations.slice(-max_stable_recovery_locations);
 
 
 ## Returns the most recently logged Grid location, previous to the current one.
