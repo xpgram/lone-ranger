@@ -436,7 +436,7 @@ func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
 
   grid_position_ledger.log_position(to_pos, self);
 
-  if ActionUtils.place_is_idleable_and_sturdy(to_pos, self):
+  if ActionUtils.place_is_standable(to_pos):
     stats.air_steps_remaining.set_to_full();
 
   # [FIXME] Consider that this is a side-effect. Are we sure this won't interfere with
