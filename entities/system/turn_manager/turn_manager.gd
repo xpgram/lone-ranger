@@ -57,6 +57,10 @@ func _advance_time_async(player_schedule: FieldActionSchedule) -> void:
 
   var action_succeeded := await _conduct_player_turn_async(player_schedule);
 
+  # This prevents the turn system from proceeding while the player is still working
+  # through unstable state.
+  await player.affairs_settled_async();
+
   # If an action wasn't carried out, i.e., it was cancelled, abandon conducting this turn.
   if not action_succeeded:
     # [FIXME] Fix the damn early returns, ah?
