@@ -176,6 +176,12 @@ func _connect_member_object_signals() -> void:
 
 #### #### #### #### #### #### #### #### #### ####
 
+## Returns if or when the player object is no longer busy handling an unstable state,
+## such as a minigame QTE, some complicated animation, etc.
+func affairs_settled_async() -> void:
+  await _busy_lock.until_unlocked_async();
+
+
 # [TODO] I think it makes sense to let Player2D keep this, in part because it still
 #    manages animation states and such, but we'll need Controller or the Move script
 #    to manage "multiple" coyote falls at once, even if it really only manages the main one.
