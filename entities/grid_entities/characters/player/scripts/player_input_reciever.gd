@@ -3,13 +3,6 @@ class_name PlayerInputReciever
 extends Node
 
 
-## A reference to the player avatar object.
-@export var player: Player2D;
-
-## A reference to the container node for all the Player2D copy-entities.
-@export var copied_players_container: Node;
-
-
 ## A lock representing whether the player object is internally busy and should
 ## ignore interrupting behavior like from player input. [br]
 ##
