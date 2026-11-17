@@ -3,6 +3,13 @@ class_name Player2D
 extends GridEntity
 
 
+# [TODO] Repair Player2D such that it is runnable.
+# [TODO] Finish refactoring Player2D to be less of a junk-drawer.
+# [TODO] Think about how to separate PlayablePlayer2D from DirectablePlayer2D.
+#     "Directable" meaning the copies. They don't need to know about any "camera", for
+#     instance.
+
+
 ## Emitted when an action the player would like to perform has been chosen.
 signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 
