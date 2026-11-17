@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
+[ext_resource type="Script" uid="uid://bfagy8ta077yk" path="res://utilities/resources/int_meter.gd" id="3_5beel"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
+[ext_resource type="Script" uid="uid://jqu31eg2nkvn" path="res://entities/grid_entities/characters/player/scripts/player_stats.gd" id="4_qdihw"]
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
 [ext_resource type="Resource" uid="uid://d3abxrfst60nr" path="res://utilities/actions/field_actions/resources/rest_action.tres" id="5_p4sl8"]
 [ext_resource type="Script" uid="uid://ctb6ose2j544h" path="res://entities/grid_entities/characters/player/scripts/primary_focusable_control.gd" id="6_1ol17"]
@@ -23,6 +25,16 @@
 [ext_resource type="Script" uid="uid://cd3222nx3y3k5" path="res://addons/dialogue_manager/nodes/context/dialogue_state_context.gd" id="22_txwd0"]
 [ext_resource type="Script" uid="uid://c6m6g7mr53cn" path="res://entities/ui/screen_space_shader/screen_space_shader.gd" id="23_1ol17"]
 [ext_resource type="Script" uid="uid://d0d00edwopbqy" path="res://utilities/nodes/node_retargeter.gd" id="23_mrt6k"]
+
+[sub_resource type="Resource" id="Resource_qdihw"]
+script = ExtResource("3_5beel")
+maximum = 0
+metadata/_custom_type_script = "uid://bfagy8ta077yk"
+
+[sub_resource type="Resource" id="Resource_mrt6k"]
+script = ExtResource("4_qdihw")
+air_steps_remaining = SubResource("Resource_qdihw")
+metadata/_custom_type_script = "uid://jqu31eg2nkvn"
 
 [sub_resource type="Resource" id="Resource_l0w8i"]
 script = ExtResource("4_sg284")
@@ -182,12 +194,9 @@ _camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://kreg7knmfr1j"
 
 [node name="Player2D" parent="." unique_id=389025421 node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
-pushable = true
-standable = null
-observes_golem_time = null
-is_inspectable = null
-_inspection_dialogue_cue = null
 inventory = NodePath("../Inventory")
+stats = SubResource("Resource_mrt6k")
+pushable = true
 
 [node name="PlayerCopies" type="Node2D" parent="." unique_id=973660402]
 
