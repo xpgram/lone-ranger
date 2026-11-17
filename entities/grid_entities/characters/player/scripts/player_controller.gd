@@ -3,15 +3,6 @@ class_name PlayerController
 extends Node
 
 
-# [TODO] Player2D Wishlist:
-# - None. Yay~
-
-
-##
-signal coyote_fall_recovered_result(recovered: bool);
-
-# [TODO] The players container, not just one player.
-#     Or maybe we'll have a main one and also a separate container for the copies?
 ## A reference to the player avatar object.
 @export var player: Player2D;
 
