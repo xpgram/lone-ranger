@@ -268,7 +268,7 @@ func trigger_idle_animation_state() -> void:
   if (
       not ActionUtils.place_is_standable(grid_position)
       and inventory.has_equipment(PlayerEquipment.wings)
-      and stats.air_steps_remaining.value >= 0
+      and not stats.air_steps_remaining.is_empty()
   ):
     set_animation_state('flying');
   else:
@@ -496,7 +496,8 @@ func _state_idle__move_input(input_vector: Vector2i) -> void:
 
 ## The injured state handles player flinch animations and input suspension after losing HP.
 func _state_injured() -> void:
-  _unsettle_affairs();
+  if _busy_lock.thread_locked():
+    return;
 
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
@@ -506,14 +507,15 @@ func _state_injured() -> void:
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);
 
-  _settle_affairs();
+  _busy_lock.unlock();
 
 
 ## The coyote fall state occurs when the player is risking a fall into a pit or hole. This
 ## state runs a QTE minigame that succeeds or fails, and reports this result via
 ## [signal coyote_fall_recovered_result].
 func _state_coyote_fall() -> void:
-  _unsettle_affairs();
+  if _busy_lock.thread_locked():
+    return;
 
   set_animation_state('coyote_fall');
 
@@ -536,7 +538,8 @@ func _state_coyote_fall__exit() -> void:
   if _coyote_fall_timer:
     _coyote_fall_timer.stop();
     _coyote_fall_timer.queue_free();
-  _settle_affairs();
+
+  _busy_lock.unlock();
 
 
 func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
@@ -550,7 +553,8 @@ func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
 ## The fall state is a transition state that handles the animation and effects of falling
 ## into a pit or hole.
 func _state_fall() -> void:
-  _unsettle_affairs();
+  if _busy_lock.thread_locked():
+    return;
 
   await get_tree().create_timer(0.25).timeout;
 
@@ -562,7 +566,7 @@ func _state_fall() -> void:
   add_sibling(fall_effect);
   await fall_effect.animation_finished;
 
-  grid_position = _last_safe_position;
+  grid_position = grid_position_ledger.get_recover_point(self);
 
   show();
 
@@ -570,13 +574,14 @@ func _state_fall() -> void:
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.value -= 1;
 
-  _settle_affairs();
+  _busy_lock.unlock();
 
 
 ## The death state handles death animations and resets some player systems before
 ## triggering a revive at the last checkpoint.
 func _state_death() -> void:
-  _unsettle_affairs();
+  if _busy_lock.thread_locked():
+    return;
 
   _interrupt_ui_subsystems();
   set_animation_state('injured');
@@ -596,7 +601,7 @@ func _state_death() -> void:
   await _world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-  _settle_affairs();
+  _busy_lock.unlock();
 
 
 ## The sleep state handles sleep animations and resets some player systems before
@@ -605,7 +610,8 @@ func _state_death() -> void:
 ## This state transition is similar to [method _state_death], but uses different
 ## animations.
 func _state_sleep() -> void:
-  _unsettle_affairs();
+  if _busy_lock.thread_locked():
+    return;
 
   _interrupt_ui_subsystems();
   # [TODO] Play a sleeping animation.
@@ -620,7 +626,7 @@ func _state_sleep() -> void:
   await _world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-  _settle_affairs();
+  _busy_lock.unlock();
 
 
 class PlayerState extends CallableState:
