@@ -6,6 +6,9 @@ extends Node
 ## A reference to the player avatar object.
 @export var player: Player2D;
 
+## A reference to the container node for all the Player2D copy-entities.
+@export var copied_players_container: Node;
+
 
 ## A lock representing whether the player object is internally busy and should
 ## ignore interrupting behavior like from player input. [br]
@@ -62,34 +65,25 @@ var _selected_command_menu_action: FieldAction;
 
 
 func _ready() -> void:
-  _connect_component_signals();
-  _connect_input_signals();
-  _connect_ui_subsystem_signals();
-
-
-func _process(_delta: float) -> void:
-  _catch_input_focus_when_focus_lost();
+  _move_input_repeater.input_triggered.connect(_on_move_input);
 
 
 func _unhandled_input(event: InputEvent) -> void:
   player.handle_input(event);
 
+  # [TODO]
+  # save input
+  # get copied_players
+  # replay input for each copied player.
+
 
 func _on_move_input(input_vector: Vector2i) -> void:
   player.handle_move_input(input_vector);
 
-
-func _connect_component_signals() -> void:
-  # [TODO] Is this really where I want this? But where else would it go?
-  inventory.heart_container_completed.connect(_on_heart_container_completed);
-
-
-func _connect_input_signals() -> void:
-  _move_input_repeater.input_triggered.connect(_on_move_input);
-
-
-func _connect_ui_subsystem_signals() -> void:
-  pass
+  # [TODO]
+  # save input
+  # get copied_players
+  # replay input for each copied player.
 
 
 # [FIXME] Not yet connected to anything. Scripts used to use player2d to access this method.
