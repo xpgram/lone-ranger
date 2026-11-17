@@ -591,8 +591,15 @@ func _state_fall() -> void:
   # [FIXME] Put this damn thing in an @onready already.
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.value -= 1;
+  # [FIXME] This is a little confusing, isn't it? We use health.value to trigger
+  #     the Injured state, which then transitions to Idle.
+  #     In other words, state_fall transitions to state_idle via a side effect.
+  #     ...
+  #     I'm not entirely sure how this should work, though.
+  #     If the Injured state could be a layer above the other states, I guess
+  #     that could make sense, but that's not how any of this is implemented.
+  #     I don't have cascading player states.
 
-  _state_machine.switch_to(_state_idle);
   _busy_lock.unlock();
 
 
