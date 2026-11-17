@@ -48,6 +48,17 @@ var _busy_lock := Padlock.new();
 ## A reference to the last-created coyote fall timer.
 var _coyote_fall_timer: Timer;
 
+# [TODO] This is clutter.
+#     This is less confusing then using `remaining_air_steps = -1` for the same
+#     purpose... uh, maybe. But it's an extra value to fret over, and it's
+#     certainly bothersome -here-.
+#     It'd be nice, I think, if I could change the nature of the idle state. I mean,
+#     that's sort of what I'm doing anyway, but less officially. Sometimes Idle is
+#     standing and sometimes it's flying, but there is no IdleState struct to track
+#     this information. Except for this boolean, right here.
+## True if the player is currently floating over a gap with the wings.
+var _is_using_wings := false;
+
 # [TODO] This ought to be moved to a UI management node. Player2D doesn't really need
 #     to know about this.
 ## A blackboard variable to retain a reference to the player's chosen command menu action.
@@ -273,8 +284,7 @@ func trigger_idle_animation_state() -> void:
   # [TODO] Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
   if (
       not ActionUtils.place_is_standable(grid_position)
-      and inventory.has_equipment(PlayerEquipment.wings)
-      and not stats.air_steps_remaining.is_empty()
+      and _is_using_wings
   ):
     set_animation_state('flying');
   else:
@@ -454,9 +464,11 @@ func _facing_changed() -> void:
 
 func _on_free_fall() -> void:
   if stats.air_steps_remaining.is_empty():
+    _is_using_wings = false;
     _state_machine.switch_to(_state_fall);
-
-  stats.air_steps_remaining.value -= 1;
+  else:
+    _is_using_wings = true;
+    stats.air_steps_remaining.value -= 1;
 
 
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be
