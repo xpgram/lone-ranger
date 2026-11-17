@@ -114,13 +114,15 @@ func get_recent_positions() -> Array[Vector2i]:
 ## respawn point usually reserved for save spots.
 func get_recover_point(entity: GridEntity) -> Vector2i:
   # Check recent positions for a safe recovery point.
-  for place in _recent_recovery_locations:
+  for x in _recent_recovery_locations.size():
+    var place := _recent_recovery_locations[-x - 1];
     if ActionUtils.place_is_idleable(place, entity):
       return place;
 
   # Check recent safe tiles, which may reach farther back in play time, for a
   # safe recovery point.
-  for place in _recent_stable_recovery_locations:
+  for x in _recent_stable_recovery_locations.size():
+    var place := _recent_stable_recovery_locations[-x - 1];
     if ActionUtils.place_is_idleable(place, entity):
       return place;
 
