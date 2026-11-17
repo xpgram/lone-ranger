@@ -63,7 +63,7 @@ func set_revive_point(place: Vector2i) -> void:
 ## Logs a [param place] on the Grid in the list of recent locations. If the
 ## given [param place] is not a viable recovery point for [param entity], then
 ## it will be ignored.
-func log_position(place: Vector2i, entity: GridEntity) -> void:
+func log_position(place: Vector2i) -> void:
   if not ActionUtils.place_is_standable(place):
     return;
 
@@ -72,7 +72,7 @@ func log_position(place: Vector2i, entity: GridEntity) -> void:
   _recent_recovery_locations.erase(place);
   _recent_recovery_locations.append(place);
 
-  if ActionUtils.place_is_idleable_and_sturdy(place, entity):
+  if ActionUtils.place_is_floor(place):
     _recent_stable_recovery_locations.erase(place);
     _recent_stable_recovery_locations.append(place);
 

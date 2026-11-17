@@ -155,7 +155,7 @@ func _assemble_machine_states() -> void:
 
 func _set_starting_values() -> void:
   grid_position_ledger.set_revive_point(grid_position);
-  grid_position_ledger.log_position(grid_position, self);
+  grid_position_ledger.log_position(grid_position);
 
   animation_state_switch.play(current_animation_state, faced_direction);
 
@@ -434,7 +434,7 @@ func _on_heart_container_completed() -> void:
 func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
   super._on_grid_position_changed(to_pos, from_pos);
 
-  grid_position_ledger.log_position(to_pos, self);
+  grid_position_ledger.log_position(to_pos);
 
   if ActionUtils.place_is_standable(to_pos):
     stats.air_steps_remaining.set_to_full();
