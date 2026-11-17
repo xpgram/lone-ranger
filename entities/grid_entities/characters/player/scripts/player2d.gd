@@ -514,8 +514,7 @@ func _state_idle__move_input(input_vector: Vector2i) -> void:
 
 ## The injured state handles player flinch animations and input suspension after losing HP.
 func _state_injured() -> void:
-  if _busy_lock.thread_locked():
-    return;
+  _busy_lock.lock();
 
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
