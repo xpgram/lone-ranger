@@ -31,13 +31,22 @@ var grid_position_ledger := GridPositionLedger.new();
 ## A lock representing whether the player object is internally busy and should ignore
 ## interrupting behavior like from player input. [br]
 ##
-## Generally used when the player object is preoccupied with animations or states that
+## Generally used when the player object is preoccupied with animations or minigames that
 ## make the current board state unknowable or erratic, or that make it unable to
 ## participate in the normal procession of game mechanics where it would be unfair to
-## proceed without it.
+## proceed without them.
 var _busy_lock := Padlock.new();
 
-## Manages [Player2D] state.
+## @nullable [br]
+## A reference to the last-created coyote fall timer.
+var _coyote_fall_timer: Timer;
+
+# [TODO] This ought to be moved to a UI management node. Player2D doesn't really need
+#     to know about this.
+## A blackboard variable to retain a reference to the player's chosen command menu action.
+var _selected_command_menu_action: FieldAction;
+
+## A reference to the player-controller state machine.
 var _state_machine := CallableStateMachine.new();
 
 
@@ -172,6 +181,7 @@ func _send_player_back_to_checkpoint() -> void:
 
 #### #### #### #### #### #### #### #### #### ####
 
+# [TODO] Move these references to the Camera2D or some child of it.
 ## Returns a reference to the player's camera-view shader interface.
 func get_cam_view_shader() -> PlayerCameraViewShader:
   return _world_shader_rect;
