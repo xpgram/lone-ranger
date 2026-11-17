@@ -33,7 +33,7 @@ func _ready() -> void:
   _inaction_timer.start_and_reset();
 
   _inaction_timer.timeout.connect(func ():
-    _advance_time_async(player.get_wait_action());
+    _advance_time_async(PlayerInputUtils.get_wait_action(player));
   );
 
   # [TODO] Clean this up: I just wanted to try some demo stuff.
