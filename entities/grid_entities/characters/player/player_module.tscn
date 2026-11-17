@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://kreg7knmfr1j" path="res://entities/grid_entities/characters/player/scripts/player_module.gd" id="1_g13rh"]
 [ext_resource type="PackedScene" uid="uid://xjvdjvcg5sjk" path="res://entities/grid_entities/characters/player/player.tscn" id="2_7iogb"]
-[ext_resource type="Script" uid="uid://bfagy8ta077yk" path="res://utilities/resources/int_meter.gd" id="3_5beel"]
+[ext_resource type="Script" uid="uid://bfagy8ta077yk" path="res://common/resources/int_meter.gd" id="3_5beel"]
 [ext_resource type="Script" uid="uid://g8diiktdxcrq" path="res://entities/grid_entities/characters/player/scripts/player_inventory.gd" id="3_08fk3"]
 [ext_resource type="Script" uid="uid://jqu31eg2nkvn" path="res://entities/grid_entities/characters/player/scripts/player_stats.gd" id="4_qdihw"]
 [ext_resource type="Script" uid="uid://ue6jqko73xxa" path="res://entities/grid_entities/characters/player/scripts/player_inventory_item.gd" id="4_sg284"]
