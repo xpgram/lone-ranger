@@ -15,7 +15,7 @@ func perform_async(playbill: FieldActionPlaybill) -> bool:
 
     var place_is_pit := ActionUtils.place_is_pit(playbill.target_position);
     var no_standables := not ActionUtils.place_has_standable_grid_entity(playbill.target_position);
-    var cannot_float := player.get_air_steps_remaining() <= 0;
+    var cannot_float := player.stats.air_steps_remaining.is_empty();
 
     if place_is_pit and no_standables and cannot_float:
       player.start_coyote_fall();
