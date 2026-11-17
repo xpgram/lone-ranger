@@ -42,7 +42,8 @@ func act_async() -> void:
   var move_direction := path[0] - self_entity.grid_position;
   var inter_distance := self_entity.distance_to(player) - 1;
   var is_adjacent := (inter_distance == 0);
-  var is_last_pos_adjacent := (VectorUtils.grid_distance(self_entity.grid_position, player.get_last_position()) == 1);
+  var previous_position := player.grid_position_ledger.get_previous_position();
+  var is_last_pos_adjacent := (VectorUtils.grid_distance(self_entity.grid_position, previous_position) == 1);
 
   # When close, prefer to move toward wherever the player just was.
   if (inter_distance == 1 and is_last_pos_adjacent):
