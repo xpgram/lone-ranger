@@ -3,7 +3,6 @@ class_name Player2D
 extends GridEntity
 
 
-# [TODO] Repair Player2D such that it is runnable.
 # [TODO] Finish refactoring Player2D to be less of a junk-drawer.
 # [TODO] Think about how to separate PlayablePlayer2D from DirectablePlayer2D.
 #     "Directable" meaning the copies. They don't need to know about any "camera", for
@@ -104,6 +103,20 @@ var _state_machine := CallableStateMachine.new();
 
 
 func _init() -> void:
+  # [FIXME] Problem: How does a new Player2D know not to add itself to the player group
+  #     if the only way to tell it it's a copy is _after_ initialization?
+  # How can we solve this...
+  #  - Inheritance: override the _init method.
+  #  - Ask player group pullers (who mostly use ActionUtils anyway) to filter the list of "players"
+  #    down to the real player (or non-real ones).
+  #  - Rediscover why this is in _init anyway, and move it to _ready. (I believe Player needs to be added
+  #    to the player group quickly so that other objects can reference them. It's acting as a distinct
+  #    game setup phase.)
+  #
+  # If I need distinct game setup phases... maybe I should add Events that a game-controller can call
+  # in sequence in its own ready step. This would be after Godot's other setup phases are all completed.
+  # But this way, objects could define _ready, add a listener for Events.post_setup_1 or whatever, and
+  # do what they need to there instead.
   add_to_group(Group.Player);
 
 
