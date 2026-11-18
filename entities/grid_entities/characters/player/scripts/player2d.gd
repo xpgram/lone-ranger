@@ -223,10 +223,41 @@ func affairs_settled_async() -> void:
   await _busy_lock.until_all_unlocked_async();
 
 
+# [TODO] Could this be a part of the animation submodule?
+#     If it were public, right? Isn't this public method for other scripts, like the
+#     FieldAction for using the Hookshot, to work with?
+## @nullable [br]
+## Returns the node object associated with [param item_type], or null if no association
+## exists.
+func get_handheld_tool(item_type: PlayerHandheldItem.HandheldItemType) -> Node2D:
+  return $HandheldItem.get_tool_node(item_type);
+
+
 ## Resets to full all player stats that represent exhaustion, such as HP.
 func replenish_all() -> void:
   var health := Component.getc(self, HealthComponent) as HealthComponent;
   health.set_hp_to_full();
+
+
+# [TODO] Why is this public, again?
+## Replays the active animation, but with current context, such as the faced direction,
+## etc.
+func retrigger_animation_state() -> void:
+  animation_state_switch.play(current_animation_state, faced_direction);
+
+
+## Sets the animation state to `param state_key`.
+func set_animation_state(state_key: StringName) -> void:
+  current_animation_state = state_key;
+  animation_state_switch.play(state_key, faced_direction);
+
+
+# [TODO] Could this be a part of the animation submodule?
+#     If those modules were public, I think. This method is for scripts like Hookshot_FieldAction
+#     to use, if I remember.
+## Sets the player avatar's handheld item type to [param item_type].
+func set_handheld_item(item_type: PlayerHandheldItem.HandheldItemType) -> void:
+  $HandheldItem.set_item(item_type);
 
 
 ## Starts the Coyote Fall minigame, where the [Player2D] animates themselves falling into
@@ -238,9 +269,33 @@ func start_coyote_fall() -> void:
   _state_machine.switch_to(_state_coyote_fall);
 
 
-# [TODO] It makes some sense to move these somewhere into the UI subpackage.
-#     Not all Player2D's would have this package, either, so they literally wouldn't
-#     be able to start dialogues.
+## Sets the animation state to a variant of the idle animation dependent on environment
+## context.
+func trigger_idle_animation_state() -> void:
+  # [TODO] Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
+  #     We could set is_flying on the animation object, and it would interpret all animation
+  #     state calls thusly.
+  #     This could work out better, anyway, because not every animation state has wings enabled.
+  #     Like, Push doesn't, right? But if the wings were a separate feature, enabled with
+  #     whatever animation was active whenever the wings were being used, everything would
+  #     work wonderfully.
+  if (
+      not ActionUtils.place_is_standable(grid_position)
+      and _is_using_wings
+  ):
+    set_animation_state('flying');
+  else:
+    set_animation_state('idle');
+
+
+## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
+## player is sent back to their last checkpoint and the world's state is reset.
+func trigger_sleep() -> void:
+  _state_machine.switch_to(_state_sleep);
+
+
+#region Move to submodule script
+# [TODO] Dialogue Package
 ## Starts a dialogue bubble to read out the scene described by [param resource].
 ## If [param resource] is `null`, does nothing. [br]
 ##
@@ -257,16 +312,30 @@ func start_dialogue(
   _dialogue_bubble.start(resource, cue, extra_game_states);
 
 
+# [TODO] Dialogue Package
 ## Starts a dialogue bubble to read out the scene described by [param scene].
 func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
   _dialogue_context_inspection_target.target = scene.inspection_subject;
   _dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
 
 
-## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
-## player is sent back to their last checkpoint and the world's state is reset.
-func trigger_sleep() -> void:
-  _state_machine.switch_to(_state_sleep);
+# [TODO] UI Package / Camera Package
+## Returns a reference to the player's camera-view shader interface.
+func get_cam_view_shader() -> PlayerCameraViewShader:
+  return _world_shader_rect;
+
+
+# [TODO] UI Package / Camera Package
+## Returns a reference to the player's HUD shader interface.
+func get_hud_shader() -> PlayerHUDShader:
+  return _hud_shader_rect;
+
+
+# [TODO] UI Package / Camera Package
+## Returns a reference to the player's screen-space shader interface.
+func get_screen_shader() -> PlayerScreenSpaceShader:
+  return _screen_shader_rect;
+#endregion Move to submodule script
 
 
 ## Moves the player to the last checkpoint position, resets their health and animation
@@ -283,59 +352,6 @@ func _send_player_back_to_checkpoint() -> void:
 
 
 #### #### #### #### #### #### #### #### #### ####
-
-# [TODO] Move these references to the Camera2D or some child of it.
-## Returns a reference to the player's camera-view shader interface.
-func get_cam_view_shader() -> PlayerCameraViewShader:
-  return _world_shader_rect;
-
-
-## Returns a reference to the player's HUD shader interface.
-func get_hud_shader() -> PlayerHUDShader:
-  return _hud_shader_rect;
-
-
-## Returns a reference to the player's screen-space shader interface.
-func get_screen_shader() -> PlayerScreenSpaceShader:
-  return _screen_shader_rect;
-
-
-## Sets the animation state to `param state_key`.
-func set_animation_state(state_key: StringName) -> void:
-  current_animation_state = state_key;
-  animation_state_switch.play(state_key, faced_direction);
-
-
-## Sets the animation state to a variant of the idle animation dependent on environment
-## context.
-func trigger_idle_animation_state() -> void:
-  # [TODO] Instead of trigger_idle(), shouldn't set_animation('idle') assume an idle variant?
-  if (
-      not ActionUtils.place_is_standable(grid_position)
-      and _is_using_wings
-  ):
-    set_animation_state('flying');
-  else:
-    set_animation_state('idle');
-
-
-## Sets the player avatar's handheld item type to [param item_type].
-func set_handheld_item(item_type: PlayerHandheldItem.HandheldItemType) -> void:
-  $HandheldItem.set_item(item_type);
-
-
-## @nullable [br]
-## Returns the node object associated with [param item_type], or null if no association
-## exists.
-func get_handheld_tool(item_type: PlayerHandheldItem.HandheldItemType) -> Node2D:
-  return $HandheldItem.get_tool_node(item_type);
-
-
-## Replays the active animation, but with current context, such as the faced direction,
-## etc.
-func retrigger_animation_state() -> void:
-  animation_state_switch.play(current_animation_state, faced_direction);
-
 
 ## Resets the animation state to the idle animation set.
 func _on_animation_finished(_from_animation: StringName = '') -> void:
