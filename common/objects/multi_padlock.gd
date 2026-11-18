@@ -67,7 +67,6 @@ func until_locked_async(which := &"") -> void:
     else:
       var lock_name := &"";
       while lock_name != which:
-        # [FIXME] This shouldn't return an array, but test it just in case.
         lock_name = await locked;
 
   return;
