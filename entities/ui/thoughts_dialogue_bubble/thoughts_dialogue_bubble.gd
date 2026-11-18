@@ -346,7 +346,6 @@ func _apply_dialogue_line_async() -> void:
 
 ## Applies tag effects for the current [member dialogue_line].
 func _process_tags_in_current_line() -> void:
-  prints('tags', dialogue_line.tags)
   for tag in dialogue_line.tags:
     tag = tag.to_lower();
 
