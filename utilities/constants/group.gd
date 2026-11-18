@@ -9,6 +9,9 @@ const TerrainData: StringName = 'terrain_data';
 ## A group containing player avatars.
 const Player: StringName = 'player_entities';
 
+## A group containing non-controlled independent copies of the main playable character.
+const PlayerCopy: StringName = 'player_copy_entities';
+
 ## A group containing enemy entities.
 const Enemy: StringName = 'enemy_entities';
 
