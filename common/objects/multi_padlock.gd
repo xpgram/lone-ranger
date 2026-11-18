@@ -102,7 +102,7 @@ func until_first_locked_async() -> void:
 ##
 ## Returns when the last lock is removed from this MultiPadlock's memory, or if it is already
 ## empty, returns immediately.
-func until_unlocked_all_async() -> void:
+func until_all_unlocked_async() -> void:
   await until_unlocked_async(&"");
 
 

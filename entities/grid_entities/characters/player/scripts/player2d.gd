@@ -42,7 +42,7 @@ var grid_position_ledger := GridPositionLedger.new();
 ## make the current board state unknowable or erratic, or that make it unable to
 ## participate in the normal procession of game mechanics where it would be unfair to
 ## proceed without them.
-var _busy_lock := Padlock.new();
+var _busy_lock := MultiPadlock.new();
 
 ## @nullable [br]
 ## A reference to the last-created coyote fall timer.
@@ -190,7 +190,7 @@ func _connect_member_object_signals() -> void:
 ## Returns if or when the player object is no longer busy handling an unstable state,
 ## such as a minigame QTE, some complicated animation, etc.
 func affairs_settled_async() -> void:
-  await _busy_lock.until_unlocked_async();
+  await _busy_lock.until_all_unlocked_async();
 
 
 # [TODO] I think it makes sense to let Player2D keep this, in part because it still
@@ -514,7 +514,7 @@ func _state_idle__move_input(input_vector: Vector2i) -> void:
 
 ## The injured state handles player flinch animations and input suspension after losing HP.
 func _state_injured() -> void:
-  _busy_lock.lock();
+  _busy_lock.lock("injured_state");
 
   set_animation_state('injured');
   $Audio/PlayerHurt.play();
@@ -524,14 +524,14 @@ func _state_injured() -> void:
   await get_tree().create_timer(0.5).timeout;
   _state_machine.switch_to(_state_idle);
 
-  _busy_lock.unlock();
+  _busy_lock.unlock("injured_state");
 
 
 ## The coyote fall state occurs when the player is risking a fall into a pit or hole. This
 ## state runs a QTE minigame that succeeds or fails, and reports this result via
 ## [signal coyote_fall_recovered_result].
 func _state_coyote_fall() -> void:
-  _busy_lock.lock();
+  _busy_lock.lock("coyote_fall_state");
 
   set_animation_state('coyote_fall');
 
@@ -555,7 +555,7 @@ func _state_coyote_fall__exit() -> void:
     _coyote_fall_timer.stop();
     _coyote_fall_timer.queue_free();
 
-  _busy_lock.unlock();
+  _busy_lock.unlock("coyote_fall_state");
 
 
 func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
@@ -569,7 +569,7 @@ func _state_coyote_fall__move_input(input_vector: Vector2i) -> void:
 ## The fall state is a transition state that handles the animation and effects of falling
 ## into a pit or hole.
 func _state_fall() -> void:
-  _busy_lock.lock();
+  _busy_lock.lock("fall_state");
 
   await get_tree().create_timer(0.25).timeout;
 
@@ -597,13 +597,13 @@ func _state_fall() -> void:
   #     that could make sense, but that's not how any of this is implemented.
   #     I don't have cascading player states.
 
-  _busy_lock.unlock();
+  _busy_lock.unlock("fall_state");
 
 
 ## The death state handles death animations and resets some player systems before
 ## triggering a revive at the last checkpoint.
 func _state_death() -> void:
-  _busy_lock.lock();
+  _busy_lock.lock("death_state");
 
   _interrupt_ui_subsystems();
   set_animation_state('injured');
@@ -623,7 +623,7 @@ func _state_death() -> void:
   await _world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-  _busy_lock.unlock();
+  _busy_lock.unlock("death_state");
 
 
 ## The sleep state handles sleep animations and resets some player systems before
@@ -632,7 +632,7 @@ func _state_death() -> void:
 ## This state transition is similar to [method _state_death], but uses different
 ## animations.
 func _state_sleep() -> void:
-  _busy_lock.lock();
+  _busy_lock.lock("sleep_state");
 
   _interrupt_ui_subsystems();
   # [TODO] Play a sleeping animation.
@@ -647,7 +647,7 @@ func _state_sleep() -> void:
   await _world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
-  _busy_lock.unlock();
+  _busy_lock.unlock("sleep_state");
 
 
 class PlayerState extends CallableState:
