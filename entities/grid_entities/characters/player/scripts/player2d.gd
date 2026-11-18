@@ -100,7 +100,7 @@ var _state_machine := CallableStateMachine.new();
 
 # [TODO] This should be named more clearly. This is the dialogue context node for the "Inspect" subject.
 ## A reference to the dialogue context object for inspect-object scenes.
-@onready var _dialogue_inspection_target: NodeRetargeter = %DialogueInspectionTarget;
+@onready var _dialogue_context_inspection_target: NodeRetargeter = %DialogueInspectionTarget;
 
 
 func _init() -> void:
@@ -237,7 +237,7 @@ func start_dialogue(
 
 ## Starts a dialogue bubble to read out the scene described by [param scene].
 func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
-  _dialogue_inspection_target.target = scene.inspection_subject;
+  _dialogue_context_inspection_target.target = scene.inspection_subject;
   _dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
 
 
