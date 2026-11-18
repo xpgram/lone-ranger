@@ -217,17 +217,18 @@ func _connect_to_ui_subsystems() -> void:
 
 
 
-#### #### #### #### #### #### #### #### #### ####
-
 ## Returns if or when the player object is no longer busy handling an unstable state,
 ## such as a minigame QTE, some complicated animation, etc.
 func affairs_settled_async() -> void:
   await _busy_lock.until_all_unlocked_async();
 
 
-# [TODO] I think it makes sense to let Player2D keep this, in part because it still
-#    manages animation states and such, but we'll need Controller or the Move script
-#    to manage "multiple" coyote falls at once, even if it really only manages the main one.
+## Resets to full all player stats that represent exhaustion, such as HP.
+func replenish_all() -> void:
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.set_hp_to_full();
+
+
 ## Starts the Coyote Fall minigame, where the [Player2D] animates themselves falling into
 ## the tile it's facing, and the player has an opportunity to save themselves with a QTE. [br]
 ##
@@ -237,20 +238,9 @@ func start_coyote_fall() -> void:
   _state_machine.switch_to(_state_coyote_fall);
 
 
-# [TODO] I think this should be here and not Controller, but I haven't really
-#     thought through it.
-## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
-## player is sent back to their last checkpoint and the world's state is reset. [br]
-func trigger_sleep() -> void:
-  _state_machine.switch_to(_state_sleep);
-
-
-## Resets to full all player stats that represent exhaustion, such as HP.
-func replenish_all() -> void:
-  var health := Component.getc(self, HealthComponent) as HealthComponent;
-  health.set_hp_to_full();
-
-
+# [TODO] It makes some sense to move these somewhere into the UI subpackage.
+#     Not all Player2D's would have this package, either, so they literally wouldn't
+#     be able to start dialogues.
 ## Starts a dialogue bubble to read out the scene described by [param resource].
 ## If [param resource] is `null`, does nothing. [br]
 ##
@@ -271,6 +261,12 @@ func start_dialogue(
 func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
   _dialogue_context_inspection_target.target = scene.inspection_subject;
   _dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
+
+
+## Triggers the player state 'sleep', which behaves somewhat like 'death' in that the
+## player is sent back to their last checkpoint and the world's state is reset.
+func trigger_sleep() -> void:
+  _state_machine.switch_to(_state_sleep);
 
 
 ## Moves the player to the last checkpoint position, resets their health and animation
