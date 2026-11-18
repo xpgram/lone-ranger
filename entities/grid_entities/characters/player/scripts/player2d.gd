@@ -335,45 +335,15 @@ func get_hud_shader() -> PlayerHUDShader:
 ## Returns a reference to the player's screen-space shader interface.
 func get_screen_shader() -> PlayerScreenSpaceShader:
   return _screen_shader_rect;
-#endregion Move to submodule script
 
 
-## Moves the player to the last checkpoint position, resets their health and animation
-## state.
-func _send_player_back_to_checkpoint() -> void:
-  grid_position = grid_position_ledger.get_revive_point();
-  faced_direction = Vector2i.DOWN;
-
-  replenish_all();
-  Events.board_reset_declared.emit();
-
-  # [TODO] This should be a 'wake up' animation.
-  trigger_idle_animation_state();
-
-
-#### #### #### #### #### #### #### #### #### ####
-
-## Resets the animation state to the idle animation set.
-func _on_animation_finished(_from_animation: StringName = '') -> void:
-  # [FIXME] This function is not necessary anymore. 'injured' is a state now.
-  #  'item_get!' should also be a state.
-  var non_resetting_states: Array[StringName] = [
-    &'item_get!',
-  ];
-
-  if current_animation_state in non_resetting_states:
-    return;
-
-  trigger_idle_animation_state();
-
-
-## Event handler for [signal CommandMenu.ui_canceled]. [br]
-## Reacquires player input focus from sub-UI systems.
-func _on_command_menu_cancelled() -> void:
-  _selected_command_menu_action = null;
-  focus_node.grab_focus();
-
-
+# [TODO] Move to an input-focus-manager node.
+#     The command menu process is (potentially) fairly complicated. Not all commands are routed
+#     through the FieldCursor, maybe, or maybe they need you to select two places, etc.
+#     So, Player2D shouldn't handle that, an InputFocusDelegator node should, and Player2D
+#     should just invoke it from the outside.
+#     Player2D emits pause() or command_menu(), and InputFocusDelegator responds to it by
+#     shifting focus to the relevant context.
 ## Event handler for [signal CommandMenu.action_selected]. [br]
 ## Saves a reference to the chosen [FeildAction] and advances the sub-UI system to the
 ## [FieldCursor].
@@ -383,18 +353,29 @@ func _on_command_menu_action_selected(action: FieldAction) -> void:
   _field_cursor.open_from_start(action);
 
 
+# [TODO] Move to an input-focus-manager node.
 ## Responds to 'inspect' inputs signaled by the command menu.
 func _on_command_menu_action_inspected(action: FieldAction) -> void:
   var dialogue = DialogueManager.create_resource_from_text(action.action_hint);
   _dialogue_bubble.start(dialogue);
 
 
+# [TODO] Move to an input-focus-manager node.
+## Event handler for [signal CommandMenu.ui_canceled]. [br]
+## Reacquires player input focus from sub-UI systems.
+func _on_command_menu_cancelled() -> void:
+  _selected_command_menu_action = null;
+  focus_node.grab_focus();
+
+
+# [TODO] Move to an input-focus-manager node.
 ## Event handler for [signal FieldCursor.ui_canceled]. [br]
 ## Yields input focus back to the [CommandMenu].
 func _on_field_cursor_canceled() -> void:
   _command_menu.open();
 
 
+# [TODO] Move to an input-focus-manager node.
 ## Event handler for [signal FieldCursor.grid_position_selected]. [br]
 ## Builds and emits a [FieldActionSchedule] for the chosen [FieldAction] and target
 ## coordinates. Also, yields input focus back to the player.
@@ -412,12 +393,14 @@ func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
     _field_cursor.play_error();
 
 
+# [TODO] Move to an input-focus-manager node.
 ## Responds to the dialogue bubble being closed and releasing input focus.
 func _on_dialogue_bubble_closed() -> void:
   if _command_menu.visible:
     _command_menu.regrab_focus();
 
 
+# [TODO] Move to an input-focus-manager node.
 ## Closes the player's UI subsystems and forces input focus back into the primary
 ## character controller.
 func _interrupt_ui_subsystems() -> void:
@@ -427,24 +410,30 @@ func _interrupt_ui_subsystems() -> void:
   focus_node.grab_focus();
 
 
+# [TODO] Move to an input-focus-manager node.
 ## Closes player UI subsystems that are unrelated to combat and other essential
 ## game mechanics.
 func _interrupt_nonemergency_ui_subsystems() -> void:
   _dialogue_bubble.close();
   # [FIXME] Improve input focus management.
+#endregion Move to submodule script
 
 
-## Handler for when the player's HP changes value.
-func _on_health_changed(value: int, old_value: int) -> void:
-  if value < old_value and value != 0:
-    _state_machine.switch_to(_state_injured);
+## Resets the animation state to the idle animation set.
+func _on_animation_finished(_from_animation: StringName = '') -> void:
+  # [FIXME] This function is not necessary anymore. 'injured' is a state now.
+  #  'item_get!' should also be a state.
+  var non_resetting_states: Array[StringName] = [
+    &'item_get!',
+  ];
+
+  if current_animation_state in non_resetting_states:
+    return;
+
+  trigger_idle_animation_state();
 
 
-## Handler for when the player's HP is completely emptied.
-func _on_health_empty() -> void:
-  _state_machine.switch_to(_state_death);
-
-
+# [TODO] Player copies don't need this.
 ## Reassess the player's equipment and modify their stats accordingly.
 func _on_equipment_changed__recalc_stats(items: Array[StringName]) -> void:
   stats.air_steps_remaining.maximum = (
@@ -453,20 +442,18 @@ func _on_equipment_changed__recalc_stats(items: Array[StringName]) -> void:
   );
 
 
-## Handler for when the player's inventory has a new number of fully complete heart
-## containers.
-func _on_heart_container_completed() -> void:
-  # [TODO] Some of this ought to be... inside the HealthComponent maybe? A wrapper
-  #   to such, maybe?
-  var base_containers := 2;
-  var total_containers := inventory.get_heart_containers_count() + base_containers;
-  var total_max_hp := 2 * total_containers;
+# [TODO] This should be _on_facing_changed, right? But it's defined in GridEntity.
+func _facing_changed() -> void:
+  retrigger_animation_state();
 
-  var health := Component.getc(self, HealthComponent) as HealthComponent;
 
-  var new_max_hp := total_max_hp - health.maximum;
-  health.maximum = total_max_hp;
-  health.value += new_max_hp;
+func _on_free_fall() -> void:
+  if stats.air_steps_remaining.is_empty():
+    _is_using_wings = false;
+    _state_machine.switch_to(_state_fall);
+  else:
+    _is_using_wings = true;
+    stats.air_steps_remaining.value -= 1;
 
 
 func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
@@ -486,18 +473,50 @@ func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
   trigger_idle_animation_state();
 
 
-func _facing_changed() -> void:
-  retrigger_animation_state();
+# [TODO] Player copies don't need this. They shouldn't even collide with heart container pieces.
+## Handler for when the player's inventory has a new number of fully complete heart
+## containers.
+func _on_heart_container_completed() -> void:
+  # [TODO] Some of this ought to be... inside the HealthComponent maybe? A wrapper
+  #   to such, maybe?
+  var base_containers := 2;
+  var total_containers := inventory.get_heart_containers_count() + base_containers;
+  var total_max_hp := 2 * total_containers;
+
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+
+  var new_max_hp := total_max_hp - health.maximum;
+  health.maximum = total_max_hp;
+  health.value += new_max_hp;
 
 
-func _on_free_fall() -> void:
-  if stats.air_steps_remaining.is_empty():
-    _is_using_wings = false;
-    _state_machine.switch_to(_state_fall);
-  else:
-    _is_using_wings = true;
-    stats.air_steps_remaining.value -= 1;
+## Handler for when the player's HP changes value.
+func _on_health_changed(value: int, old_value: int) -> void:
+  if value < old_value and value != 0:
+    _state_machine.switch_to(_state_injured);
 
+
+## Handler for when the player's HP is completely emptied.
+func _on_health_empty() -> void:
+  _state_machine.switch_to(_state_death);
+
+
+# [TODO] This is player2d-specific, but even so, it's not something that player copies need.
+#     If is_copy, this method should do nothing.
+## Moves the player to the last checkpoint position, resets their health and animation
+## state.
+func _send_player_back_to_checkpoint() -> void:
+  grid_position = grid_position_ledger.get_revive_point();
+  faced_direction = Vector2i.DOWN;
+
+  replenish_all();
+  Events.board_reset_declared.emit();
+
+  # [TODO] This should be a 'wake up' animation.
+  trigger_idle_animation_state();
+
+
+#### #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
 ## The idle state is the "at rest" state. All, or most, player gameplay features can be
 ## accessed from here.
