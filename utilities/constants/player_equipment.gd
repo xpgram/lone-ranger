@@ -13,7 +13,7 @@ class_name PlayerEquipment
 static var all_artefacts: Dictionary[String, StringName]:
   get():
     return {
-      'fast_move': fast_move,
+      # 'fast_move': fast_move,
       'shove': shove,
       'wings': wings,
       'sword': sword,
