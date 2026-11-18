@@ -109,12 +109,9 @@ func _init() -> void:
 
 func _ready() -> void:
   super._ready();
-
   _assemble_machine_states();
+  _connect_signals();
   _set_starting_values();
-  _connect_component_signals();
-  _connect_member_object_signals();
-  _connect_to_ui_subsystems();
 
 
 ## Delegates an [InputEvent] to the object's current state handler for inputs.
@@ -171,17 +168,39 @@ func _set_starting_values() -> void:
   animation_state_switch.play(current_animation_state, faced_direction);
 
 
-## Attaches callbacks to signals emitted by owned components.
-func _connect_component_signals() -> void:
-  inventory.equipment_changed.connect(_on_equipment_changed__recalc_stats);
+func _connect_signals() -> void:
+  _connect_component_signals();
+  _connect_subsystem_signals();
+  _connect_to_ui_subsystems();
 
-  # [TODO] Which one, player or controller, should be responsible for this?
+
+## Connects to signals emitted by owned [Component]s.
+func _connect_component_signals() -> void:
+  var health := Component.getc(self, HealthComponent) as HealthComponent;
+  health.value_changed.connect(_on_health_changed);
+  health.empty.connect(_on_health_empty);
+
+
+## Connects to signals from child objects.
+func _connect_subsystem_signals() -> void:
+  inventory.equipment_changed.connect(_on_equipment_changed__recalc_stats);
   inventory.heart_container_completed.connect(_on_heart_container_completed);
 
-
-func _connect_member_object_signals() -> void:
   _move_input_repeater.input_triggered.connect(_on_move_input);
   animation_player.animation_finished.connect(_on_animation_finished);
+
+
+## Connects to signals from the player's user-interface objects, like the Command Menu,
+## the Field Cursor, the Dialogue Box, the health meter, etc.
+func _connect_to_ui_subsystems() -> void:
+  _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
+  _command_menu.action_selected.connect(_on_command_menu_action_selected);
+  _command_menu.action_inspected.connect(_on_command_menu_action_inspected);
+
+  _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
+  _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
+
+  _dialogue_bubble.dialogue_closed.connect(_on_dialogue_bubble_closed);
 
 
 
@@ -321,22 +340,6 @@ func _on_animation_finished(_from_animation: StringName = '') -> void:
     return;
 
   trigger_idle_animation_state();
-
-
-## Makes signal connections to the player's [CommandMenu] and [FieldCursor] instances.
-func _connect_to_ui_subsystems() -> void:
-  _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
-  _command_menu.action_selected.connect(_on_command_menu_action_selected);
-  _command_menu.action_inspected.connect(_on_command_menu_action_inspected);
-
-  _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
-  _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
-
-  _dialogue_bubble.dialogue_closed.connect(_on_dialogue_bubble_closed);
-
-  var health := Component.getc(self, HealthComponent) as HealthComponent;
-  health.value_changed.connect(_on_health_changed);
-  health.empty.connect(_on_health_empty);
 
 
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
