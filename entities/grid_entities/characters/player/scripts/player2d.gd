@@ -7,6 +7,35 @@ extends GridEntity
 # [TODO] Think about how to separate PlayablePlayer2D from DirectablePlayer2D.
 #     "Directable" meaning the copies. They don't need to know about any "camera", for
 #     instance.
+# [TODO] Create a PlayerInterface node that holds references to the Camera2D, the
+#     CommandMenu, etc., such that newly instantiated Player2D's literally cannot access
+#     the main-player's extra components.
+# [TODO] Break off methods irrelevant to Player2D into this PlayerInterface, and also
+#     submodules like animation controller as needed.
+# [TODO] (Try to) break off methods relevant to Player2D but irrelevant to Player2D-copies
+#     into submodules and such.
+# [TODO] Add a get_action_from_input(input: PlayerInputStruct) -> FieldActionSchedule
+#   - This may return null.
+#   - PlayerInputStruct has two fields:
+#       - pressed_action: StringName ("interact", "cancel", "open_menu", etc.)
+#       - move_vector: Vector2i
+# [TODO] _unhandled_input and _on_move_input both do some preliminary checking, and
+#     eventually route their input into this _get_action_from_input(), then emit the
+#     field_action_declared() signal with the result, if it wasn't null.
+#     The PlayerInputStruct they created as part of this process is stored... somewhere.
+#     A child node that adds itself to a public Group, maybe.
+# [TODO] Add a replay_saved_action() that is similar to _unhandled_input and
+#     _on_move_input, but takes its struct from the public store. Naturally, this method
+#     is for the player-copies.
+
+
+# [TODO] Create a 3D mockup that is mega simplified. No Grid, no collision, yes controls
+#     that warp you in a grid-like fashion.
+#     Use 2D billboards for characters (yourself, enemies), and use the floor textures on
+#     3D models.
+#     Port over the pixelation and color shader stuff, too.
+#     See how it feels to look at the game in 3D.
+#     I imagine it feeling a bit like Pokemon gen 4 and 5.
 
 
 ## Emitted when an action the player would like to perform has been chosen.
