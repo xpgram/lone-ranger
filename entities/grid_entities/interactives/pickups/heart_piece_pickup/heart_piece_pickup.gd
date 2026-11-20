@@ -10,4 +10,4 @@ func _on_collide(entity: GridEntity) -> void:
 
 
 func _add_heart_piece_to_player(player: Player2D) -> void:
-  player.inventory.add_equipment(PlayerEquipment.heart_piece);
+  player.subsystem.inventory.add_equipment(PlayerEquipment.heart_piece);

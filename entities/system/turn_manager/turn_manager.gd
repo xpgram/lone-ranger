@@ -101,7 +101,7 @@ func _conduct_player_turn_async(player_schedule: FieldActionSchedule) -> bool:
 
   # [FIXME] Inventory should not expend an unexpendable action. This request possibly shouldn't even go here.
   if player_action.action_type in [Enums.FieldActionType.Item, Enums.FieldActionType.Magic]:
-    player.inventory.expend(player_action.action_uid);
+    player.subsystem.inventory.expend(player_action.action_uid);
 
   player.update_attributes();
 

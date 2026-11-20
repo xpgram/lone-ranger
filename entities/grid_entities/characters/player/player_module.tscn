@@ -194,9 +194,9 @@ _entity = NodePath("Player2D")
 _camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://kreg7knmfr1j"
 
-[node name="Player2D" parent="." unique_id=389025421 node_paths=PackedStringArray("inventory") instance=ExtResource("2_7iogb")]
-inventory = NodePath("../Inventory")
+[node name="Player2D" parent="." unique_id=389025421 node_paths=PackedStringArray("subsystem") instance=ExtResource("2_7iogb")]
 stats = SubResource("Resource_mrt6k")
+subsystem = NodePath("../SubsystemPackage")
 pushable = true
 
 [node name="PlayerCopies" type="Node2D" parent="." unique_id=973660402]
@@ -207,11 +207,21 @@ _abilities = Dictionary[StringName, ExtResource("4_sg284")]({
 &"sleep": SubResource("Resource_l0w8i")
 })
 
-[node name="SubsystemPackage" type="Node" parent="." unique_id=1120968205]
+[node name="SubsystemPackage" type="Node" parent="." unique_id=1120968205 node_paths=PackedStringArray("inventory", "command_menu", "dialogue_bubble", "field_cursor", "world_shader_rect", "hud_shader_rect", "screen_shader_rect", "focus_node", "move_input_repeater", "dialogue_context_inspection_target")]
+unique_name_in_owner = true
 script = ExtResource("8_qdihw")
+inventory = NodePath("../Inventory")
+command_menu = NodePath("../Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/CommandMenu")
+dialogue_bubble = NodePath("../Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer/ThoughtsDialogueBubble")
+field_cursor = NodePath("../FieldCursor")
+world_shader_rect = NodePath("../Camera2D/CamViewShader")
+hud_shader_rect = NodePath("../Camera2D/UIShaderCanvasGroup")
+screen_shader_rect = NodePath("../Camera2D/ScreenSpaceShader")
+focus_node = NodePath("../FocusableControl")
+move_input_repeater = NodePath("../InputHelpers/MoveInputRepeater")
+dialogue_context_inspection_target = NodePath("../DialogueContextNodes/DialogueContext_InspectSubject/DialogueInspectionTarget")
 
 [node name="FocusableControl" type="Control" parent="." unique_id=845502978]
-unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("6_1ol17")
@@ -220,7 +230,6 @@ metadata/_custom_type_script = "uid://dx2don6d2tt38"
 [node name="InputHelpers" type="Node" parent="." unique_id=201555692]
 
 [node name="MoveInputRepeater" type="Node" parent="InputHelpers" unique_id=1605801011 node_paths=PackedStringArray("_focus_context")]
-unique_name_in_owner = true
 script = ExtResource("13_3dwjy")
 _focus_context = NodePath("../../FocusableControl")
 reset_time_on_direction_change = false
@@ -233,7 +242,6 @@ right_axis = &"move_right"
 metadata/_custom_type_script = "uid://bq7ia3l6n5kbw"
 
 [node name="FieldCursor" parent="." unique_id=1544867713 node_paths=PackedStringArray("_origin_object") instance=ExtResource("12_5jpfb")]
-unique_name_in_owner = true
 _origin_object = NodePath("../Player2D")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1507849671 node_paths=PackedStringArray("subject")]
@@ -245,7 +253,6 @@ close_follow_lerp_speed = 12
 metadata/_custom_type_script = "uid://bgl6q243ogu5r"
 
 [node name="CamViewShader" type="ColorRect" parent="Camera2D" unique_id=411488792]
-unique_name_in_owner = true
 material = SubResource("ShaderMaterial_yibea")
 offset_left = -120.0
 offset_top = -80.0
@@ -256,7 +263,6 @@ color = Color(1, 1, 1, 0.25)
 script = ExtResource("20_yibea")
 
 [node name="UIShaderCanvasGroup" type="CanvasGroup" parent="Camera2D" unique_id=264260862]
-unique_name_in_owner = true
 material = SubResource("ShaderMaterial_06ww2")
 script = ExtResource("13_1ol17")
 
@@ -318,7 +324,6 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 9
 
 [node name="ThoughtsDialogueBubble" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox/MarginContainer" unique_id=984665687 instance=ExtResource("16_yibea")]
-unique_name_in_owner = true
 layout_mode = 2
 
 [node name="CmdMenuSpacer" type="Control" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1247845413]
@@ -326,7 +331,6 @@ custom_minimum_size = Vector2(14, 0)
 layout_mode = 2
 
 [node name="CommandMenu" parent="Camera2D/UIShaderCanvasGroup/UIContainer/CommandMenu_HBox" unique_id=1435407659 node_paths=PackedStringArray("_inventory") instance=ExtResource("14_sg284")]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 _inventory = NodePath("../../../../../Inventory")
@@ -343,7 +347,6 @@ layout_mode = 0
 copy_mode = 2
 
 [node name="ScreenSpaceShader" type="ColorRect" parent="Camera2D" unique_id=1454266606]
-unique_name_in_owner = true
 material = SubResource("ShaderMaterial_1ol17")
 offset_left = -120.0
 offset_top = -80.0
@@ -374,5 +377,4 @@ target = NodePath("DialogueInspectionTarget")
 metadata/_custom_type_script = "uid://cd3222nx3y3k5"
 
 [node name="DialogueInspectionTarget" type="Node" parent="DialogueContextNodes/DialogueContext_InspectSubject" unique_id=131318386]
-unique_name_in_owner = true
 script = ExtResource("23_mrt6k")

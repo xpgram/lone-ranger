@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 
   var player := ActionUtils.get_player_entity();
 
-  if not player.inventory.has_equipment(PlayerEquipment.hookshot):
+  if not player.subsystem.inventory.has_equipment(PlayerEquipment.hookshot):
     return;
 
   _instructions_shown = true;

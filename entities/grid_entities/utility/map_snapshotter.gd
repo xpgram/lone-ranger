@@ -91,7 +91,7 @@
 # [x] 'Submitted' text is interpreted like a command line.
 #   [x] give shove -> grants shove equipment
 #   [x] LineEdit -> DebugUI -> Debug.interpreter -> signal Events.debug_give_item
-#       -> player.inventory
+#       -> player.subsystem.inventory
 # [x] LineEdit is clickable to focus
 #     (I think the Viewport stuff is getting in the way?)
 #     (I did something to the viewport a while ago that stops blocking clicks, I think.

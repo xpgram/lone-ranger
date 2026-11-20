@@ -15,8 +15,8 @@ func _ready() -> void:
 func _on_entered(entity: GridEntity) -> void:
   if not entity is Player2D:
     return;
-  
-  var inventory := (entity as Player2D).inventory;
+
+  var inventory := (entity as Player2D).subsystem.inventory;
 
   if (
       not _sound_played

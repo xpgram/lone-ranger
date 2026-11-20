@@ -26,6 +26,6 @@ func perform_interaction_async(actor: GridEntity) -> void:
 ## Add the draw point's magic contents to the [param player]'s inventory.
 func _give_magic_to_player(player: Player2D) -> void:
   var magic_item := _draw_point.magic_item.duplicate();
-  player.inventory.add_item(magic_item);
+  player.subsystem.inventory.add_item(magic_item);
 
   _draw_point.deactivate();

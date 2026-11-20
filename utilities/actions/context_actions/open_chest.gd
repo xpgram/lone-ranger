@@ -18,7 +18,10 @@ func perform_interaction_async(actor: GridEntity) -> void:
   chest.is_open = true;
   actor.faced_direction = Vector2i.DOWN;
 
-  if actor is Player2D:
+  if (
+      actor is Player2D
+      and not actor.has_attribute(GridEntityAttributes.mirror_entity)
+  ):
     _give_items_to_actor(actor);
     AudioBus.play_audio_scene(_scene_open_audio);
     await _play_animation_async(actor);
@@ -26,11 +29,14 @@ func perform_interaction_async(actor: GridEntity) -> void:
 
 ## Add the chest's contents to the inventory of [param actor].
 func _give_items_to_actor(actor: Player2D) -> void:
+  if not actor.subsystem:
+    return;
+
   for item in chest.contents:
-    actor.inventory.add_item(item);
+    actor.subsystem.inventory.add_item(item);
 
   for equipment in chest.equipment_contents:
-    actor.inventory.add_equipment(equipment);
+    actor.subsystem.inventory.add_equipment(equipment);
 
 
 ## Plays a scripted animation using [param actor].

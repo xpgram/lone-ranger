@@ -4,6 +4,13 @@ extends Node
 
 
 # [TODO] Should this be a parent node to all these systems?
+# [TODO] Fix public/private access.
+#   For reference:
+#     inventory and focus_node were public.
+#     everything else was private.
+#   For the record:
+#     I don't like subsystem.focus_node.accept_event() all that much.
+#     I need to think of alternatives first, though.
 
 
 @export_group("Subsystems")

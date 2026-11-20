@@ -91,7 +91,7 @@ static func get_inspect_action(player: Player2D) -> FieldActionSchedule:
 ## Returns the context-appropriate [FieldAction] for a "Move" action.
 static func get_move_variant(player: Player2D) -> FieldAction:
   return (
-    FieldActionList.move_fast if player.inventory.has_equipment(PlayerEquipment.fast_move)
+    FieldActionList.move_fast if player.subsystem.inventory.has_equipment(PlayerEquipment.fast_move)
     else FieldActionList.move
   );
 
@@ -99,7 +99,7 @@ static func get_move_variant(player: Player2D) -> FieldAction:
 ## Returns the context-appropriate [FieldAction] for a "Push" action.
 static func get_push_variant(player: Player2D) -> FieldAction:
   return (
-    FieldActionList.shove if player.inventory.has_equipment(PlayerEquipment.shove)
+    FieldActionList.shove if player.subsystem.inventory.has_equipment(PlayerEquipment.shove)
     else FieldActionList.push
   );
 
@@ -107,7 +107,7 @@ static func get_push_variant(player: Player2D) -> FieldAction:
 ## Returns the context-appropriate [FieldAction] for a "Sword" action.
 static func get_sword_variant(player: Player2D) -> FieldAction:
   return (
-    FieldActionList.sword_strike if player.inventory.has_equipment(PlayerEquipment.sword)
+    FieldActionList.sword_strike if player.subsystem.inventory.has_equipment(PlayerEquipment.sword)
     else FieldActionList.null_action
   );
 
@@ -115,7 +115,7 @@ static func get_sword_variant(player: Player2D) -> FieldAction:
 ## Returns the context-appropriate [FieldAction] for a "Hookshot" action.
 static func get_hookshot_variant(player: Player2D) -> FieldAction:
   return (
-    FieldActionList.hookshot if player.inventory.has_equipment(PlayerEquipment.hookshot)
+    FieldActionList.hookshot if player.subsystem.inventory.has_equipment(PlayerEquipment.hookshot)
     else FieldActionList.null_action
   );
 

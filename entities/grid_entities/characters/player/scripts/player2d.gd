@@ -7,9 +7,8 @@ extends GridEntity
 # [TODO] Think about how to separate PlayablePlayer2D from DirectablePlayer2D.
 #     "Directable" meaning the copies. They don't need to know about any "camera", for
 #     instance.
-# [TODO] Create a PlayerInterface node that holds references to the Camera2D, the
-#     CommandMenu, etc., such that newly instantiated Player2D's literally cannot access
-#     the main-player's extra components.
+# [TODO] Make sure each use of 'subsystem' first checks that subsystem exists.
+#     Copied players have the attribute mirror_entity and have no subsystem package (== null).
 # [TODO] Break off methods irrelevant to Player2D into this PlayerInterface, and also
 #     submodules like animation controller as needed.
 # [TODO] (Try to) break off methods relevant to Player2D but irrelevant to Player2D-copies
@@ -46,13 +45,15 @@ signal action_declared(action: FieldActionSchedule, buffer_this: bool);
 signal coyote_fall_recovered_result(recovered: bool);
 
 
-## The player's collection of bits and bobs.
-@export var inventory: PlayerInventory;
-
 ## An object for tracking player values, typically ones that change with further gameplay.
 ## Not all values are kept here, however: health is measured by HealthComponent, a system
 ## to make it more accessible to other nodes.
 @export var stats: PlayerStats;
+
+## @nullable [br]
+## A node that contains references to various other player systems.
+@export var subsystem: PlayerSubsystemPackage;
+
 
 # [TODO] An enum instead of strings?
 ## The [StringName] of this player's current animation.
@@ -101,34 +102,6 @@ var _state_machine := CallableStateMachine.new();
 
 ##
 @onready var animation_state_switch: AnimationStateSwitch = %AnimationStateSwitch;
-
-##
-@onready var focus_node: FocusableControl = %FocusableControl;
-
-##
-@onready var _move_input_repeater: InputAxisRepeater = %MoveInputRepeater;
-
-## The player's unique [CommandMenu] instance.
-@onready var _command_menu: CommandMenu = %CommandMenu;
-
-## The player's unique dialogue bubble instance.
-@onready var _dialogue_bubble: ThoughtsDialogueBubble = %ThoughtsDialogueBubble;
-
-## The player's unique [FieldCursor] instance.
-@onready var _field_cursor: FieldCursor = %FieldCursor;
-
-## A reference to the Rect that handles the game world, screen space shader effects.
-@onready var _world_shader_rect: PlayerCameraViewShader = %CamViewShader;
-
-## A reference to the Rect that handles HUD-only screen space shader effects.
-@onready var _hud_shader_rect: PlayerHUDShader = %UIShaderCanvasGroup;
-
-## A reference to the Rect that handles wholistic screen space shader effects.
-@onready var _screen_shader_rect: PlayerScreenSpaceShader = %ScreenSpaceShader;
-
-# [TODO] This should be named more clearly. This is the dialogue context node for the "Inspect" subject.
-## A reference to the dialogue context object for inspect-object scenes.
-@onready var _dialogue_context_inspection_target: NodeRetargeter = %DialogueInspectionTarget;
 
 
 func _init() -> void:
@@ -225,24 +198,24 @@ func _connect_component_signals() -> void:
 
 ## Connects to signals from child objects.
 func _connect_subsystem_signals() -> void:
-  inventory.equipment_changed.connect(_on_equipment_changed__recalc_stats);
-  inventory.heart_container_completed.connect(_on_heart_container_completed);
+  subsystem.inventory.equipment_changed.connect(_on_equipment_changed__recalc_stats);
+  subsystem.inventory.heart_container_completed.connect(_on_heart_container_completed);
 
-  _move_input_repeater.input_triggered.connect(_on_move_input);
+  subsystem.move_input_repeater.input_triggered.connect(_on_move_input);
   animation_player.animation_finished.connect(_on_animation_finished);
 
 
 ## Connects to signals from the player's user-interface objects, like the Command Menu,
 ## the Field Cursor, the Dialogue Box, the health meter, etc.
 func _connect_to_ui_subsystems() -> void:
-  _command_menu.ui_canceled.connect(_on_command_menu_cancelled);
-  _command_menu.action_selected.connect(_on_command_menu_action_selected);
-  _command_menu.action_inspected.connect(_on_command_menu_action_inspected);
+  subsystem.command_menu.ui_canceled.connect(_on_command_menu_cancelled);
+  subsystem.command_menu.action_selected.connect(_on_command_menu_action_selected);
+  subsystem.command_menu.action_inspected.connect(_on_command_menu_action_inspected);
 
-  _field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
-  _field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
+  subsystem.field_cursor.ui_canceled.connect(_on_field_cursor_canceled);
+  subsystem.field_cursor.grid_position_selected.connect(_on_field_cursor_location_selected);
 
-  _dialogue_bubble.dialogue_closed.connect(_on_dialogue_bubble_closed);
+  subsystem.dialogue_bubble.dialogue_closed.connect(_on_dialogue_bubble_closed);
 
 
 
@@ -338,32 +311,33 @@ func start_dialogue(
     cue := "",
     extra_game_states := [],
 ) -> void:
-  _dialogue_bubble.start(resource, cue, extra_game_states);
+  subsystem.dialogue_bubble.start(resource, cue, extra_game_states);
 
 
 # [TODO] Dialogue Package
 ## Starts a dialogue bubble to read out the scene described by [param scene].
 func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
-  _dialogue_context_inspection_target.target = scene.inspection_subject;
-  _dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
+  subsystem.dialogue_context_inspection_target.target = scene.inspection_subject;
+  subsystem.dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
 
 
+# [TODO] These are provided by the public property 'subsystem', so... I guess they're unnecessary.
 # [TODO] UI Package / Camera Package
 ## Returns a reference to the player's camera-view shader interface.
 func get_cam_view_shader() -> PlayerCameraViewShader:
-  return _world_shader_rect;
+  return subsystem.world_shader_rect;
 
 
 # [TODO] UI Package / Camera Package
 ## Returns a reference to the player's HUD shader interface.
 func get_hud_shader() -> PlayerHUDShader:
-  return _hud_shader_rect;
+  return subsystem.hud_shader_rect;
 
 
 # [TODO] UI Package / Camera Package
 ## Returns a reference to the player's screen-space shader interface.
 func get_screen_shader() -> PlayerScreenSpaceShader:
-  return _screen_shader_rect;
+  return subsystem.screen_shader_rect;
 
 
 # [TODO] Move to an input-focus-manager node.
@@ -378,15 +352,15 @@ func get_screen_shader() -> PlayerScreenSpaceShader:
 ## [FieldCursor].
 func _on_command_menu_action_selected(action: FieldAction) -> void:
   _selected_command_menu_action = action;
-  _command_menu.close();
-  _field_cursor.open_from_start(action);
+  subsystem.command_menu.close();
+  subsystem.field_cursor.open_from_start(action);
 
 
 # [TODO] Move to an input-focus-manager node.
 ## Responds to 'inspect' inputs signaled by the command menu.
 func _on_command_menu_action_inspected(action: FieldAction) -> void:
   var dialogue = DialogueManager.create_resource_from_text(action.action_hint);
-  _dialogue_bubble.start(dialogue);
+  subsystem.dialogue_bubble.start(dialogue);
 
 
 # [TODO] Move to an input-focus-manager node.
@@ -394,14 +368,14 @@ func _on_command_menu_action_inspected(action: FieldAction) -> void:
 ## Reacquires player input focus from sub-UI systems.
 func _on_command_menu_cancelled() -> void:
   _selected_command_menu_action = null;
-  focus_node.grab_focus();
+  subsystem.focus_node.grab_focus();
 
 
 # [TODO] Move to an input-focus-manager node.
 ## Event handler for [signal FieldCursor.ui_canceled]. [br]
 ## Yields input focus back to the [CommandMenu].
 func _on_field_cursor_canceled() -> void:
-  _command_menu.open();
+  subsystem.command_menu.open();
 
 
 # [TODO] Move to an input-focus-manager node.
@@ -415,35 +389,35 @@ func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
   var schedule := FieldActionSchedule.new(_selected_command_menu_action, playbill);
 
   if _selected_command_menu_action.can_perform(playbill):
-    _field_cursor.close();
-    focus_node.grab_focus();
+    subsystem.field_cursor.close();
+    subsystem.focus_node.grab_focus();
     action_declared.emit(schedule, true);
   else:
-    _field_cursor.play_error();
+    subsystem.field_cursor.play_error();
 
 
 # [TODO] Move to an input-focus-manager node.
 ## Responds to the dialogue bubble being closed and releasing input focus.
 func _on_dialogue_bubble_closed() -> void:
-  if _command_menu.visible:
-    _command_menu.regrab_focus();
+  if subsystem.command_menu.visible:
+    subsystem.command_menu.regrab_focus();
 
 
 # [TODO] Move to an input-focus-manager node.
 ## Closes the player's UI subsystems and forces input focus back into the primary
 ## character controller.
 func _interrupt_ui_subsystems() -> void:
-  _field_cursor.close();
-  _command_menu.close();
-  _dialogue_bubble.close();
-  focus_node.grab_focus();
+  subsystem.field_cursor.close();
+  subsystem.command_menu.close();
+  subsystem.dialogue_bubble.close();
+  subsystem.focus_node.grab_focus();
 
 
 # [TODO] Move to an input-focus-manager node.
 ## Closes player UI subsystems that are unrelated to combat and other essential
 ## game mechanics.
 func _interrupt_nonemergency_ui_subsystems() -> void:
-  _dialogue_bubble.close();
+  subsystem.dialogue_bubble.close();
   # [FIXME] Improve input focus management.
 #endregion Move to submodule script
 
@@ -509,7 +483,7 @@ func _on_heart_container_completed() -> void:
   # [TODO] Some of this ought to be... inside the HealthComponent maybe? A wrapper
   #   to such, maybe?
   var base_containers := 2;
-  var total_containers := inventory.get_heart_containers_count() + base_containers;
+  var total_containers := subsystem.inventory.get_heart_containers_count() + base_containers;
   var total_max_hp := 2 * total_containers;
 
   var health := Component.getc(self, HealthComponent) as HealthComponent;
@@ -554,7 +528,7 @@ func _state_idle() -> void:
 
 
 func _state_idle__input(event: InputEvent) -> void:
-  if not focus_node.has_focus():
+  if not subsystem.focus_node.has_focus():
     return;
 
   elif Input.is_action_pressed('brace'):
@@ -562,23 +536,23 @@ func _state_idle__input(event: InputEvent) -> void:
       var action_schedule := PlayerInputUtils.get_brace_interact_action(self);
       if action_schedule.action != FieldActionList.null_action:
         action_declared.emit(action_schedule, false);
-      focus_node.accept_event();
+      subsystem.focus_node.accept_event();
 
   elif event.is_action_pressed('interact'):
     var action_schedule := PlayerInputUtils.get_interact_action(self);
     if action_schedule.action != FieldActionList.null_action:
       action_declared.emit(action_schedule, false);
-    focus_node.accept_event();
+    subsystem.focus_node.accept_event();
 
   elif event.is_action_pressed('open_action_menu'):
-    _command_menu.open_from_start();
-    focus_node.accept_event();
+    subsystem.command_menu.open_from_start();
+    subsystem.focus_node.accept_event();
 
   elif event.is_action_pressed('inspect'):
     var action_schedule := PlayerInputUtils.get_inspect_action(self);
     if action_schedule.action != FieldActionList.null_action:
       action_declared.emit(action_schedule, false);
-    focus_node.accept_event();
+    subsystem.focus_node.accept_event();
 
 
 func _state_idle__move_input(input_vector: Vector2i) -> void:
@@ -690,13 +664,13 @@ func _state_death() -> void:
   #    we often want them to work together. Calling both like we're doing
   #    here is fine, but should be handled by an intermediary for effects
   #    coordination.
-  _hud_shader_rect.fade_out_async(1.5, 0.5);
-  await _world_shader_rect.fade_out_async(1.5, 0.5);
+  subsystem.hud_shader_rect.fade_out_async(1.5, 0.5);
+  await subsystem.world_shader_rect.fade_out_async(1.5, 0.5);
 
   _send_player_back_to_checkpoint();
 
-  _hud_shader_rect.fade_in_async(1.0, 2.0);
-  await _world_shader_rect.fade_in_async(1.0, 2.0);
+  subsystem.hud_shader_rect.fade_in_async(1.0, 2.0);
+  await subsystem.world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
   _busy_lock.unlock("death_state");
@@ -714,13 +688,13 @@ func _state_sleep() -> void:
   # [TODO] Play a sleeping animation.
   # set_animation_state('falling_asleep');
 
-  _hud_shader_rect.fade_out_async(1.5, 0.5);
-  await _world_shader_rect.fade_out_async(1.5, 0.5);
+  subsystem.hud_shader_rect.fade_out_async(1.5, 0.5);
+  await subsystem.world_shader_rect.fade_out_async(1.5, 0.5);
 
   _send_player_back_to_checkpoint();
 
-  _hud_shader_rect.fade_in_async(1.0, 2.0);
-  await _world_shader_rect.fade_in_async(1.0, 2.0);
+  subsystem.hud_shader_rect.fade_in_async(1.0, 2.0);
+  await subsystem.world_shader_rect.fade_in_async(1.0, 2.0);
 
   _state_machine.switch_to(_state_idle);
   _busy_lock.unlock("sleep_state");
