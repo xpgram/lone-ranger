@@ -195,19 +195,26 @@ func _connect_component_signals() -> void:
   health.value_changed.connect(_on_health_changed);
   health.empty.connect(_on_health_empty);
 
+  animation_player.animation_finished.connect(_on_animation_finished);
+
 
 ## Connects to signals from child objects.
 func _connect_subsystem_signals() -> void:
+  if not subsystem:
+    return;
+
   subsystem.inventory.equipment_changed.connect(_on_equipment_changed__recalc_stats);
   subsystem.inventory.heart_container_completed.connect(_on_heart_container_completed);
 
   subsystem.move_input_repeater.input_triggered.connect(_on_move_input);
-  animation_player.animation_finished.connect(_on_animation_finished);
 
 
 ## Connects to signals from the player's user-interface objects, like the Command Menu,
 ## the Field Cursor, the Dialogue Box, the health meter, etc.
 func _connect_to_ui_subsystems() -> void:
+  if not subsystem:
+    return;
+
   subsystem.command_menu.ui_canceled.connect(_on_command_menu_cancelled);
   subsystem.command_menu.action_selected.connect(_on_command_menu_action_selected);
   subsystem.command_menu.action_inspected.connect(_on_command_menu_action_inspected);
@@ -311,12 +318,18 @@ func start_dialogue(
     cue := "",
     extra_game_states := [],
 ) -> void:
+  if not subsystem:
+    return;
+
   subsystem.dialogue_bubble.start(resource, cue, extra_game_states);
 
 
 # [TODO] Dialogue Package
 ## Starts a dialogue bubble to read out the scene described by [param scene].
 func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
+  if not subsystem:
+    return;
+
   subsystem.dialogue_context_inspection_target.target = scene.inspection_subject;
   subsystem.dialogue_bubble.start(scene.dialogue_resource, scene.dialogue_cue, scene.extra_game_states);
 
@@ -325,18 +338,27 @@ func start_inspect_dialogue(scene: InspectObject_DialogueScene) -> void:
 # [TODO] UI Package / Camera Package
 ## Returns a reference to the player's camera-view shader interface.
 func get_cam_view_shader() -> PlayerCameraViewShader:
+  if not subsystem:
+    return null;
+
   return subsystem.world_shader_rect;
 
 
 # [TODO] UI Package / Camera Package
 ## Returns a reference to the player's HUD shader interface.
 func get_hud_shader() -> PlayerHUDShader:
+  if not subsystem:
+    return null;
+
   return subsystem.hud_shader_rect;
 
 
 # [TODO] UI Package / Camera Package
 ## Returns a reference to the player's screen-space shader interface.
 func get_screen_shader() -> PlayerScreenSpaceShader:
+  if not subsystem:
+    return null;
+
   return subsystem.screen_shader_rect;
 
 
@@ -351,6 +373,9 @@ func get_screen_shader() -> PlayerScreenSpaceShader:
 ## Saves a reference to the chosen [FeildAction] and advances the sub-UI system to the
 ## [FieldCursor].
 func _on_command_menu_action_selected(action: FieldAction) -> void:
+  if not subsystem:
+    return;
+
   _selected_command_menu_action = action;
   subsystem.command_menu.close();
   subsystem.field_cursor.open_from_start(action);
@@ -359,6 +384,9 @@ func _on_command_menu_action_selected(action: FieldAction) -> void:
 # [TODO] Move to an input-focus-manager node.
 ## Responds to 'inspect' inputs signaled by the command menu.
 func _on_command_menu_action_inspected(action: FieldAction) -> void:
+  if not subsystem:
+    return;
+
   var dialogue = DialogueManager.create_resource_from_text(action.action_hint);
   subsystem.dialogue_bubble.start(dialogue);
 
@@ -367,6 +395,9 @@ func _on_command_menu_action_inspected(action: FieldAction) -> void:
 ## Event handler for [signal CommandMenu.ui_canceled]. [br]
 ## Reacquires player input focus from sub-UI systems.
 func _on_command_menu_cancelled() -> void:
+  if not subsystem:
+    return;
+
   _selected_command_menu_action = null;
   subsystem.focus_node.grab_focus();
 
@@ -375,6 +406,9 @@ func _on_command_menu_cancelled() -> void:
 ## Event handler for [signal FieldCursor.ui_canceled]. [br]
 ## Yields input focus back to the [CommandMenu].
 func _on_field_cursor_canceled() -> void:
+  if not subsystem:
+    return;
+
   subsystem.command_menu.open();
 
 
@@ -383,6 +417,9 @@ func _on_field_cursor_canceled() -> void:
 ## Builds and emits a [FieldActionSchedule] for the chosen [FieldAction] and target
 ## coordinates. Also, yields input focus back to the player.
 func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
+  if not subsystem:
+    return;
+
   var orientation := ActionUtils.get_direction_to_target(grid_position, target_pos);
 
   var playbill := FieldActionPlaybill.new(self, target_pos, orientation);
@@ -399,6 +436,9 @@ func _on_field_cursor_location_selected(target_pos: Vector2i) -> void:
 # [TODO] Move to an input-focus-manager node.
 ## Responds to the dialogue bubble being closed and releasing input focus.
 func _on_dialogue_bubble_closed() -> void:
+  if not subsystem:
+    return;
+
   if subsystem.command_menu.visible:
     subsystem.command_menu.regrab_focus();
 
@@ -407,6 +447,9 @@ func _on_dialogue_bubble_closed() -> void:
 ## Closes the player's UI subsystems and forces input focus back into the primary
 ## character controller.
 func _interrupt_ui_subsystems() -> void:
+  if not subsystem:
+    return;
+
   subsystem.field_cursor.close();
   subsystem.command_menu.close();
   subsystem.dialogue_bubble.close();
@@ -417,6 +460,9 @@ func _interrupt_ui_subsystems() -> void:
 ## Closes player UI subsystems that are unrelated to combat and other essential
 ## game mechanics.
 func _interrupt_nonemergency_ui_subsystems() -> void:
+  if not subsystem:
+    return;
+
   subsystem.dialogue_bubble.close();
   # [FIXME] Improve input focus management.
 #endregion Move to submodule script
@@ -480,6 +526,9 @@ func _on_grid_position_changed(to_pos: Vector2i, from_pos: Vector2i) -> void:
 ## Handler for when the player's inventory has a new number of fully complete heart
 ## containers.
 func _on_heart_container_completed() -> void:
+  if not subsystem:
+    return;
+
   # [TODO] Some of this ought to be... inside the HealthComponent maybe? A wrapper
   #   to such, maybe?
   var base_containers := 2;
@@ -528,7 +577,7 @@ func _state_idle() -> void:
 
 
 func _state_idle__input(event: InputEvent) -> void:
-  if not subsystem.focus_node.has_focus():
+  if not subsystem or not subsystem.focus_node.has_focus():
     return;
 
   elif Input.is_action_pressed('brace'):
@@ -653,6 +702,10 @@ func _state_fall() -> void:
 ## The death state handles death animations and resets some player systems before
 ## triggering a revive at the last checkpoint.
 func _state_death() -> void:
+  if not subsystem:
+    # [TODO] If this is a copy-player, it needs to queue_free. I'll think about this later.
+    return;
+
   _busy_lock.lock("death_state");
 
   _interrupt_ui_subsystems();
@@ -682,6 +735,12 @@ func _state_death() -> void:
 ## This state transition is similar to [method _state_death], but uses different
 ## animations.
 func _state_sleep() -> void:
+  if not subsystem:
+    # [TODO] If this is a copy-player, it can't be sent back anywhere. Right now, it does nothing,
+    #     but there could be a neat, unique interraction here. An actual sleep state, like an enemy's.
+    _state_machine.switch_to(_state_idle);
+    return;
+
   _busy_lock.lock("sleep_state");
 
   _interrupt_ui_subsystems();
